@@ -3,51 +3,66 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
 
-<<<<<<< HEAD
 namespace MonoGame_Core.Scripts
-=======
-namespace GEJam.Scripts
->>>>>>> c1b8f6f68bc0e41355e957b11df0ccaba139105d
 {
     public class CollisionBox : Component
     {
-        public string Tag;
-        public bool CheckCollision;
+        List<string> tags;
+        bool checkCollision;
         Vector2 offset;
-        Transform transform;
-        CollisionHandler collisionHandler;
+        Transform myTransform;
+        GameObject myObject;
         float width;
         float height;
 
-        public CollisionBox(string tag, bool checkCollision, Vector2 off, Transform transform, float width, float height, CollisionHandler ch, int uo) : base(uo)
+        public List<string> Tags { get { return tags; } }
+        public bool CheckCollision { get{ return checkCollision; } }
+        public Vector2 Offset { get { return offset; } }
+        public Transform MyTransform { get { return myTransform; } }
+        public GameObject MyObject { get { return myObject; } }
+        public float Width { get { return width; } }
+        public float Height { get { return height; } }
+
+        public CollisionBox(List<string> t, bool check, Vector2 off, Transform transform, float width, float height, int uo) : base(uo)
         {
-            Tag = tag;
-            CheckCollision = checkCollision;
+            tags = t;
+            checkCollision = check;
             offset = off;
-            this.transform = transform;
+            this.myTransform = transform;
             this.width = width;
             this.height = height;
-            collisionHandler = ch;
+        }
+
+        public CollisionBox(int uo, List<string> t, GameObject myObj, Transform myTrans) : base(uo)
+        {
+            tags = t;
+            myTransform = myTrans;
+            myObject = myObj;
+            checkCollision = true;
+            offset = new Vector2();
+            width = myTrans.Width;
+            height = myTrans.Height;
+            
         }
 
         public Vector2 TopLeft()
         {
-            return transform.Position + offset;
+            return myTransform.Position - new Vector2(width/2, height/2) + offset;
         }
 
         public Vector2 TopRight()
         {
-            return transform.Position + offset + new Vector2(width, 0);
+            return myTransform.Position + offset + new Vector2(width/2, -height/2);
         }
 
         public Vector2 BottomLeft()
         {
-            return transform.Position + offset + new Vector2(0, height);
+            return myTransform.Position + offset + new Vector2(-width/2, height/2);
         }
 
         public Vector2 BottomRight()
         {
-            return transform.Position + offset + new Vector2(width, height);
+            return myTransform.Position + offset + new Vector2(width/2, height/2);
         }
 
         public void Resize(float width, float height)

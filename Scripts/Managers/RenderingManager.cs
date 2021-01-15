@@ -4,12 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics;
 
-
-<<<<<<< HEAD
 namespace MonoGame_Core.Scripts
-=======
-namespace GEJam.Scripts
->>>>>>> c1b8f6f68bc0e41355e957b11df0ccaba139105d
 {
     public static class RenderingManager
     {
@@ -46,10 +41,11 @@ namespace GEJam.Scripts
 
             Scale = new Vector2(graphicsDevice.Viewport.Width / WIDTH, graphicsDevice.Viewport.Height / HEIGHT);
 
-            IEnumerable<SpriteRenderer> s = Sprites.OrderByDescending(s => s.Transform.Position.Y)
-                .ThenBy(s => s.OrderInLayer);
+            IEnumerable<SpriteRenderer> s = Sprites.OrderBy(s => s.Layer)
+                                         .ThenByDescending(s => s.Transform.Position.Y)
+                                         .ThenBy(s => s.OrderInLayer);
 
-            foreach(SpriteRenderer sr in s)//(int i = 0; i < s.Count(); ++i)
+            foreach (SpriteRenderer sr in s)//(int i = 0; i < s.Count(); ++i)
             {
                 //System.Diagnostics.Debug.WriteLine(GridMap.WorldToGridPosition(sr.WorldPosition(), sr.zOrder));
                 sr.Posted = false;
@@ -65,7 +61,9 @@ namespace GEJam.Scripts
             }
 
 
-            s = HUD.OrderByDescending(s => s.OrderInLayer);
+            s = Sprites.OrderBy(s => s.Layer)
+                                .ThenByDescending(s => s.Transform.Position.Y)
+                                .ThenBy(s => s.OrderInLayer);
 
             foreach (SpriteRenderer sr in s)
             {

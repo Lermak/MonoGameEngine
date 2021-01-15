@@ -2,33 +2,34 @@
 using System.Linq;
 using Microsoft.Xna.Framework;
 
-<<<<<<< HEAD
 namespace MonoGame_Core.Scripts
-=======
-namespace GEJam.Scripts
->>>>>>> c1b8f6f68bc0e41355e957b11df0ccaba139105d
 {
     public class ComponentHandler
     {
-        public Dictionary<string, Component> Components;
+        Dictionary<string, Component> components;
         public ComponentHandler()
         {
-            Components = new Dictionary<string, Component>();
+            components = new Dictionary<string, Component>();
+        }
+
+        public Component GetComponent(string t)
+        {
+            return components[t];
         }
 
         public void AddComponent(string tag, Component c)
         {
-            Components.Add(tag, c);
+            components.Add(tag, c);
         }
 
         public void Initilize()
         {
-            Components.OrderBy(c => c.Value.UpdateOrder);
+            components.OrderBy(c => c.Value.UpdateOrder);
         }
 
         public void Update(GameTime gt)
         {
-            foreach(Component c in Components.Values)
+            foreach(Component c in components.Values)
             {
                 c.Update(gt);
             }
@@ -36,11 +37,11 @@ namespace GEJam.Scripts
 
         public void OnDestroy()
         {
-            foreach(Component c in Components.Values)
+            foreach(Component c in components.Values)
             {
                 c.OnDestroy();
             }
-            Components.Clear();
+            components.Clear();
         }
     }
 }

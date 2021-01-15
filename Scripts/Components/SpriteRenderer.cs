@@ -5,11 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
 
-<<<<<<< HEAD
 namespace MonoGame_Core.Scripts
-=======
-namespace GEJam.Scripts
->>>>>>> c1b8f6f68bc0e41355e957b11df0ccaba139105d
 {
     public class SpriteRenderer : Component
     {
@@ -25,6 +21,7 @@ namespace GEJam.Scripts
         public bool IsHUD = false;
         public bool Visible = true;
         public bool Posted = false;
+        public float Layer = 0;
         public SpriteRenderer(string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, Color clr, int frames, int uo) : base(uo)
         {
             Texture = texID;
@@ -76,7 +73,7 @@ namespace GEJam.Scripts
 
         public Vector2 WorldPosition()
         {
-            return (Transform.Position + offSet) * RenderingManager.Scale;
+            return (Transform.Position - new Vector2(Transform.Width/2, Transform.Height/2) + offSet) * RenderingManager.Scale;
         }
 
     }

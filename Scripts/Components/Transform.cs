@@ -3,19 +3,57 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using System.Text;
 
-<<<<<<< HEAD
 namespace MonoGame_Core.Scripts
-=======
-namespace GEJam.Scripts
->>>>>>> c1b8f6f68bc0e41355e957b11df0ccaba139105d
 {
     public class Transform : Component
     {
-        public Vector2 Position;
+        Vector2 position;
+        Vector2 velocity;
+        float width;
+        float height;
 
-        public Transform(int uo, Vector2 pos) : base(uo)
+        public Vector2 Position { get { return position;} }    
+        public Vector2 Velocity { get { return velocity; } }
+        public float Width { get { return width; } }
+        public float Height { get { return height; } }
+        
+        public Transform(int uo, Vector2 pos, float w, float h) : base(uo)
         {
-            Position = pos;
+            position = pos;
+            width = w;
+            height = h;
+        }
+        //Manually add to velocity
+        public void AddVelocity(float x, float y)
+        {
+            velocity += new Vector2(x, y);
+        }
+        public void AddXVelocity(float x)
+        {
+            velocity.X += x;
+        }
+        public void AddYVelocity(float y)
+        {
+            velocity.Y += y;
+        }
+        //Manually set velocity
+        public void SetVelocity(float x, float y)
+        {
+            velocity = new Vector2(x, y);
+        }
+        public void SetXVelocity(float x)
+        {
+            velocity.X = x;
+        }
+        public void SetYVelocity(float y)
+        {
+            velocity.Y = y;
+        }
+
+        public void Resize(float x, float y)
+        {
+            width = x;
+            height = y;
         }
     }
 }

@@ -4,15 +4,16 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using System.Linq;
 
-<<<<<<< HEAD
 namespace MonoGame_Core.Scripts
-=======
-namespace GEJam.Scripts
->>>>>>> c1b8f6f68bc0e41355e957b11df0ccaba139105d
 {
     public class BehaviorHandler
     {
         public Dictionary<string, Behavior> Behaviors;
+
+        public Behavior GetBehavior(string t)
+        {
+            return Behaviors[t];
+        }
 
         public BehaviorHandler()
         {
