@@ -17,8 +17,9 @@ namespace MonoGame_Core.Scripts
 
         }
 
-        public static void Update(GameTime gt)
+        public static void Update(float gt)
         {
+
         }
     }
 }

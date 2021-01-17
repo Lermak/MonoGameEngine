@@ -17,9 +17,9 @@ namespace MonoGame_Core.Scripts
             return components[t];
         }
 
-        public void AddComponent(string tag, Component c)
+        public void AddComponent(Component c)
         {
-            components.Add(tag, c);
+            components.Add(c.Name, c);
         }
 
         public void Initilize()
@@ -27,7 +27,7 @@ namespace MonoGame_Core.Scripts
             components.OrderBy(c => c.Value.UpdateOrder);
         }
 
-        public void Update(GameTime gt)
+        public void Update(float gt)
         {
             foreach(Component c in components.Values)
             {

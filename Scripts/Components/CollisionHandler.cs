@@ -23,7 +23,7 @@ namespace MonoGame_Core.Scripts
         }
     }
 
-    public struct CollisionActions
+    public struct CollisionActions 
     {
         public string a;
         public List<string> b;
@@ -37,7 +37,7 @@ namespace MonoGame_Core.Scripts
         }
     }
 
-    public class CollisionHandler
+    public class CollisionHandler : Component
     {
         WorldObject myObject;
         List<Collision> collisions;
@@ -45,8 +45,9 @@ namespace MonoGame_Core.Scripts
         public List<CollisionActions> myActions;
 
         public List<CollisionBox> CollisionBoxs { get { return collisionBoxs; } }
-        public CollisionHandler(WorldObject myObj)
+        public CollisionHandler(int uo, WorldObject myObj) : base(uo)
         {
+            name = "collisionHandler";
             CollisionManager.collisionHandlers.Add(this);
             myObject = myObj;
             collisionBoxs = new List<CollisionBox>();

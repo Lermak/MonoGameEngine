@@ -12,7 +12,7 @@ namespace MonoGame_Core.Scripts
     static class SceneManager
     {
         public enum State { Running, Paused };
-        public static Scene CurrentScene = new Scene();
+        public static Scene CurrentScene = new TestScene();
         public static State SceneState;
         static ContentManager cm;
 
@@ -33,7 +33,7 @@ namespace MonoGame_Core.Scripts
             s.OnLoad();
         }
 
-        public static void Update(GameTime gt)
+        public static void Update(float gt)
         {
             CurrentScene.Update(gt);
         }

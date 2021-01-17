@@ -4,7 +4,9 @@ namespace MonoGame_Core.Scripts
 {
     public class Component
     {
+        protected string name = "component";
         public int UpdateOrder;
+        public string Name { get { return name; } }
         public Component(int uo)
         {
             UpdateOrder = uo;
@@ -15,7 +17,7 @@ namespace MonoGame_Core.Scripts
 
         }
 
-        public virtual void Update(GameTime gt)
+        public virtual void Update(float gt)
         {
 
         }

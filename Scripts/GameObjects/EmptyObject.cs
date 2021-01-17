@@ -14,7 +14,7 @@ namespace MonoGame_Core.Scripts
             base.Initilize();
         }
 
-        public override void Update(GameTime gt)
+        public override void Update(float gt)
         {
             base.Update(gt);
         }
@@ -24,7 +24,7 @@ namespace MonoGame_Core.Scripts
             base.OnCreate();
         }
 
-        public override void OnDestroy()
+        protected override void OnDestroy()
         {
             base.OnDestroy();
         }

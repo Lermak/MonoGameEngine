@@ -20,9 +20,9 @@ namespace MonoGame_Core.Scripts
             Behaviors = new Dictionary<string, Behavior>();
         }
 
-        public void AddBehavior(string tag, Behavior b)
+        public void AddBehavior(Behavior b)
         {
-            Behaviors.Add(tag, b);
+            Behaviors.Add(b.Name, b);
         }
 
         public void Inizilize()
@@ -30,7 +30,7 @@ namespace MonoGame_Core.Scripts
             Behaviors.OrderBy(b => b.Value.UpdateOrder);
         }
 
-        public void Update(GameTime gt)
+        public void Update(float gt)
         {
             foreach(Behavior b in Behaviors.Values)
             {

@@ -25,7 +25,7 @@ namespace MonoGame_Core.Scripts
             //Mouse.SetCursor(MouseCursor.FromTexture2D(SceneManager.CursorImage,45,45));
         }
 
-        public static void Update(GameTime gt)
+        public static void Update(float gt)
         {
             if(IsTriggered(1))
             {

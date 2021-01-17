@@ -37,18 +37,22 @@ namespace MonoGame_Core.Scripts
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            float gt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
             // TODO: Add your update logic here
-            SceneManager.Update(gameTime);
-            Cursor.Update(gameTime);
-            Camera.Update(gameTime);
-            CollisionManager.Update();
+            SceneManager.Update(gt);
+            Cursor.Update(gt);
+            Camera.Update(gt);
+            CollisionManager.Update(gt);
 
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            RenderingManager.Draw(gameTime);
+            float gt = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            RenderingManager.Draw(gt);
 
             base.Draw(gameTime);
         }

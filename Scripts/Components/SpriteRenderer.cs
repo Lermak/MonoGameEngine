@@ -14,7 +14,7 @@ namespace MonoGame_Core.Scripts
         public Color Color;
         public Transform Transform;
         Vector2 offSet;
-        Vector2 drawArea;
+        public Vector2 DrawArea;
         int frames;
         int currentFrame = 0;
         float timeSinceFrameChange = 0;
@@ -24,19 +24,21 @@ namespace MonoGame_Core.Scripts
         public float Layer = 0;
         public SpriteRenderer(string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, Color clr, int frames, int uo) : base(uo)
         {
+            name = "spriteRenderer";
             Texture = texID;
             Transform = t;
             this.OrderInLayer = orderInLayer;
-            this.drawArea = drawArea;
+            this.DrawArea = drawArea;
             Color = clr;
             this.frames = frames;
         }
         public SpriteRenderer(string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, int frames, int uo) : base(uo)
         {
+            name = "spriteRenderer";
             Texture = texID;
             Transform = t;
             this.OrderInLayer = orderInLayer;
-            this.drawArea = drawArea;
+            this.DrawArea = drawArea;
             Color = Color.White;
             this.frames = frames;
         }
@@ -49,16 +51,16 @@ namespace MonoGame_Core.Scripts
 
         public Rectangle DrawRect()
         {
-            return new Rectangle(currentFrame * (int)drawArea.X, 0, (int)drawArea.X, (int)drawArea.Y);
+            return new Rectangle(currentFrame * (int)DrawArea.X, 0, (int)DrawArea.X, (int)DrawArea.Y);
         }
 
-        public override void Update(GameTime gt)
+        public override void Update(float gt)
         {
             if (!Posted)
             {
                 Post();
             }
-            timeSinceFrameChange += (float)gt.ElapsedGameTime.TotalSeconds;
+            timeSinceFrameChange += gt;
             if (timeSinceFrameChange > 1)
             {
                 timeSinceFrameChange = 0;
@@ -73,7 +75,7 @@ namespace MonoGame_Core.Scripts
 
         public Vector2 WorldPosition()
         {
-            return (Transform.Position - new Vector2(Transform.Width/2, Transform.Height/2) + offSet) * RenderingManager.Scale;
+            return ((Transform.Position - new Vector2(Transform.Width/2, Transform.Height/2) + offSet)) * RenderingManager.GameScale;
         }
 
     }

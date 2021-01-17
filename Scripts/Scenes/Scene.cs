@@ -29,7 +29,7 @@ namespace MonoGame_Core.Scripts
 
         }
 
-        public virtual void Update(GameTime gt)
+        public virtual void Update(float gt)
         {
             foreach (GameObject go in GameObjects.Values)
             {

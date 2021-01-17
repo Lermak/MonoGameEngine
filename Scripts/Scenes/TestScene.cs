@@ -30,11 +30,10 @@ namespace MonoGame_Core.Scripts
             Textures["Test"] = Content.Load<Texture2D>("Test");
 
             GameObjects = new Dictionary<string, GameObject>();
-            GameObjects.Add("TestPlayer", new TestPlayer("Test", "TestPlayer"));
-            GameObjects.Add("TestObject2", new SampleWorldObject("Test", "TestObject2"));
+            GameObjects.Add("test", new TestObject("Test", "testObj"));
         }
 
-        public override void Update(GameTime gt)
+        public override void Update(float gt)
         {
             base.Update(gt);
         }

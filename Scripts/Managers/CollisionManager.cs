@@ -13,10 +13,17 @@ namespace MonoGame_Core.Scripts
 
         public static void Initilize()
         {
+
         }
 
-        public static void Update()
+        static  bool VecToRectCollision(Vector2 pos, Vector2 vec, Rectangle rect)
         {
+            return false;
+        }
+
+        public static void Update(float gt)
+        {
+
         }
     }
 }

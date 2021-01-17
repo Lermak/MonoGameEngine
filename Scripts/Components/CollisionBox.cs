@@ -25,6 +25,7 @@ namespace MonoGame_Core.Scripts
 
         public CollisionBox(List<string> t, bool check, Vector2 off, Transform transform, float width, float height, int uo) : base(uo)
         {
+            name = "collisionBox";
             tags = t;
             checkCollision = check;
             offset = off;
@@ -47,22 +48,22 @@ namespace MonoGame_Core.Scripts
 
         public Vector2 TopLeft()
         {
-            return myTransform.Position - new Vector2(width/2, height/2) + offset;
+            return myTransform.Position + new Vector2(-width * myTransform.Scale.X / 2, -height * myTransform.Scale.Y / 2) + offset;
         }
 
         public Vector2 TopRight()
         {
-            return myTransform.Position + offset + new Vector2(width/2, -height/2);
+            return myTransform.Position + offset + new Vector2(width * myTransform.Scale.X / 2, -height * myTransform.Scale.Y / 2);
         }
 
         public Vector2 BottomLeft()
         {
-            return myTransform.Position + offset + new Vector2(-width/2, height/2);
+            return myTransform.Position + offset + new Vector2(-width * myTransform.Scale.X / 2, height * myTransform.Scale.Y / 2);
         }
 
         public Vector2 BottomRight()
         {
-            return myTransform.Position + offset + new Vector2(width/2, height/2);
+            return myTransform.Position + offset + new Vector2(width * myTransform.Scale.X / 2, height * myTransform.Scale.Y / 2);
         }
 
         public void Resize(float width, float height)

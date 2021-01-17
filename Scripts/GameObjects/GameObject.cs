@@ -7,6 +7,7 @@ namespace MonoGame_Core.Scripts
         protected ComponentHandler componentHandler;
         protected BehaviorHandler behaviorHandler;
         protected string tag;
+        protected bool destroy = false;
 
         public string Tag { get { return tag; } }
         public ComponentHandler ComponentHandler { get { return componentHandler; } }
@@ -25,10 +26,17 @@ namespace MonoGame_Core.Scripts
             behaviorHandler.Inizilize();
         }
 
-        public virtual void Update(GameTime gt)
+        public virtual void Update(float gt)
         {
-            componentHandler.Update(gt);
-            behaviorHandler.Update(gt);
+            if (destroy)
+            {
+                OnDestroy();
+            }
+            else
+            {
+                componentHandler.Update(gt);
+                behaviorHandler.Update(gt);
+            }
         }
 
         public virtual void OnCreate()
@@ -36,7 +44,12 @@ namespace MonoGame_Core.Scripts
 
         }
 
-        public virtual void OnDestroy()
+        public void Destroy()
+        {
+            destroy = true;
+        }
+
+        protected virtual void OnDestroy()
         {
             behaviorHandler.OnDestroy();
             componentHandler.OnDestroy();

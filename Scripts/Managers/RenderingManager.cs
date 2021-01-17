@@ -11,7 +11,10 @@ namespace MonoGame_Core.Scripts
         const float WIDTH = 1920;
         const float HEIGHT = 1080;
 
-        public static Vector2 Scale = new Vector2(1,1);
+        public static Vector2 GameScale { get { return WindowScale * BaseScale; } }
+        public static Vector2 BaseScale = new Vector2(1, 1);
+        public static Vector2 WindowScale = new Vector2(1, 1);
+
         public static List<SpriteRenderer> Sprites;
         public static List<SpriteRenderer> HUD;
         private static SpriteBatch spriteBatch;
@@ -33,47 +36,48 @@ namespace MonoGame_Core.Scripts
                 Sprites.Add(s);
         }
 
-        public static void Draw(GameTime gt)
+        public static void Draw(float gt)
         {
 
             graphicsDevice.Clear(Color.CornflowerBlue);
             spriteBatch.Begin();
 
-            Scale = new Vector2(graphicsDevice.Viewport.Width / WIDTH, graphicsDevice.Viewport.Height / HEIGHT);
+            WindowScale = new Vector2(graphicsDevice.Viewport.Width / WIDTH, graphicsDevice.Viewport.Height / HEIGHT);
+
+            
 
             IEnumerable<SpriteRenderer> s = Sprites.OrderBy(s => s.Layer)
                                          .ThenByDescending(s => s.Transform.Position.Y)
                                          .ThenBy(s => s.OrderInLayer);
 
-            foreach (SpriteRenderer sr in s)//(int i = 0; i < s.Count(); ++i)
+            foreach (SpriteRenderer sr in s)
             {
-                //System.Diagnostics.Debug.WriteLine(GridMap.WorldToGridPosition(sr.WorldPosition(), sr.zOrder));
                 sr.Posted = false;
                 spriteBatch.Draw(SceneManager.CurrentScene.Textures[sr.Texture], 
-                    (sr.WorldPosition() - Camera.Position), 
+                    (sr.WorldPosition() - Camera.Position + (new Vector2(WIDTH/2, HEIGHT/2) * WindowScale)), 
                     sr.DrawRect(), 
                     sr.Color, 
-                    0, 
-                    new Vector2(0,0),
-                    Scale, 
+                    sr.Transform.Rotation,
+                    new Vector2(sr.Transform.Width/2, sr.Transform.Height/2),
+                    GameScale * sr.Transform.Scale, 
                     SpriteEffects.None, 
                     0);
             }
 
 
-            s = Sprites.OrderBy(s => s.Layer)
+            s = HUD.OrderBy(s => s.Layer)
                                 .ThenByDescending(s => s.Transform.Position.Y)
                                 .ThenBy(s => s.OrderInLayer);
 
             foreach (SpriteRenderer sr in s)
             {
                 spriteBatch.Draw(SceneManager.CurrentScene.Textures[sr.Texture],
-                    sr.WorldPosition() * Scale,
+                    sr.WorldPosition() + (new Vector2(WIDTH/2, HEIGHT/2) * WindowScale),
                     sr.DrawRect(),
                     sr.Color,
-                    0,
+                    sr.Transform.Rotation,
                     new Vector2(0, 0),
-                    Scale,
+                    WindowScale * sr.Transform.Scale,
                     SpriteEffects.None,
                     0);
             }
