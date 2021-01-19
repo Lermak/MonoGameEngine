@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
+using System.Diagnostics;
 
 namespace MonoGame_Core.Scripts
 {
@@ -14,6 +15,9 @@ namespace MonoGame_Core.Scripts
         GameObject myObject;
         float width;
         float height;
+
+        float angle;
+        float radius;
 
         public List<string> Tags { get { return tags; } }
         public bool CheckCollision { get{ return checkCollision; } }
@@ -32,6 +36,9 @@ namespace MonoGame_Core.Scripts
             this.myTransform = transform;
             this.width = width;
             this.height = height;
+
+            this.radius = (float)Math.Sqrt(Math.Pow(this.height / 2, 2) + Math.Pow(this.width / 2, 2));
+            this.angle = (float)(Math.Acos((this.width / 2) / radius)) * (180 / (float)Math.PI);//Asin finds the angle of a right triangle, multiply by 2 to find the angle of the center to two corners
         }
 
         public CollisionBox(int uo, List<string> t, GameObject myObj, Transform myTrans) : base(uo)
@@ -43,33 +50,52 @@ namespace MonoGame_Core.Scripts
             offset = new Vector2();
             width = myTrans.Width;
             height = myTrans.Height;
-            
+
+            this.radius = (float)Math.Sqrt(Math.Pow(this.height / 2, 2) + Math.Pow(this.width / 2, 2));
+            this.angle = (float)(Math.Acos((this.width / 2) / radius)) * (180 / (float)Math.PI);//Asin finds the angle of a right triangle, multiply by 2 to find the angle of the center to two corners
         }
 
-        public Vector2 TopLeft()
+        public override void Update(float gt)
         {
-            return myTransform.Position + new Vector2(-width * myTransform.Scale.X / 2, -height * myTransform.Scale.Y / 2) + offset;
+            base.Update(gt);
         }
 
         public Vector2 TopRight()
         {
-            return myTransform.Position + offset + new Vector2(width * myTransform.Scale.X / 2, -height * myTransform.Scale.Y / 2);
+            return getRotationPosition(angle, radius, myTransform.Position + offset);
+        }
+
+        public Vector2 TopLeft()
+        {
+            return getRotationPosition(90 + angle, radius, myTransform.Position + offset);//use half side angle because at 0 rotation the box should be cut through the middle, so only half the side angle is needed
         }
 
         public Vector2 BottomLeft()
         {
-            return myTransform.Position + offset + new Vector2(-width * myTransform.Scale.X / 2, height * myTransform.Scale.Y / 2);
+            return getRotationPosition(180 + angle, radius, myTransform.Position + offset);
         }
 
         public Vector2 BottomRight()
         {
-            return myTransform.Position + offset + new Vector2(width * myTransform.Scale.X / 2, height * myTransform.Scale.Y / 2);
+            return getRotationPosition(270 + angle, radius, myTransform.Position + offset);
         }
 
         public void Resize(float width, float height)
         {
             this.width = width;
             this.height = height;
+        }
+
+        public Vector2 getRotationPosition(float angleInDegrees, float radius, Vector2 center)
+        {
+            Vector2 newPosition = center;
+
+            angleInDegrees %= 360;//if the angle goes over 360 loop back around to 0
+            double rotationRadians = angleInDegrees * (Math.PI / 180) - myTransform.Rotation;//converts degrees to radians
+
+            newPosition += new Vector2((float)(radius * Math.Cos(rotationRadians)), (float)(radius * Math.Sin(rotationRadians)));
+
+            return newPosition;
         }
     }
 }

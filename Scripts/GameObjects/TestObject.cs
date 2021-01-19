@@ -12,6 +12,7 @@ namespace MonoGame_Core.Scripts
             Transform.Resize(40, 40);
             SpriteRenderer.DrawArea = new Vector2(40, 40);
             BehaviorHandler.AddBehavior(new TestControls(0, RigidBody));
+            ComponentHandler.AddComponent(new CollisionBox(0, new List<string>() { "box" }, this, Transform));
         }
     }
 }
