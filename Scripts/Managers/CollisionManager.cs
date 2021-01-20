@@ -28,23 +28,17 @@ namespace MonoGame_Core.Scripts
 
             return false;
         }
-/*
+
         public static bool SATcollision(CollisionBox boxOne, CollisionBox boxTwo, out Vector2 penitrationVector)
         {
             //find the rotated vectors to use for dot products and put them in a list
             //use a radius of 1 for a unit circle
-            List<Vector3> linesToCheck = new List<Vector3>();
-            linesToCheck.Add(boxOne.getRotationPosition(boxOne.rotationInDegrees, 1, new Vector2(0, 0)));
-            linesToCheck.Add(boxOne.getRotationPosition(boxOne.rotationInDegrees + 90, 1, new Vector2(0, 0)));//add 90 because rectangles have only right angles and you need the next line's vector
-
-            linesToCheck.Add(boxTwo.getRotationPosition(boxTwo.rotationInDegrees, 1, new Vector2(0, 0)));
-            linesToCheck.Add(boxTwo.getRotationPosition(boxTwo.rotationInDegrees + 90, 1, new Vector2(0, 0)));
+            List<Vector2> axies = new List<Vector2>();
+            axies.AddRange(boxOne.Axies);
+            axies.AddRange(boxTwo.Axies);
 
             float minPenValue = float.MaxValue;//used to find the depth of penetration collision happens at. 
                                                //if all points overlap (i.e. they collide) the smallest value is the penetration amount.
-            Vector3[] boxOneVectors = new Vector3[] { boxOne.topLeft(), boxOne.topRight(), boxOne.bottomLeft(), boxOne.bottomRight() };
-            Vector3[] boxTwoVectors = new Vector3[] { boxTwo.topLeft(), boxTwo.topRight(), boxTwo.bottomLeft(), boxTwo.bottomRight() };
-
             penitrationVector = new Vector2();
 
             //variables to hold the min and max points of each box on each angle
@@ -58,7 +52,7 @@ namespace MonoGame_Core.Scripts
             //check each vector in the list to each point(vector) of both boxs
             //make a min and max value for each box's dot product
             //check and see if those lines overlap
-            foreach (Vector3 line in linesToCheck)
+            foreach (Vector2 line in axies)
             {
                 //set min and max values to thier opposing values so that any value will be larger or smaller respectively
                 boxOneMin = float.MaxValue;
@@ -67,15 +61,15 @@ namespace MonoGame_Core.Scripts
                 boxTwoMax = float.MinValue;
 
                 //find the smallest and largest dot product for both boxs
-                foreach (Vector3 point in boxOneVectors)
+                foreach (Vector2 point in boxOne.Verticies)
                 {
-                    boxOneMin = Math.Min(boxOneMin, Vector3.Dot(line, point));
-                    boxOneMax = Math.Max(boxOneMax, Vector3.Dot(line, point));
+                    boxOneMin = Math.Min(boxOneMin, Vector2.Dot(line, point));
+                    boxOneMax = Math.Max(boxOneMax, Vector2.Dot(line, point));
                 }
-                foreach (Vector3 point in boxTwoVectors)
+                foreach (Vector2 point in boxTwo.Verticies)
                 {
-                    boxTwoMin = Math.Min(boxTwoMin, Vector3.Dot(line, point));
-                    boxTwoMax = Math.Max(boxTwoMax, Vector3.Dot(line, point));
+                    boxTwoMin = Math.Min(boxTwoMin, Vector2.Dot(line, point));
+                    boxTwoMax = Math.Max(boxTwoMax, Vector2.Dot(line, point));
                 }
 
                 //check if either line's min or max is contained in the other
@@ -108,7 +102,7 @@ namespace MonoGame_Core.Scripts
             penitrationVector *= minPenValue;//multiply the PenValue to the vector to get how far in what direction collision occured
             return true;
         }
-*/
+
         public static void Update(float gt)
         {
 

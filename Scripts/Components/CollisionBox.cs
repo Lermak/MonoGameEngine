@@ -26,6 +26,11 @@ namespace MonoGame_Core.Scripts
         public GameObject MyObject { get { return myObject; } }
         public float Width { get { return width; } }
         public float Height { get { return height; } }
+        public float Angle { get { return angle; } }
+        public float Radius { get { return radius; } }
+
+        public List<Vector2> Verticies { get { return new List<Vector2>() { TopRight(), TopLeft(), BottomLeft(), BottomRight() }; } } 
+        public List<Vector2> Axies { get { return new List<Vector2>() { getRotationPosition(0, 1, new Vector2()), getRotationPosition(90, 1, new Vector2()) }; } }
 
         public CollisionBox(List<string> t, bool check, Vector2 off, Transform transform, float width, float height, int uo) : base(uo)
         {
@@ -80,10 +85,23 @@ namespace MonoGame_Core.Scripts
             return getRotationPosition(270 + angle, radius, myTransform.Position + offset);
         }
 
+        public void ReplaceOffset(Vector2 newOff)
+        {
+            offset = newOff;
+        }
+
+        public void UpdateOffset(Vector2 delta)
+        {
+            offset += delta;
+        }
+
         public void Resize(float width, float height)
         {
             this.width = width;
             this.height = height;
+
+            this.radius = (float)Math.Sqrt(Math.Pow(this.height / 2, 2) + Math.Pow(this.width / 2, 2));
+            this.angle = (float)(Math.Acos((this.width / 2) / radius)) * (180 / (float)Math.PI);
         }
 
         public Vector2 getRotationPosition(float angleInDegrees, float radius, Vector2 center)
