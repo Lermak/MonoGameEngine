@@ -6,36 +6,21 @@ using System.Diagnostics;
 
 namespace MonoGame_Core.Scripts
 {
-    public class CollisionBox : Component
+    public class CollisionBox : Collider
     {
-        List<string> tags;
-        bool checkCollision;
-        Vector2 offset;
-        Transform myTransform;
-        GameObject myObject;
         float width;
         float height;
 
         float angle;
         float radius;
-
-        public List<string> Tags { get { return tags; } }
-        public bool CheckCollision { get{ return checkCollision; } }
-        public Vector2 Offset { get { return offset; } }
-        public Transform MyTransform { get { return myTransform; } }
-        public GameObject MyObject { get { return myObject; } }
+        
         public float Width { get { return width; } }
         public float Height { get { return height; } }
         public float Angle { get { return angle; } }
         public float Radius { get { return radius; } }
 
-        public List<Vector2> Verticies { get { return new List<Vector2>() { TopRight(), TopLeft(), BottomLeft(), BottomRight() }; } } 
-        public List<Vector2> Axies { get { return new List<Vector2>() { getRotationPosition(0, 1, new Vector2()), getRotationPosition(90, 1, new Vector2()) }; } }
-
         public CollisionBox(string name, List<string> t, bool check, Vector2 off, Transform transform, float width, float height, int uo) : base(uo, name)
         {
-            name = "collisionBox";
-            tags = t;
             checkCollision = check;
             offset = off;
             this.myTransform = transform;
@@ -46,9 +31,8 @@ namespace MonoGame_Core.Scripts
             this.angle = (float)(Math.Acos((this.width / 2) / radius)) * (180 / (float)Math.PI);//Asin finds the angle of a right triangle, multiply by 2 to find the angle of the center to two corners
         }
 
-        public CollisionBox(int uo, List<string> t, GameObject myObj, Transform myTrans) : base(uo)
+        public CollisionBox(string name, int uo, List<string> t, GameObject myObj, Transform myTrans) : base(uo, name)
         {
-            tags = t;
             myTransform = myTrans;
             myObject = myObj;
             checkCollision = true;
@@ -60,6 +44,28 @@ namespace MonoGame_Core.Scripts
             this.angle = (float)(Math.Acos((this.width / 2) / radius)) * (180 / (float)Math.PI);//Asin finds the angle of a right triangle, multiply by 2 to find the angle of the center to two corners
         }
 
+        public CollisionBox(WorldObject myObj, int uo) : base(uo, "collisionBox")
+        {
+            myTransform = myObj.Transform;
+            myObject = myObj;
+            checkCollision = true;
+            offset = new Vector2();
+            width = myTransform.Width;
+            height = myTransform.Height;
+
+            this.radius = (float)Math.Sqrt(Math.Pow(this.height / 2, 2) + Math.Pow(this.width / 2, 2));
+            this.angle = (float)(Math.Acos((this.width / 2) / radius)) * (180 / (float)Math.PI);//Asin finds the angle of a right triangle, multiply by 2 to find the angle of the center to two corners
+        }
+
+        public override List<Vector2> Axies()
+        {
+            return new List<Vector2>() { getRotationPosition(0, 1, new Vector2()), getRotationPosition(90, 1, new Vector2()) };
+        }
+
+        public override List<Vector2> Verticies()
+        {
+            return new List<Vector2>() { TopRight(), TopLeft(), BottomLeft(), BottomRight() };
+        }
         public override void Update(float gt)
         {
             base.Update(gt);

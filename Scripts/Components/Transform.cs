@@ -21,7 +21,13 @@ namespace MonoGame_Core.Scripts
 
         public Transform(string name, int uo, Vector2 pos, float w, float h, float r) : base(uo, name)
         {
-            name = "transform";
+            rotation = r;
+            position = pos;
+            width = w;
+            height = h;
+        }
+        public Transform(int uo, Vector2 pos, float w, float h, float r) : base(uo, "transform")
+        {
             rotation = r;
             position = pos;
             width = w;

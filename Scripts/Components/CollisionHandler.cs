@@ -45,9 +45,16 @@ namespace MonoGame_Core.Scripts
         public List<CollisionActions> myActions;
 
         public List<CollisionBox> CollisionBoxs { get { return collisionBoxs; } }
-        public CollisionHandler(int uo, WorldObject myObj) : base(uo)
+        public CollisionHandler(string name, int uo, WorldObject myObj) : base(uo, name)
         {
-            name = "collisionHandler";
+            CollisionManager.collisionHandlers.Add(this);
+            myObject = myObj;
+            collisionBoxs = new List<CollisionBox>();
+            collisions = new List<Collision>();
+            myActions = new List<CollisionActions>();
+        }
+        public CollisionHandler(int uo, WorldObject myObj) : base(uo, "collisionHandler")
+        {
             CollisionManager.collisionHandlers.Add(this);
             myObject = myObj;
             collisionBoxs = new List<CollisionBox>();

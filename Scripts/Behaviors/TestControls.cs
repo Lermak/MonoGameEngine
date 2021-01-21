@@ -11,6 +11,10 @@ namespace MonoGame_Core.Scripts
         {           
             rigidBody = rb;
         }
+        public TestControls(int uo, RigidBody rb) : base(uo, "testControls")
+        {
+            rigidBody = rb;
+        }
 
         public override void Update(float gt)
         {

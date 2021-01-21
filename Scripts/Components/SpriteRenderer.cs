@@ -24,7 +24,6 @@ namespace MonoGame_Core.Scripts
         public float Layer = 0;
         public SpriteRenderer(string name, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, Color clr, int frames, int uo) : base(uo, name)
         {
-            name = "spriteRenderer";
             Texture = texID;
             Transform = t;
             this.OrderInLayer = orderInLayer;
@@ -34,7 +33,15 @@ namespace MonoGame_Core.Scripts
         }
         public SpriteRenderer(string name, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, int frames, int uo) : base(uo, name)
         {
-            name = "spriteRenderer";
+            Texture = texID;
+            Transform = t;
+            this.OrderInLayer = orderInLayer;
+            this.DrawArea = drawArea;
+            Color = Color.White;
+            this.frames = frames;
+        }
+        public SpriteRenderer(string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, int frames, int uo) : base(uo, "spriteRenderer")
+        {
             Texture = texID;
             Transform = t;
             this.OrderInLayer = orderInLayer;

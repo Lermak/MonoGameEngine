@@ -34,8 +34,8 @@ namespace MonoGame_Core.Scripts
             //find the rotated vectors to use for dot products and put them in a list
             //use a radius of 1 for a unit circle
             List<Vector2> axies = new List<Vector2>();
-            axies.AddRange(boxOne.Axies);
-            axies.AddRange(boxTwo.Axies);
+            axies.AddRange(boxOne.Axies());
+            axies.AddRange(boxTwo.Axies());
 
             float minPenValue = float.MaxValue;//used to find the depth of penetration collision happens at. 
                                                //if all points overlap (i.e. they collide) the smallest value is the penetration amount.
@@ -61,12 +61,12 @@ namespace MonoGame_Core.Scripts
                 boxTwoMax = float.MinValue;
 
                 //find the smallest and largest dot product for both boxs
-                foreach (Vector2 point in boxOne.Verticies)
+                foreach (Vector2 point in boxOne.Verticies())
                 {
                     boxOneMin = Math.Min(boxOneMin, Vector2.Dot(line, point));
                     boxOneMax = Math.Max(boxOneMax, Vector2.Dot(line, point));
                 }
-                foreach (Vector2 point in boxTwo.Verticies)
+                foreach (Vector2 point in boxTwo.Verticies())
                 {
                     boxTwoMin = Math.Min(boxTwoMin, Vector2.Dot(line, point));
                     boxTwoMax = Math.Max(boxTwoMax, Vector2.Dot(line, point));

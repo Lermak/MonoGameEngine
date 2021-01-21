@@ -2,7 +2,7 @@
 
 namespace MonoGame_Core.Scripts
 {
-    public class Component
+    public abstract class Component
     {
         protected string name = "component";
         public int UpdateOrder;

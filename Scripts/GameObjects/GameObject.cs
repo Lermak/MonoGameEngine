@@ -2,7 +2,7 @@
 
 namespace MonoGame_Core.Scripts
 {
-    public class GameObject
+    public abstract class GameObject
     {
         protected ComponentHandler componentHandler;
         protected BehaviorHandler behaviorHandler;

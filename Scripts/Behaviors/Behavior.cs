@@ -2,7 +2,7 @@
 
 namespace MonoGame_Core.Scripts
 {
-    public class Behavior
+    public abstract class Behavior
     {
         protected string name;
         public int UpdateOrder;
