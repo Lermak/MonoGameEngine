@@ -32,7 +32,7 @@ namespace MonoGame_Core.Scripts
         public List<Vector2> Verticies { get { return new List<Vector2>() { TopRight(), TopLeft(), BottomLeft(), BottomRight() }; } } 
         public List<Vector2> Axies { get { return new List<Vector2>() { getRotationPosition(0, 1, new Vector2()), getRotationPosition(90, 1, new Vector2()) }; } }
 
-        public CollisionBox(List<string> t, bool check, Vector2 off, Transform transform, float width, float height, int uo) : base(uo)
+        public CollisionBox(string name, List<string> t, bool check, Vector2 off, Transform transform, float width, float height, int uo) : base(uo, name)
         {
             name = "collisionBox";
             tags = t;

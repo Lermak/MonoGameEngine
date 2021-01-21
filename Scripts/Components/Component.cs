@@ -6,9 +6,11 @@ namespace MonoGame_Core.Scripts
     {
         protected string name = "component";
         public int UpdateOrder;
+        public string Type { get { return this.GetType().Name; } }
         public string Name { get { return name; } }
-        public Component(int uo)
+        public Component(int uo, string name)
         {
+            this.name = name;
             UpdateOrder = uo;
         }
 

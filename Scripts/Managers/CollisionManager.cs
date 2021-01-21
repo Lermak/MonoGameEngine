@@ -90,7 +90,7 @@ namespace MonoGame_Core.Scripts
                 {
                     penitrationVector = -line;
                     minPenValue = boxOneMax - boxTwoMin + floatEpsilon;//based on what side is overlaping you will get different values
-                                                                       //add .00001 to counteract inconsistantcy in floating point rounding
+                                                                       //add .01 to counteract inconsistantcy in floating point rounding
                 }
                 if ((boxTwoMax - boxOneMin) + floatEpsilon < minPenValue)
                 {

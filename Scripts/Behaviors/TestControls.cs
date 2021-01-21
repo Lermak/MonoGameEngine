@@ -7,8 +7,8 @@ namespace MonoGame_Core.Scripts
     {
         RigidBody rigidBody;
         float speed = 100;
-        public TestControls(int uo, RigidBody rb) : base(uo)
-        {
+        public TestControls(int uo, string name, RigidBody rb) : base(uo, name)
+        {           
             rigidBody = rb;
         }
 

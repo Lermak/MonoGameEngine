@@ -17,6 +17,21 @@ namespace MonoGame_Core.Scripts
             return components[t];
         }
 
+        public List<Component> GetComponentsOfType(string type)
+        {
+            List<Component> cl = new List<Component>();
+
+            foreach (Component c in components.Values)
+            {
+                if (c.Type == type)
+                {
+                    cl.Add(c);
+                }
+            }
+
+            return cl;
+        }
+
         public void AddComponent(Component c)
         {
             components.Add(c.Name, c);

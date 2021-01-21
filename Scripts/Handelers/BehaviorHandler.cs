@@ -8,16 +8,32 @@ namespace MonoGame_Core.Scripts
 {
     public class BehaviorHandler
     {
-        public Dictionary<string, Behavior> Behaviors;
+        Dictionary<string, Behavior> behaviors;
+        public Dictionary<string, Behavior> Behaviors { get { return behaviors; } }
 
         public Behavior GetBehavior(string t)
         {
             return Behaviors[t];
         }
 
+        public List<Behavior> GetBehaviorsOfType(string type)
+        {
+            List<Behavior> bl = new List<Behavior>();
+
+            foreach(Behavior b in behaviors.Values)
+            {
+                if (b.Type == type)
+                {
+                    bl.Add(b);
+                }
+            }
+
+            return bl;
+        }
+
         public BehaviorHandler()
         {
-            Behaviors = new Dictionary<string, Behavior>();
+            behaviors = new Dictionary<string, Behavior>();
         }
 
         public void AddBehavior(Behavior b)

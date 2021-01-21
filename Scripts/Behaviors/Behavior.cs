@@ -4,11 +4,15 @@ namespace MonoGame_Core.Scripts
 {
     public class Behavior
     {
-        public readonly string Name = "behavior";      
+        protected string name;
         public int UpdateOrder;
 
-        public Behavior(int uo)
+        public string Type { get { return this.GetType().Name; } }
+        public string Name { get { return name; } }
+
+        public Behavior(int uo, string name)
         {
+            this.name = name;
             UpdateOrder = uo;
         }
         public virtual void Update(float gt)
