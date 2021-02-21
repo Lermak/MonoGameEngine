@@ -46,6 +46,12 @@ namespace MonoGame_Core.Scripts
             return false;
         }
 
+        static bool distanceHuristic(CollisionBox b1, CollisionBox b2)
+        {
+            if (Vector2.Distance(b1.MyTransform.Position, b2.MyTransform.Position) > b1.Radius + b2.Radius)
+                return false;
+            else return true;
+        }
         public static bool SATcollision(CollisionBox boxOne, CollisionBox boxTwo, out Vector2 penitrationVector)
         {
             //find the rotated vectors to use for dot products and put them in a list
@@ -131,20 +137,26 @@ namespace MonoGame_Core.Scripts
                     {
                         if (ActiveMovingBoxs[x].MyObject != ActiveMovingBoxs[i].MyObject)
                         {
-                            if (SATcollision(ActiveMovingBoxs[i], ActiveMovingBoxs[x], out p))
+                            if (distanceHuristic(ActiveMovingBoxs[i], ActiveMovingBoxs[x]))
                             {
-                                ((CollisionHandler)ActiveMovingBoxs[i].MyObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(ActiveMovingBoxs[i], ActiveMovingBoxs[x], p);
-                                p = new Vector2();
+                                if (SATcollision(ActiveMovingBoxs[i], ActiveMovingBoxs[x], out p))
+                                {
+                                    ((CollisionHandler)ActiveMovingBoxs[i].MyObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(ActiveMovingBoxs[i], ActiveMovingBoxs[x], p);
+                                    p = new Vector2();
+                                }
                             }
                         }
                     }
 
                     for (int x = 0; x < ActiveStaticBoxs.Count; ++x)
                     {
-                        if (SATcollision(ActiveMovingBoxs[i], ActiveStaticBoxs[x], out p))
+                        if (distanceHuristic(ActiveMovingBoxs[i], ActiveStaticBoxs[x]))
                         {
-                            ((CollisionHandler)ActiveMovingBoxs[i].MyObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(ActiveMovingBoxs[i], ActiveStaticBoxs[x], p);
-                            p = new Vector2();
+                            if (SATcollision(ActiveMovingBoxs[i], ActiveStaticBoxs[x], out p))
+                            {
+                                ((CollisionHandler)ActiveMovingBoxs[i].MyObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(ActiveMovingBoxs[i], ActiveStaticBoxs[x], p);
+                                p = new Vector2();
+                            }
                         }
                     }
                 }
