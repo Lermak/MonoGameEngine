@@ -9,6 +9,9 @@ namespace MonoGame_Core.Scripts
 {
     public static class CollisionBehaviors
     {
-
+        public static void UndoMinPen(CollisionBox a, CollisionBox b, Vector2 p)
+        {
+            ((WorldObject)a.MyObject).Transform.Move(p);
+        }
     }
 }

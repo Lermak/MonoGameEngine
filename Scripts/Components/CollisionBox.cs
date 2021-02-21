@@ -19,8 +19,13 @@ namespace MonoGame_Core.Scripts
         public float Angle { get { return angle; } }
         public float Radius { get { return radius; } }
 
-        public CollisionBox(string name, List<string> t, bool check, Vector2 off, Transform transform, float width, float height, int uo) : base(uo, name)
+        public CollisionBox(string name, List<string> t, bool check, Vector2 off, Transform transform, float width, float height, int uo, bool isStatic) : base(uo, name)
         {
+            if (isStatic)
+                CollisionManager.ActiveStaticBoxs.Add(this);
+            else
+                CollisionManager.ActiveMovingBoxs.Add(this);
+
             checkCollision = check;
             offset = off;
             this.myTransform = transform;
@@ -31,8 +36,13 @@ namespace MonoGame_Core.Scripts
             this.angle = (float)(Math.Acos((this.width / 2) / radius)) * (180 / (float)Math.PI);//Asin finds the angle of a right triangle, multiply by 2 to find the angle of the center to two corners
         }
 
-        public CollisionBox(string name, int uo, List<string> t, GameObject myObj, Transform myTrans) : base(uo, name)
+        public CollisionBox(string name, int uo, List<string> t, GameObject myObj, Transform myTrans, bool isStatic) : base(uo, name)
         {
+            if (isStatic)
+                CollisionManager.ActiveStaticBoxs.Add(this);
+            else
+                CollisionManager.ActiveMovingBoxs.Add(this);
+
             myTransform = myTrans;
             myObject = myObj;
             checkCollision = true;
@@ -44,8 +54,13 @@ namespace MonoGame_Core.Scripts
             this.angle = (float)(Math.Acos((this.width / 2) / radius)) * (180 / (float)Math.PI);//Asin finds the angle of a right triangle, multiply by 2 to find the angle of the center to two corners
         }
 
-        public CollisionBox(WorldObject myObj, int uo) : base(uo, "collisionBox")
+        public CollisionBox(WorldObject myObj, int uo, string name, bool isStatic) : base(uo, name)
         {
+            if (isStatic)
+                CollisionManager.ActiveStaticBoxs.Add(this);
+            else
+                CollisionManager.ActiveMovingBoxs.Add(this);
+
             myTransform = myObj.Transform;
             myObject = myObj;
             checkCollision = true;

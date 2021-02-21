@@ -49,6 +49,12 @@ namespace MonoGame_Core.Scripts
         {
             position += dist;
         }
+
+        public void Place(Vector2 pos)
+        {
+            position = pos;
+        }
+
         public void Rotate(float r)
         {
             rotation += r;

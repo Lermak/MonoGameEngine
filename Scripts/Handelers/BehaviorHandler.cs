@@ -36,9 +36,11 @@ namespace MonoGame_Core.Scripts
             behaviors = new Dictionary<string, Behavior>();
         }
 
-        public void AddBehavior(Behavior b)
+        public Behavior AddBehavior(Behavior b)
         {
-            Behaviors.Add(b.Name, b);
+            behaviors.Add(b.Name, b);
+
+            return behaviors[b.Name];
         }
 
         public void Inizilize()

@@ -32,9 +32,11 @@ namespace MonoGame_Core.Scripts
             return cl;
         }
 
-        public void AddComponent(Component c)
+        public Component AddComponent(Component c)
         {
             components.Add(c.Name, c);
+
+            return components[c.Name];
         }
 
         public void Initilize()

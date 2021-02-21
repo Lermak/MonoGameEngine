@@ -12,7 +12,9 @@ namespace MonoGame_Core.Scripts
             Transform.Resize(40, 40);
             SpriteRenderer.DrawArea = new Vector2(40, 40);
             BehaviorHandler.AddBehavior(new TestControls(0, RigidBody));
-            ComponentHandler.AddComponent(new CollisionBox(this, 0));
+            ComponentHandler.AddComponent(new CollisionBox(this, 0, "myBox", false));
+
+            ((CollisionHandler)ComponentHandler.GetComponent("collisionHandler")).myActions.Add(new CollisionActions("myBox", new List<string> { "myBox" }, new List<collisionAction> { CollisionBehaviors.UndoMinPen }));
         }
     }
 }
