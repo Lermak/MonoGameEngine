@@ -22,6 +22,7 @@ namespace MonoGame_Core.Scripts
         public bool Visible = true;
         public bool Posted = false;
         public float Layer = 0;
+
         public SpriteRenderer(string name, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, Color clr, int frames, int uo) : base(uo, name)
         {
             Texture = texID;

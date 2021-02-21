@@ -15,8 +15,8 @@ namespace MonoGame_Core.Scripts
         public static void Initilize()
         {
             position = new Vector2(0, 0);
-            MinPos = new Vector2(float.MinValue, float.MinValue);
-            MaxPos = new Vector2(float.MaxValue, float.MaxValue);
+            MinPos = new Vector2(0, 0);
+            MaxPos = SceneManager.CurrentScene.Size;
         }
 
         public static void Update(float gt)

@@ -9,11 +9,24 @@ namespace MonoGame_Core.Scripts
 {
     public static class CollisionManager
     {
-        public static List<CollisionHandler> collisionHandlers;
+        public static List<CollisionBox>[,] ActiveStaticBoxs;
+        public static List<CollisionBox>[,] ActiveMovingBoxs;
 
         public static void Initilize()
         {
+            ActiveStaticBoxs = new List<CollisionBox>[4, 4];
+            ActiveMovingBoxs = new List<CollisionBox>[4, 4];
+        }
 
+        public static void Clear()
+        {
+            ActiveStaticBoxs = new List<CollisionBox>[4, 4];
+            ActiveMovingBoxs = new List<CollisionBox>[4, 4];
+        }
+
+        public static void AddStaticBox(CollisionBox c)
+        {
+            float x = c.MyTransform.Position.X - Camera.Position.X;
         }
 
         static bool CheckCollision(CollisionBox b1, CollisionBox b2)

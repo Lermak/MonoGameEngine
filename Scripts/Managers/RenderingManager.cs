@@ -8,8 +8,8 @@ namespace MonoGame_Core.Scripts
 {
     public static class RenderingManager
     {
-        const float WIDTH = 1920;
-        const float HEIGHT = 1080;
+        public const float WIDTH = 1920;
+        public const float HEIGHT = 1080;
 
         public static Vector2 GameScale { get { return WindowScale * BaseScale; } }
         public static Vector2 BaseScale = new Vector2(1, 1);
@@ -23,6 +23,13 @@ namespace MonoGame_Core.Scripts
         public static void Initilize(GraphicsDevice gd)
         {
             graphicsDevice = gd;
+            spriteBatch = new SpriteBatch(graphicsDevice);
+            Sprites = new List<SpriteRenderer>();
+            HUD = new List<SpriteRenderer>();
+        }
+
+        public static void Clear()
+        {
             spriteBatch = new SpriteBatch(graphicsDevice);
             Sprites = new List<SpriteRenderer>();
             HUD = new List<SpriteRenderer>();

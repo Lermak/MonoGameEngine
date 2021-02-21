@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace MonoGame_Core.Scripts
 {
-    public delegate void collisionAction(CollisionBox a, CollisionBox b, Vector2 p, WorldObject w);
+    public delegate void collisionAction(CollisionBox a, CollisionBox b, Vector2 p);
 
     public struct Collision
     {
@@ -47,7 +47,6 @@ namespace MonoGame_Core.Scripts
         public List<CollisionBox> CollisionBoxs { get { return collisionBoxs; } }
         public CollisionHandler(string name, int uo, WorldObject myObj) : base(uo, name)
         {
-            CollisionManager.collisionHandlers.Add(this);
             myObject = myObj;
             collisionBoxs = new List<CollisionBox>();
             collisions = new List<Collision>();
@@ -55,7 +54,6 @@ namespace MonoGame_Core.Scripts
         }
         public CollisionHandler(int uo, WorldObject myObj) : base(uo, "collisionHandler")
         {
-            CollisionManager.collisionHandlers.Add(this);
             myObject = myObj;
             collisionBoxs = new List<CollisionBox>();
             collisions = new List<Collision>();

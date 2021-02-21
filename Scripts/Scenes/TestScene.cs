@@ -19,7 +19,7 @@ namespace MonoGame_Core.Scripts
 
         public override void Initilize(ContentManager c)
         {
-            Content = c;
+            base.Initilize(c);
 
             SoundManager.SongChannels["Melody"] = Content.Load<Song>("Music/TestSong");
             MediaPlayer.Play(SoundManager.SongChannels["Melody"]);

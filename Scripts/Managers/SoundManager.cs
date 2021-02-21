@@ -17,6 +17,12 @@ namespace MonoGame_Core.Scripts
 
         }
 
+        public static void Clear()
+        {
+            SongChannels.Clear();
+            SoundEffectChannels.Clear();
+        }
+
         public static void Update(float gt)
         {
 
