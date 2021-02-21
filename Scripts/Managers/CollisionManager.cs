@@ -9,24 +9,28 @@ namespace MonoGame_Core.Scripts
 {
     public static class CollisionManager
     {
-        public static List<CollisionBox>[,] ActiveStaticBoxs;
-        public static List<CollisionBox>[,] ActiveMovingBoxs;
+        public static List<CollisionBox> ActiveStaticBoxs;
+        public static List<CollisionBox> ActiveMovingBoxs;
 
         public static void Initilize()
         {
-            ActiveStaticBoxs = new List<CollisionBox>[4, 4];
-            ActiveMovingBoxs = new List<CollisionBox>[4, 4];
+            Clear();
         }
 
         public static void Clear()
         {
-            ActiveStaticBoxs = new List<CollisionBox>[4, 4];
-            ActiveMovingBoxs = new List<CollisionBox>[4, 4];
+            ActiveStaticBoxs = new List<CollisionBox>();
+            ActiveMovingBoxs = new List<CollisionBox>();
         }
 
         public static void AddStaticBox(CollisionBox c)
         {
-            float x = c.MyTransform.Position.X - Camera.Position.X;
+            ActiveStaticBoxs.Add(c);
+        }
+
+        public static void AddMovingBox(CollisionBox c)
+        {
+            ActiveMovingBoxs.Add(c);
         }
 
         static bool CheckCollision(CollisionBox b1, CollisionBox b2)
@@ -118,7 +122,33 @@ namespace MonoGame_Core.Scripts
 
         public static void Update(float gt)
         {
+            Vector2 p = new Vector2();
+            for (int t = 0; t < 8; ++t)
+            {
+                for (int i = 0; i < ActiveMovingBoxs.Count; ++i)
+                {
+                    for (int x = 0; x < ActiveMovingBoxs.Count; ++x)
+                    {
+                        if (ActiveMovingBoxs[x].MyObject != ActiveMovingBoxs[i].MyObject)
+                        {
+                            if (SATcollision(ActiveMovingBoxs[i], ActiveMovingBoxs[x], out p))
+                            {
+                                ((CollisionHandler)ActiveMovingBoxs[i].MyObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(ActiveMovingBoxs[i], ActiveMovingBoxs[x], p);
+                                p = new Vector2();
+                            }
+                        }
+                    }
 
+                    for (int x = 0; x < ActiveStaticBoxs.Count; ++x)
+                    {
+                        if (SATcollision(ActiveMovingBoxs[i], ActiveStaticBoxs[x], out p))
+                        {
+                            ((CollisionHandler)ActiveMovingBoxs[i].MyObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(ActiveMovingBoxs[i], ActiveStaticBoxs[x], p);
+                            p = new Vector2();
+                        }
+                    }
+                }
+            }
         }
     }
 }

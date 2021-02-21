@@ -25,49 +25,47 @@ namespace MonoGame_Core.Scripts
 
     public struct CollisionActions 
     {
-        public string a;
-        public List<string> b;
-        public List<collisionAction> ca;
+        public string MyBox;
+        public List<string> OtherBoxs;
+        public List<collisionAction> Actions;
 
         public CollisionActions(string a, List<string> b, List<collisionAction> ca)
         {
-            this.a = a;
-            this.b = b;
-            this.ca = ca;
+            this.MyBox = a;
+            this.OtherBoxs = b;
+            this.Actions = ca;
         }
     }
 
     public class CollisionHandler : Component
     {
         WorldObject myObject;
-        List<Collision> collisions;
-        List<CollisionBox> collisionBoxs;
         public List<CollisionActions> myActions;
 
-        public List<CollisionBox> CollisionBoxs { get { return collisionBoxs; } }
-        public CollisionHandler(string name, int uo, WorldObject myObj) : base(uo, name)
-        {
-            myObject = myObj;
-            collisionBoxs = new List<CollisionBox>();
-            collisions = new List<Collision>();
-            myActions = new List<CollisionActions>();
-        }
         public CollisionHandler(int uo, WorldObject myObj) : base(uo, "collisionHandler")
         {
             myObject = myObj;
-            collisionBoxs = new List<CollisionBox>();
-            collisions = new List<Collision>();
             myActions = new List<CollisionActions>();
         }
 
-        public void AddCollision(CollisionBox a, CollisionBox b, Vector2 pen)
+        public void RunCollisionActions(CollisionBox b1, CollisionBox b2, Vector2 v)
         {
-            collisions.Add(new Collision(pen, a, b));
-        }
-
-        public void AddCollisionBox(CollisionBox cb)
-        {
-            collisionBoxs.Add(cb);
+            foreach(CollisionActions ca in myActions)
+            {
+                if(ca.MyBox == b1.Name)
+                {
+                    foreach(string s in ca.OtherBoxs)
+                    {
+                        if(s == b2.Name)
+                        {
+                            foreach(collisionAction c in ca.Actions)
+                            {
+                                c(b1, b2, v);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         public void Update(GameTime gt)
