@@ -1,10 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 
-<<<<<<< HEAD
 namespace MonoGame_Core.Scripts
-=======
-namespace GEJam.Scripts
->>>>>>> c1b8f6f68bc0e41355e957b11df0ccaba139105d
 {
     public class EmptyObject : GameObject
     {
@@ -18,7 +14,7 @@ namespace GEJam.Scripts
             base.Initilize();
         }
 
-        public override void Update(GameTime gt)
+        public override void Update(float gt)
         {
             base.Update(gt);
         }
@@ -28,7 +24,7 @@ namespace GEJam.Scripts
             base.OnCreate();
         }
 
-        public override void OnDestroy()
+        protected override void OnDestroy()
         {
             base.OnDestroy();
         }

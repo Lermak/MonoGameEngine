@@ -2,11 +2,7 @@
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
 
-<<<<<<< HEAD
 namespace MonoGame_Core.Scripts
-=======
-namespace GEJam.Scripts
->>>>>>> c1b8f6f68bc0e41355e957b11df0ccaba139105d
 {
     public static class Cursor
     {
@@ -29,7 +25,7 @@ namespace GEJam.Scripts
             //Mouse.SetCursor(MouseCursor.FromTexture2D(SceneManager.CursorImage,45,45));
         }
 
-        public static void Update(GameTime gt)
+        public static void Update(float gt)
         {
             if(IsTriggered(1))
             {

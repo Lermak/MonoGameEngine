@@ -5,13 +5,9 @@ using System.Text;
 using System.Linq;
 using System.Diagnostics;
 
-<<<<<<< HEAD
 namespace MonoGame_Core.Scripts
-=======
-namespace GEJam.Scripts
->>>>>>> c1b8f6f68bc0e41355e957b11df0ccaba139105d
 {
-    public delegate void collisionAction(CollisionBox a, CollisionBox b, Vector2 p, WorldObject w);
+    public delegate void collisionAction(CollisionBox a, CollisionBox b, Vector2 p);
 
     public struct Collision
     {
@@ -27,7 +23,7 @@ namespace GEJam.Scripts
         }
     }
 
-    public struct CollisionActions
+    public struct CollisionActions 
     {
         public string a;
         public List<string> b;
@@ -41,7 +37,7 @@ namespace GEJam.Scripts
         }
     }
 
-    public class CollisionHandler
+    public class CollisionHandler : Component
     {
         WorldObject myObject;
         List<Collision> collisions;
@@ -49,9 +45,15 @@ namespace GEJam.Scripts
         public List<CollisionActions> myActions;
 
         public List<CollisionBox> CollisionBoxs { get { return collisionBoxs; } }
-        public CollisionHandler(WorldObject myObj)
+        public CollisionHandler(string name, int uo, WorldObject myObj) : base(uo, name)
         {
-            CollisionManager.collisionHandlers.Add(this);
+            myObject = myObj;
+            collisionBoxs = new List<CollisionBox>();
+            collisions = new List<Collision>();
+            myActions = new List<CollisionActions>();
+        }
+        public CollisionHandler(int uo, WorldObject myObj) : base(uo, "collisionHandler")
+        {
             myObject = myObj;
             collisionBoxs = new List<CollisionBox>();
             collisions = new List<Collision>();
@@ -70,28 +72,7 @@ namespace GEJam.Scripts
 
         public void Update(GameTime gt)
         {
-            foreach(Collision c in collisions)
-            {
-                foreach (CollisionActions ca in myActions)
-                {
-                    if (ca.a == c.a.Tag)
-                    {
-                        foreach (string s in ca.b)
-                        {
-                            if (s == c.b.Tag || s == "*")
-                            {
-                                foreach (collisionAction a in ca.ca)
-                                {
-                                    a(c.a, c.b, c.Depth, myObject);
-                                }
-                            }
-                        }
-                    }
-                }
-
-                Debug.WriteLine("Collision");
-            }
-            collisions.Clear();
+           
         }
     }
 }

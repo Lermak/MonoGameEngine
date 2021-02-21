@@ -7,16 +7,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-<<<<<<< HEAD
 namespace MonoGame_Core.Scripts
-=======
-namespace GEJam.Scripts
->>>>>>> c1b8f6f68bc0e41355e957b11df0ccaba139105d
 {
     static class SceneManager
     {
         public enum State { Running, Paused };
-        public static Scene CurrentScene = new Scene();
+        public static Scene CurrentScene = new TestScene();
         public static State SceneState;
         static ContentManager cm;
 
@@ -37,7 +33,7 @@ namespace GEJam.Scripts
             s.OnLoad();
         }
 
-        public static void Update(GameTime gt)
+        public static void Update(float gt)
         {
             CurrentScene.Update(gt);
         }

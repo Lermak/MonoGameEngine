@@ -1,19 +1,21 @@
 ﻿using Microsoft.Xna.Framework;
 
-<<<<<<< HEAD
 namespace MonoGame_Core.Scripts
-=======
-namespace GEJam.Scripts
->>>>>>> c1b8f6f68bc0e41355e957b11df0ccaba139105d
 {
-    public class Behavior
+    public abstract class Behavior
     {
+        protected string name;
         public int UpdateOrder;
-        public Behavior(int uo)
+
+        public string Type { get { return this.GetType().Name; } }
+        public string Name { get { return name; } }
+
+        public Behavior(int uo, string name)
         {
+            this.name = name;
             UpdateOrder = uo;
         }
-        public virtual void Update(GameTime gt)
+        public virtual void Update(float gt)
         {
 
         }

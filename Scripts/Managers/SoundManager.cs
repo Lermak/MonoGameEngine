@@ -5,11 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 
-<<<<<<< HEAD
 namespace MonoGame_Core.Scripts
-=======
-namespace GEJam.Scripts
->>>>>>> c1b8f6f68bc0e41355e957b11df0ccaba139105d
 {
     public static class SoundManager
     {
@@ -21,8 +17,15 @@ namespace GEJam.Scripts
 
         }
 
-        public static void Update(GameTime gt)
+        public static void Clear()
         {
+            SongChannels.Clear();
+            SoundEffectChannels.Clear();
+        }
+
+        public static void Update(float gt)
+        {
+
         }
     }
 }

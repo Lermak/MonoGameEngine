@@ -1,17 +1,18 @@
 ﻿using Microsoft.Xna.Framework;
 
-<<<<<<< HEAD
 namespace MonoGame_Core.Scripts
-=======
-namespace GEJam.Scripts
->>>>>>> c1b8f6f68bc0e41355e957b11df0ccaba139105d
 {
-    public class GameObject
+    public abstract class GameObject
     {
         protected ComponentHandler componentHandler;
         protected BehaviorHandler behaviorHandler;
         protected string tag;
+        protected bool destroy = false;
+
         public string Tag { get { return tag; } }
+        public ComponentHandler ComponentHandler { get { return componentHandler; } }
+        public BehaviorHandler BehaviorHandler { get { return behaviorHandler; } }
+
         public GameObject(string tag)
         {
             this.tag = tag;
@@ -25,10 +26,17 @@ namespace GEJam.Scripts
             behaviorHandler.Inizilize();
         }
 
-        public virtual void Update(GameTime gt)
+        public virtual void Update(float gt)
         {
-            componentHandler.Update(gt);
-            behaviorHandler.Update(gt);
+            if (destroy)
+            {
+                OnDestroy();
+            }
+            else
+            {
+                componentHandler.Update(gt);
+                behaviorHandler.Update(gt);
+            }
         }
 
         public virtual void OnCreate()
@@ -36,7 +44,12 @@ namespace GEJam.Scripts
 
         }
 
-        public virtual void OnDestroy()
+        public void Destroy()
+        {
+            destroy = true;
+        }
+
+        protected virtual void OnDestroy()
         {
             behaviorHandler.OnDestroy();
             componentHandler.OnDestroy();

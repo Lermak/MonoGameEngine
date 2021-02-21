@@ -4,24 +4,41 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using System.Linq;
 
-<<<<<<< HEAD
 namespace MonoGame_Core.Scripts
-=======
-namespace GEJam.Scripts
->>>>>>> c1b8f6f68bc0e41355e957b11df0ccaba139105d
 {
     public class BehaviorHandler
     {
-        public Dictionary<string, Behavior> Behaviors;
+        Dictionary<string, Behavior> behaviors;
+        public Dictionary<string, Behavior> Behaviors { get { return behaviors; } }
+
+        public Behavior GetBehavior(string t)
+        {
+            return Behaviors[t];
+        }
+
+        public List<Behavior> GetBehaviorsOfType(string type)
+        {
+            List<Behavior> bl = new List<Behavior>();
+
+            foreach(Behavior b in behaviors.Values)
+            {
+                if (b.Type == type)
+                {
+                    bl.Add(b);
+                }
+            }
+
+            return bl;
+        }
 
         public BehaviorHandler()
         {
-            Behaviors = new Dictionary<string, Behavior>();
+            behaviors = new Dictionary<string, Behavior>();
         }
 
-        public void AddBehavior(string tag, Behavior b)
+        public void AddBehavior(Behavior b)
         {
-            Behaviors.Add(tag, b);
+            Behaviors.Add(b.Name, b);
         }
 
         public void Inizilize()
@@ -29,7 +46,7 @@ namespace GEJam.Scripts
             Behaviors.OrderBy(b => b.Value.UpdateOrder);
         }
 
-        public void Update(GameTime gt)
+        public void Update(float gt)
         {
             foreach(Behavior b in Behaviors.Values)
             {

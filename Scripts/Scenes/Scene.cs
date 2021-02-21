@@ -5,15 +5,14 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 
-<<<<<<< HEAD
 namespace MonoGame_Core.Scripts
-=======
-namespace GEJam.Scripts
->>>>>>> c1b8f6f68bc0e41355e957b11df0ccaba139105d
 {
     public class Scene
     {
+        protected Vector2 size;
         protected ContentManager Content;
+        public Vector2 Size { get { return size; } }
+
         public Dictionary<string, Texture2D> Textures = new Dictionary<string, Texture2D>();
         public Dictionary<string, GameObject> GameObjects = new Dictionary<string, GameObject>();
         public Dictionary<string, Song> Songs = new Dictionary<string, Song>();
@@ -21,6 +20,10 @@ namespace GEJam.Scripts
         public virtual void Initilize(ContentManager c)
         {
             Content = c;
+            CollisionManager.Clear();
+            RenderingManager.Clear();
+            SoundManager.Clear();
+            Camera.Initilize();
         }
 
         public virtual void OnLoad()
@@ -33,7 +36,7 @@ namespace GEJam.Scripts
 
         }
 
-        public virtual void Update(GameTime gt)
+        public virtual void Update(float gt)
         {
             foreach (GameObject go in GameObjects.Values)
             {

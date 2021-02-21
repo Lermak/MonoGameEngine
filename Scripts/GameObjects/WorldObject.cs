@@ -1,40 +1,35 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-<<<<<<< HEAD
 namespace MonoGame_Core.Scripts
-=======
-namespace GEJam.Scripts
->>>>>>> c1b8f6f68bc0e41355e957b11df0ccaba139105d
 {
-    public class WorldObject : GameObject
+    public abstract class WorldObject : GameObject
     {
-        string tag;
-        public CollisionHandler CollisionHandler;
-        public Transform Transform { get { return ((Transform)componentHandler.Components["transform"]); } }
-        public SpriteRenderer SpriteRenderer{ get { return ((SpriteRenderer)componentHandler.Components["spriteRenderer"]); } }
+        public RigidBody RigidBody { get { return (RigidBody)componentHandler.GetComponent("rigidBody"); } }
+        public Transform Transform { get { return (Transform)componentHandler.GetComponent("transform"); } }
+        public SpriteRenderer SpriteRenderer{ get { return (SpriteRenderer)componentHandler.GetComponent("spriteRenderer"); } }
+        public CollisionHandler CollisionHandler { get { return (CollisionHandler)componentHandler.GetComponent("collisionHandler"); } }
         public WorldObject(string texID, string tag) : base(tag)
         {
-            CollisionHandler = new CollisionHandler(this);
-            this.tag = tag;
-            componentHandler.AddComponent("transform", new Transform(0, new Vector2(0,0)));
-            componentHandler.AddComponent("spriteRenderer", new SpriteRenderer(texID,
-                                                            (Transform)componentHandler.Components["transform"],
-                                                            new Vector2(0, 0),
-                                                            new Vector2(0, 0),
-                                                            0,
-                                                            0,
-                                                            0));
-        }
+            componentHandler.AddComponent(new CollisionHandler(0, this));           
+            componentHandler.AddComponent(new Transform(0, new Vector2(0,0), 0, 0, 0));
+            componentHandler.AddComponent(new RigidBody(this, RigidBody.RigidBodyType.Dynamic, 0));
+            componentHandler.AddComponent(new SpriteRenderer(texID,
+                                            Transform,
+                                            new Vector2(0, 0),
+                                            new Vector2(0, 0),
+                                            0,
+                                            0,
+                                            0));
+    }
 
         public override void Initilize()
         {
             base.Initilize();
         }
 
-        public override void Update(GameTime gt)
+        public override void Update(float gt)
         {
-            CollisionHandler.Update(gt);
             base.Update(gt);
         }
 
@@ -43,7 +38,7 @@ namespace GEJam.Scripts
             base.OnCreate();
         }
 
-        public override void OnDestroy()
+        protected override void OnDestroy()
         {
             base.OnDestroy();
         }

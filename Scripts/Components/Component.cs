@@ -1,16 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
 
-<<<<<<< HEAD
 namespace MonoGame_Core.Scripts
-=======
-namespace GEJam.Scripts
->>>>>>> c1b8f6f68bc0e41355e957b11df0ccaba139105d
 {
-    public class Component
+    public abstract class Component
     {
+        protected string name = "component";
         public int UpdateOrder;
-        public Component(int uo)
+        public string Type { get { return this.GetType().Name; } }
+        public string Name { get { return name; } }
+        public Component(int uo, string name)
         {
+            this.name = name;
             UpdateOrder = uo;
         }
 
@@ -19,7 +19,7 @@ namespace GEJam.Scripts
 
         }
 
-        public virtual void Update(GameTime gt)
+        public virtual void Update(float gt)
         {
 
         }

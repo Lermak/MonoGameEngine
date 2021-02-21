@@ -8,11 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
 
-<<<<<<< HEAD
 namespace MonoGame_Core.Scripts
-=======
-namespace GEJam.Scripts
->>>>>>> c1b8f6f68bc0e41355e957b11df0ccaba139105d
 {
     public class TestScene:Scene
     {
@@ -23,7 +19,7 @@ namespace GEJam.Scripts
 
         public override void Initilize(ContentManager c)
         {
-            Content = c;
+            base.Initilize(c);
 
             SoundManager.SongChannels["Melody"] = Content.Load<Song>("Music/TestSong");
             MediaPlayer.Play(SoundManager.SongChannels["Melody"]);
@@ -34,11 +30,10 @@ namespace GEJam.Scripts
             Textures["Test"] = Content.Load<Texture2D>("Test");
 
             GameObjects = new Dictionary<string, GameObject>();
-            GameObjects.Add("TestPlayer", new TestPlayer("Test", "TestPlayer"));
-            GameObjects.Add("TestObject2", new SampleWorldObject("Test", "TestObject2"));
+            GameObjects.Add("test", new TestObject("Test", "testObj"));
         }
 
-        public override void Update(GameTime gt)
+        public override void Update(float gt)
         {
             base.Update(gt);
         }
