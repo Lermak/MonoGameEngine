@@ -7,16 +7,16 @@ namespace MonoGame_Core.Scripts
     {
         static float CameraSpeed = 200;
 
-        static Vector2 position;
-        public static Vector2 Position { get { return position * RenderingManager.WindowScale; } }
-        public static Vector2 MinPos;
-        public static Vector2 MaxPos;
+        static Transform transform;
+        public static Vector2 Position { get { return transform.Position * RenderingManager.WindowScale; } }
+        public static Vector2 MinPos { get { return new Vector2(-SceneManager.CurrentScene.Size.X / 2 + RenderingManager.WIDTH / 2, -SceneManager.CurrentScene.Size.Y / 2 + RenderingManager.HEIGHT / 2); } }
+        public static Vector2 MaxPos { get { return new Vector2(SceneManager.CurrentScene.Size.X / 2 - RenderingManager.WIDTH / 2, SceneManager.CurrentScene.Size.Y / 2 - RenderingManager.HEIGHT / 2); } }
 
         public static void Initilize()
         {
-            position = new Vector2(0, 0);
-            MinPos = new Vector2(0, 0);
-            MaxPos = SceneManager.CurrentScene.Size;
+            transform = new Transform(0, new Vector2(),0,0,0);
+            //MinPos = new Vector2(0, 0);
+            //MaxPos = SceneManager.CurrentScene.Size;
         }
 
         public static void Update(float gt)
@@ -28,23 +28,23 @@ namespace MonoGame_Core.Scripts
         {
             KeyboardState state = Keyboard.GetState();
             if (state.IsKeyDown(Keys.Up))
-                position.Y -= (float)(CameraSpeed * gt);
+                transform.Move(new Vector2(0, -(float)(CameraSpeed * gt)));
             else if (state.IsKeyDown(Keys.Down))
-                position.Y += (float)(CameraSpeed * gt);
+                transform.Move(new Vector2(0, (float)(CameraSpeed * gt)));
             if (state.IsKeyDown(Keys.Right))
-                position.X += (float)(CameraSpeed * gt);
+                transform.Move(new Vector2((float)(CameraSpeed * gt), 0));
             else if (state.IsKeyDown(Keys.Left))
-                position.X -= (float)(CameraSpeed * gt);
+                transform.Move(new Vector2(-(float)(CameraSpeed * gt), 0));
 
-            if (position.X > MaxPos.X)
-                position.X = MaxPos.X;
-            else if (position.X < MinPos.X)
-                position.X = MinPos.X;
+            if (transform.Position.X > MaxPos.X)
+                transform.Place(new Vector2(MaxPos.X, transform.Position.Y));
+            else if (transform.Position.X < MinPos.X)
+                transform.Place(new Vector2(MinPos.X, transform.Position.Y));
 
-            if (position.Y > MaxPos.Y)
-                position.Y = MaxPos.Y;
-            else if (position.Y < MinPos.Y)
-                position.Y = MinPos.Y;
+            if (transform.Position.Y > MaxPos.Y)
+                transform.Place(new Vector2(transform.Position.X ,MaxPos.Y));
+            else if (transform.Position.Y < MinPos.Y)
+                transform.Place(new Vector2(transform.Position.X, MinPos.Y));
         }
     }
 }

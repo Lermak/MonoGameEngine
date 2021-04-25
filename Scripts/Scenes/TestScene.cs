@@ -21,6 +21,8 @@ namespace MonoGame_Core.Scripts
         {
             base.Initilize(c);
 
+            size = new Vector2(2100, 1080);
+
             SoundManager.SongChannels["Melody"] = Content.Load<Song>("Music/TestSong");
             MediaPlayer.Play(SoundManager.SongChannels["Melody"]);
 

@@ -9,7 +9,7 @@ namespace MonoGame_Core.Scripts
 {
     public class Scene
     {
-        protected Vector2 size;
+        protected Vector2 size;//Scene size must never be smaller than the rendering size
         protected ContentManager Content;
         public Vector2 Size { get { return size; } }
 
@@ -19,6 +19,7 @@ namespace MonoGame_Core.Scripts
         public Dictionary<string, SoundEffect> SoundEffects= new Dictionary<string, SoundEffect>();
         public virtual void Initilize(ContentManager c)
         {
+            size = new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT);
             Content = c;
             CollisionManager.Clear();
             RenderingManager.Clear();
