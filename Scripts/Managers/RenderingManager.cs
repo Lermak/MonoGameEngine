@@ -14,6 +14,7 @@ namespace MonoGame_Core.Scripts
         public static Vector2 GameScale { get { return WindowScale * BaseScale; } }
         public static Vector2 BaseScale = new Vector2(1, 1);
         public static Vector2 WindowScale = new Vector2(1, 1);
+        public static float GlobalFade = 255;
 
         public static List<SpriteRenderer> Sprites;
         public static List<SpriteRenderer> HUD;
@@ -46,12 +47,10 @@ namespace MonoGame_Core.Scripts
         public static void Draw(float gt)
         {
 
-            graphicsDevice.Clear(Color.CornflowerBlue);
+            graphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
 
-            WindowScale = new Vector2(graphicsDevice.Viewport.Width / WIDTH, graphicsDevice.Viewport.Height / HEIGHT);
-
-            
+            WindowScale = new Vector2(graphicsDevice.Viewport.Width / WIDTH, graphicsDevice.Viewport.Height / HEIGHT);        
 
             IEnumerable<SpriteRenderer> s = Sprites.OrderBy(s => s.Layer)
                                          .ThenByDescending(s => s.Transform.Position.Y)
@@ -62,8 +61,8 @@ namespace MonoGame_Core.Scripts
                 sr.Posted = false;
                 spriteBatch.Draw(SceneManager.CurrentScene.Textures[sr.Texture], 
                     (sr.WorldPosition() - Camera.Position + (new Vector2(WIDTH/2, HEIGHT/2) * WindowScale)), 
-                    sr.DrawRect(), 
-                    sr.Color, 
+                    sr.DrawRect(),
+                    new Color(sr.Color.R - (int)GlobalFade, sr.Color.G - (int)GlobalFade, sr.Color.B - (int)GlobalFade, sr.Color.A), 
                     sr.Transform.Rotation,
                     new Vector2(sr.Transform.Width/2, sr.Transform.Height/2),
                     GameScale * sr.Transform.Scale, 
@@ -81,7 +80,7 @@ namespace MonoGame_Core.Scripts
                 spriteBatch.Draw(SceneManager.CurrentScene.Textures[sr.Texture],
                     sr.WorldPosition() + (new Vector2(WIDTH/2, HEIGHT/2) * WindowScale),
                     sr.DrawRect(),
-                    sr.Color,
+                    new Color(sr.Color.R - (int)GlobalFade, sr.Color.G - (int)GlobalFade, sr.Color.B - (int)GlobalFade, sr.Color.A),
                     sr.Transform.Rotation,
                     new Vector2(0, 0),
                     WindowScale * sr.Transform.Scale,

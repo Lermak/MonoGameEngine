@@ -11,8 +11,9 @@ namespace MonoGame_Core.Scripts
 {
     static class SceneManager
     {
-        public enum State { Running, Paused };
+        public enum State { Running, Paused, SceneOut, SceneIn };
         public static Scene CurrentScene = new TestScene();
+        private static Scene nextScene = null;
         public static State SceneState;
         static ContentManager cm;
 
@@ -27,15 +28,42 @@ namespace MonoGame_Core.Scripts
             if (CurrentScene != null)
             {
                 CurrentScene.OnExit();
+                SceneState = State.SceneOut;
             }
-            CurrentScene = s;
-            s.Initilize(cm);
-            s.OnLoad();
+            else
+            {
+                SceneState = State.SceneIn;
+            }
+            nextScene = s;
         }
 
         public static void Update(float gt)
         {
             CurrentScene.Update(gt);
+            
+            if(SceneState == State.SceneIn)
+            {
+                RenderingManager.GlobalFade -= 128 * gt;
+                if (RenderingManager.GlobalFade < 0)
+                {
+                    RenderingManager.GlobalFade = 0;
+                    SceneState = State.Running;
+                }
+            }
+            else if(SceneState == State.SceneOut)
+            {
+                RenderingManager.GlobalFade += 128 * gt;
+                if(RenderingManager.GlobalFade > 255)
+                {
+                    RenderingManager.GlobalFade = 255;
+                    SceneState = State.SceneIn;
+
+                    CurrentScene = nextScene;
+                    nextScene = null;
+                    CurrentScene.Initilize(cm);
+                    CurrentScene.OnLoad();
+                }
+            }
         }
     }
 }

@@ -18,12 +18,13 @@ namespace MonoGame_Core.Scripts
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            InputManager.Initilize();
             RenderingManager.Initilize(GraphicsDevice);
             SoundManager.Initilize();
             CollisionManager.Initilize();
             SceneManager.Initilize(Content);
             Camera.Initilize();
-            SceneManager.ChangeScene(new TestScene());
+            SceneManager.ChangeScene(new MainMenu());
             base.Initialize();
         }
 
@@ -40,6 +41,7 @@ namespace MonoGame_Core.Scripts
             float gt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             // TODO: Add your update logic here
+            InputManager.Update(gt);
             SceneManager.Update(gt);
             Cursor.Update(gt);
             Camera.Update(gt);

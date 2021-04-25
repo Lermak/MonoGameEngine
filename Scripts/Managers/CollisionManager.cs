@@ -9,6 +9,9 @@ namespace MonoGame_Core.Scripts
 {
     public static class CollisionManager
     {
+        public enum CollisionType { AABB, SAT, TileMap }
+        public static CollisionType CollisionDetection = CollisionType.SAT;
+
         public static List<CollisionBox> ActiveStaticBoxs;
         public static List<CollisionBox> ActiveMovingBoxs;
 
@@ -128,34 +131,39 @@ namespace MonoGame_Core.Scripts
 
         public static void Update(float gt)
         {
-            Vector2 p = new Vector2();
-            for (int t = 0; t < 8; ++t)
-            {
-                for (int i = 0; i < ActiveMovingBoxs.Count; ++i)
+            if (CollisionDetection == CollisionType.SAT)
+            { 
+                Vector2 p = new Vector2();
+                for (int t = 0; t < 8; ++t)
                 {
-                    for (int x = 0; x < ActiveMovingBoxs.Count; ++x)
+                    for (int i = 0; i < ActiveMovingBoxs.Count; ++i)
                     {
-                        if (ActiveMovingBoxs[x].MyObject != ActiveMovingBoxs[i].MyObject)
+                        for (int x = 0; x < ActiveMovingBoxs.Count; ++x)
                         {
-                            if (distanceHuristic(ActiveMovingBoxs[i], ActiveMovingBoxs[x]))
+                            if (ActiveMovingBoxs[x].MyObject != ActiveMovingBoxs[i].MyObject)
                             {
-                                if (SATcollision(ActiveMovingBoxs[i], ActiveMovingBoxs[x], out p))
+
+
+                                if (distanceHuristic(ActiveMovingBoxs[i], ActiveMovingBoxs[x]))
                                 {
-                                    ((CollisionHandler)ActiveMovingBoxs[i].MyObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(ActiveMovingBoxs[i], ActiveMovingBoxs[x], p);
-                                    p = new Vector2();
+                                    if (SATcollision(ActiveMovingBoxs[i], ActiveMovingBoxs[x], out p))
+                                    {
+                                        ((CollisionHandler)ActiveMovingBoxs[i].MyObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(ActiveMovingBoxs[i], ActiveMovingBoxs[x], p);
+                                        p = new Vector2();
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    for (int x = 0; x < ActiveStaticBoxs.Count; ++x)
-                    {
-                        if (distanceHuristic(ActiveMovingBoxs[i], ActiveStaticBoxs[x]))
+                        for (int x = 0; x < ActiveStaticBoxs.Count; ++x)
                         {
-                            if (SATcollision(ActiveMovingBoxs[i], ActiveStaticBoxs[x], out p))
+                            if (distanceHuristic(ActiveMovingBoxs[i], ActiveStaticBoxs[x]))
                             {
-                                ((CollisionHandler)ActiveMovingBoxs[i].MyObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(ActiveMovingBoxs[i], ActiveStaticBoxs[x], p);
-                                p = new Vector2();
+                                if (SATcollision(ActiveMovingBoxs[i], ActiveStaticBoxs[x], out p))
+                                {
+                                    ((CollisionHandler)ActiveMovingBoxs[i].MyObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(ActiveMovingBoxs[i], ActiveStaticBoxs[x], p);
+                                    p = new Vector2();
+                                }
                             }
                         }
                     }
