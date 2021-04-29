@@ -107,10 +107,10 @@ namespace MonoGame_Core.Scripts
         public static void Update(float gt)
         {
             previousKeyboardState = currentKeyboardState;
-            currentKeyboardState = new KeyboardState();
+            currentKeyboardState = Keyboard.GetState();
 
             previousMouseState = currentMouseState;
-            currentMouseState = new MouseState();
+            currentMouseState = Mouse.GetState();
 
             checkDoubleClick(gt);
         }

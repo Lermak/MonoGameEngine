@@ -15,7 +15,7 @@ namespace MonoGame_Core.Scripts
 
         public bool CheckCollision { get { return checkCollision; } }
         public bool IsTrigger { get { return isTrigger; } }
-        public Vector2 Offset { get { return offset; } }
+        public Vector2 Offset { get { return offset * myTransform.Scale; } }
         public Transform MyTransform { get { return myTransform; } }
         public GameObject MyObject { get { return myObject; } }
 

@@ -10,14 +10,11 @@ namespace MonoGame_Core.Scripts
     {
         float width;
         float height;
-
-        float angle;
-        float radius;
         
-        public float Width { get { return width; } }
-        public float Height { get { return height; } }
-        public float Angle { get { return angle; } }
-        public float Radius { get { return radius; } }
+        public float Width { get { return width * myTransform.Scale.X; } }
+        public float Height { get { return height * myTransform.Scale.Y; } }
+        public float Angle { get { return (float)(Math.Acos((Width / 2) / Radius)) * (180 / (float)Math.PI); } }
+        public float Radius { get { return (float)Math.Sqrt(Math.Pow(Height / 2, 2) + Math.Pow(Width / 2, 2)); } }
 
         public CollisionBox(string name, List<string> t, bool check, Vector2 off, Transform transform, float width, float height, int uo, bool isStatic) : base(uo, name)
         {
@@ -31,9 +28,6 @@ namespace MonoGame_Core.Scripts
             this.myTransform = transform;
             this.width = width;
             this.height = height;
-
-            this.radius = (float)Math.Sqrt(Math.Pow(this.height / 2, 2) + Math.Pow(this.width / 2, 2));
-            this.angle = (float)(Math.Acos((this.width / 2) / radius)) * (180 / (float)Math.PI);//Asin finds the angle of a right triangle, multiply by 2 to find the angle of the center to two corners
         }
 
         public CollisionBox(string name, int uo, List<string> t, GameObject myObj, Transform myTrans, bool isStatic) : base(uo, name)
@@ -49,9 +43,6 @@ namespace MonoGame_Core.Scripts
             offset = new Vector2();
             width = myTrans.Width;
             height = myTrans.Height;
-
-            this.radius = (float)Math.Sqrt(Math.Pow(this.height / 2, 2) + Math.Pow(this.width / 2, 2));
-            this.angle = (float)(Math.Acos((this.width / 2) / radius)) * (180 / (float)Math.PI);//Asin finds the angle of a right triangle, multiply by 2 to find the angle of the center to two corners
         }
 
         public CollisionBox(WorldObject myObj, int uo, string name, bool isStatic) : base(uo, name)
@@ -67,9 +58,6 @@ namespace MonoGame_Core.Scripts
             offset = new Vector2();
             width = myTransform.Width;
             height = myTransform.Height;
-
-            this.radius = (float)Math.Sqrt(Math.Pow(this.height / 2, 2) + Math.Pow(this.width / 2, 2));
-            this.angle = (float)(Math.Acos((this.width / 2) / radius)) * (180 / (float)Math.PI);//Asin finds the angle of a right triangle, multiply by 2 to find the angle of the center to two corners
         }
 
         public override List<Vector2> Axies()
@@ -88,22 +76,22 @@ namespace MonoGame_Core.Scripts
 
         public Vector2 TopRight()
         {
-            return getRotationPosition(angle, radius, myTransform.Position + offset);
+            return getRotationPosition(Angle, Radius, myTransform.Position + offset);
         }
 
         public Vector2 TopLeft()
         {
-            return getRotationPosition(90 + angle, radius, myTransform.Position + offset);//use half side angle because at 0 rotation the box should be cut through the middle, so only half the side angle is needed
+            return getRotationPosition(90 + Angle, Radius, myTransform.Position + offset);//use half side angle because at 0 rotation the box should be cut through the middle, so only half the side angle is needed
         }
 
         public Vector2 BottomLeft()
         {
-            return getRotationPosition(180 + angle, radius, myTransform.Position + offset);
+            return getRotationPosition(180 + Angle, Radius, myTransform.Position + offset);
         }
 
         public Vector2 BottomRight()
         {
-            return getRotationPosition(270 + angle, radius, myTransform.Position + offset);
+            return getRotationPosition(270 + Angle, Radius, myTransform.Position + offset);
         }
 
         public void ReplaceOffset(Vector2 newOff)
@@ -120,9 +108,6 @@ namespace MonoGame_Core.Scripts
         {
             this.width = width;
             this.height = height;
-
-            this.radius = (float)Math.Sqrt(Math.Pow(this.height / 2, 2) + Math.Pow(this.width / 2, 2));
-            this.angle = (float)(Math.Acos((this.width / 2) / radius)) * (180 / (float)Math.PI);
         }
 
         public Vector2 getRotationPosition(float angleInDegrees, float radius, Vector2 center)

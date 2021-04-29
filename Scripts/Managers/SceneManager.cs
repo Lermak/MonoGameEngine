@@ -57,8 +57,10 @@ namespace MonoGame_Core.Scripts
                 {
                     RenderingManager.GlobalFade = 255;
                     SceneState = State.SceneIn;
-
+                    
+                    CurrentScene.OnExit();
                     CurrentScene = nextScene;
+                    
                     nextScene = null;
                     CurrentScene.Initilize(cm);
                     CurrentScene.OnLoad();
