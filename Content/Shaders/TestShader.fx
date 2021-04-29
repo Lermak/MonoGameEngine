@@ -22,10 +22,11 @@ struct VertexShaderOutput
 	float2 TextureCoordinates : TEXCOORD0;
 };
 
+
 float4 MainPS(VertexShaderOutput input) : COLOR
 {
 	float4 color = tex2D(s0, input.TextureCoordinates);
-	if (input.TextureCoordinates.x % .2 < .1)
+	if (input.TextureCoordinates.x % .1 < .05)
 	{
 		color.r *= 0.5;
 		color.g *= 0.5;

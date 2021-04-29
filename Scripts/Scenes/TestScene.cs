@@ -31,7 +31,7 @@ namespace MonoGame_Core.Scripts
             Effects["TestShader"] = Content.Load<Effect>("Shaders/TestShader");
 
             Textures = new Dictionary<string, Texture2D>();
-            Textures["Test"] = Content.Load<Texture2D>("Test");
+            Textures["Test"] = Content.Load<Texture2D>("Images/Test");
 
             GameObjects = new Dictionary<string, GameObject>();
             GameObjects.Add("test", new TestObject("Test", "testObj"));

@@ -19,8 +19,6 @@ namespace MonoGame_Core.Scripts
         public static Vector2 WindowScale = new Vector2(1, 1);
         public static float GlobalFade = 255;
 
-        public static Effect GlobalShader;
-
         public static List<SpriteRenderer> Sprites;
         public static List<SpriteRenderer> HUD;
         private static SpriteBatch spriteBatch;
@@ -54,7 +52,6 @@ namespace MonoGame_Core.Scripts
 
             graphicsDevice.Clear(Color.Black);
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
-            ApplyGlobalShader();
 
             WindowScale = new Vector2(graphicsDevice.Viewport.Width / WIDTH, graphicsDevice.Viewport.Height / HEIGHT);        
 
@@ -69,7 +66,6 @@ namespace MonoGame_Core.Scripts
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
                     sr.Shader.CurrentTechnique.Passes[0].Apply();
-                    ApplyGlobalShader();
                 }               
 
                 sr.Posted = false;
@@ -87,7 +83,6 @@ namespace MonoGame_Core.Scripts
                 {
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
-                    ApplyGlobalShader();
                 }
             }
 
@@ -112,12 +107,6 @@ namespace MonoGame_Core.Scripts
             spriteBatch.End();
 
             Sprites.Clear();
-        }
-
-        private static void ApplyGlobalShader()
-        {
-            if (GlobalShader != null)
-                GlobalShader.CurrentTechnique.Passes[0].Apply();
         }
     }
 }
