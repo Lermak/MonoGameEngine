@@ -25,7 +25,12 @@ struct VertexShaderOutput
 float4 MainPS(VertexShaderOutput input) : COLOR
 {
 	float4 color = tex2D(s0, input.TextureCoordinates);
-	color.gb = color.r;
+	if (input.TextureCoordinates.x % .2 < .1)
+	{
+		color.r *= 0.5;
+		color.g *= 0.5;
+		color.b *= 0.5;
+	}
 	return color;
 }
 
