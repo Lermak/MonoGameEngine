@@ -13,6 +13,8 @@ namespace MonoGame_Core.Scripts
             SpriteRenderer.DrawArea = new Vector2(40, 40);
             ComponentHandler.AddComponent(new CollisionBox(this, 0, "myBox", true));
             Transform.Place(new Vector2(100, 100));
+
+            //SpriteRenderer.Shader = SceneManager.CurrentScene.Effects["BlueShader"];
         }
     }
 }

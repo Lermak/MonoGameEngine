@@ -19,11 +19,29 @@
 /processorParam:Quality=Best
 /build:Music/TestSong.mp3
 
+#begin Shaders/BlueShader.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Shaders/BlueShader.fx
+
 #begin Shaders/TestShader.fx
 /importer:EffectImporter
 /processor:EffectProcessor
 /processorParam:DebugMode=Auto
 /build:Shaders/TestShader.fx
+
+#begin Shaders/TintShaderExample.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Shaders/TintShaderExample.fx
+
+#begin Shaders/tutorial.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Shaders/tutorial.fx
 
 #begin Sound/TestHit.wav
 /importer:WavImporter
