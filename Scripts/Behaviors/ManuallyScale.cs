@@ -15,10 +15,10 @@ namespace MonoGame_Core.Scripts
 
         public override void Update(float gt)
         {
-            if (InputManager.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.Z) && myTransform.Scale.X < 5)
-            { myTransform.SetScale(myTransform.Scale.X + .5f, myTransform.Scale.Y + .5f); }
-            if (InputManager.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.X) && myTransform.Scale.X > 0)
-            { myTransform.SetScale(myTransform.Scale.X - .5f, myTransform.Scale.Y - .5f); }
+            if (InputManager.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.Add) && myTransform.Scale.X < 5)
+            { myTransform.SetScale(myTransform.Scale.X + .1f, myTransform.Scale.Y + .1f); }
+            if (InputManager.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.Subtract) && myTransform.Scale.X > 0)
+            { myTransform.SetScale(myTransform.Scale.X - .1f, myTransform.Scale.Y - .1f); }
 
         }
     }

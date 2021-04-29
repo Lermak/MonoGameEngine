@@ -28,6 +28,8 @@ namespace MonoGame_Core.Scripts
 
             SoundManager.SoundEffectChannels["TestHit"] = Content.Load<SoundEffect>("Sound/TestHit").CreateInstance();
 
+            Effects["TestShader"] = Content.Load<Effect>("Shaders/TestShader");
+
             Textures = new Dictionary<string, Texture2D>();
             Textures["Test"] = Content.Load<Texture2D>("Test");
 

@@ -8,6 +8,7 @@ namespace MonoGame_Core.Scripts
 {
     public class CollisionBox : Collider
     {
+        const int degreesBetwenVertecies = 90;
         float width;
         float height;
         
@@ -81,17 +82,17 @@ namespace MonoGame_Core.Scripts
 
         public Vector2 TopLeft()
         {
-            return getRotationPosition(90 + Angle, Radius, myTransform.Position + offset);//use half side angle because at 0 rotation the box should be cut through the middle, so only half the side angle is needed
+            return getRotationPosition(degreesBetwenVertecies + Angle, Radius, myTransform.Position + offset);//use half side angle because at 0 rotation the box should be cut through the middle, so only half the side angle is needed
         }
 
         public Vector2 BottomLeft()
         {
-            return getRotationPosition(180 + Angle, Radius, myTransform.Position + offset);
+            return getRotationPosition(2 * degreesBetwenVertecies + Angle, Radius, myTransform.Position + offset);
         }
 
         public Vector2 BottomRight()
         {
-            return getRotationPosition(270 + Angle, Radius, myTransform.Position + offset);
+            return getRotationPosition(3 * degreesBetwenVertecies + Angle, Radius, myTransform.Position + offset);
         }
 
         public void ReplaceOffset(Vector2 newOff)

@@ -48,7 +48,7 @@ namespace MonoGame_Core.Scripts
         {
 
             graphicsDevice.Clear(Color.Black);
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
 
             WindowScale = new Vector2(graphicsDevice.Viewport.Width / WIDTH, graphicsDevice.Viewport.Height / HEIGHT);        
 
@@ -58,6 +58,13 @@ namespace MonoGame_Core.Scripts
 
             foreach (SpriteRenderer sr in s)
             {
+                if (sr.Shader != null)
+                {
+                    spriteBatch.End();
+                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);   
+                    sr.Shader.CurrentTechnique.Passes[0].Apply();
+                }
+
                 sr.Posted = false;
                 spriteBatch.Draw(SceneManager.CurrentScene.Textures[sr.Texture], 
                     (sr.WorldPosition() - Camera.Position + (new Vector2(WIDTH/2, HEIGHT/2) * WindowScale)), 
@@ -68,6 +75,12 @@ namespace MonoGame_Core.Scripts
                     GameScale * sr.Transform.Scale, 
                     SpriteEffects.None, 
                     0);
+
+                if (sr.Shader != null)
+                {
+                    spriteBatch.End();
+                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+                }
             }
 
 
