@@ -56,7 +56,7 @@ namespace MonoGame_Core.Scripts
             WindowScale = new Vector2(graphicsDevice.Viewport.Width / WIDTH, graphicsDevice.Viewport.Height / HEIGHT);        
 
             IEnumerable<SpriteRenderer> s = Sprites.OrderBy(s => s.Layer)
-                                         .ThenByDescending(s => s.Transform.Position.Y)
+                                         .ThenBy(s => s.Transform.Position.Y)
                                          .ThenBy(s => s.OrderInLayer);
 
             foreach (SpriteRenderer sr in s)
@@ -65,48 +65,82 @@ namespace MonoGame_Core.Scripts
                 {
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
-                    sr.Shader.CurrentTechnique.Passes[0].Apply();
-                }               
-
-                sr.Posted = false;
-                spriteBatch.Draw(SceneManager.CurrentScene.Textures[sr.Texture],
-                    (sr.WorldPosition() - Camera.Position + (new Vector2(WIDTH / 2, HEIGHT / 2) * WindowScale)),
-                    sr.DrawRect(),
-                    new Color(sr.Color.R - (int)GlobalFade, sr.Color.G - (int)GlobalFade, sr.Color.B - (int)GlobalFade, sr.Color.A),
-                    sr.Transform.Rotation,
-                    new Vector2(sr.Transform.Width / 2, sr.Transform.Height / 2),
-                    GameScale * sr.Transform.Scale,
-                    SpriteEffects.None,
-                    0);
-
-                if (sr.Shader != null)
-                {
+                    foreach (EffectTechnique t in sr.Shader.Techniques)
+                    {
+                        foreach (EffectPass p in t.Passes)
+                        {
+                            p.Apply();
+                            DrawGameElement(sr);
+                        }
+                    }
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+                }
+                else
+                {
+                    DrawGameElement(sr);
                 }
             }
 
 
             s = HUD.OrderBy(s => s.Layer)
-                                .ThenByDescending(s => s.Transform.Position.Y)
+                                .ThenBy(s => s.Transform.Position.Y)
                                 .ThenBy(s => s.OrderInLayer);
 
             foreach (SpriteRenderer sr in s)
             {
-                spriteBatch.Draw(SceneManager.CurrentScene.Textures[sr.Texture],
-                    sr.WorldPosition() + (new Vector2(WIDTH/2, HEIGHT/2) * WindowScale),
-                    sr.DrawRect(),
-                    new Color(sr.Color.R - (int)GlobalFade, sr.Color.G - (int)GlobalFade, sr.Color.B - (int)GlobalFade, sr.Color.A),
-                    sr.Transform.Rotation,
-                    new Vector2(0, 0),
-                    WindowScale * sr.Transform.Scale,
-                    SpriteEffects.None,
-                    0);
+                if (sr.Shader != null)
+                {
+                    spriteBatch.End();
+                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+                    foreach (EffectTechnique t in sr.Shader.Techniques)
+                    {
+                        foreach (EffectPass p in t.Passes)
+                        {
+                            p.Apply();
+                            DrawHUDElement(sr);
+                        }
+                    }
+                    spriteBatch.End();
+                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+                }
+                else
+                {
+                    DrawHUDElement(sr);
+                }
             }
 
             spriteBatch.End();
 
             Sprites.Clear();
+        }
+
+        private static void DrawHUDElement(SpriteRenderer sr)
+        {
+            sr.Posted = false;
+            spriteBatch.Draw(SceneManager.CurrentScene.Textures[sr.Texture],
+                sr.WorldPosition() + (new Vector2(WIDTH / 2, HEIGHT / 2) * WindowScale),
+                sr.DrawRect(),
+                new Color(sr.Color.R - (int)GlobalFade, sr.Color.G - (int)GlobalFade, sr.Color.B - (int)GlobalFade, sr.Color.A),
+                sr.Transform.Rotation,
+                new Vector2(0, 0),
+                WindowScale * sr.Transform.Scale,
+                SpriteEffects.None,
+                sr.Layer);
+        }
+
+        private static void DrawGameElement(SpriteRenderer sr)
+        {
+            sr.Posted = false;
+            spriteBatch.Draw(SceneManager.CurrentScene.Textures[sr.Texture],
+                (sr.WorldPosition() - Camera.Position + (new Vector2(WIDTH / 2, HEIGHT / 2) * WindowScale)),
+                sr.DrawRect(),
+                new Color(sr.Color.R - (int)GlobalFade, sr.Color.G - (int)GlobalFade, sr.Color.B - (int)GlobalFade, sr.Color.A),
+                sr.Transform.Rotation,
+                new Vector2(sr.Transform.Width / 2, sr.Transform.Height / 2),
+                GameScale * sr.Transform.Scale,
+                SpriteEffects.None,
+                sr.Layer);
         }
     }
 }

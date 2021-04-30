@@ -14,10 +14,10 @@ namespace MonoGame_Core.Scripts
             BehaviorHandler.AddBehavior(new TestControls(0, RigidBody));
             BehaviorHandler.AddBehavior(new ManuallyScale(1, "scaler", Transform));
             ComponentHandler.AddComponent(new CollisionBox(this, 0, "myBox", false));
+            SpriteRenderer.Layer = 1;
+            SpriteRenderer.Shader = SceneManager.CurrentScene.Effects["BlueShader"];
 
-            SpriteRenderer.Shader = SceneManager.CurrentScene.Effects["TestShader"];
-
-            ((CollisionHandler)ComponentHandler.GetComponent("collisionHandler")).myActions.Add(new CollisionActions("myBox", new List<string> { "myBox" }, new List<collisionAction> { CollisionBehaviors.UndoMinPen }));
+            //((CollisionHandler)ComponentHandler.GetComponent("collisionHandler")).myActions.Add(new CollisionActions("myBox", new List<string> { "myBox" }, new List<collisionAction> { CollisionBehaviors.UndoMinPen }));
         }
     }
 }
