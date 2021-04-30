@@ -125,7 +125,7 @@ namespace MonoGame_Core.Scripts
                 sr.Transform.Rotation,
                 new Vector2(0, 0),
                 WindowScale * sr.Transform.Scale,
-                SpriteEffects.None,
+                sr.SpriteEffect,
                 sr.Layer);
         }
 
@@ -139,7 +139,7 @@ namespace MonoGame_Core.Scripts
                 sr.Transform.Rotation,
                 new Vector2(sr.Transform.Width / 2, sr.Transform.Height / 2),
                 GameScale * sr.Transform.Scale,
-                SpriteEffects.None,
+                sr.SpriteEffect,
                 sr.Layer);
         }
     }

@@ -16,6 +16,7 @@ namespace MonoGame_Core.Scripts
         Vector2 offSet;
         public Vector2 DrawArea;
         public Effect Shader;
+        public SpriteEffects SpriteEffect = SpriteEffects.None;
         int frames;
         int currentFrame = 0;
         float timeSinceFrameChange = 0;
