@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MonoGame_Core.Scripts
 {
-    public abstract class WorldObject : GameObject
+    public class WorldObject : GameObject
     {
         public RigidBody RigidBody { get { return (RigidBody)componentHandler.GetComponent("rigidBody"); } }
         public Transform Transform { get { return (Transform)componentHandler.GetComponent("transform"); } }

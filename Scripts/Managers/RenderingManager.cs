@@ -30,6 +30,15 @@ namespace MonoGame_Core.Scripts
             spriteBatch = new SpriteBatch(graphicsDevice);
             Sprites = new List<SpriteRenderer>();
             RenderTargets = new List<RenderTarget2D>();
+
+            RenderTargets.Add(new RenderTarget2D(graphicsDevice,
+                (int)WIDTH,
+                (int)HEIGHT,
+                false,
+                graphicsDevice.PresentationParameters.BackBufferFormat,
+                DepthFormat.Depth24,
+                0,
+                RenderTargetUsage.PreserveContents));
         }
 
         public static void Clear()
@@ -108,6 +117,33 @@ namespace MonoGame_Core.Scripts
                     }
                 }
             }
+            spriteBatch.End();
+
+            if(Target != -1)
+            {
+                Target = -1;
+                SetTarget(-1);
+            }
+
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+
+            foreach (EffectTechnique t in SceneManager.CurrentScene.Effects["CRT"].Techniques)
+            {
+                foreach (EffectPass p in t.Passes)
+                {
+                    p.Apply();
+                    spriteBatch.Draw(RenderTargets[0],
+                    new Vector2(),
+                    new Rectangle(0, 0, (int)(WIDTH * WindowScale.X), (int)(HEIGHT * WindowScale.Y)),
+                    Color.White,
+                    0,
+                    new Vector2(0, 0),
+                    new Vector2(1, 1),
+                    SpriteEffects.None,
+                    0);
+                }
+            }
+
             spriteBatch.End();
         }
 

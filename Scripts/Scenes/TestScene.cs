@@ -30,14 +30,21 @@ namespace MonoGame_Core.Scripts
 
             Effects["TestShader"] = Content.Load<Effect>("Shaders/TestShader");
             Effects["BlueShader"] = Content.Load<Effect>("Shaders/BlueShader");
+            Effects["CRT"] = Content.Load<Effect>("Shaders/CRTShader");
 
             Textures = new Dictionary<string, Texture2D>();
             Textures["Test"] = Content.Load<Texture2D>("Images/Test");
+            Textures["BG"] = Content.Load<Texture2D>("Images/MainMenuBG");
 
             GameObjects = new Dictionary<string, GameObject>();
             GameObjects.Add("test", new TestObject("Test", "testObj"));
             GameObjects.Add("testStatic", new TestStaticObject("Test", "testStatic"));
             GameObjects.Add("testStatic2", new TestStaticObject("Test", "testStatic"));
+            GameObjects.Add("BG", new WorldObject("BG", "Background"));
+            ((WorldObject)GameObjects["BG"]).SpriteRenderer.DrawArea.X = 1920;
+            ((WorldObject)GameObjects["BG"]).SpriteRenderer.DrawArea.Y = 1080;
+            ((WorldObject)GameObjects["BG"]).Transform.Place(new Vector2());
+            ((WorldObject)GameObjects["BG"]).Transform.Resize(960, 540);
             ((WorldObject)GameObjects["testStatic2"]).Transform.Place(new Vector2(10, 10));
             ((WorldObject)GameObjects["testStatic2"]).SpriteRenderer.Shader = "BlueShader";
         }
