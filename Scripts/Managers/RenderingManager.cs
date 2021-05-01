@@ -19,6 +19,8 @@ namespace MonoGame_Core.Scripts
         public static Vector2 WindowScale = new Vector2(1, 1);
         public static float GlobalFade = 255;
 
+        public static List<RenderTarget2D> RenderTargets = new List<RenderTarget2D>();
+
         public static List<SpriteRenderer> Sprites;
         public static List<SpriteRenderer> HUD;
         private static SpriteBatch spriteBatch;
@@ -30,6 +32,14 @@ namespace MonoGame_Core.Scripts
             spriteBatch = new SpriteBatch(graphicsDevice);
             Sprites = new List<SpriteRenderer>();
             HUD = new List<SpriteRenderer>();
+            RenderTargets.Add(new RenderTarget2D(graphicsDevice,
+                graphicsDevice.PresentationParameters.BackBufferWidth,
+                graphicsDevice.PresentationParameters.BackBufferHeight,
+                false,
+                graphicsDevice.PresentationParameters.BackBufferFormat,
+                DepthFormat.Depth24,
+                0,
+                RenderTargetUsage.PreserveContents));
         }
 
         public static void Clear()
@@ -49,22 +59,50 @@ namespace MonoGame_Core.Scripts
 
         public static void Draw(float gt)
         {
+            var x = graphicsDevice.GetRenderTargets();
+            WindowScale = new Vector2(graphicsDevice.Viewport.Width / WIDTH, graphicsDevice.Viewport.Height / HEIGHT);
 
+            IEnumerable<SpriteRenderer> s = Sprites.OrderByDescending(s => s.Target)
+                                        .ThenBy(s => s.Shader)
+                                        .ThenBy(s => s.Layer)
+                                        .ThenBy(s => s.Transform.Position.Y)
+                                        .ThenBy(s => s.OrderInLayer);
+
+            Effect prevShader = null;
+            RenderTarget2D Target = null;
+
+            graphicsDevice.SetRenderTarget(Target);
             graphicsDevice.Clear(Color.Black);
+
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
-
-            WindowScale = new Vector2(graphicsDevice.Viewport.Width / WIDTH, graphicsDevice.Viewport.Height / HEIGHT);        
-
-            IEnumerable<SpriteRenderer> s = Sprites.OrderBy(s => s.Layer)
-                                         .ThenBy(s => s.Transform.Position.Y)
-                                         .ThenBy(s => s.OrderInLayer);
 
             foreach (SpriteRenderer sr in s)
             {
+                if (sr.Shader != prevShader)
+                {
+                    if (sr.Target == Target)
+                    {
+                        spriteBatch.End();
+                        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+                    }
+
+                    prevShader = sr.Shader;
+                }
+
+                if (sr.Target != Target)
+                {
+                    spriteBatch.End();                 
+
+                    graphicsDevice.SetRenderTarget(sr.Target);
+                    graphicsDevice.Clear(Color.Transparent);
+
+                    Target = sr.Target;
+                    
+                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend); 
+                }
+
                 if (sr.Shader != null)
                 {
-                    spriteBatch.End();
-                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
                     foreach (EffectTechnique t in sr.Shader.Techniques)
                     {
                         foreach (EffectPass p in t.Passes)
@@ -73,26 +111,47 @@ namespace MonoGame_Core.Scripts
                             DrawGameElement(sr);
                         }
                     }
-                    spriteBatch.End();
-                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
                 }
                 else
                 {
                     DrawGameElement(sr);
                 }
             }
-
-
-            s = HUD.OrderBy(s => s.Layer)
-                                .ThenBy(s => s.Transform.Position.Y)
-                                .ThenBy(s => s.OrderInLayer);
+            spriteBatch.End();
+            
+            s = HUD.OrderBy(s => s.Target)
+                            .ThenBy(s => s.Shader)
+                            .ThenBy(s => s.Layer)
+                            .ThenBy(s => s.Transform.Position.Y)
+                            .ThenBy(s => s.OrderInLayer);
 
             foreach (SpriteRenderer sr in s)
             {
-                if (sr.Shader != null)
+                if (sr.Shader != prevShader)
+                {
+                    if (sr.Target == Target)
+                    {
+                        spriteBatch.End();
+                        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+                    }
+
+                    prevShader = sr.Shader;
+                }
+
+                if (sr.Target != Target)
                 {
                     spriteBatch.End();
+
+                    graphicsDevice.SetRenderTarget(sr.Target);
+                    graphicsDevice.Clear(Color.Transparent);
+
+                    Target = sr.Target;
+
                     spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+                }
+
+                if (sr.Shader != null)
+                {
                     foreach (EffectTechnique t in sr.Shader.Techniques)
                     {
                         foreach (EffectPass p in t.Passes)
@@ -101,15 +160,13 @@ namespace MonoGame_Core.Scripts
                             DrawHUDElement(sr);
                         }
                     }
-                    spriteBatch.End();
-                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
                 }
                 else
                 {
                     DrawHUDElement(sr);
                 }
             }
-
+            
             spriteBatch.End();
 
             Sprites.Clear();
@@ -140,7 +197,7 @@ namespace MonoGame_Core.Scripts
                 new Vector2(sr.Transform.Width / 2, sr.Transform.Height / 2),
                 GameScale * sr.Transform.Scale,
                 sr.SpriteEffect,
-                sr.Layer);
+                sr.Layer + 100);
         }
     }
 }

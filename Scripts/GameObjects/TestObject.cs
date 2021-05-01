@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGame_Core.Scripts
 {
@@ -14,10 +15,12 @@ namespace MonoGame_Core.Scripts
             BehaviorHandler.AddBehavior(new TestControls(0, RigidBody));
             BehaviorHandler.AddBehavior(new ManuallyScale(1, "scaler", Transform));
             ComponentHandler.AddComponent(new CollisionBox(this, 0, "myBox", false));
-            SpriteRenderer.Layer = 1;
-            SpriteRenderer.Shader = SceneManager.CurrentScene.Effects["BlueShader"];
 
-            //((CollisionHandler)ComponentHandler.GetComponent("collisionHandler")).myActions.Add(new CollisionActions("myBox", new List<string> { "myBox" }, new List<collisionAction> { CollisionBehaviors.UndoMinPen }));
+            
+            SpriteRenderer.Shader = SceneManager.CurrentScene.Effects["TestShader"];
+            SpriteRenderer.Target = RenderingManager.RenderTargets[0];
+
+            ((CollisionHandler)ComponentHandler.GetComponent("collisionHandler")).myActions.Add(new CollisionActions("myBox", new List<string> { "myBox" }, new List<collisionAction> { CollisionBehaviors.UndoMinPen }));
         }
     }
 }

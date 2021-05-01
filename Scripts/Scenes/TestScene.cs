@@ -24,10 +24,11 @@ namespace MonoGame_Core.Scripts
             size = new Vector2(2100, 1080);
 
             SoundManager.SongChannels["Melody"] = Content.Load<Song>("Music/TestSong");
-            MediaPlayer.Play(SoundManager.SongChannels["Melody"]);
+            //MediaPlayer.Play(SoundManager.SongChannels["Melody"]);
 
             SoundManager.SoundEffectChannels["TestHit"] = Content.Load<SoundEffect>("Sound/TestHit").CreateInstance();
 
+            Effects["TestShader"] = Content.Load<Effect>("Shaders/TestShader");
             Effects["BlueShader"] = Content.Load<Effect>("Shaders/BlueShader");
 
             Textures = new Dictionary<string, Texture2D>();
@@ -36,6 +37,9 @@ namespace MonoGame_Core.Scripts
             GameObjects = new Dictionary<string, GameObject>();
             GameObjects.Add("test", new TestObject("Test", "testObj"));
             GameObjects.Add("testStatic", new TestStaticObject("Test", "testStatic"));
+            GameObjects.Add("testStatic2", new TestStaticObject("Test", "testStatic"));
+            ((WorldObject)GameObjects["testStatic2"]).Transform.Place(new Vector2(10, 10));
+            ((WorldObject)GameObjects["testStatic2"]).SpriteRenderer.Shader = Effects["BlueShader"];
         }
 
         public override void Update(float gt)

@@ -16,6 +16,7 @@ namespace MonoGame_Core.Scripts
         Vector2 offSet;
         public Vector2 DrawArea;
         public Effect Shader;
+        public RenderTarget2D Target = null;
         public SpriteEffects SpriteEffect = SpriteEffects.None;
         int frames;
         int currentFrame = 0;
@@ -29,6 +30,7 @@ namespace MonoGame_Core.Scripts
         {
             Texture = texID;
             Transform = t;
+            offSet = off;
             this.OrderInLayer = orderInLayer;
             this.DrawArea = drawArea;
             Color = clr;
@@ -38,6 +40,7 @@ namespace MonoGame_Core.Scripts
         {
             Texture = texID;
             Transform = t;
+            offSet = off;
             this.OrderInLayer = orderInLayer;
             this.DrawArea = drawArea;
             Color = Color.White;
@@ -47,6 +50,7 @@ namespace MonoGame_Core.Scripts
         {
             Texture = texID;
             Transform = t;
+            offSet = off;
             this.OrderInLayer = orderInLayer;
             this.DrawArea = drawArea;
             Color = Color.White;
