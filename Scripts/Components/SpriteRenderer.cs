@@ -15,8 +15,8 @@ namespace MonoGame_Core.Scripts
         public Transform Transform;
         Vector2 offSet;
         public Vector2 DrawArea;
-        public Effect Shader;
-        public RenderTarget2D Target = null;
+        public string Shader;
+        public int Target = -1;
         public SpriteEffects SpriteEffect = SpriteEffects.None;
         int frames;
         int currentFrame = 0;

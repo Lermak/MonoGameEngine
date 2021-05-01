@@ -17,8 +17,7 @@ namespace MonoGame_Core.Scripts
             ComponentHandler.AddComponent(new CollisionBox(this, 0, "myBox", false));
 
             
-            SpriteRenderer.Shader = SceneManager.CurrentScene.Effects["TestShader"];
-            SpriteRenderer.Target = RenderingManager.RenderTargets[0];
+            SpriteRenderer.Shader = "TestShader";
 
             ((CollisionHandler)ComponentHandler.GetComponent("collisionHandler")).myActions.Add(new CollisionActions("myBox", new List<string> { "myBox" }, new List<collisionAction> { CollisionBehaviors.UndoMinPen }));
         }

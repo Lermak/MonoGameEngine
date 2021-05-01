@@ -49,10 +49,11 @@ namespace MonoGame_Core.Scripts
                                         .ThenBy(s => s.Transform.Position.Y)
                                         .ThenBy(s => s.OrderInLayer);
 
-            Effect prevShader = null;
-            RenderTarget2D Target = null;
+            string prevShader = "";
+            int Target = -1;
 
-            graphicsDevice.SetRenderTarget(Target);
+            SetTarget(Target);
+
             graphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
@@ -76,7 +77,7 @@ namespace MonoGame_Core.Scripts
                     {
                         spriteBatch.End();
 
-                        graphicsDevice.SetRenderTarget(sr.Target);
+                        SetTarget(sr.Target);
                         graphicsDevice.Clear(Color.Transparent);
 
                         Target = sr.Target;
@@ -86,7 +87,7 @@ namespace MonoGame_Core.Scripts
 
                     if (sr.Shader != null)
                     {
-                        foreach (EffectTechnique t in sr.Shader.Techniques)
+                        foreach (EffectTechnique t in SceneManager.CurrentScene.Effects[sr.Shader].Techniques)
                         {
                             foreach (EffectPass p in t.Passes)
                             {
@@ -108,8 +109,14 @@ namespace MonoGame_Core.Scripts
                 }
             }
             spriteBatch.End();
+        }
 
-            Sprites.Clear();
+        private static void SetTarget(int Target)
+        {
+            if (Target == -1)
+                graphicsDevice.SetRenderTarget(null);
+            else
+                graphicsDevice.SetRenderTarget(RenderTargets[Target]);
         }
 
         private static void DrawHUDElement(SpriteRenderer sr)

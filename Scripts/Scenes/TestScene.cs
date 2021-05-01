@@ -39,7 +39,7 @@ namespace MonoGame_Core.Scripts
             GameObjects.Add("testStatic", new TestStaticObject("Test", "testStatic"));
             GameObjects.Add("testStatic2", new TestStaticObject("Test", "testStatic"));
             ((WorldObject)GameObjects["testStatic2"]).Transform.Place(new Vector2(10, 10));
-            ((WorldObject)GameObjects["testStatic2"]).SpriteRenderer.Shader = Effects["BlueShader"];
+            ((WorldObject)GameObjects["testStatic2"]).SpriteRenderer.Shader = "BlueShader";
         }
 
         public override void Update(float gt)
