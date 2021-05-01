@@ -19,10 +19,8 @@ namespace MonoGame_Core.Scripts
         public static Vector2 WindowScale = new Vector2(1, 1);
         public static float GlobalFade = 255;
 
-        public static List<RenderTarget2D> RenderTargets = new List<RenderTarget2D>();
-
+        public static List<RenderTarget2D> RenderTargets;
         public static List<SpriteRenderer> Sprites;
-        public static List<SpriteRenderer> HUD;
         private static SpriteBatch spriteBatch;
         private static GraphicsDevice graphicsDevice; 
 
@@ -31,30 +29,13 @@ namespace MonoGame_Core.Scripts
             graphicsDevice = gd;
             spriteBatch = new SpriteBatch(graphicsDevice);
             Sprites = new List<SpriteRenderer>();
-            HUD = new List<SpriteRenderer>();
-            RenderTargets.Add(new RenderTarget2D(graphicsDevice,
-                graphicsDevice.PresentationParameters.BackBufferWidth,
-                graphicsDevice.PresentationParameters.BackBufferHeight,
-                false,
-                graphicsDevice.PresentationParameters.BackBufferFormat,
-                DepthFormat.Depth24,
-                0,
-                RenderTargetUsage.PreserveContents));
+            RenderTargets = new List<RenderTarget2D>();
         }
 
         public static void Clear()
         {
             spriteBatch = new SpriteBatch(graphicsDevice);
             Sprites = new List<SpriteRenderer>();
-            HUD = new List<SpriteRenderer>();
-        }
-
-        public static void AddSpriteToDraw(SpriteRenderer s)
-        {
-            if (s.IsHUD)
-                HUD.Add(s);
-            else
-                Sprites.Add(s);
         }
 
         public static void Draw(float gt)
@@ -108,65 +89,21 @@ namespace MonoGame_Core.Scripts
                         foreach (EffectPass p in t.Passes)
                         {
                             p.Apply();
-                            DrawGameElement(sr);
+                            if (sr.IsHUD)
+                                DrawHUDElement(sr);
+                            else
+                                DrawGameElement(sr);
                         }
                     }
                 }
                 else
                 {
-                    DrawGameElement(sr);
+                    if (sr.IsHUD)
+                        DrawHUDElement(sr);
+                    else
+                        DrawGameElement(sr);
                 }
             }
-            spriteBatch.End();
-            
-            s = HUD.OrderBy(s => s.Target)
-                            .ThenBy(s => s.Shader)
-                            .ThenBy(s => s.Layer)
-                            .ThenBy(s => s.Transform.Position.Y)
-                            .ThenBy(s => s.OrderInLayer);
-
-            foreach (SpriteRenderer sr in s)
-            {
-                if (sr.Shader != prevShader)
-                {
-                    if (sr.Target == Target)
-                    {
-                        spriteBatch.End();
-                        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
-                    }
-
-                    prevShader = sr.Shader;
-                }
-
-                if (sr.Target != Target)
-                {
-                    spriteBatch.End();
-
-                    graphicsDevice.SetRenderTarget(sr.Target);
-                    graphicsDevice.Clear(Color.Transparent);
-
-                    Target = sr.Target;
-
-                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
-                }
-
-                if (sr.Shader != null)
-                {
-                    foreach (EffectTechnique t in sr.Shader.Techniques)
-                    {
-                        foreach (EffectPass p in t.Passes)
-                        {
-                            p.Apply();
-                            DrawHUDElement(sr);
-                        }
-                    }
-                }
-                else
-                {
-                    DrawHUDElement(sr);
-                }
-            }
-            
             spriteBatch.End();
 
             Sprites.Clear();
@@ -174,7 +111,6 @@ namespace MonoGame_Core.Scripts
 
         private static void DrawHUDElement(SpriteRenderer sr)
         {
-            sr.Posted = false;
             spriteBatch.Draw(SceneManager.CurrentScene.Textures[sr.Texture],
                 sr.WorldPosition() + (new Vector2(WIDTH / 2, HEIGHT / 2) * WindowScale),
                 sr.DrawRect(),
@@ -183,12 +119,11 @@ namespace MonoGame_Core.Scripts
                 new Vector2(0, 0),
                 WindowScale * sr.Transform.Scale,
                 sr.SpriteEffect,
-                sr.Layer);
+                1);
         }
 
         private static void DrawGameElement(SpriteRenderer sr)
         {
-            sr.Posted = false;
             spriteBatch.Draw(SceneManager.CurrentScene.Textures[sr.Texture],
                 (sr.WorldPosition() - Camera.Position + (new Vector2(WIDTH / 2, HEIGHT / 2) * WindowScale)),
                 sr.DrawRect(),
@@ -197,7 +132,7 @@ namespace MonoGame_Core.Scripts
                 new Vector2(sr.Transform.Width / 2, sr.Transform.Height / 2),
                 GameScale * sr.Transform.Scale,
                 sr.SpriteEffect,
-                sr.Layer + 100);
+                sr.Layer/100);
         }
     }
 }

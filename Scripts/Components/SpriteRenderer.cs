@@ -23,7 +23,6 @@ namespace MonoGame_Core.Scripts
         float timeSinceFrameChange = 0;
         public bool IsHUD = false;
         public bool Visible = true;
-        public bool Posted = false;
         public float Layer = 0;
 
         public SpriteRenderer(string name, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, Color clr, int frames, int uo) : base(uo, name)
@@ -45,6 +44,8 @@ namespace MonoGame_Core.Scripts
             this.DrawArea = drawArea;
             Color = Color.White;
             this.frames = frames;
+
+            RenderingManager.Sprites.Add(this);
         }
         public SpriteRenderer(string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, int frames, int uo) : base(uo, "spriteRenderer")
         {
@@ -55,12 +56,8 @@ namespace MonoGame_Core.Scripts
             this.DrawArea = drawArea;
             Color = Color.White;
             this.frames = frames;
-        }
 
-        public void Post()
-        {
-            Posted = true;
-            RenderingManager.AddSpriteToDraw(this);
+            RenderingManager.Sprites.Add(this);
         }
 
         public Rectangle DrawRect()
@@ -70,10 +67,6 @@ namespace MonoGame_Core.Scripts
 
         public override void Update(float gt)
         {
-            if (!Posted)
-            {
-                Post();
-            }
             timeSinceFrameChange += gt;
             if (timeSinceFrameChange > 1)
             {
@@ -92,5 +85,10 @@ namespace MonoGame_Core.Scripts
             return ((Transform.Position - new Vector2(Transform.Width/2, Transform.Height/2) + offSet)) * RenderingManager.GameScale;
         }
 
+        public override void OnDestroy()
+        {
+            base.OnDestroy();
+            RenderingManager.Sprites.Remove(this);
+        }
     }
 }
