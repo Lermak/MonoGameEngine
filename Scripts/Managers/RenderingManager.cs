@@ -59,49 +59,52 @@ namespace MonoGame_Core.Scripts
 
             foreach (SpriteRenderer sr in s)
             {
-                if (sr.Shader != prevShader)
+                if (sr.Visible)
                 {
-                    if (sr.Target == Target)
+                    if (sr.Shader != prevShader)
+                    {
+                        if (sr.Target == Target)
+                        {
+                            spriteBatch.End();
+                            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+                        }
+
+                        prevShader = sr.Shader;
+                    }
+
+                    if (sr.Target != Target)
                     {
                         spriteBatch.End();
+
+                        graphicsDevice.SetRenderTarget(sr.Target);
+                        graphicsDevice.Clear(Color.Transparent);
+
+                        Target = sr.Target;
+
                         spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
                     }
 
-                    prevShader = sr.Shader;
-                }
-
-                if (sr.Target != Target)
-                {
-                    spriteBatch.End();                 
-
-                    graphicsDevice.SetRenderTarget(sr.Target);
-                    graphicsDevice.Clear(Color.Transparent);
-
-                    Target = sr.Target;
-                    
-                    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend); 
-                }
-
-                if (sr.Shader != null)
-                {
-                    foreach (EffectTechnique t in sr.Shader.Techniques)
+                    if (sr.Shader != null)
                     {
-                        foreach (EffectPass p in t.Passes)
+                        foreach (EffectTechnique t in sr.Shader.Techniques)
                         {
-                            p.Apply();
-                            if (sr.IsHUD)
-                                DrawHUDElement(sr);
-                            else
-                                DrawGameElement(sr);
+                            foreach (EffectPass p in t.Passes)
+                            {
+                                p.Apply();
+                                if (sr.IsHUD)
+                                    DrawHUDElement(sr);
+                                else
+                                    DrawGameElement(sr);
+                            }
                         }
                     }
-                }
-                else
-                {
-                    if (sr.IsHUD)
-                        DrawHUDElement(sr);
                     else
-                        DrawGameElement(sr);
+                    {
+                        if (sr.IsHUD)
+                            DrawHUDElement(sr);
+                        else
+                            DrawGameElement(sr);
+                    }
                 }
             }
             spriteBatch.End();
