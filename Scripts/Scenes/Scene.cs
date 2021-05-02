@@ -27,19 +27,17 @@ namespace MonoGame_Core.Scripts
             SoundManager.Clear();
             Camera.Initilize();
 
-            CoroutineManager.Clear();
-            CoroutineManager.AddCoroutine(FadeIn(), "FadeIn");
-            CoroutineManager.AddCoroutine(FadeOut(), "FadeOut");
+            CoroutineManager.Clear();   
         }
 
         public virtual void OnLoad()
         {
-
+            CoroutineManager.AddCoroutine(Coroutines.FadeIn(), "FadeIn", true);
         }
 
         public virtual void OnExit()
         {
-
+            CoroutineManager.AddCoroutine(Coroutines.FadeOut(), "FadeOut", true);
         }
 
         public virtual void Update(float gt)
@@ -48,10 +46,6 @@ namespace MonoGame_Core.Scripts
                 SceneRunning(gt);
             else if (SceneManager.SceneState == SceneManager.State.Paused)
                 ScenePaused(gt);
-            else if (SceneManager.SceneState == SceneManager.State.SceneIn)
-                SceneEnter(gt);
-            else if (SceneManager.SceneState == SceneManager.State.SceneOut)
-                SceneExit(gt);
         }
 
         public virtual void SceneRunning(float gt)
@@ -65,56 +59,6 @@ namespace MonoGame_Core.Scripts
         public virtual void ScenePaused(float gt)
         {
 
-        }
-
-        public virtual void SceneEnter(float gt)
-        {
-            if(!CoroutineManager.IsRunning("FadeIn"))
-                CoroutineManager.Start("FadeIn");
-        }
-
-        public virtual void SceneExit(float gt)
-        {
-            CoroutineManager.Start("FadeOut");
-        }
-
-        protected IEnumerator<bool> FadeIn()
-        {
-            while (RenderingManager.GlobalFade > 0)
-            { 
-                RenderingManager.GlobalFade -= 128 * TimeManager.DeltaTime;
-
-                if (RenderingManager.GlobalFade < 0)
-                {
-                    RenderingManager.GlobalFade = 0;
-                    SceneManager.SceneState = SceneManager.State.Running;
-                }
-                yield return false;
-            }
-            yield return true;
-        }
-
-        protected IEnumerator<bool> FadeOut()
-        {
-            while (RenderingManager.GlobalFade < 255)
-            {
-                RenderingManager.GlobalFade += 128 * TimeManager.DeltaTime;
-                if (RenderingManager.GlobalFade > 255)
-                {
-                    RenderingManager.GlobalFade = 255;
-                    SceneManager.SceneState = SceneManager.State.SceneIn;
-
-                    SceneManager.CurrentScene.OnExit();
-                    SceneManager.CurrentScene = SceneManager.NextScene;
-                    SceneManager.NextScene = null;
-
-                    SceneManager.InitilizeCurrentScene();
-                    SceneManager.CurrentScene.OnLoad();
-                }
-                yield return false;
-            }
-
-            yield return true;
         }
     }
 }

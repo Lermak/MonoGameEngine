@@ -48,5 +48,12 @@ namespace MonoGame_Core.Scripts
             ((WorldObject)GameObjects["testStatic2"]).Transform.Place(new Vector2(10, 10));
             ((WorldObject)GameObjects["testStatic2"]).SpriteRenderer.Shader = "BlueShader";
         }
+
+        public override void Update(float gt)
+        {
+            if (InputManager.IsKeyPressed(Keys.Space))
+                SceneManager.ChangeScene(new TestScene());
+            base.Update(gt);
+        }
     }
 }

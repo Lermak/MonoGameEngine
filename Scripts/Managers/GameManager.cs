@@ -43,8 +43,8 @@ namespace MonoGame_Core.Scripts
             TimeManager.Update(gameTime);
 
             InputManager.Update(TimeManager.DeltaTime);
-            SceneManager.Update(TimeManager.DeltaTime);
             CoroutineManager.Update(TimeManager.DeltaTime);
+            SceneManager.Update(TimeManager.DeltaTime);
             Cursor.Update(TimeManager.DeltaTime);
             Camera.Update(TimeManager.DeltaTime);
             CollisionManager.Update(TimeManager.DeltaTime);

@@ -13,10 +13,13 @@ namespace MonoGame_Core.Scripts
             public CoroutineState State;
             public IEnumerator<bool> Routine;
 
-            public Coroutine(IEnumerator<bool> routine, string name)
+            public Coroutine(IEnumerator<bool> routine, string name, bool start)
             {
                 Name = name;
-                State = CoroutineState.Paused;
+                if (start)
+                    State = CoroutineState.Running;
+                else
+                    State = CoroutineState.Paused;
                 Routine = routine;
             }
         }
@@ -27,9 +30,9 @@ namespace MonoGame_Core.Scripts
             coroutines.Clear();
         }
 
-        public static void AddCoroutine(IEnumerator<bool> coroutine, string name)
+        public static void AddCoroutine(IEnumerator<bool> coroutine, string name, bool start)
         {
-            coroutines[name] = new Coroutine(coroutine, name);
+            coroutines[name] = new Coroutine(coroutine, name, start);
         }
         public static bool IsRunning(string coroutine)
         {

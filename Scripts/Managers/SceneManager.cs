@@ -23,25 +23,28 @@ namespace MonoGame_Core.Scripts
             cm = c;
             CurrentScene = s;
             InitilizeCurrentScene();
+            CurrentScene.OnLoad();
         }   
 
         public static void ChangeScene(Scene s)
         {
-            if (CurrentScene != null)
-            {
-                SceneState = State.SceneOut;
-                NextScene = s;
-            }
-            else
-            {
-                SceneState = State.SceneIn;
-                CurrentScene = s;
-            }
+            SceneState = State.SceneOut;
+            CurrentScene.OnExit();
+            NextScene = s;
         }
 
         public static void Update(float gt)
         {
-            CurrentScene.Update(gt);         
+            if(CurrentScene == null)
+            {
+                CurrentScene = NextScene;
+                NextScene = null;
+                CurrentScene.Initilize(cm);
+                CurrentScene.OnLoad();
+                SceneState = State.SceneIn;
+            }
+            else
+                CurrentScene.Update(gt);         
         }
 
         public static void InitilizeCurrentScene()
