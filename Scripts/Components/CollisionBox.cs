@@ -11,7 +11,7 @@ namespace MonoGame_Core.Scripts
         const int degreesBetwenVertecies = 90;
         float width;
         float height;
-        
+
         public float Width { get { return width * myTransform.Scale.X; } }
         public float Height { get { return height * myTransform.Scale.Y; } }
         public float Angle { get { return (float)(Math.Acos((Width / 2) / Radius)) * (180 / (float)Math.PI); } }
@@ -24,6 +24,7 @@ namespace MonoGame_Core.Scripts
             else
                 CollisionManager.ActiveMovingBoxs.Add(this);
 
+            this.isStatic = isStatic;
             checkCollision = check;
             offset = off;
             this.myTransform = transform;
@@ -38,6 +39,7 @@ namespace MonoGame_Core.Scripts
             else
                 CollisionManager.ActiveMovingBoxs.Add(this);
 
+            this.isStatic = isStatic;
             myTransform = myTrans;
             myObject = myObj;
             checkCollision = true;
@@ -52,7 +54,8 @@ namespace MonoGame_Core.Scripts
                 CollisionManager.ActiveStaticBoxs.Add(this);
             else
                 CollisionManager.ActiveMovingBoxs.Add(this);
-
+            
+            this.isStatic = isStatic;
             myTransform = myObj.Transform;
             myObject = myObj;
             checkCollision = true;
@@ -121,6 +124,15 @@ namespace MonoGame_Core.Scripts
             newPosition += new Vector2((float)(radius * Math.Cos(rotationRadians)), (float)(radius * Math.Sin(rotationRadians)));
 
             return newPosition;
+        }
+
+        public override void OnDestroy()
+        {
+            if (isStatic)
+                CollisionManager.ActiveStaticBoxs.Remove(this);
+            else
+                CollisionManager.ActiveMovingBoxs.Remove(this);
+            base.OnDestroy();
         }
     }
 }

@@ -10,7 +10,7 @@ namespace MonoGame_Core.Scripts
         public TestStaticObject(string texID, string tag) : base(texID, tag)
         {
             Transform.Resize(40, 40);
-            SpriteRenderer.DrawArea = new Vector2(40, 40);
+            SpriteRenderer.SetDrawArea(40, 40);
             ComponentHandler.AddComponent(new CollisionBox(this, 0, "myBox", true));
             Transform.Place(new Vector2(100, 100));
 

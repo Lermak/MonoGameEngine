@@ -9,12 +9,14 @@ namespace MonoGame_Core.Scripts
     {
         protected bool checkCollision;
         protected bool isTrigger;
+        protected bool isStatic;
         protected Vector2 offset;
         protected Transform myTransform;
         protected GameObject myObject;
 
         public bool CheckCollision { get { return checkCollision; } }
         public bool IsTrigger { get { return isTrigger; } }
+        public bool IsStatic { get { return isStatic; } }
         public Vector2 Offset { get { return offset * myTransform.Scale; } }
         public Transform MyTransform { get { return myTransform; } }
         public GameObject MyObject { get { return myObject; } }

@@ -94,7 +94,7 @@ namespace MonoGame_Core.Scripts
                         spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
                     }
 
-                    if (sr.Shader != null)
+                    if (sr.Shader != "")
                     {
                         foreach (EffectTechnique t in SceneManager.CurrentScene.Effects[sr.Shader].Techniques)
                         {

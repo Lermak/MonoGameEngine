@@ -9,40 +9,72 @@ namespace MonoGame_Core.Scripts
 {
     public class SpriteRenderer : Component
     {
-        public string Texture;
-        public int OrderInLayer;
-        public Color Color;
-        public Transform Transform;
+        private string texture;
+        public int orderInLayer;
+        Color color;
+        Transform transform;
         Vector2 offSet;
-        public Vector2 DrawArea;
-        public string Shader;
-        public int Target = -1;
-        public SpriteEffects SpriteEffect = SpriteEffects.None;
+        Vector2 drawArea;
+        string shader;
+        int target = -1;
+        SpriteEffects spriteEffect = SpriteEffects.None;
         int frames;
         int currentFrame = 0;
         float timeSinceFrameChange = 0;
-        public bool IsHUD = false;
-        public bool Visible = true;
-        public float Layer = 0;
+        bool isHUD = false;
+        bool visible = true;
+        byte layer = 0;
 
+        public string Texture { get { return texture; } 
+            set {
+                if (SceneManager.CurrentScene.Textures.ContainsKey(value))
+                    texture = value;
+                else
+                    texture = null;
+            } 
+        }
+        public int OrderInLayer { get { return orderInLayer; } }
+        public Color Color { get { return color; } }
+        public Transform Transform { get { return transform; } }
+        public Vector2 Offset { get { return Offset; } }
+        public Vector2 DrawArea { get { return drawArea; } }
+        public string Shader { get { return shader; } 
+            set {
+                if (SceneManager.CurrentScene.Effects.ContainsKey(value))
+                    shader = value;
+                else
+                    shader = "";
+            } 
+        }
+        public int Target { get { return target; } 
+            set {
+                if (value < RenderingManager.RenderTargets.Count)
+                    target = value;
+                else
+                    target = -1;
+            } }
+        public SpriteEffects SpriteEffect { get { return spriteEffect; } }
+        public bool IsHUD { get { return isHUD; } }
+        public bool Visible { get { return visible; } set { visible = value; } }
+        public byte Layer { get { return layer; } set { layer = value; } }
         public SpriteRenderer(string name, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, Color clr, int frames, int uo) : base(uo, name)
         {
             Texture = texID;
-            Transform = t;
+            transform = t;
             offSet = off;
-            this.OrderInLayer = orderInLayer;
-            this.DrawArea = drawArea;
-            Color = clr;
+            this.orderInLayer = orderInLayer;
+            this.drawArea = drawArea;
+            color = clr;
             this.frames = frames;
         }
         public SpriteRenderer(string name, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, int frames, int uo) : base(uo, name)
         {
             Texture = texID;
-            Transform = t;
+            transform = t;
             offSet = off;
-            this.OrderInLayer = orderInLayer;
-            this.DrawArea = drawArea;
-            Color = Color.White;
+            this.orderInLayer = orderInLayer;
+            this.drawArea = drawArea;
+            color = Color.White;
             this.frames = frames;
 
             RenderingManager.Sprites.Add(this);
@@ -50,11 +82,11 @@ namespace MonoGame_Core.Scripts
         public SpriteRenderer(string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, int frames, int uo) : base(uo, "spriteRenderer")
         {
             Texture = texID;
-            Transform = t;
+            transform = t;
             offSet = off;
-            this.OrderInLayer = orderInLayer;
-            this.DrawArea = drawArea;
-            Color = Color.White;
+            this.orderInLayer = orderInLayer;
+            this.drawArea = drawArea;
+            color = Color.White;
             this.frames = frames;
 
             RenderingManager.Sprites.Add(this);
@@ -89,6 +121,12 @@ namespace MonoGame_Core.Scripts
         {
             base.OnDestroy();
             RenderingManager.Sprites.Remove(this);
+        }
+
+        public void SetDrawArea(float width, float height)
+        {
+            drawArea.X = width;
+            drawArea.Y = height;
         }
     }
 }

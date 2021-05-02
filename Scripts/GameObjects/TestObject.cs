@@ -11,7 +11,7 @@ namespace MonoGame_Core.Scripts
         public TestObject(string texID, string tag) : base(texID, tag)
         {
             Transform.Resize(40, 40);
-            SpriteRenderer.DrawArea = new Vector2(40, 40);
+            SpriteRenderer.SetDrawArea(40, 40);
             BehaviorHandler.AddBehavior(new TestControls(0, RigidBody));
             BehaviorHandler.AddBehavior(new ManuallyScale(1, "scaler", Transform));
             ComponentHandler.AddComponent(new CollisionBox(this, 0, "myBox", false));
