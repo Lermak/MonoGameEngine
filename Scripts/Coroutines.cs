@@ -6,7 +6,7 @@ namespace MonoGame_Core.Scripts
 {
     public static class Coroutines
     {
-        public static IEnumerator<bool> FadeIn()
+        public static IEnumerator<bool> FadeInSceneTransision()
         {
             while (RenderingManager.GlobalFade > 0)
             {
@@ -21,7 +21,7 @@ namespace MonoGame_Core.Scripts
             }
             yield return true;
         }
-        public static IEnumerator<bool> FadeOut()
+        public static IEnumerator<bool> FadeOutSceneTransision()
         {
             while (RenderingManager.GlobalFade < 255)
             {

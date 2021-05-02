@@ -43,7 +43,7 @@ namespace MonoGame_Core.Scripts
                 CurrentScene.OnLoad();
                 SceneState = State.SceneIn;
             }
-            else
+            else if(CurrentScene != null)
                 CurrentScene.Update(gt);         
         }
 

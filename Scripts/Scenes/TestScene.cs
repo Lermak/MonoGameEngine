@@ -49,7 +49,7 @@ namespace MonoGame_Core.Scripts
             ((WorldObject)GameObjects["testStatic2"]).SpriteRenderer.Shader = "BlueShader";
         }
 
-        public override void Update(float gt)
+        public override void SceneRunning(float gt)
         {
             if (InputManager.IsKeyPressed(Keys.Space))
                 SceneManager.ChangeScene(new TestScene());
