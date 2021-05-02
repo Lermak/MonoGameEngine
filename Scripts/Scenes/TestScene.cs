@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Input;
 
 namespace MonoGame_Core.Scripts
 {
@@ -24,7 +25,7 @@ namespace MonoGame_Core.Scripts
             size = new Vector2(2100, 1080);
 
             SoundManager.SongChannels["Melody"] = Content.Load<Song>("Music/TestSong");
-            //MediaPlayer.Play(SoundManager.SongChannels["Melody"]);
+            MediaPlayer.Play(SoundManager.SongChannels["Melody"]);
 
             SoundManager.SoundEffectChannels["TestHit"] = Content.Load<SoundEffect>("Sound/TestHit").CreateInstance();
 
@@ -46,11 +47,6 @@ namespace MonoGame_Core.Scripts
             ((WorldObject)GameObjects["BG"]).Transform.Resize(960, 540);
             ((WorldObject)GameObjects["testStatic2"]).Transform.Place(new Vector2(10, 10));
             ((WorldObject)GameObjects["testStatic2"]).SpriteRenderer.Shader = "BlueShader";
-        }
-
-        public override void Update(float gt)
-        {
-            base.Update(gt);
         }
     }
 }

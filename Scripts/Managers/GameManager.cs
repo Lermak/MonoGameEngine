@@ -23,9 +23,9 @@ namespace MonoGame_Core.Scripts
             RenderingManager.Initilize(GraphicsDevice);
             SoundManager.Initilize();
             CollisionManager.Initilize();
-            SceneManager.Initilize(Content);
+            CoroutineManager.Initilize();
+            SceneManager.Initilize(Content, new TestScene());
             Camera.Initilize();
-            SceneManager.ChangeScene(new TestScene());
             base.Initialize();
         }
 
@@ -39,23 +39,22 @@ namespace MonoGame_Core.Scripts
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            float gt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
             // TODO: Add your update logic here
-            InputManager.Update(gt);
-            SceneManager.Update(gt);
-            Cursor.Update(gt);
-            Camera.Update(gt);
-            CollisionManager.Update(gt);
+            TimeManager.Update(gameTime);
+
+            InputManager.Update(TimeManager.DeltaTime);
+            SceneManager.Update(TimeManager.DeltaTime);
+            CoroutineManager.Update(TimeManager.DeltaTime);
+            Cursor.Update(TimeManager.DeltaTime);
+            Camera.Update(TimeManager.DeltaTime);
+            CollisionManager.Update(TimeManager.DeltaTime);
 
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            float gt = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            RenderingManager.Draw(gt);
+            RenderingManager.Draw(TimeManager.DeltaTime);
 
             base.Draw(gameTime);
         }
