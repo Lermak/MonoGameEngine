@@ -58,11 +58,12 @@ namespace MonoGame_Core.Scripts
         public bool IsHUD { get { return isHUD; } set { isHUD = value; } }
         public bool Visible { get { return visible; } set { visible = value; } }
         public byte Layer { get { return layer; } set { layer = value; } }
-        public SpriteRenderer(string name, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, Color clr, int frames, int uo) : base(uo, name)
+        public SpriteRenderer(string name, string texID, Transform t, Vector2 off, Vector2 drawArea, byte layer, int orderInLayer, Color clr, int frames, int uo) : base(uo, name)
         {
             Texture = texID;
             transform = t;
             offSet = off;
+            this.layer = layer;
             this.orderInLayer = orderInLayer;
             this.drawArea = drawArea;
             color = clr;
@@ -70,11 +71,12 @@ namespace MonoGame_Core.Scripts
 
             RenderingManager.Sprites.Add(this);
         }
-        public SpriteRenderer(string name, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, int frames, int uo) : base(uo, name)
+        public SpriteRenderer(string name, string texID, Transform t, Vector2 off, Vector2 drawArea, byte layer, int orderInLayer, int frames, int uo) : base(uo, name)
         {
             Texture = texID;
             transform = t;
             offSet = off;
+            this.layer = layer;
             this.orderInLayer = orderInLayer;
             this.drawArea = drawArea;
             color = Color.White;
@@ -82,11 +84,12 @@ namespace MonoGame_Core.Scripts
 
             RenderingManager.Sprites.Add(this);
         }
-        public SpriteRenderer(string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, int frames, int uo) : base(uo, "spriteRenderer")
+        public SpriteRenderer(string texID, Transform t, Vector2 off, Vector2 drawArea, byte layer, int orderInLayer, int frames, int uo) : base(uo, "spriteRenderer")
         {
             Texture = texID;
             transform = t;
             offSet = off;
+            this.layer = layer;
             this.orderInLayer = orderInLayer;
             this.drawArea = drawArea;
             color = Color.White;
@@ -117,7 +120,9 @@ namespace MonoGame_Core.Scripts
 
         public virtual Vector2 WorldPosition()
         {
-            return ((Transform.Position - new Vector2(Transform.Width/2, Transform.Height/2) + offSet*Transform.Scale)) * RenderingManager.GameScale;
+            return (Transform.Position 
+                - new Vector2(Transform.Width/2, Transform.Height/2) 
+                + hf_Math.getRotationPosition(90, (float)Math.Sqrt(Math.Pow(offSet.X,2)+Math.Pow(offSet.Y,2)), -transform.Rotation, new Vector2()) * Transform.Scale) * RenderingManager.GameScale;
         }
 
         public override void OnDestroy()

@@ -66,7 +66,7 @@ namespace MonoGame_Core.Scripts
 
         public override List<Vector2> Axies()
         {
-            return new List<Vector2>() { getRotationPosition(0, 1, new Vector2()), getRotationPosition(90, 1, new Vector2()) };
+            return new List<Vector2>() { hf_Math.getRotationPosition(0, 1, myTransform.Rotation, new Vector2()), hf_Math.getRotationPosition(90, 1, myTransform.Rotation, new Vector2()) };
         }
 
         public override List<Vector2> Verticies()
@@ -80,22 +80,22 @@ namespace MonoGame_Core.Scripts
 
         public Vector2 TopRight()
         {
-            return getRotationPosition(Angle, Radius, myTransform.Position + offset);
+            return hf_Math.getRotationPosition(Angle, Radius, myTransform.Rotation, myTransform.Position + offset);
         }
 
         public Vector2 TopLeft()
         {
-            return getRotationPosition(degreesBetwenVertecies + Angle, Radius, myTransform.Position + offset);//use half side angle because at 0 rotation the box should be cut through the middle, so only half the side angle is needed
+            return hf_Math.getRotationPosition(degreesBetwenVertecies + Angle, Radius, myTransform.Rotation, myTransform.Position + offset);//use half side angle because at 0 rotation the box should be cut through the middle, so only half the side angle is needed
         }
 
         public Vector2 BottomLeft()
         {
-            return getRotationPosition(2 * degreesBetwenVertecies + Angle, Radius, myTransform.Position + offset);
+            return hf_Math.getRotationPosition(2 * degreesBetwenVertecies + Angle, Radius, myTransform.Rotation, myTransform.Position + offset);
         }
 
         public Vector2 BottomRight()
         {
-            return getRotationPosition(3 * degreesBetwenVertecies + Angle, Radius, myTransform.Position + offset);
+            return hf_Math.getRotationPosition(3 * degreesBetwenVertecies + Angle, myTransform.Rotation, Radius, myTransform.Position + offset);
         }
 
         public void ReplaceOffset(Vector2 newOff)
@@ -112,18 +112,6 @@ namespace MonoGame_Core.Scripts
         {
             this.width = width;
             this.height = height;
-        }
-
-        public Vector2 getRotationPosition(float angleInDegrees, float radius, Vector2 center)
-        {
-            Vector2 newPosition = center;
-
-            angleInDegrees %= 360;//if the angle goes over 360 loop back around to 0
-            double rotationRadians = angleInDegrees * (Math.PI / 180) - myTransform.Rotation;//converts degrees to radians
-
-            newPosition += new Vector2((float)(radius * Math.Cos(rotationRadians)), (float)(radius * Math.Sin(rotationRadians)));
-
-            return newPosition;
         }
 
         public override void OnDestroy()
