@@ -24,6 +24,7 @@ namespace MonoGame_Core.Scripts
         protected bool isHUD = false;
         protected bool isFont = false;
         protected bool visible = true;
+        protected float addedRotation = 0;
         byte layer = 0;
 
         public virtual string Texture { get { return texture; } 
@@ -58,6 +59,7 @@ namespace MonoGame_Core.Scripts
         public bool IsHUD { get { return isHUD; } set { isHUD = value; } }
         public bool Visible { get { return visible; } set { visible = value; } }
         public byte Layer { get { return layer; } set { layer = value; } }
+        public float AddedRotation { get { return addedRotation; } set { addedRotation = value; } }
         public SpriteRenderer(string name, string texID, Transform t, Vector2 off, Vector2 drawArea, byte layer, int orderInLayer, Color clr, int frames, int uo) : base(uo, name)
         {
             Texture = texID;
@@ -140,7 +142,7 @@ namespace MonoGame_Core.Scripts
                     ScreenPosition(),
                     DrawRect(),
                     new Color(Color.R - (int)RenderingManager.GlobalFade, Color.G - (int)RenderingManager.GlobalFade, Color.B - (int)RenderingManager.GlobalFade, Color.A),
-                    Transform.Rotation,
+                    Transform.Rotation + addedRotation,
                     new Vector2(Transform.Width / 2, Transform.Height / 2),
                     RenderingManager.WindowScale * Transform.Scale,
                     SpriteEffect,
@@ -152,7 +154,7 @@ namespace MonoGame_Core.Scripts
                     ScreenPosition(),
                     DrawRect(),
                     new Color(Color.R - (int)RenderingManager.GlobalFade, Color.G - (int)RenderingManager.GlobalFade, Color.B - (int)RenderingManager.GlobalFade, Color.A),
-                    Transform.Rotation,
+                    Transform.Rotation + addedRotation,
                     new Vector2(Transform.Width / 2, Transform.Height / 2),
                     RenderingManager.GameScale * Transform.Scale,
                     SpriteEffect,
