@@ -51,9 +51,9 @@ namespace MonoGame_Core.Scripts
 
         public override void SceneRunning(float gt)
         {
-            if (InputManager.IsKeyPressed(Keys.Space))
-                SceneManager.ChangeScene(new TestScene());
-            base.Update(gt);
+            if (InputManager.IsKeyTriggered(Keys.Space))
+                CoroutineManager.AddCoroutine(Coroutines.ScreenShake(), "shake", true);
+            base.SceneRunning(gt);
         }
     }
 }

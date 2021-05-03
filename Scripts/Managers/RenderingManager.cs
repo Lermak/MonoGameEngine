@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics;
-
 using Microsoft.Xna.Framework.Content;
 
 
@@ -178,7 +177,7 @@ namespace MonoGame_Core.Scripts
                 new Vector2(sr.Transform.Width / 2, sr.Transform.Height / 2),
                 GameScale * sr.Transform.Scale,
                 sr.SpriteEffect,
-                sr.Layer/100);
+                (float)sr.Layer/256f);
         }
     }
 }

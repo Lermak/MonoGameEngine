@@ -25,9 +25,9 @@ namespace MonoGame_Core.Scripts
             CollisionManager.Clear();
             RenderingManager.Clear();
             SoundManager.Clear();
-            Camera.Initilize();
-
             CoroutineManager.Clear();   
+            Camera.Initilize();
+            
         }
 
         public virtual void OnLoad()

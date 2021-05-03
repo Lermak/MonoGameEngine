@@ -8,6 +8,8 @@ namespace MonoGame_Core.Scripts
         static float CameraSpeed = 200;
 
         static Transform transform;
+
+        public static Transform Transform { get { return transform; } }
         public static Vector2 Position { get { return transform.Position * RenderingManager.WindowScale; } }
         public static Vector2 MinPos { get { return new Vector2(-SceneManager.CurrentScene.Size.X / 2 + RenderingManager.WIDTH / 2, -SceneManager.CurrentScene.Size.Y / 2 + RenderingManager.HEIGHT / 2); } }
         public static Vector2 MaxPos { get { return new Vector2(SceneManager.CurrentScene.Size.X / 2 - RenderingManager.WIDTH / 2, SceneManager.CurrentScene.Size.Y / 2 - RenderingManager.HEIGHT / 2); } }

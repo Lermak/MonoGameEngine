@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Xna.Framework;
 
 namespace MonoGame_Core.Scripts
 {
@@ -34,6 +35,25 @@ namespace MonoGame_Core.Scripts
                 yield return false;
             }
 
+            yield return true;
+        }
+
+        public static IEnumerator<bool> ScreenShake()
+        {
+            float duration = .1f;
+            float timeElapsed = 0;
+            Vector2 origonalPos = Camera.Transform.Position;
+            Random r = new Random();
+            int dir = -1;
+            while (timeElapsed < duration)
+            {
+                Camera.Transform.Place(origonalPos);
+                timeElapsed += TimeManager.DeltaTime;
+                Camera.Transform.Move(new Vector2(r.Next(3, 10) * dir, 1));
+                dir *= -1;
+                yield return false;
+            }
+            Camera.Transform.Place(origonalPos);
             yield return true;
         }
     }

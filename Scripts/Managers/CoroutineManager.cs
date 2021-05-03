@@ -32,7 +32,8 @@ namespace MonoGame_Core.Scripts
 
         public static void AddCoroutine(IEnumerator<bool> coroutine, string name, bool start)
         {
-            coroutines[name] = new Coroutine(coroutine, name, start);
+            if(!coroutines.ContainsKey(name))
+                coroutines[name] = new Coroutine(coroutine, name, start);
         }
         public static bool IsRunning(string coroutine)
         {
