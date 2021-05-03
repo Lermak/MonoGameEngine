@@ -18,6 +18,7 @@ namespace MonoGame_Core.Scripts
         public Dictionary<string, Song> Songs = new Dictionary<string, Song>();
         public Dictionary<string, SoundEffect> SoundEffects = new Dictionary<string, SoundEffect>();
         public Dictionary<string, Effect> Effects = new Dictionary<string, Effect>();
+        public Dictionary<string, SpriteFont> Fonts = new Dictionary<string, SpriteFont>();
         public virtual void Initilize(ContentManager c)
         {
             size = new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT);

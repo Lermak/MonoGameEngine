@@ -37,14 +37,16 @@ namespace MonoGame_Core.Scripts
             Textures["Test"] = Content.Load<Texture2D>("Images/Test");
             Textures["BG"] = Content.Load<Texture2D>("Images/MainMenuBG");
 
+            Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
+
             GameObjects = new Dictionary<string, GameObject>();
             GameObjects.Add("test", new TestObject("Test", "testObj"));
             GameObjects.Add("testStatic", new TestStaticObject("Test", "testStatic"));
             GameObjects.Add("testStatic2", new TestStaticObject("Test", "testStatic"));
-            GameObjects.Add("BG", new WorldObject("BG", "Background"));
-            ((WorldObject)GameObjects["BG"]).SpriteRenderer.SetDrawArea(1920, 1080);
-            ((WorldObject)GameObjects["BG"]).Transform.Place(new Vector2());
-            ((WorldObject)GameObjects["BG"]).Transform.Resize(960, 540);
+            //GameObjects.Add("BG", new WorldObject("BG", "Background"));
+            //((WorldObject)GameObjects["BG"]).SpriteRenderer.SetDrawArea(1920, 1080);
+            //((WorldObject)GameObjects["BG"]).Transform.Place(new Vector2());
+            //((WorldObject)GameObjects["BG"]).Transform.Resize(960, 540);
             ((WorldObject)GameObjects["testStatic2"]).Transform.Place(new Vector2(10, 10));
             ((WorldObject)GameObjects["testStatic2"]).SpriteRenderer.Shader = "BlueShader";
         }
@@ -52,7 +54,7 @@ namespace MonoGame_Core.Scripts
         public override void SceneRunning(float gt)
         {
             if (InputManager.IsKeyTriggered(Keys.Space))
-                CoroutineManager.AddCoroutine(Coroutines.ScreenShake(), "shake", true);
+                CoroutineManager.AddCoroutine(Coroutines.ScreenShake(.1f, 3, 10), "shake", true);
             base.SceneRunning(gt);
         }
     }

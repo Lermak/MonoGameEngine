@@ -38,9 +38,8 @@ namespace MonoGame_Core.Scripts
             yield return true;
         }
 
-        public static IEnumerator<bool> ScreenShake()
+        public static IEnumerator<bool> ScreenShake(float duration, int min, int max)
         {
-            float duration = .1f;
             float timeElapsed = 0;
             Vector2 origonalPos = Camera.Transform.Position;
             Random r = new Random();
@@ -49,7 +48,7 @@ namespace MonoGame_Core.Scripts
             {
                 Camera.Transform.Place(origonalPos);
                 timeElapsed += TimeManager.DeltaTime;
-                Camera.Transform.Move(new Vector2(r.Next(3, 10) * dir, 1));
+                Camera.Transform.Move(new Vector2(r.Next(min, max) * dir, 1));
                 dir *= -1;
                 yield return false;
             }

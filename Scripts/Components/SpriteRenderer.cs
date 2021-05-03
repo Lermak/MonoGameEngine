@@ -9,23 +9,24 @@ namespace MonoGame_Core.Scripts
 {
     public class SpriteRenderer : Component
     {
-        private string texture;
-        public int orderInLayer;
-        Color color;
-        Transform transform;
-        Vector2 offSet;
-        Vector2 drawArea;
-        string shader = "";
-        int target = -1;
-        SpriteEffects spriteEffect = SpriteEffects.None;
-        int frames;
-        int currentFrame = 0;
-        float timeSinceFrameChange = 0;
-        bool isHUD = false;
-        bool visible = true;
+        protected string texture;
+        protected int orderInLayer;
+        protected Color color;
+        protected Transform transform;
+        protected Vector2 offSet;
+        protected Vector2 drawArea;
+        protected string shader = "";
+        protected int target = -1;
+        protected SpriteEffects spriteEffect = SpriteEffects.None;
+        protected int frames;
+        protected int currentFrame = 0;
+        protected float timeSinceFrameChange = 0;
+        protected bool isHUD = false;
+        protected bool isFont = false;
+        protected bool visible = true;
         byte layer = 0;
 
-        public string Texture { get { return texture; } 
+        public virtual string Texture { get { return texture; } 
             set {
                 if (SceneManager.CurrentScene.Textures.ContainsKey(value))
                     texture = value;
@@ -66,6 +67,8 @@ namespace MonoGame_Core.Scripts
             this.drawArea = drawArea;
             color = clr;
             this.frames = frames;
+
+            RenderingManager.Sprites.Add(this);
         }
         public SpriteRenderer(string name, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, int frames, int uo) : base(uo, name)
         {
@@ -112,9 +115,9 @@ namespace MonoGame_Core.Scripts
             base.Update(gt);
         }
 
-        public Vector2 WorldPosition()
+        public virtual Vector2 WorldPosition()
         {
-            return ((Transform.Position - new Vector2(Transform.Width/2, Transform.Height/2) + offSet)) * RenderingManager.GameScale;
+            return ((Transform.Position - new Vector2(Transform.Width/2, Transform.Height/2) + offSet*Transform.Scale)) * RenderingManager.GameScale;
         }
 
         public override void OnDestroy()
@@ -127,6 +130,34 @@ namespace MonoGame_Core.Scripts
         {
             drawArea.X = width;
             drawArea.Y = height;
+        }
+
+        public virtual void Draw(SpriteBatch sb)
+        {
+            if (isHUD)
+            {
+                sb.Draw(SceneManager.CurrentScene.Textures[Texture],
+                    WorldPosition() + (new Vector2(RenderingManager.WIDTH / 2, RenderingManager.HEIGHT / 2) * RenderingManager.WindowScale),
+                    DrawRect(),
+                    new Color(Color.R - (int)RenderingManager.GlobalFade, Color.G - (int)RenderingManager.GlobalFade, Color.B - (int)RenderingManager.GlobalFade, Color.A),
+                    Transform.Rotation,
+                    new Vector2(0, 0),
+                    RenderingManager.WindowScale * Transform.Scale,
+                    SpriteEffect,
+                    1);
+            }
+            else
+            {
+                sb.Draw(SceneManager.CurrentScene.Textures[Texture],
+                    (WorldPosition() - Camera.Position + (new Vector2(RenderingManager.WIDTH / 2, RenderingManager.HEIGHT / 2) * RenderingManager.WindowScale)),
+                    DrawRect(),
+                    new Color(Color.R - (int)RenderingManager.GlobalFade, Color.G - (int)RenderingManager.GlobalFade, Color.B - (int)RenderingManager.GlobalFade, Color.A),
+                    Transform.Rotation,
+                    new Vector2(Transform.Width / 2, Transform.Height / 2),
+                    RenderingManager.GameScale * Transform.Scale,
+                    SpriteEffect,
+                    (float)Layer / 256f);
+            }
         }
     }
 }

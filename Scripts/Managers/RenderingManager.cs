@@ -21,7 +21,8 @@ namespace MonoGame_Core.Scripts
         public static List<RenderTarget2D> RenderTargets;
         public static List<SpriteRenderer> Sprites;
         private static SpriteBatch spriteBatch;
-        private static GraphicsDevice graphicsDevice; 
+        private static GraphicsDevice graphicsDevice;
+        
 
         public static void Initilize(GraphicsDevice gd)
         {
@@ -100,19 +101,13 @@ namespace MonoGame_Core.Scripts
                             foreach (EffectPass p in t.Passes)
                             {
                                 p.Apply();
-                                if (sr.IsHUD)
-                                    DrawHUDElement(sr);
-                                else
-                                    DrawGameElement(sr);
+                                sr.Draw(spriteBatch);
                             }
                         }
                     }
                     else
                     {
-                        if (sr.IsHUD)
-                            DrawHUDElement(sr);
-                        else
-                            DrawGameElement(sr);
+                        sr.Draw(spriteBatch);
                     }
                 }
             }
@@ -152,32 +147,6 @@ namespace MonoGame_Core.Scripts
                 graphicsDevice.SetRenderTarget(null);
             else
                 graphicsDevice.SetRenderTarget(RenderTargets[Target]);
-        }
-
-        private static void DrawHUDElement(SpriteRenderer sr)
-        {
-            spriteBatch.Draw(SceneManager.CurrentScene.Textures[sr.Texture],
-                sr.WorldPosition() + (new Vector2(WIDTH / 2, HEIGHT / 2) * WindowScale),
-                sr.DrawRect(),
-                new Color(sr.Color.R - (int)GlobalFade, sr.Color.G - (int)GlobalFade, sr.Color.B - (int)GlobalFade, sr.Color.A),
-                sr.Transform.Rotation,
-                new Vector2(0, 0),
-                WindowScale * sr.Transform.Scale,
-                sr.SpriteEffect,
-                1);
-        }
-
-        private static void DrawGameElement(SpriteRenderer sr)
-        {
-            spriteBatch.Draw(SceneManager.CurrentScene.Textures[sr.Texture],
-                (sr.WorldPosition() - Camera.Position + (new Vector2(WIDTH / 2, HEIGHT / 2) * WindowScale)),
-                sr.DrawRect(),
-                new Color(sr.Color.R - (int)GlobalFade, sr.Color.G - (int)GlobalFade, sr.Color.B - (int)GlobalFade, sr.Color.A),
-                sr.Transform.Rotation,
-                new Vector2(sr.Transform.Width / 2, sr.Transform.Height / 2),
-                GameScale * sr.Transform.Scale,
-                sr.SpriteEffect,
-                (float)sr.Layer/256f);
         }
     }
 }
