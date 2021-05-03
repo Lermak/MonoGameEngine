@@ -118,12 +118,7 @@ namespace MonoGame_Core.Scripts
             base.Update(gt);
         }
 
-        public virtual Vector2 WorldPosition()
-        {
-            return (Transform.Position 
-                - new Vector2(Transform.Width/2, Transform.Height/2) 
-                + hf_Math.getRotationPosition(90, (float)Math.Sqrt(Math.Pow(offSet.X,2)+Math.Pow(offSet.Y,2)), -transform.Rotation, new Vector2()) * Transform.Scale) * RenderingManager.GameScale;
-        }
+
 
         public override void OnDestroy()
         {
@@ -142,7 +137,7 @@ namespace MonoGame_Core.Scripts
             if (isHUD)
             {
                 sb.Draw(SceneManager.CurrentScene.Textures[Texture],
-                    WorldPosition() + (new Vector2(RenderingManager.WIDTH / 2, RenderingManager.HEIGHT / 2) * RenderingManager.WindowScale),
+                    ScreenPosition(),
                     DrawRect(),
                     new Color(Color.R - (int)RenderingManager.GlobalFade, Color.G - (int)RenderingManager.GlobalFade, Color.B - (int)RenderingManager.GlobalFade, Color.A),
                     Transform.Rotation,
@@ -154,7 +149,7 @@ namespace MonoGame_Core.Scripts
             else
             {
                 sb.Draw(SceneManager.CurrentScene.Textures[Texture],
-                    (WorldPosition() - Camera.Position + (new Vector2(RenderingManager.WIDTH / 2, RenderingManager.HEIGHT / 2) * RenderingManager.WindowScale)),
+                    ScreenPosition(),
                     DrawRect(),
                     new Color(Color.R - (int)RenderingManager.GlobalFade, Color.G - (int)RenderingManager.GlobalFade, Color.B - (int)RenderingManager.GlobalFade, Color.A),
                     Transform.Rotation,
@@ -163,6 +158,15 @@ namespace MonoGame_Core.Scripts
                     SpriteEffect,
                     (float)Layer / 256f);
             }
+        }
+
+        protected Vector2 ScreenPosition()
+        {
+            if (isHUD)
+                return Transform.WorldPosition(offSet) + (new Vector2(RenderingManager.WIDTH / 2, RenderingManager.HEIGHT / 2) * RenderingManager.WindowScale);
+
+            else
+                return (Transform.WorldPosition(offSet) - Camera.Position + (new Vector2(RenderingManager.WIDTH / 2, RenderingManager.HEIGHT / 2) * RenderingManager.WindowScale));
         }
     }
 }

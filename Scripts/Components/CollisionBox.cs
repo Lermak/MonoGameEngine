@@ -66,7 +66,7 @@ namespace MonoGame_Core.Scripts
 
         public override List<Vector2> Axies()
         {
-            return new List<Vector2>() { hf_Math.getRotationPosition(0, 1, myTransform.Rotation, new Vector2()), hf_Math.getRotationPosition(90, 1, myTransform.Rotation, new Vector2()) };
+            return new List<Vector2>() { hf_Math.getRotationPosition(0, 1, -myTransform.Rotation, new Vector2()), hf_Math.getRotationPosition(90, 1, -myTransform.Rotation, new Vector2()) };
         }
 
         public override List<Vector2> Verticies()
@@ -80,22 +80,22 @@ namespace MonoGame_Core.Scripts
 
         public Vector2 TopRight()
         {
-            return hf_Math.getRotationPosition(Angle, Radius, myTransform.Rotation, myTransform.Position + offset);
+            return hf_Math.getRotationPosition(45, Radius, myTransform.Rotation, myTransform.Position + offset);
         }
 
         public Vector2 TopLeft()
         {
-            return hf_Math.getRotationPosition(degreesBetwenVertecies + Angle, Radius, myTransform.Rotation, myTransform.Position + offset);//use half side angle because at 0 rotation the box should be cut through the middle, so only half the side angle is needed
+            return hf_Math.getRotationPosition(degreesBetwenVertecies + 45, Radius, myTransform.Rotation, myTransform.Position + offset);//use half side angle because at 0 rotation the box should be cut through the middle, so only half the side angle is needed
         }
 
         public Vector2 BottomLeft()
         {
-            return hf_Math.getRotationPosition(2 * degreesBetwenVertecies + Angle, Radius, myTransform.Rotation, myTransform.Position + offset);
+            return hf_Math.getRotationPosition(2 * degreesBetwenVertecies + 45, Radius, myTransform.Rotation, myTransform.Position + offset);
         }
 
         public Vector2 BottomRight()
         {
-            return hf_Math.getRotationPosition(3 * degreesBetwenVertecies + Angle, myTransform.Rotation, Radius, myTransform.Position + offset);
+            return hf_Math.getRotationPosition(3 * degreesBetwenVertecies + 45, Radius, myTransform.Rotation, myTransform.Position + offset);
         }
 
         public void ReplaceOffset(Vector2 newOff)

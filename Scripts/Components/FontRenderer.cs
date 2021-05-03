@@ -35,7 +35,7 @@ namespace MonoGame_Core.Scripts
             {
                 sb.DrawString(SceneManager.CurrentScene.Fonts[Texture],
                     text,
-                    WorldPosition() + (new Vector2(RenderingManager.WIDTH / 2, RenderingManager.HEIGHT / 2) * RenderingManager.WindowScale),
+                    ScreenPosition(),
                     new Color(Color.R - (int)RenderingManager.GlobalFade, Color.G - (int)RenderingManager.GlobalFade, Color.B - (int)RenderingManager.GlobalFade, Color.A),
                     Transform.Rotation,
                     stringSize,
@@ -47,7 +47,7 @@ namespace MonoGame_Core.Scripts
             {
                 sb.DrawString(SceneManager.CurrentScene.Fonts[Texture],
                     text,
-                    (WorldPosition() - Camera.Position + (new Vector2(RenderingManager.WIDTH / 2, RenderingManager.HEIGHT / 2) * RenderingManager.WindowScale)),
+                    ScreenPosition(),
                     new Color(Color.R - (int)RenderingManager.GlobalFade, Color.G - (int)RenderingManager.GlobalFade, Color.B - (int)RenderingManager.GlobalFade, Color.A),
                     Transform.Rotation,
                     stringSize,

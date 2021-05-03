@@ -59,5 +59,12 @@ namespace MonoGame_Core.Scripts
         {
             rotation += r;
         }
+
+        public Vector2 WorldPosition(Vector2 offSet)
+        {
+            return (Position
+                - new Vector2(Width / 2, Height / 2)
+                + hf_Math.getRotationPosition(90, (float)Math.Sqrt(Math.Pow(offSet.X, 2) + Math.Pow(offSet.Y, 2)), -Rotation, new Vector2()) * Scale) * RenderingManager.GameScale;
+        }
     }
 }
