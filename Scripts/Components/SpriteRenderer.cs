@@ -55,7 +55,7 @@ namespace MonoGame_Core.Scripts
                     target = -1;
             } }
         public SpriteEffects SpriteEffect { get { return spriteEffect; } }
-        public bool IsHUD { get { return isHUD; } }
+        public bool IsHUD { get { return isHUD; } set { isHUD = value; } }
         public bool Visible { get { return visible; } set { visible = value; } }
         public byte Layer { get { return layer; } set { layer = value; } }
         public SpriteRenderer(string name, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, Color clr, int frames, int uo) : base(uo, name)
@@ -141,7 +141,7 @@ namespace MonoGame_Core.Scripts
                     DrawRect(),
                     new Color(Color.R - (int)RenderingManager.GlobalFade, Color.G - (int)RenderingManager.GlobalFade, Color.B - (int)RenderingManager.GlobalFade, Color.A),
                     Transform.Rotation,
-                    new Vector2(0, 0),
+                    new Vector2(Transform.Width / 2, Transform.Height / 2),
                     RenderingManager.WindowScale * Transform.Scale,
                     SpriteEffect,
                     1);

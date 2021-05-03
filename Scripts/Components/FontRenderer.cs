@@ -31,15 +31,30 @@ namespace MonoGame_Core.Scripts
         {
             Vector2 stringSize = SceneManager.CurrentScene.Fonts[Texture].MeasureString(text) * 0.5f;
 
-            sb.DrawString(SceneManager.CurrentScene.Fonts[Texture],
-                text,
-                (WorldPosition() - Camera.Position + (new Vector2(RenderingManager.WIDTH / 2, RenderingManager.HEIGHT / 2) * RenderingManager.WindowScale)),
-                Color.Blue,
-                Transform.Rotation,
-                stringSize,
-                RenderingManager.WindowScale * Transform.Scale * textScale,
-                SpriteEffect,
-                1);
+            if (isHUD)
+            {
+                sb.DrawString(SceneManager.CurrentScene.Fonts[Texture],
+                    text,
+                    WorldPosition() + (new Vector2(RenderingManager.WIDTH / 2, RenderingManager.HEIGHT / 2) * RenderingManager.WindowScale),
+                    new Color(Color.R - (int)RenderingManager.GlobalFade, Color.G - (int)RenderingManager.GlobalFade, Color.B - (int)RenderingManager.GlobalFade, Color.A),
+                    Transform.Rotation,
+                    stringSize,
+                    RenderingManager.WindowScale * Transform.Scale * textScale,
+                    SpriteEffect,
+                    1);
+            }
+            else
+            {
+                sb.DrawString(SceneManager.CurrentScene.Fonts[Texture],
+                    text,
+                    (WorldPosition() - Camera.Position + (new Vector2(RenderingManager.WIDTH / 2, RenderingManager.HEIGHT / 2) * RenderingManager.WindowScale)),
+                    new Color(Color.R - (int)RenderingManager.GlobalFade, Color.G - (int)RenderingManager.GlobalFade, Color.B - (int)RenderingManager.GlobalFade, Color.A),
+                    Transform.Rotation,
+                    stringSize,
+                    RenderingManager.GameScale * Transform.Scale * textScale,
+                    SpriteEffect,
+                    (float)Layer / 256);
+            }
         }
 
     }
