@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-
+using System;
 namespace MonoGame_Core.Scripts
 {
     class FollowBall : Behavior
@@ -20,12 +20,9 @@ namespace MonoGame_Core.Scripts
         {
             Vector2 v = new Vector2();
 
-            if (toFollow.Transform.Position.Y < transform.Position.Y + 5)
-                v = new Vector2(0, -speed) * TimeManager.DeltaTime;
-            else
-                v = new Vector2(0, speed) * TimeManager.DeltaTime;
-
-
+            v.Y = Math.Min(Math.Abs(toFollow.RigidBody.MoveVelocity.Y), speed*TimeManager.DeltaTime);
+            if (toFollow.RigidBody.MoveVelocity.Y < 1)
+                v.Y *= -1;
             rigidBody.UpdateVelocity(v);
             base.Update(gt);
         }

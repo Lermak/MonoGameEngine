@@ -3,14 +3,12 @@ using System.Collections.Generic;
 
 namespace MonoGame_Core.Scripts
 {
-    public class Score : WorldObject
+    public class Score : TextWriter
     {
         public int Points = 0;
-        public Score(string texID, string tag, Vector2 position, Vector2 size) : base(texID, tag, size)
+        public Score(string fontID, string tag, Vector2 position, Vector2 size) : base(fontID, tag, "", position, size, Color.White)
         {
-            componentHandler.RemoveComponent("spriteRenderer");
-            componentHandler.AddComponent(new FontRenderer("test", "fontRenderer", "BasicFont", Transform, new Vector2(), new Vector2(Transform.Width, Transform.Height), 2, 0, Color.White, 0));
-            Transform.Place(position);
+
         }
 
         public override void Update(float gt)

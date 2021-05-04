@@ -25,7 +25,7 @@ namespace MonoGame_Core.Scripts
 
         public static void ScorePoints(Collider a, Collider b, Vector2 p)
         {
-            ((Ball)a.GameObject).Score(b.Name == "LeftWall");
+            ((Ball)a.GameObject).Score(b.Name != "LeftWall");
         }
 
     }

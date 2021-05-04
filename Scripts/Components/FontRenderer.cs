@@ -22,7 +22,7 @@ namespace MonoGame_Core.Scripts
                     texture = null;
             }
         }
-        public FontRenderer(string text, string name, string texID, Transform t, Vector2 off, Vector2 drawArea, byte layer, int orderInLayer, Color clr, int uo) : base(name, texID, t, off, drawArea, layer, orderInLayer, clr, 0, uo)
+        public FontRenderer(string text, string texID, Transform t, Vector2 off, Vector2 drawArea, byte layer, int orderInLayer, Color clr, int uo) : base("fontRenderer", texID, t, off, drawArea, layer, orderInLayer, clr, 0, uo)
         {
             this.text = text;
         }
