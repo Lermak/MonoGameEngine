@@ -12,8 +12,8 @@ namespace MonoGame_Core.Scripts
         float width;
         float height;
 
-        public float Width { get { return width * myTransform.Scale.X; } }
-        public float Height { get { return height * myTransform.Scale.Y; } }
+        public float Width { get { return width * transform.Scale.X; } }
+        public float Height { get { return height * transform.Scale.Y; } }
         public float Angle { get { return (float)(Math.Acos((Width / 2) / Radius)) * (180 / (float)Math.PI); } }
         public float Radius { get { return (float)Math.Sqrt(Math.Pow(Height / 2, 2) + Math.Pow(Width / 2, 2)); } }
 
@@ -27,7 +27,7 @@ namespace MonoGame_Core.Scripts
             this.isStatic = isStatic;
             checkCollision = check;
             offset = off;
-            this.myTransform = transform;
+            this.transform = transform;
             this.width = width;
             this.height = height;
         }
@@ -40,8 +40,8 @@ namespace MonoGame_Core.Scripts
                 CollisionManager.ActiveMovingBoxs.Add(this);
 
             this.isStatic = isStatic;
-            myTransform = myTrans;
-            myObject = myObj;
+            transform = myTrans;
+            gameObject = myObj;
             checkCollision = true;
             offset = new Vector2();
             width = myTrans.Width;
@@ -56,17 +56,17 @@ namespace MonoGame_Core.Scripts
                 CollisionManager.ActiveMovingBoxs.Add(this);
             
             this.isStatic = isStatic;
-            myTransform = myObj.Transform;
-            myObject = myObj;
+            transform = myObj.Transform;
+            gameObject = myObj;
             checkCollision = true;
             offset = new Vector2();
-            width = myTransform.Width;
-            height = myTransform.Height;
+            width = transform.Width;
+            height = transform.Height;
         }
 
         public override List<Vector2> Axies()
         {
-            return new List<Vector2>() { hf_Math.getRotationPosition(0, 1, -myTransform.Rotation, new Vector2()), hf_Math.getRotationPosition(90, 1, -myTransform.Rotation, new Vector2()) };
+            return new List<Vector2>() { hf_Math.getRotationPosition(0, 1, -transform.Rotation, new Vector2()), hf_Math.getRotationPosition(90, 1, -transform.Rotation, new Vector2()) };
         }
 
         public override List<Vector2> Verticies()
@@ -80,22 +80,22 @@ namespace MonoGame_Core.Scripts
 
         public Vector2 TopRight()
         {
-            return hf_Math.getRotationPosition(45, Radius, myTransform.Rotation, myTransform.Position + offset);
+            return hf_Math.getRotationPosition(Angle, Radius, -transform.Rotation, transform.Position + offset);
         }
 
         public Vector2 TopLeft()
         {
-            return hf_Math.getRotationPosition(degreesBetwenVertecies + 45, Radius, myTransform.Rotation, myTransform.Position + offset);//use half side angle because at 0 rotation the box should be cut through the middle, so only half the side angle is needed
+            return hf_Math.getRotationPosition(degreesBetwenVertecies + Angle, Radius, -transform.Rotation, transform.Position + offset);//use half side angle because at 0 rotation the box should be cut through the middle, so only half the side angle is needed
         }
 
         public Vector2 BottomLeft()
         {
-            return hf_Math.getRotationPosition(2 * degreesBetwenVertecies + 45, Radius, myTransform.Rotation, myTransform.Position + offset);
+            return hf_Math.getRotationPosition(2 * degreesBetwenVertecies + Angle, Radius, -transform.Rotation, transform.Position + offset);
         }
 
         public Vector2 BottomRight()
         {
-            return hf_Math.getRotationPosition(3 * degreesBetwenVertecies + 45, Radius, myTransform.Rotation, myTransform.Position + offset);
+            return hf_Math.getRotationPosition(3 * degreesBetwenVertecies + Angle, Radius, -transform.Rotation, transform.Position + offset);
         }
 
         public void ReplaceOffset(Vector2 newOff)

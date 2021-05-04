@@ -38,11 +38,11 @@ namespace MonoGame_Core.Scripts
 
         static bool CheckCollision(CollisionBox b1, CollisionBox b2)
         {
-            Transform t1 = ((WorldObject)b1.MyObject).Transform;
-            RigidBody rb1 = ((WorldObject)b1.MyObject).RigidBody;
+            Transform t1 = ((WorldObject)b1.GameObject).Transform;
+            RigidBody rb1 = ((WorldObject)b1.GameObject).RigidBody;
 
-            Transform t2 = ((WorldObject)b2.MyObject).Transform;
-            RigidBody rb2 = ((WorldObject)b2.MyObject).RigidBody;
+            Transform t2 = ((WorldObject)b2.GameObject).Transform;
+            RigidBody rb2 = ((WorldObject)b2.GameObject).RigidBody;
 
 
 
@@ -51,7 +51,7 @@ namespace MonoGame_Core.Scripts
 
         static bool distanceHuristic(CollisionBox b1, CollisionBox b2)
         {
-            if (Vector2.Distance(b1.MyTransform.Position, b2.MyTransform.Position) > b1.Radius + b2.Radius)
+            if (Vector2.Distance(b1.Transform.Position, b2.Transform.Position) > b1.Radius + b2.Radius)
                 return false;
             else return true;
         }
@@ -140,7 +140,7 @@ namespace MonoGame_Core.Scripts
                     {
                         for (int x = 0; x < ActiveMovingBoxs.Count; ++x)
                         {
-                            if (ActiveMovingBoxs[x].MyObject != ActiveMovingBoxs[i].MyObject)
+                            if (ActiveMovingBoxs[x].GameObject != ActiveMovingBoxs[i].GameObject)
                             {
 
 
@@ -148,7 +148,7 @@ namespace MonoGame_Core.Scripts
                                 {
                                     if (SATcollision(ActiveMovingBoxs[i], ActiveMovingBoxs[x], out p))
                                     {
-                                        ((CollisionHandler)ActiveMovingBoxs[i].MyObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(ActiveMovingBoxs[i], ActiveMovingBoxs[x], p);
+                                        ((CollisionHandler)ActiveMovingBoxs[i].GameObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(ActiveMovingBoxs[i], ActiveMovingBoxs[x], p);
                                         p = new Vector2();
                                     }
                                 }
@@ -161,7 +161,7 @@ namespace MonoGame_Core.Scripts
                             {
                                 if (SATcollision(ActiveMovingBoxs[i], ActiveStaticBoxs[x], out p))
                                 {
-                                    ((CollisionHandler)ActiveMovingBoxs[i].MyObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(ActiveMovingBoxs[i], ActiveStaticBoxs[x], p);
+                                    ((CollisionHandler)ActiveMovingBoxs[i].GameObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(ActiveMovingBoxs[i], ActiveStaticBoxs[x], p);
                                     p = new Vector2();
                                 }
                             }

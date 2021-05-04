@@ -18,10 +18,8 @@ namespace MonoGame_Core.Scripts
             
         }
 
-        public override void Initilize(ContentManager c)
+        protected override void loadContent()
         {
-            base.Initilize(c);
-
             size = new Vector2(2100, 1080);
 
             SoundManager.SongChannels["Melody"] = Content.Load<Song>("Music/TestSong");
@@ -49,6 +47,8 @@ namespace MonoGame_Core.Scripts
             ((WorldObject)GameObjects["BG"]).Transform.Resize(960, 540);
             ((WorldObject)GameObjects["testStatic2"]).Transform.Place(new Vector2(10, 10));
             ((WorldObject)GameObjects["testStatic2"]).SpriteRenderer.Shader = "BlueShader";
+
+            base.loadContent();
         }
 
         public override void SceneRunning(float gt)

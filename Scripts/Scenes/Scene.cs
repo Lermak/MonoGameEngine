@@ -28,7 +28,16 @@ namespace MonoGame_Core.Scripts
             SoundManager.Clear();
             CoroutineManager.Clear();   
             Camera.Initilize();
-            
+
+            loadContent();
+        }
+
+        protected virtual void loadContent()
+        {
+            foreach (GameObject go in GameObjects.Values)
+            {
+                go.Initilize();
+            }
         }
 
         public virtual void OnLoad()

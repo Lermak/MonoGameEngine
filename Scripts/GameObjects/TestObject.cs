@@ -17,7 +17,6 @@ namespace MonoGame_Core.Scripts
             ComponentHandler.AddComponent(new CollisionBox(this, 0, "myBox", false));
             ComponentHandler.AddComponent(new FontRenderer("Test", "TestFont", "TestFont", Transform, new Vector2(0, 100), new Vector2(1920,1080),1,0,Color.Red,1));
             SpriteRenderer.Shader = "TestShader";
-            Transform.Rotate(45);
             ((CollisionHandler)ComponentHandler.GetComponent("collisionHandler")).myActions.Add(new CollisionActions("myBox", new List<string> { "myBox" }, new List<collisionAction> { CollisionBehaviors.UndoMinPen }));
         }
     }

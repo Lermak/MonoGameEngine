@@ -11,15 +11,15 @@ namespace MonoGame_Core.Scripts
         protected bool isTrigger;
         protected bool isStatic;
         protected Vector2 offset;
-        protected Transform myTransform;
-        protected GameObject myObject;
+        protected Transform transform;
+        protected GameObject gameObject;
 
         public bool CheckCollision { get { return checkCollision; } }
         public bool IsTrigger { get { return isTrigger; } }
         public bool IsStatic { get { return isStatic; } }
-        public Vector2 Offset { get { return offset * myTransform.Scale; } }
-        public Transform MyTransform { get { return myTransform; } }
-        public GameObject MyObject { get { return myObject; } }
+        public Vector2 Offset { get { return offset * transform.Scale; } }
+        public Transform Transform { get { return transform; } }
+        public GameObject GameObject { get { return gameObject; } }
 
 
         public abstract List<Vector2> Verticies();
