@@ -96,11 +96,11 @@ namespace MonoGame_Core.Scripts
                         p.Apply();
                         sb.Draw(RenderingManager.RenderTargets[Target],
                                 (screenPosition - new Vector2(Transform.Width / 2, Transform.Height / 2)) * RenderingManager.WindowScale,
-                                new Rectangle(0, 0, (int)(Transform.Width * RenderingManager.WindowScale.X * 2), (int)(Transform.Height * RenderingManager.WindowScale.Y * 2)),
+                                new Rectangle(0, 0, (int)(RenderingManager.RenderTargets[target].Width * RenderingManager.WindowScale.X), (int)(RenderingManager.RenderTargets[target].Height * RenderingManager.WindowScale.Y)),
                                 Color.White,
                                 Transform.Rotation,
                                 new Vector2(),
-                                new Vector2(Transform.Width, Transform.Height) / new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT),
+                                new Vector2(Transform.Width, Transform.Height) / new Vector2(RenderingManager.RenderTargets[target].Width, RenderingManager.RenderTargets[target].Height),
                                 SpriteEffects.None,
                                 Layer / 256);
                     }
