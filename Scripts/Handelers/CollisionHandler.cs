@@ -7,15 +7,15 @@ using System.Diagnostics;
 
 namespace MonoGame_Core.Scripts
 {
-    public delegate void collisionAction(CollisionBox a, CollisionBox b, Vector2 p);
+    public delegate void collisionAction(Collider a, Collider b, Vector2 p);
 
     public struct Collision
     {
         public Vector2 Depth;
-        public CollisionBox a;
-        public CollisionBox b;
+        public Collider a;
+        public Collider b;
 
-        public Collision(Vector2 d, CollisionBox a, CollisionBox b)
+        public Collision(Vector2 d, Collider a, Collider b)
         {
             Depth = d;
             this.a = a;
@@ -48,7 +48,7 @@ namespace MonoGame_Core.Scripts
             myActions = new List<CollisionActions>();
         }
 
-        public void RunCollisionActions(CollisionBox b1, CollisionBox b2, Vector2 v)
+        public void RunCollisionActions(Collider b1, Collider b2, Vector2 v)
         {
             foreach(CollisionActions ca in myActions)
             {

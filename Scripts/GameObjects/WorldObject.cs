@@ -9,15 +9,16 @@ namespace MonoGame_Core.Scripts
         public Transform Transform { get { return (Transform)componentHandler.GetComponent("transform"); } }
         public SpriteRenderer SpriteRenderer{ get { return (SpriteRenderer)componentHandler.GetComponent("spriteRenderer"); } }
         public CollisionHandler CollisionHandler { get { return (CollisionHandler)componentHandler.GetComponent("collisionHandler"); } }
-        public WorldObject(string texID, string tag) : base(tag)
-        {
+        public WorldObject(string texID, string tag, Vector2 size) : base(tag)
+        {           
             componentHandler.AddComponent(new CollisionHandler(0, this));           
             componentHandler.AddComponent(new Transform(0, new Vector2(0,0), 0, 0, 0));
+            Transform.Resize(size.X, size.Y);
             componentHandler.AddComponent(new RigidBody(this, RigidBody.RigidBodyType.Dynamic, 0));
             componentHandler.AddComponent(new SpriteRenderer(texID,
                                             Transform,
                                             new Vector2(0, 0),
-                                            new Vector2(0, 0),
+                                            size,
                                             0,
                                             0,
                                             0,

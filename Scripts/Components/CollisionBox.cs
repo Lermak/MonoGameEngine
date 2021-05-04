@@ -8,23 +8,16 @@ namespace MonoGame_Core.Scripts
 {
     public class CollisionBox : Collider
     {
-        const int degreesBetwenVertecies = 90;
         float width;
         float height;
 
         public float Width { get { return width * transform.Scale.X; } }
         public float Height { get { return height * transform.Scale.Y; } }
         public float Angle { get { return (float)(Math.Acos((Width / 2) / Radius)) * (180 / (float)Math.PI); } }
-        public float Radius { get { return (float)Math.Sqrt(Math.Pow(Height / 2, 2) + Math.Pow(Width / 2, 2)); } }
+        public override float Radius { get { return (float)Math.Sqrt(Math.Pow(Height / 2, 2) + Math.Pow(Width / 2, 2)); } }
 
-        public CollisionBox(string name, List<string> t, bool check, Vector2 off, Transform transform, float width, float height, int uo, bool isStatic) : base(uo, name)
+        public CollisionBox(string name, List<string> t, bool check, Vector2 off, Transform transform, float width, float height, int uo, bool isStatic) : base(uo, name, isStatic)
         {
-            if (isStatic)
-                CollisionManager.ActiveStaticBoxs.Add(this);
-            else
-                CollisionManager.ActiveMovingBoxs.Add(this);
-
-            this.isStatic = isStatic;
             checkCollision = check;
             offset = off;
             this.transform = transform;
@@ -32,14 +25,8 @@ namespace MonoGame_Core.Scripts
             this.height = height;
         }
 
-        public CollisionBox(string name, int uo, List<string> t, GameObject myObj, Transform myTrans, bool isStatic) : base(uo, name)
+        public CollisionBox(string name, int uo, GameObject myObj, Transform myTrans, bool isStatic) : base(uo, name, isStatic)
         {
-            if (isStatic)
-                CollisionManager.ActiveStaticBoxs.Add(this);
-            else
-                CollisionManager.ActiveMovingBoxs.Add(this);
-
-            this.isStatic = isStatic;
             transform = myTrans;
             gameObject = myObj;
             checkCollision = true;
@@ -48,14 +35,8 @@ namespace MonoGame_Core.Scripts
             height = myTrans.Height;
         }
 
-        public CollisionBox(WorldObject myObj, int uo, string name, bool isStatic) : base(uo, name)
-        {
-            if (isStatic)
-                CollisionManager.ActiveStaticBoxs.Add(this);
-            else
-                CollisionManager.ActiveMovingBoxs.Add(this);
-            
-            this.isStatic = isStatic;
+        public CollisionBox(WorldObject myObj, int uo, string name, bool isStatic) : base(uo, name, isStatic)
+        {                       
             transform = myObj.Transform;
             gameObject = myObj;
             checkCollision = true;
@@ -85,17 +66,17 @@ namespace MonoGame_Core.Scripts
 
         public Vector2 TopLeft()
         {
-            return hf_Math.getRotationPosition(degreesBetwenVertecies + Angle, Radius, -transform.Rotation, transform.Position + offset);//use half side angle because at 0 rotation the box should be cut through the middle, so only half the side angle is needed
+            return hf_Math.getRotationPosition((180 - Angle), Radius, -transform.Rotation, transform.Position + offset);//use half side angle because at 0 rotation the box should be cut through the middle, so only half the side angle is needed
         }
 
         public Vector2 BottomLeft()
         {
-            return hf_Math.getRotationPosition(2 * degreesBetwenVertecies + Angle, Radius, -transform.Rotation, transform.Position + offset);
+            return hf_Math.getRotationPosition(180 + Angle, Radius, -transform.Rotation, transform.Position + offset);
         }
 
         public Vector2 BottomRight()
         {
-            return hf_Math.getRotationPosition(3 * degreesBetwenVertecies + Angle, Radius, -transform.Rotation, transform.Position + offset);
+            return hf_Math.getRotationPosition(360 - Angle, Radius, -transform.Rotation, transform.Position + offset);
         }
 
         public void ReplaceOffset(Vector2 newOff)
@@ -117,9 +98,9 @@ namespace MonoGame_Core.Scripts
         public override void OnDestroy()
         {
             if (isStatic)
-                CollisionManager.ActiveStaticBoxs.Remove(this);
+                CollisionManager.ActiveStaticColliders.Remove(this);
             else
-                CollisionManager.ActiveMovingBoxs.Remove(this);
+                CollisionManager.ActiveMovingColliders.Remove(this);
             base.OnDestroy();
         }
     }

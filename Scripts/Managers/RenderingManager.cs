@@ -32,8 +32,8 @@ namespace MonoGame_Core.Scripts
             RenderTargets = new List<RenderTarget2D>();
 
             RenderTargets.Add(new RenderTarget2D(graphicsDevice,
-                (int)1920,
-                (int)1080,
+                (int)1200,
+                (int)800,
                 false,
                 graphicsDevice.PresentationParameters.BackBufferFormat,
                 DepthFormat.Depth24,
@@ -122,7 +122,7 @@ namespace MonoGame_Core.Scripts
                 SetTarget(-1);
             }
 
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
             CameraManager.Draw(spriteBatch);
             spriteBatch.End();
         }

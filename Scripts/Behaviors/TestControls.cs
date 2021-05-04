@@ -6,7 +6,7 @@ namespace MonoGame_Core.Scripts
     class TestControls : Behavior
     {
         RigidBody rigidBody;
-        float speed = 100;
+        float speed = 500;
         public TestControls(int uo, string name, RigidBody rb) : base(uo, name)
         {           
             rigidBody = rb;

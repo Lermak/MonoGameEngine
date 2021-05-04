@@ -17,6 +17,12 @@ namespace MonoGame_Core.Scripts
             return components[t];
         }
 
+        public void RemoveComponent(string t)
+        {
+            components[t].OnDestroy();
+            components.Remove(t);
+        }
+
         public List<Component> GetComponentsOfType(string type)
         {
             List<Component> cl = new List<Component>();

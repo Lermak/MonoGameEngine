@@ -8,10 +8,8 @@ namespace MonoGame_Core.Scripts
 {
     public class TestObject : WorldObject
     {
-        public TestObject(string texID, string tag) : base(texID, tag)
+        public TestObject(string texID, string tag) : base(texID, tag, new Vector2(40,40))
         {
-            Transform.Resize(40, 40);
-            SpriteRenderer.SetDrawArea(40, 40);
             BehaviorHandler.AddBehavior(new TestControls(0, RigidBody));
             BehaviorHandler.AddBehavior(new ManuallyScale(1, "scaler", Transform));
             ComponentHandler.AddComponent(new CollisionBox(this, 0, "myBox", false));

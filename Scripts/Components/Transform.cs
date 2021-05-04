@@ -18,6 +18,7 @@ namespace MonoGame_Core.Scripts
         public float Height { get { return height; } }
         public float Rotation { get { return rotation; } }
         public Vector2 Scale { get { return scale; } }
+        public float Radius { get { return (float)Math.Sqrt(Math.Pow(Height / 2, 2) + Math.Pow(Width / 2, 2)); } }
 
         public Transform(int uo, Vector2 pos, float w, float h, float r) : base(uo, "transform")
         {
@@ -56,7 +57,6 @@ namespace MonoGame_Core.Scripts
         public Vector2 WorldPosition(Vector2 offSet)
         {
             return (Position
-                - new Vector2(Width / 2, Height / 2)
                 + hf_Math.getRotationPosition(90, (float)Math.Sqrt(Math.Pow(offSet.X, 2) + Math.Pow(offSet.Y, 2)), -Rotation, new Vector2()) * Scale) * RenderingManager.GameScale;
         }
     }

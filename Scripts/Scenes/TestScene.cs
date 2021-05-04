@@ -43,16 +43,12 @@ namespace MonoGame_Core.Scripts
             GameObjects.Add("test", new TestObject("Test", "testObj"));
             GameObjects.Add("testStatic", new TestStaticObject("Test", "testStatic"));
             GameObjects.Add("testStatic2", new TestStaticObject("Test", "testStatic"));
-            GameObjects.Add("BG", new WorldObject("BG", "Background"));
-            ((WorldObject)GameObjects["BG"]).SpriteRenderer.SetDrawArea(1920, 1080);
+            GameObjects.Add("BG", new WorldObject("BG", "Background", new Vector2(1920,1080)));
             ((WorldObject)GameObjects["BG"]).Transform.Place(new Vector2());
-            ((WorldObject)GameObjects["BG"]).Transform.Resize(960, 540);
-            ((WorldObject)GameObjects["BG"]).SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);
-            ((WorldObject)GameObjects["test"]).SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);
             ((WorldObject)GameObjects["testStatic2"]).Transform.Place(new Vector2(10, 10));
             ((WorldObject)GameObjects["testStatic2"]).SpriteRenderer.Shader = "BlueShader";
 
-            CameraManager.Cameras[1].Shader = "CRT";
+            //CameraManager.Cameras[1].Shader = "CRT";
 
             base.loadContent();
         }

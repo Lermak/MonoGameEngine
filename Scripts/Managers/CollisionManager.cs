@@ -12,8 +12,8 @@ namespace MonoGame_Core.Scripts
         public enum CollisionType { AABB, SAT, TileMap }
         public static CollisionType CollisionDetection = CollisionType.SAT;
 
-        public static List<CollisionBox> ActiveStaticBoxs;
-        public static List<CollisionBox> ActiveMovingBoxs;
+        public static List<Collider> ActiveStaticColliders;
+        public static List<Collider> ActiveMovingColliders;
 
         public static void Initilize()
         {
@@ -22,21 +22,21 @@ namespace MonoGame_Core.Scripts
 
         public static void Clear()
         {
-            ActiveStaticBoxs = new List<CollisionBox>();
-            ActiveMovingBoxs = new List<CollisionBox>();
+            ActiveStaticColliders = new List<Collider>();
+            ActiveMovingColliders = new List<Collider>();
         }
 
-        public static void AddStaticBox(CollisionBox c)
+        public static void AddStaticCollider(Collider c)
         {
-            ActiveStaticBoxs.Add(c);
+            ActiveStaticColliders.Add(c);
         }
 
-        public static void AddMovingBox(CollisionBox c)
+        public static void AddMovingCollider(Collider c)
         {
-            ActiveMovingBoxs.Add(c);
+            ActiveMovingColliders.Add(c);
         }
 
-        static bool CheckCollision(CollisionBox b1, CollisionBox b2)
+        static bool AABBCollision(CollisionBox b1, CollisionBox b2)
         {
             Transform t1 = ((WorldObject)b1.GameObject).Transform;
             RigidBody rb1 = ((WorldObject)b1.GameObject).RigidBody;
@@ -49,19 +49,24 @@ namespace MonoGame_Core.Scripts
             return false;
         }
 
-        static bool distanceHuristic(CollisionBox b1, CollisionBox b2)
+        static bool SphereToBoxCollision(CollisionSphere s1, CollisionBox b2, out Vector2 p)
+        {
+            p = new Vector2();
+            return false;
+        }
+        static bool distanceHuristic(Collider b1, Collider b2)
         {
             if (Vector2.Distance(b1.Transform.Position, b2.Transform.Position) > b1.Radius + b2.Radius)
                 return false;
             else return true;
         }
-        public static bool SATcollision(CollisionBox boxOne, CollisionBox boxTwo, out Vector2 penitrationVector)
+        public static bool SATcollision(Collider c1, Collider c2, out Vector2 penitrationVector)
         {
             //find the rotated vectors to use for dot products and put them in a list
             //use a radius of 1 for a unit circle
             List<Vector2> axies = new List<Vector2>();
-            axies.AddRange(boxOne.Axies());
-            axies.AddRange(boxTwo.Axies());
+            axies.AddRange(c1.Axies());
+            axies.AddRange(c2.Axies());
 
             float minPenValue = float.MaxValue;//used to find the depth of penetration collision happens at. 
                                                //if all points overlap (i.e. they collide) the smallest value is the penetration amount.
@@ -87,12 +92,12 @@ namespace MonoGame_Core.Scripts
                 boxTwoMax = float.MinValue;
 
                 //find the smallest and largest dot product for both boxs
-                foreach (Vector2 point in boxOne.Verticies())
+                foreach (Vector2 point in c1.Verticies())
                 {
                     boxOneMin = Math.Min(boxOneMin, Vector2.Dot(line, point));
                     boxOneMax = Math.Max(boxOneMax, Vector2.Dot(line, point));
                 }
-                foreach (Vector2 point in boxTwo.Verticies())
+                foreach (Vector2 point in c2.Verticies())
                 {
                     boxTwoMin = Math.Min(boxTwoMin, Vector2.Dot(line, point));
                     boxTwoMax = Math.Max(boxTwoMax, Vector2.Dot(line, point));
@@ -136,33 +141,33 @@ namespace MonoGame_Core.Scripts
                 Vector2 p = new Vector2();
                 for (int t = 0; t < 8; ++t)
                 {
-                    for (int i = 0; i < ActiveMovingBoxs.Count; ++i)
+                    for (int i = 0; i < ActiveMovingColliders.Count; ++i)
                     {
-                        for (int x = 0; x < ActiveMovingBoxs.Count; ++x)
+                        for (int x = 0; x < ActiveMovingColliders.Count; ++x)
                         {
-                            if (ActiveMovingBoxs[x].GameObject != ActiveMovingBoxs[i].GameObject)
+                            if (ActiveMovingColliders[x].GameObject != ActiveMovingColliders[i].GameObject)
                             {
-
-
-                                if (distanceHuristic(ActiveMovingBoxs[i], ActiveMovingBoxs[x]))
+                                if (distanceHuristic(ActiveMovingColliders[i], ActiveMovingColliders[x]))
                                 {
-                                    if (SATcollision(ActiveMovingBoxs[i], ActiveMovingBoxs[x], out p))
+                                    if (SATcollision(ActiveMovingColliders[i], ActiveMovingColliders[x], out p))
                                     {
-                                        ((CollisionHandler)ActiveMovingBoxs[i].GameObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(ActiveMovingBoxs[i], ActiveMovingBoxs[x], p);
+                                        ((CollisionHandler)ActiveMovingColliders[i].GameObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(ActiveMovingColliders[i], ActiveMovingColliders[x], p);
                                         p = new Vector2();
                                     }
                                 }
                             }
                         }
-
-                        for (int x = 0; x < ActiveStaticBoxs.Count; ++x)
+                        for (int x = 0; x < ActiveStaticColliders.Count; ++x)
                         {
-                            if (distanceHuristic(ActiveMovingBoxs[i], ActiveStaticBoxs[x]))
+                            if (ActiveStaticColliders[x].GameObject != ActiveMovingColliders[i].GameObject)
                             {
-                                if (SATcollision(ActiveMovingBoxs[i], ActiveStaticBoxs[x], out p))
+                                if (distanceHuristic(ActiveMovingColliders[i], ActiveStaticColliders[x]))
                                 {
-                                    ((CollisionHandler)ActiveMovingBoxs[i].GameObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(ActiveMovingBoxs[i], ActiveStaticBoxs[x], p);
-                                    p = new Vector2();
+                                    if (SATcollision(ActiveMovingColliders[i], ActiveStaticColliders[x], out p))
+                                    {
+                                        ((CollisionHandler)ActiveMovingColliders[i].GameObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(ActiveMovingColliders[i], ActiveStaticColliders[x], p);
+                                        p = new Vector2();
+                                    }
                                 }
                             }
                         }

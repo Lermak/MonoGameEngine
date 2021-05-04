@@ -47,13 +47,14 @@ namespace MonoGame_Core.Scripts
         public Vector2 ScreenPosition { get { return screenPosition; } set { screenPosition = value; } }
         public byte Layer { get { return layer; } set { layer = value; } }
 
-        public Camera(string tag, int target, byte layer, Transform t, Vector2 min, Vector2 max) : base(tag)
+        public Camera(string tag, int target, byte layer, Transform t, Vector2 size, Vector2 min, Vector2 max) : base(tag)
         {
             minPos = min;
             maxPos = max;
             Target = target;
             drawArea = new Rectangle(0, 0, (int)(RenderingManager.WIDTH * RenderingManager.WindowScale.X), (int)(RenderingManager.HEIGHT * RenderingManager.WindowScale.Y));
             componentHandler.AddComponent(t);
+
             screenPosition = new Vector2(RenderingManager.WIDTH / 2, RenderingManager.HEIGHT / 2);
         }
 
@@ -107,14 +108,14 @@ namespace MonoGame_Core.Scripts
                 }
             else
                 sb.Draw(RenderingManager.RenderTargets[Target],
-                        (screenPosition - new Vector2(Transform.Width/2, Transform.Height/2)) * RenderingManager.WindowScale,
-                        new Rectangle(0,0,(int)(Transform.Width * RenderingManager.WindowScale.X * 2), (int)(Transform.Height * RenderingManager.WindowScale.Y * 2)),
+                        (screenPosition - new Vector2(Transform.Width / 2, Transform.Height / 2)) * RenderingManager.WindowScale,
+                        new Rectangle(0, 0, (int)(RenderingManager.RenderTargets[target].Width * RenderingManager.WindowScale.X), (int)(RenderingManager.RenderTargets[target].Height * RenderingManager.WindowScale.Y)),
                         Color.White,
                         Transform.Rotation,
                         new Vector2(),
-                        new Vector2(Transform.Width, Transform.Height) / new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT),
+                        new Vector2(Transform.Width, Transform.Height) / new Vector2(RenderingManager.RenderTargets[target].Width, RenderingManager.RenderTargets[target].Height),
                         SpriteEffects.None,
-                        Layer/256);
+                        Layer / 256);
         
         }
     }

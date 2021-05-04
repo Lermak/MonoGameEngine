@@ -43,8 +43,6 @@ namespace MonoGame_Core.Scripts
         {
             Transform.Move(moveVelocity);
             transform.Rotate(angularVelocity);
-            moveVelocity = new Vector2();
-            angularVelocity = 0;
             base.Update(gt);
         }
 

@@ -13,6 +13,7 @@ namespace MonoGame_Core.Scripts
         protected Vector2 offset;
         protected Transform transform;
         protected GameObject gameObject;
+        protected float radius;
 
         public bool CheckCollision { get { return checkCollision; } }
         public bool IsTrigger { get { return isTrigger; } }
@@ -20,16 +21,21 @@ namespace MonoGame_Core.Scripts
         public Vector2 Offset { get { return offset * transform.Scale; } }
         public Transform Transform { get { return transform; } }
         public GameObject GameObject { get { return gameObject; } }
-
+        public virtual float Radius { get { return radius; } }
 
         public abstract List<Vector2> Verticies();
 
         public abstract List<Vector2> Axies();
 
 
-        public Collider(int uo, string name) : base(uo, name)
+        public Collider(int uo, string name, bool isStatic) : base(uo, name)
         {
+            if (isStatic)
+                CollisionManager.ActiveStaticColliders.Add(this);
+            else
+                CollisionManager.ActiveMovingColliders.Add(this);
 
+            this.isStatic = isStatic;
         }
     }
 }
