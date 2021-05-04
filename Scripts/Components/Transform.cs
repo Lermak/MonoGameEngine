@@ -19,13 +19,6 @@ namespace MonoGame_Core.Scripts
         public float Rotation { get { return rotation; } }
         public Vector2 Scale { get { return scale; } }
 
-        public Transform(string name, int uo, Vector2 pos, float w, float h, float r) : base(uo, name)
-        {
-            rotation = r;
-            position = pos;
-            width = w;
-            height = h;
-        }
         public Transform(int uo, Vector2 pos, float w, float h, float r) : base(uo, "transform")
         {
             rotation = r;

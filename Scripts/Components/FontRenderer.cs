@@ -27,7 +27,7 @@ namespace MonoGame_Core.Scripts
             this.text = text;
         }
 
-        public override void Draw(SpriteBatch sb)
+        public override void Draw(SpriteBatch sb, Camera c)
         {
             Vector2 stringSize = SceneManager.CurrentScene.Fonts[Texture].MeasureString(text) * 0.5f;
 
@@ -35,7 +35,7 @@ namespace MonoGame_Core.Scripts
             {
                 sb.DrawString(SceneManager.CurrentScene.Fonts[Texture],
                     text,
-                    ScreenPosition(),
+                    ScreenPosition(c),
                     new Color(Color.R - (int)RenderingManager.GlobalFade, Color.G - (int)RenderingManager.GlobalFade, Color.B - (int)RenderingManager.GlobalFade, Color.A),
                     Transform.Rotation + addedRotation,
                     stringSize,
@@ -47,7 +47,7 @@ namespace MonoGame_Core.Scripts
             {
                 sb.DrawString(SceneManager.CurrentScene.Fonts[Texture],
                     text,
-                    ScreenPosition(),
+                    ScreenPosition(c),
                     new Color(Color.R - (int)RenderingManager.GlobalFade, Color.G - (int)RenderingManager.GlobalFade, Color.B - (int)RenderingManager.GlobalFade, Color.A),
                     Transform.Rotation + addedRotation,
                     stringSize,

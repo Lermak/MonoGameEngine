@@ -21,6 +21,8 @@ namespace MonoGame_Core.Scripts
         protected override void loadContent()
         {
             size = new Vector2(2100, 1080);
+            CameraManager.Cameras[0].SetMinPos(Size/2*-1);
+            CameraManager.Cameras[0].SetMaxPos(Size / 2);
 
             SoundManager.SongChannels["Melody"] = Content.Load<Song>("Music/TestSong");
             MediaPlayer.Play(SoundManager.SongChannels["Melody"]);
@@ -45,8 +47,12 @@ namespace MonoGame_Core.Scripts
             ((WorldObject)GameObjects["BG"]).SpriteRenderer.SetDrawArea(1920, 1080);
             ((WorldObject)GameObjects["BG"]).Transform.Place(new Vector2());
             ((WorldObject)GameObjects["BG"]).Transform.Resize(960, 540);
+            ((WorldObject)GameObjects["BG"]).SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);
+            ((WorldObject)GameObjects["test"]).SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);
             ((WorldObject)GameObjects["testStatic2"]).Transform.Place(new Vector2(10, 10));
             ((WorldObject)GameObjects["testStatic2"]).SpriteRenderer.Shader = "BlueShader";
+
+            CameraManager.Cameras[1].Shader = "CRT";
 
             base.loadContent();
         }

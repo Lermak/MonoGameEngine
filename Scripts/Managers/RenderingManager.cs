@@ -52,12 +52,12 @@ namespace MonoGame_Core.Scripts
             var x = graphicsDevice.GetRenderTargets();
             WindowScale = new Vector2(graphicsDevice.Viewport.Width / WIDTH, graphicsDevice.Viewport.Height / HEIGHT);
 
-            IEnumerable<SpriteRenderer> s = Sprites.OrderByDescending(s => s.Target)
-                                        .ThenBy(s => s.Shader)
+            IEnumerable<SpriteRenderer> s = Sprites.OrderBy(s => s.Shader)
                                         .ThenBy(s => s.Layer)
                                         .ThenBy(s => s.Transform.Position.Y)
                                         .ThenBy(s => s.OrderInLayer);
 
+            IEnumerable<Camera> cameras = CameraManager.Cameras.OrderByDescending(s => s.Target);
             string prevShader = "";
             int Target = -1;
 
@@ -65,49 +65,52 @@ namespace MonoGame_Core.Scripts
 
             graphicsDevice.Clear(Color.Black);
 
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque);
 
-            foreach (SpriteRenderer sr in s)
+            foreach(Camera c in cameras)
             {
-                if (sr.Visible)
+                foreach (SpriteRenderer sr in s)
                 {
-                    if (sr.Shader != prevShader)
+                    if (sr.Visible && sr.Cameras.Contains(c))
                     {
-                        if (sr.Target == Target)
+                        if (sr.Shader != prevShader)
+                        {
+                            if(c.Target == Target)
+                            {
+                                spriteBatch.End();
+                                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+                            }
+
+                            prevShader = sr.Shader;
+                        }
+
+                        if (c.Target != Target)
                         {
                             spriteBatch.End();
+
+                            SetTarget(c.Target);
+                            graphicsDevice.Clear(Color.Transparent);
+
+                            Target = c.Target;
+
                             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
                         }
 
-                        prevShader = sr.Shader;
-                    }
-
-                    if (sr.Target != Target)
-                    {
-                        spriteBatch.End();
-
-                        SetTarget(sr.Target);
-                        graphicsDevice.Clear(Color.Transparent);
-
-                        Target = sr.Target;
-
-                        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
-                    }
-
-                    if (sr.Shader != "")
-                    {
-                        foreach (EffectTechnique t in SceneManager.CurrentScene.Effects[sr.Shader].Techniques)
+                        if (sr.Shader != "")
                         {
-                            foreach (EffectPass p in t.Passes)
+                            foreach (EffectTechnique t in SceneManager.CurrentScene.Effects[sr.Shader].Techniques)
                             {
-                                p.Apply();
-                                sr.Draw(spriteBatch);
+                                foreach (EffectPass p in t.Passes)
+                                {
+                                    p.Apply();
+                                    sr.Draw(spriteBatch, c);
+                                }
                             }
                         }
-                    }
-                    else
-                    {
-                        sr.Draw(spriteBatch);
+                        else
+                        {
+                            sr.Draw(spriteBatch, c);
+                        }
                     }
                 }
             }
@@ -120,24 +123,7 @@ namespace MonoGame_Core.Scripts
             }
 
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
-
-            foreach (EffectTechnique t in SceneManager.CurrentScene.Effects["CRT"].Techniques)
-            {
-                foreach (EffectPass p in t.Passes)
-                {
-                    p.Apply();
-                    spriteBatch.Draw(RenderTargets[0],
-                    new Vector2(),
-                    new Rectangle(0, 0, (int)(WIDTH * WindowScale.X), (int)(HEIGHT * WindowScale.Y)),
-                    Color.White,
-                    0,
-                    new Vector2(0, 0),
-                    new Vector2(1, 1),
-                    SpriteEffects.None,
-                    0);
-                }
-            }
-
+            CameraManager.Draw(spriteBatch);
             spriteBatch.End();
         }
 

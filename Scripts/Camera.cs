@@ -1,50 +1,121 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using Microsoft.Xna.Framework;
+using System.Linq;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGame_Core.Scripts
 {
-    public static class Camera
+    public class Camera : GameObject
     {
-        static float CameraSpeed = 200;
-
-        static Transform transform;
-
-        public static Transform Transform { get { return transform; } }
-        public static Vector2 Position { get { return transform.Position * RenderingManager.WindowScale; } }
-        public static Vector2 MinPos { get { return new Vector2(-SceneManager.CurrentScene.Size.X / 2 + RenderingManager.WIDTH / 2, -SceneManager.CurrentScene.Size.Y / 2 + RenderingManager.HEIGHT / 2); } }
-        public static Vector2 MaxPos { get { return new Vector2(SceneManager.CurrentScene.Size.X / 2 - RenderingManager.WIDTH / 2, SceneManager.CurrentScene.Size.Y / 2 - RenderingManager.HEIGHT / 2); } }
-
-        public static void Initilize()
+        int target;
+        Vector2 minPos;
+        Vector2 maxPos;
+        Rectangle drawArea;
+        string shader = "";
+        Vector2 screenPosition;
+        byte layer;
+        public int Target
         {
-            transform = new Transform(0, new Vector2(),0,0,0);
+            get { return target; }
+            set
+            {
+                if (RenderingManager.RenderTargets.Count > value)
+                    target = value;
+                else
+                    target = -1;
+            }
+        }
+        public string Shader
+        {
+            get { return shader; }
+            set
+            {
+                if (SceneManager.CurrentScene.Effects.ContainsKey(value))
+                    shader = value;
+                else
+                    shader = "";
+            }
         }
 
-        public static void Update(float gt)
+        public Transform Transform { get { return (Transform)componentHandler.GetComponent("transform"); } }
+        public Vector2 Position { get { return Transform.Position * RenderingManager.WindowScale; } }
+        public Vector2 MinPos { get { return minPos; } }
+        public Vector2 MaxPos { get { return maxPos; } }
+        public Rectangle DrawArea { get { return drawArea; } set { drawArea = value; } }
+        public Vector2 ScreenPosition { get { return screenPosition; } set { screenPosition = value; } }
+        public byte Layer { get { return layer; } set { layer = value; } }
+
+        public Camera(string tag, int target, byte layer, Transform t, Vector2 min, Vector2 max) : base(tag)
         {
-            MoveWithArrowKeys(gt);
+            minPos = min;
+            maxPos = max;
+            Target = target;
+            drawArea = new Rectangle(0, 0, (int)(RenderingManager.WIDTH * RenderingManager.WindowScale.X), (int)(RenderingManager.HEIGHT * RenderingManager.WindowScale.Y));
+            componentHandler.AddComponent(t);
+            screenPosition = new Vector2(RenderingManager.WIDTH / 2, RenderingManager.HEIGHT / 2);
         }
 
-        private static void MoveWithArrowKeys(float gt)
+        public override void Update(float gt)
         {
-            KeyboardState state = Keyboard.GetState();
-            if (state.IsKeyDown(Keys.Up))
-                transform.Move(new Vector2(0, -(float)(CameraSpeed * gt)));
-            else if (state.IsKeyDown(Keys.Down))
-                transform.Move(new Vector2(0, (float)(CameraSpeed * gt)));
-            if (state.IsKeyDown(Keys.Right))
-                transform.Move(new Vector2((float)(CameraSpeed * gt), 0));
-            else if (state.IsKeyDown(Keys.Left))
-                transform.Move(new Vector2(-(float)(CameraSpeed * gt), 0));
+            base.Update(gt);
+            clamp();
+        }
 
-            if (transform.Position.X > MaxPos.X)
-                transform.Place(new Vector2(MaxPos.X, transform.Position.Y));
-            else if (transform.Position.X < MinPos.X)
-                transform.Place(new Vector2(MinPos.X, transform.Position.Y));
+        public void SetMinPos(Vector2 min)
+        {
+            minPos = min;
+        }
 
-            if (transform.Position.Y > MaxPos.Y)
-                transform.Place(new Vector2(transform.Position.X ,MaxPos.Y));
-            else if (transform.Position.Y < MinPos.Y)
-                transform.Place(new Vector2(transform.Position.X, MinPos.Y));
+        public void SetMaxPos(Vector2 max)
+        {
+            maxPos = max;
+        }
+
+        void clamp()
+        {
+            if (Transform.Position.X > MaxPos.X)
+                Transform.Place(new Vector2(MaxPos.X, Transform.Position.Y));
+            else if (Transform.Position.X < MinPos.X)
+                Transform.Place(new Vector2(MinPos.X, Transform.Position.Y));
+
+            if (Transform.Position.Y > MaxPos.Y)
+                Transform.Place(new Vector2(Transform.Position.X, MaxPos.Y));
+            else if (Transform.Position.Y < MinPos.Y)
+                Transform.Place(new Vector2(Transform.Position.X, MinPos.Y));
+        }
+
+        public void Draw(SpriteBatch sb)
+        {
+            if (shader != "")
+                foreach (EffectTechnique t in SceneManager.CurrentScene.Effects[shader].Techniques)
+                {
+                    foreach (EffectPass p in t.Passes)
+                    {
+                        p.Apply();
+                        sb.Draw(RenderingManager.RenderTargets[Target],
+                                (screenPosition - new Vector2(Transform.Width / 2, Transform.Height / 2)) * RenderingManager.WindowScale,
+                                new Rectangle(0, 0, (int)(Transform.Width * RenderingManager.WindowScale.X * 2), (int)(Transform.Height * RenderingManager.WindowScale.Y * 2)),
+                                Color.White,
+                                Transform.Rotation,
+                                new Vector2(),
+                                new Vector2(Transform.Width, Transform.Height) / new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT),
+                                SpriteEffects.None,
+                                Layer / 256);
+                    }
+                }
+            else
+                sb.Draw(RenderingManager.RenderTargets[Target],
+                        (screenPosition - new Vector2(Transform.Width/2, Transform.Height/2)) * RenderingManager.WindowScale,
+                        new Rectangle(0,0,(int)(Transform.Width * RenderingManager.WindowScale.X * 2), (int)(Transform.Height * RenderingManager.WindowScale.Y * 2)),
+                        Color.White,
+                        Transform.Rotation,
+                        new Vector2(),
+                        new Vector2(Transform.Width, Transform.Height) / new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT),
+                        SpriteEffects.None,
+                        Layer/256);
+        
         }
     }
 }
