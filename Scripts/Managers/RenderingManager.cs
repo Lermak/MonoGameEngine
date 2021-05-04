@@ -69,7 +69,8 @@ namespace MonoGame_Core.Scripts
                 IEnumerable<SpriteRenderer> s = Sprites.OrderBy(s => s.Shader)
                             .ThenBy(s => s.Layer)
                             .ThenBy(s => s.Transform.Position.Y)
-                            .ThenBy(s => s.OrderInLayer);
+                            .ThenBy(s => s.OrderInLayer)
+                            .Where(s=>s.Cameras.Contains(c));
 
                 foreach (SpriteRenderer sr in s)
                 {
