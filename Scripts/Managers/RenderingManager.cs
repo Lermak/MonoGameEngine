@@ -32,8 +32,8 @@ namespace MonoGame_Core.Scripts
             RenderTargets = new List<RenderTarget2D>();
 
             RenderTargets.Add(new RenderTarget2D(graphicsDevice,
-                (int)1200,
-                (int)800,
+                (int)1920,
+                (int)1080,
                 false,
                 graphicsDevice.PresentationParameters.BackBufferFormat,
                 DepthFormat.Depth24,
@@ -52,10 +52,7 @@ namespace MonoGame_Core.Scripts
             var x = graphicsDevice.GetRenderTargets();
             WindowScale = new Vector2(graphicsDevice.Viewport.Width / WIDTH, graphicsDevice.Viewport.Height / HEIGHT);
 
-            IEnumerable<SpriteRenderer> s = Sprites.OrderBy(s => s.Shader)
-                                        .ThenBy(s => s.Layer)
-                                        .ThenBy(s => s.Transform.Position.Y)
-                                        .ThenBy(s => s.OrderInLayer);
+
 
             IEnumerable<Camera> cameras = CameraManager.Cameras.OrderByDescending(s => s.Target);
             string prevShader = "";
@@ -69,6 +66,11 @@ namespace MonoGame_Core.Scripts
 
             foreach(Camera c in cameras)
             {
+                IEnumerable<SpriteRenderer> s = Sprites.OrderBy(s => s.Shader)
+                            .ThenBy(s => s.Layer)
+                            .ThenBy(s => s.Transform.Position.Y)
+                            .ThenBy(s => s.OrderInLayer);
+
                 foreach (SpriteRenderer sr in s)
                 {
                     if (sr.Visible && sr.Cameras.Contains(c))
