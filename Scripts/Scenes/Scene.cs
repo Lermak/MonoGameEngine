@@ -42,12 +42,12 @@ namespace MonoGame_Core.Scripts
 
         public virtual void OnLoad()
         {
-            CoroutineManager.AddCoroutine(Coroutines.FadeInSceneTransision(), "FadeIn", true);
+            CoroutineManager.AddCoroutine(Coroutines.FadeInSceneTransision(), "FadeIn", 0, true);
         }
 
         public virtual void OnExit()
         {
-            CoroutineManager.AddCoroutine(Coroutines.FadeOutSceneTransision(), "FadeOut", true);
+            CoroutineManager.AddCoroutine(Coroutines.FadeOutSceneTransision(), "FadeOut", 0, true);
         }
 
         public virtual void Update(float gt)

@@ -38,21 +38,21 @@ namespace MonoGame_Core.Scripts
             yield return true;
         }
 
-        public static IEnumerator<bool> ScreenShake(float duration, int min, int max)
+        public static IEnumerator<bool> ScreenShake(float duration, int min, int max, Transform t)
         {
             float timeElapsed = 0;
-            Vector2 origonalPos = MainCamera.Transform.Position;
+            Vector2 origonalPos = t.Position;
             Random r = new Random();
             int dir = -1;
             while (timeElapsed < duration)
             {
-                MainCamera.Transform.Place(origonalPos);
+                t.Place(origonalPos);
                 timeElapsed += TimeManager.DeltaTime;
-                MainCamera.Transform.Move(new Vector2(r.Next(min, max) * dir, 1));
+                t.Move(new Vector2(r.Next(min, max) * dir, 1));
                 dir *= -1;
                 yield return false;
             }
-            MainCamera.Transform.Place(origonalPos);
+            t.Place(origonalPos);
             yield return true;
         }
     }

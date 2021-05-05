@@ -39,6 +39,14 @@ namespace MonoGame_Core.Scripts
 
             Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
 
+            CameraManager.Cameras.Add(new Camera("CRTCamera", 0, 0,
+                new Transform(0, new Vector2(0, 0), 480, 270, 0),
+                new Vector2(480, 270),
+                new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * -1,
+                new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * 1));
+
+            CameraManager.Cameras[1].BehaviorHandler.AddBehavior(new ScreenShake(0, "screenShake", CameraManager.Cameras[1].Transform));
+
             GameObjects = new Dictionary<string, GameObject>();
             GameObjects.Add("test", new TestObject("Test", "testObj"));
             GameObjects.Add("testStatic", new TestStaticObject("Test", "testStatic"));
@@ -48,6 +56,9 @@ namespace MonoGame_Core.Scripts
             ((WorldObject)GameObjects["testStatic2"]).Transform.Place(new Vector2(10, 10));
             ((WorldObject)GameObjects["testStatic2"]).SpriteRenderer.Shader = "BlueShader";
 
+
+
+            CameraManager.Cameras[1].ScreenPosition = new Vector2(480, 270) / 2;
             CameraManager.Cameras[1].Shader = "CRT";
 
             base.loadContent();
@@ -55,8 +66,6 @@ namespace MonoGame_Core.Scripts
 
         public override void SceneRunning(float gt)
         {
-            if (InputManager.IsKeyTriggered(Keys.Space))
-                CoroutineManager.AddCoroutine(Coroutines.ScreenShake(.1f, 3, 10), "shake", true);
             base.SceneRunning(gt);
         }
     }

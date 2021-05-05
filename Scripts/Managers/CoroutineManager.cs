@@ -11,29 +11,35 @@ namespace MonoGame_Core.Scripts
         {
             public string Name;
             public CoroutineState State;
+            public float TimeSinceLast;
+            public float TimeBetweenSteps;
             public IEnumerator<bool> Routine;
 
-            public Coroutine(IEnumerator<bool> routine, string name, bool start)
+            public Coroutine(IEnumerator<bool> routine, string name, float timeBetween, bool start)
             {
-                Name = name;
                 if (start)
                     State = CoroutineState.Running;
                 else
                     State = CoroutineState.Paused;
                 Routine = routine;
+                Name = name;
+                TimeBetweenSteps = timeBetween;
+                TimeSinceLast = 0;
             }
         }
-
+        static List<string> keys = new List<string>();
         static Dictionary<string, Coroutine> coroutines = new Dictionary<string, Coroutine>();
         public static void Clear()
         {
             coroutines.Clear();
         }
 
-        public static void AddCoroutine(IEnumerator<bool> coroutine, string name, bool start)
+        public static void AddCoroutine(IEnumerator<bool> coroutine, string name, float timeBetween, bool start)
         {
-            if(!coroutines.ContainsKey(name))
-                coroutines[name] = new Coroutine(coroutine, name, start);
+            if (!coroutines.ContainsKey(name))
+            {
+                coroutines[name] = new Coroutine(coroutine, name, timeBetween, start);
+            }
         }
         public static bool IsRunning(string coroutine)
         {
@@ -85,10 +91,14 @@ namespace MonoGame_Core.Scripts
                 Coroutine c = coroutines[k[i]];
                 if (c.State == CoroutineState.Running)
                 {
-                    c.Routine.MoveNext();
-                    if (c.Routine.Current)
+                    c.TimeSinceLast += gt;
+                    if (c.TimeSinceLast > c.TimeBetweenSteps)
                     {
-                        toRemove.Add(c.Name);
+                        c.Routine.MoveNext();
+                        if (c.Routine.Current)
+                        {
+                            toRemove.Add(c.Name);
+                        }
                     }
                 }
 
