@@ -16,7 +16,7 @@ namespace MonoGame_Core.Scripts
 
         public static List<Collider> ActiveStaticColliders;
         public static List<Collider> ActiveMovingColliders;
-
+        public static bool[,,] TileMap;
         public static void Initilize()
         {
             Clear();
@@ -149,8 +149,9 @@ namespace MonoGame_Core.Scripts
                     foreach(Collider a in ab)
                     {
                         sb = sb.OrderBy(s => Vector2.Distance(s.Transform.Position, a.Transform.Position))
+                            .Where(s => s.Transform.Layer == a.Transform.Layer)
                             .Where(s => Vector2.Distance(s.Transform.Position, a.Transform.Position) < s.Transform.Radius + a.Transform.Radius);
-
+                            
                         for (int t = 0; t < 4; ++t)
                         {
                             foreach (Collider s in ab)

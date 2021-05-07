@@ -42,6 +42,8 @@ namespace MonoGame_Core.Scripts
 
             string[] rows = map.Trim().Split(new char[] { '\n' });
 
+            CollisionManager.TileMap = new bool[width, height, doc.ChildNodes[1].ChildNodes.Count];
+
             for (int y = 0; y < height; ++y)
             {
                 string[] row = rows[y].Split(new char[] { ',' });
