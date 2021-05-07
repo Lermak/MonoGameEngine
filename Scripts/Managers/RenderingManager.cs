@@ -10,6 +10,7 @@ namespace MonoGame_Core.Scripts
 {
     public static class RenderingManager
     {
+        public enum RenderOrder { TopDown, YSort, Isometric }
         public const float WIDTH = 1920;
         public const float HEIGHT = 1080;
 
@@ -17,6 +18,7 @@ namespace MonoGame_Core.Scripts
         public static Vector2 BaseScale = new Vector2(1, 1);
         public static Vector2 WindowScale = new Vector2(1, 1);
         public static float GlobalFade = 255;
+        public static RenderOrder RenderingOrder = RenderOrder.TopDown;
 
         public static List<RenderTarget2D> RenderTargets;
         public static List<SpriteRenderer> Sprites;
@@ -52,9 +54,6 @@ namespace MonoGame_Core.Scripts
             var x = graphicsDevice.GetRenderTargets();
             WindowScale = new Vector2(graphicsDevice.Viewport.Width / WIDTH, graphicsDevice.Viewport.Height / HEIGHT);
 
-
-
-            IEnumerable<Camera> cameras = CameraManager.Cameras.OrderByDescending(s => s.Target);
             string prevShader = "";
             int Target = -1;
 
@@ -63,23 +62,17 @@ namespace MonoGame_Core.Scripts
             graphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque);
-
-            foreach(Camera c in cameras)
+            IEnumerable<Camera> cameras = CameraManager.Cameras.OrderByDescending(s => s.Target);
+           
+            foreach (Camera c in cameras)
             {
-                IEnumerable<SpriteRenderer> s = Sprites.OrderBy(s => s.Shader)
-                            .ThenBy(s => s.Layer)
-                            .ThenBy(s => s.Transform.Position.Y)
-                            .ThenBy(s => s.OrderInLayer)
-                            .Where(s=> s.Cameras.Contains(c))
-                            .Where(s=> Vector2.Distance(s.Transform.Position, c.Transform.Position) <= s.Transform.Radius + c.Transform.Radius);
-
-                foreach (SpriteRenderer sr in s)
+                foreach (SpriteRenderer sr in Sprites)
                 {
                     if (sr.Visible && sr.Cameras.Contains(c))
                     {
                         if (sr.Shader != prevShader)
                         {
-                            if(c.Target == Target)
+                            if (c.Target == Target)
                             {
                                 spriteBatch.End();
                                 spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
@@ -129,6 +122,37 @@ namespace MonoGame_Core.Scripts
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
             CameraManager.Draw(spriteBatch);
             spriteBatch.End();
+        }
+
+        public static void Sort()
+        {
+            IEnumerable<Camera> cameras = CameraManager.Cameras.OrderByDescending(s => s.Target);
+
+            IEnumerable<SpriteRenderer> s = Sprites;
+
+            foreach (Camera c in cameras)
+            {
+                if (RenderingOrder == RenderOrder.TopDown)
+                    s = Sprites.OrderBy(s => s.Shader)
+                                .ThenBy(s => s.Transform.Layer)
+                                .ThenBy(s => s.OrderInLayer)
+                                .Where(s => s.Cameras.Contains(c))
+                                .Where(s => Vector2.Distance(s.Transform.Position, c.Transform.Position) <= s.Transform.Radius + c.Transform.Radius);
+                else if (RenderingOrder == RenderOrder.YSort)
+                    s = Sprites.OrderBy(s => s.Shader)
+                                .ThenBy(s => s.Transform.Layer)
+                                .ThenBy(s => s.Transform.Position.Y)
+                                .ThenBy(s => s.OrderInLayer)
+                                .Where(s => s.Cameras.Contains(c))
+                                .Where(s => Vector2.Distance(s.Transform.Position, c.Transform.Position) <= s.Transform.Radius + c.Transform.Radius);
+
+                else if (RenderingOrder == RenderOrder.Isometric)
+                {
+
+                }
+            }
+
+            Sprites = s.ToList();
         }
 
         private static void SetTarget(int Target)

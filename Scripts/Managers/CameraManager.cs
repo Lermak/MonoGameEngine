@@ -15,7 +15,7 @@ namespace MonoGame_Core.Scripts
         public static void Initilize()
         {
             cameras = new List<Camera>();
-            cameras.Add(new Camera("MainCamera", -1, 0, new Transform(0, new Vector2(), RenderingManager.WIDTH, RenderingManager.HEIGHT, 0), new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT), new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * -1, new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * 1));
+            cameras.Add(new Camera("MainCamera", -1, 0, new Transform(0, new Vector2(), RenderingManager.WIDTH, RenderingManager.HEIGHT, 0,0), new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT), new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * -1, new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * 1));
 
         }
 

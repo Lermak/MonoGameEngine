@@ -16,6 +16,7 @@ namespace MonoGame_Core.Scripts
         float degreesFromParent = 0f;
         float startingRotation = 0f;
         float distanceToParent = 0f;
+        byte layer;
 
         public Vector2 Position { get {
                 if (parent == null)
@@ -34,13 +35,14 @@ namespace MonoGame_Core.Scripts
         public Vector2 Scale { get { return scale; } }
         public float Radius { get { return (float)Math.Sqrt(Math.Pow(Height / 2, 2) + Math.Pow(Width / 2, 2)); } }
         public Transform Parent { get { return parent; } }
-
-        public Transform(int uo, Vector2 pos, float w, float h, float r) : base(uo, "transform")
+        public byte Layer { get { return layer; } set { layer = value; } }
+        public Transform(int uo, Vector2 pos, float w, float h, float r, byte l) : base(uo, "transform")
         {
             rotation = r;
             position = pos;
             width = w;
             height = h;
+            layer = l;
         }
 
         public void SetScale(float x, float y)

@@ -11,7 +11,10 @@ namespace MonoGame_Core.Scripts
     {
         public static void UndoMinPen(Collider a, Collider b, Vector2 p)
         {
-            ((WorldObject)a.GameObject).Transform.Move(p);
+            if (Math.Abs(p.Y) >= Math.Abs(p.X))
+                ((WorldObject)a.GameObject).Transform.Move(new Vector2(0,p.Y));
+            else
+                ((WorldObject)a.GameObject).Transform.Move(new Vector2(p.X, 0));
         }
         public static void Reflect(Collider a, Collider b, Vector2 p)
         {

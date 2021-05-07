@@ -16,7 +16,7 @@ namespace MonoGame_Core.Scripts
 
         public static void Initilize()
         {
-            transform = new Transform(0, new Vector2(),0,0,0);
+            transform = new Transform(0, new Vector2(),0,0,0,0);
         }
 
         public static void Update(float gt)

@@ -5,7 +5,7 @@ namespace MonoGame_Core.Scripts
 {
     public class Ball : WorldObject
     {
-        public Ball(string texID, string tag, Vector2 position, Vector2 size) : base(texID, tag, size, position)
+        public Ball(string texID, string tag, Vector2 position, Vector2 size, byte layer) : base(texID, tag, size, position, layer)
         {
             ComponentHandler.AddComponent(new CollisionSphere(0, "Ball", this, new Vector2(), true, false, false));
             CollisionHandler.myActions.Add(new CollisionActions("Ball", new List<string>() { "TopWall", "BottomWall", "Paddle" }, new List<collisionAction>() { CollisionBehaviors.Reflect }));

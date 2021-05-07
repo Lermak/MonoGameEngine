@@ -9,7 +9,7 @@ namespace MonoGame_Core.Scripts
 
         public Wall(string name, Vector2 position, Vector2 size) : base(name)
         {
-            componentHandler.AddComponent(new Transform(0, position, size.X, size.Y, 0));
+            componentHandler.AddComponent(new Transform(0, position, size.X, size.Y, 0, 0));
             
             ComponentHandler.AddComponent(new CollisionBox(name, 0, this, Transform, true));
         }

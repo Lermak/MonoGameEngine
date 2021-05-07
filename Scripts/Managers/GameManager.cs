@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace MonoGame_Core.Scripts
 {
@@ -44,12 +45,19 @@ namespace MonoGame_Core.Scripts
 
             // TODO: Add your update logic here
             TimeManager.Update(gameTime);
+
             InputManager.Update(TimeManager.DeltaTime);
+
             CoroutineManager.Update(TimeManager.DeltaTime);
+
             SceneManager.Update(TimeManager.DeltaTime);
+
             Cursor.Update(TimeManager.DeltaTime);
+
             CameraManager.Update(TimeManager.DeltaTime);
+
             CollisionManager.Update(TimeManager.DeltaTime);
+
             base.Update(gameTime);
         }
 

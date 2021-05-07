@@ -38,6 +38,8 @@ namespace MonoGame_Core.Scripts
             {
                 go.Initilize();
             }
+
+            RenderingManager.Sort();
         }
 
         public virtual void OnLoad()

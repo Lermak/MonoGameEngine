@@ -37,5 +37,20 @@ namespace MonoGame_Core.Scripts
 
             this.isStatic = isStatic;
         }
+        public override void Update(float gt)
+        {
+            foreach (Camera c in CameraManager.Cameras)
+            {
+                if (Vector2.Distance(transform.Position, c.Transform.Position) <= transform.Radius + c.Transform.Radius)
+                {
+                    if (isStatic)
+                        CollisionManager.ActiveStaticColliders.Add(this);
+                    else
+                        CollisionManager.ActiveMovingColliders.Add(this);
+
+                    break;
+                }
+            }
+        }
     }
 }

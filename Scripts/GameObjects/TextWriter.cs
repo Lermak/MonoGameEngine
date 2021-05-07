@@ -8,15 +8,14 @@ namespace MonoGame_Core.Scripts
 
         public Transform Transform { get { return (Transform)componentHandler.GetComponent("transform"); } }
         public FontRenderer FontRenderer { get { return (FontRenderer)componentHandler.GetComponent("fontRenderer"); } }
-        public TextWriter(string fontID, string tag, string text, Vector2 pos, Vector2 size, Color c) : base(tag)
+        public TextWriter(string fontID, string tag, string text, Vector2 pos, Vector2 size, Color c, byte layer) : base(tag)
         {
-            componentHandler.AddComponent(new Transform(0, pos, size.X, size.Y, 0));
+            componentHandler.AddComponent(new Transform(0, pos, size.X, size.Y, 0, layer));
             componentHandler.AddComponent(new FontRenderer(text,
                                             fontID,
                                             Transform,
                                             new Vector2(0, 0),
                                             size,
-                                            0,
                                             0,
                                             c,
                                             0));

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Xml.Linq;
 using System.Diagnostics;
+using System.Linq;
+
 
 namespace MonoGame_Core.Scripts
 {
@@ -137,36 +139,46 @@ namespace MonoGame_Core.Scripts
         public static void Update(float gt)
         {
             if (CollisionDetection == CollisionType.SAT)
-            { 
-                Vector2 p = new Vector2();
-                for (int t = 0; t < 8; ++t)
+            {
+                foreach (Camera c in CameraManager.Cameras)
                 {
-                    for (int i = 0; i < ActiveMovingColliders.Count; ++i)
+                    IEnumerable<Collider> ab = ActiveMovingColliders;
+                    IEnumerable<Collider> sb = ActiveStaticColliders;
+                    Vector2 p = new Vector2();
+
+                    foreach(Collider a in ab)
                     {
-                        for (int x = 0; x < ActiveMovingColliders.Count; ++x)
+                        sb = sb.OrderBy(s => Vector2.Distance(s.Transform.Position, a.Transform.Position))
+                            .Where(s => Vector2.Distance(s.Transform.Position, a.Transform.Position) < s.Transform.Radius + a.Transform.Radius);
+
+                        for (int t = 0; t < 4; ++t)
                         {
-                            if (ActiveMovingColliders[x].GameObject != ActiveMovingColliders[i].GameObject)
+                            foreach (Collider s in ab)
                             {
-                                if (distanceHuristic(ActiveMovingColliders[i], ActiveMovingColliders[x]))
+                                if (a.GameObject != s.GameObject)
                                 {
-                                    if (SATcollision(ActiveMovingColliders[i], ActiveMovingColliders[x], out p))
+                                    if (distanceHuristic(a, s))
                                     {
-                                        ((CollisionHandler)ActiveMovingColliders[i].GameObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(ActiveMovingColliders[i], ActiveMovingColliders[x], p);
-                                        p = new Vector2();
+                                        if (SATcollision(a, s, out p))
+                                        {
+                                            ((CollisionHandler)a.GameObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(a, s, p);
+                                            p = new Vector2();
+                                        }
                                     }
                                 }
                             }
-                        }
-                        for (int x = 0; x < ActiveStaticColliders.Count; ++x)
-                        {
-                            if (ActiveStaticColliders[x].GameObject != ActiveMovingColliders[i].GameObject)
+                            
+                            foreach (Collider s in sb)
                             {
-                                if (distanceHuristic(ActiveMovingColliders[i], ActiveStaticColliders[x]))
+                                if (a.GameObject != s.GameObject)
                                 {
-                                    if (SATcollision(ActiveMovingColliders[i], ActiveStaticColliders[x], out p))
+                                    if (distanceHuristic(a, s))
                                     {
-                                        ((CollisionHandler)ActiveMovingColliders[i].GameObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(ActiveMovingColliders[i], ActiveStaticColliders[x], p);
-                                        p = new Vector2();
+                                        if (SATcollision(a, s, out p))
+                                        {
+                                            ((CollisionHandler)a.GameObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(a, s, p);
+                                            p = new Vector2();
+                                        }
                                     }
                                 }
                             }
@@ -174,6 +186,8 @@ namespace MonoGame_Core.Scripts
                     }
                 }
             }
+            ActiveMovingColliders.Clear();
+            ActiveStaticColliders.Clear();
         }
     }
 }
