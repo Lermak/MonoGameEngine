@@ -12,13 +12,28 @@ namespace MonoGame_Core.Scripts
         float height;
         float rotation;
         Vector2 scale = new Vector2(1,1);
+        Transform parent;
+        float degreesFromParent = 0f;
+        float startingRotation = 0f;
+        float distanceToParent = 0f;
 
-        public Vector2 Position { get { return position;} }    
+        public Vector2 Position { get {
+                if (parent == null)
+                    return position;
+                else
+                    return hf_Math.getRotationPosition(degreesFromParent, distanceToParent, -parent.rotation, parent.position);
+            } }    
         public float Width { get { return width; } }
         public float Height { get { return height; } }
-        public float Rotation { get { return rotation; } }
+        public float Rotation { get {
+                if (parent == null)
+                    return rotation;
+                else
+                    return rotation + parent.rotation - startingRotation;
+            } }
         public Vector2 Scale { get { return scale; } }
         public float Radius { get { return (float)Math.Sqrt(Math.Pow(Height / 2, 2) + Math.Pow(Width / 2, 2)); } }
+        public Transform Parent { get { return parent; } }
 
         public Transform(int uo, Vector2 pos, float w, float h, float r) : base(uo, "transform")
         {
@@ -59,5 +74,24 @@ namespace MonoGame_Core.Scripts
             return (Position
                 + hf_Math.getRotationPosition(90, (float)Math.Sqrt(Math.Pow(offSet.X, 2) + Math.Pow(offSet.Y, 2)), -Rotation, new Vector2()) * Scale) * RenderingManager.GameScale;
         }
+
+        public void AttachToTransform(Transform t)
+        {
+            parent = t;
+            startingRotation = t.rotation;
+            degreesFromParent = hf_Math.getAngle(t.position, position) - t.rotation;
+            distanceToParent = Vector2.Distance(position, t.position);
+            position = position - t.position;
+        }
+        public void DetachFromParent()
+        {
+            position = Position;
+            rotation = Rotation;
+            parent = null;
+            degreesFromParent = 0;
+            startingRotation = 0;
+            
+        }
+
     }
 }

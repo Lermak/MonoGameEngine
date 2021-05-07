@@ -37,7 +37,7 @@ namespace MonoGame_Core.Scripts
         public int OrderInLayer { get { return orderInLayer; } }
         public Color Color { get { return color; } }
         public Transform Transform { get { return transform; } }
-        public Vector2 Offset { get { return Offset; } }
+        public Vector2 Offset { get { return offSet; } }
         public Vector2 DrawArea { get { return drawArea; } }
         public string Shader { get { return shader; } 
             set {

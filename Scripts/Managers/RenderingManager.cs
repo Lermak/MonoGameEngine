@@ -70,7 +70,8 @@ namespace MonoGame_Core.Scripts
                             .ThenBy(s => s.Layer)
                             .ThenBy(s => s.Transform.Position.Y)
                             .ThenBy(s => s.OrderInLayer)
-                            .Where(s=>s.Cameras.Contains(c));
+                            .Where(s=> s.Cameras.Contains(c))
+                            .Where(s=> Vector2.Distance(s.Transform.Position, c.Transform.Position) <= s.Transform.Radius + c.Transform.Radius);
 
                 foreach (SpriteRenderer sr in s)
                 {
