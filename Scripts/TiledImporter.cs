@@ -37,11 +37,13 @@ namespace MonoGame_Core.Scripts
                 {
                     mapArr[x, y] = int.Parse(row[x]);
                     int l = int.Parse(doc.ChildNodes[1].ChildNodes[0].Attributes[0].Value)-1;
+                    string name = "TileX" + x + "Y" + y + "L" + doc.ChildNodes[1].ChildNodes[0].Attributes[0].Value;
+                    Vector2 pos = new Vector2(imageWidth * x - width * imageWidth / 2, imageHeight * y - height * imageHeight / 2);
                     switch (int.Parse(row[x]))
                     {
                         case 2:
-                            SceneManager.CurrentScene.GameObjects.Add("TileX"+x+"Y"+y+"L"+doc.ChildNodes[1].ChildNodes[0].Attributes[0].Value, new TestStaticObject("Test", "staticTest"));
-                            ((WorldObject)SceneManager.CurrentScene.GameObjects["TileX" + x + "Y" + y + "L" + doc.ChildNodes[1].ChildNodes[0].Attributes[0].Value]).Transform.Place(new Vector2(imageWidth * x - width * imageWidth / 2, imageHeight * y - height * imageHeight / 2));
+                            SceneManager.CurrentScene.GameObjects.Add(name, new TestStaticObject("Test"));
+                            ((WorldObject)SceneManager.CurrentScene.GameObjects[name]).Transform.Place(pos);
                             CollisionManager.TileMap[x, y, l] = true;
                             break;
                     }
@@ -51,7 +53,5 @@ namespace MonoGame_Core.Scripts
 
             return;
         }
-
-
     }
 }

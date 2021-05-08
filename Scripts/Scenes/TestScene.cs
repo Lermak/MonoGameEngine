@@ -49,8 +49,8 @@ namespace MonoGame_Core.Scripts
 
             GameObjects = new Dictionary<string, GameObject>();
             GameObjects.Add("test", new TestObject("Test", "testObj"));
-            GameObjects.Add("testStatic", new TestStaticObject("Test", "testStatic"));
-            GameObjects.Add("testStatic2", new TestStaticObject("Test", "testStatic"));
+            GameObjects.Add("testStatic", new TestStaticObject("Test"));
+            GameObjects.Add("testStatic2", new TestStaticObject("Test"));
             GameObjects.Add("BG", new WorldObject("BG", "Background", new Vector2(1920,1080), new Vector2(), 0));
             ((WorldObject)GameObjects["BG"]).SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);
             ((WorldObject)GameObjects["testStatic"]).Transform.Place(new Vector2(100, 10));
