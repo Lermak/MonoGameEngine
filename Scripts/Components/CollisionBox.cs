@@ -45,6 +45,16 @@ namespace MonoGame_Core.Scripts
             height = transform.Height;
         }
 
+        public CollisionBox(Transform trans, string name) : base(0, name, true)
+        {
+            transform = trans;
+            gameObject = null;
+            checkCollision = true;
+            offset = new Vector2();
+            width = transform.Width;
+            height = transform.Height;
+        }
+
         public override List<Vector2> Axies()
         {
             return new List<Vector2>() { hf_Math.getRotationPosition(0, 1, -transform.Rotation, new Vector2()), hf_Math.getRotationPosition(90, 1, -transform.Rotation, new Vector2()) };

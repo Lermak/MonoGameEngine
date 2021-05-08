@@ -56,7 +56,7 @@ namespace MonoGame_Core.Scripts
                 {
                     foreach(string s in ca.OtherBoxs)
                     {
-                        if(s == b2.Name)
+                        if(b2.Name == "" || s == b2.Name)
                         {
                             foreach(collisionAction c in ca.Actions)
                             {
@@ -67,7 +67,25 @@ namespace MonoGame_Core.Scripts
                 }
             }
         }
-
+        public void RunCollisionActions(Collider b1, string t, Vector2 v)
+        {
+            foreach (CollisionActions ca in myActions)
+            {
+                if (ca.MyBox == b1.Name)
+                {
+                    foreach (string s in ca.OtherBoxs)
+                    {
+                        if(t == s)
+                        {
+                            foreach (collisionAction c in ca.Actions)
+                            {
+                                c(b1, null, v);
+                            }
+                        }
+                    }
+                }
+            }
+        }
         public void Update(GameTime gt)
         {
            
