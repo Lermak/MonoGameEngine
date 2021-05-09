@@ -11,7 +11,7 @@ namespace MonoGame_Core.Scripts
 {
     public static class CollisionManager
     {
-        public enum CollisionType { AABB, SAT, TileMap }
+        public enum CollisionType { AABB, SAT, TileMapFree, TileMap, IsometricFree, Isometric }
         public static CollisionType CollisionDetection = CollisionType.SAT;
 
         public static List<Collider> ActiveStaticColliders;
@@ -39,13 +39,28 @@ namespace MonoGame_Core.Scripts
             ActiveMovingColliders.Add(c);
         }
 
-        static bool AABBCollision(CollisionBox b1, CollisionBox b2)
+        static bool AABBCollision(CollisionBox b1, CollisionBox b2, out Vector2 p)
         {
-            Transform t1 = ((WorldObject)b1.GameObject).Transform;
-            RigidBody rb1 = ((WorldObject)b1.GameObject).RigidBody;
+            p = new Vector2();
 
-            Transform t2 = ((WorldObject)b2.GameObject).Transform;
-            RigidBody rb2 = ((WorldObject)b2.GameObject).RigidBody;
+            foreach(Vector2 v in b1.Verticies())
+            if (v.X > b2.TopLeft().X
+                && v.X < b2.TopRight().X
+                && v.Y > b2.TopRight().Y
+                && v.Y < b2.BottomLeft().Y)
+                {
+                    if (b1.Transform.Position.X > b2.Transform.Position.X)
+                        p.X = b1.Transform.Position.X - b2.Transform.Position.X;
+                    else
+                        p.X = b2.Transform.Position.X - b1.Transform.Position.X;
+
+                    if (b1.Transform.Position.Y > b2.Transform.Position.Y)
+                        p.X = b1.Transform.Position.Y - b2.Transform.Position.Y;
+                    else
+                        p.X = b2.Transform.Position.Y - b1.Transform.Position.Y;
+
+                    return true;
+                }
 
 
 
@@ -143,9 +158,9 @@ namespace MonoGame_Core.Scripts
             {
                 PerformSATCollision();
             }
-            else if(CollisionDetection == CollisionType.TileMap)
+            else if(CollisionDetection == CollisionType.TileMapFree)
             {
-                PerformTileCollision();
+                PerformFreeTileCollision();
             }
             ActiveMovingColliders.Clear();
             ActiveStaticColliders.Clear();
@@ -205,7 +220,7 @@ namespace MonoGame_Core.Scripts
             }
         }
 
-        private static void PerformTileCollision()
+        private static void PerformFreeTileCollision()
         {
             Vector2 p = new Vector2();
             foreach(Collider c in ActiveMovingColliders)
@@ -213,19 +228,26 @@ namespace MonoGame_Core.Scripts
                 Vector2 pos = c.Transform.Position + c.Offset;
                 Vector2 gridPos = new Vector2((pos.X + TileSize.X / 2 + TileMap.GetUpperBound(0) * TileSize.X / 2)/TileSize.X, (pos.Y + TileSize.Y / 2 + TileMap.GetUpperBound(1) * TileSize.Y / 2) / TileSize.Y);
 
-
+                List<Vector2> collisionChecks = new List<Vector2>();
                 for (int y = (int)gridPos.Y - 1; y <= (int)gridPos.Y + 1; y++)//check surrounding tiles on y axis
                     if (y >= 0 && y < TileMap.GetUpperBound(1))//if they are within the tilemap
                         for (int x = (int)gridPos.X - 1; x <= (int)gridPos.X + 1; x++)//and the surrounding tiles on the x axis
                             if (x >= 0 && x < TileMap.GetUpperBound(0))//that are within the tile map
-                                if (TileMap[x,y,c.Transform.Layer] == true)//if there is collision there
+                                if (TileMap[x, y, c.Transform.Layer] == true)//if there is collision there
                                 {
-                                    //create a collision box
-                                    CollisionBox cb = new CollisionBox(new Transform(0, new Vector2(TileSize.X * x - TileSize.X / 2 - TileSize.X * TileMap.GetUpperBound(0) / 2, TileSize.Y * y - TileSize.Y / 2 - TileSize.Y * TileMap.GetUpperBound(1) / 2), TileSize.X, TileSize.Y, 0, c.Transform.Layer), "TileWall"); ;
-                                    //test collision against it
-                                    if(SATcollision(c, cb, out p))
-                                        ((CollisionHandler)c.GameObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(c, cb, p);
+                                    collisionChecks.Add(new Vector2(TileSize.X * x - TileSize.X / 2 - TileSize.X * TileMap.GetUpperBound(0) / 2, TileSize.Y * y - TileSize.Y / 2 - TileSize.Y * TileMap.GetUpperBound(1) / 2));
                                 }
+
+                IEnumerable<Vector2> cc = collisionChecks.OrderBy(s => Vector2.Distance(s, c.Transform.Position));
+
+                foreach(Vector2 v in cc)
+                {
+                    //create a collision box
+                    CollisionBox cb = new CollisionBox(new Transform(0, v, TileSize.X, TileSize.Y, 0, c.Transform.Layer), "TileWall"); ;
+                    //test collision against it
+                    if(SATcollision(c, cb, out p))
+                        ((CollisionHandler)c.GameObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(c, cb, p);
+                }
             }
         }
     }

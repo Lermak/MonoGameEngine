@@ -10,7 +10,7 @@ namespace MonoGame_Core.Scripts
 {
     public static class RenderingManager
     {
-        public enum RenderOrder { TopDown, YSort, Isometric }
+        public enum RenderOrder { SideScrolling, TopDown, Isometric }
         public const float WIDTH = 1920;
         public const float HEIGHT = 1080;
 
@@ -18,7 +18,7 @@ namespace MonoGame_Core.Scripts
         public static Vector2 BaseScale = new Vector2(1, 1);
         public static Vector2 WindowScale = new Vector2(1, 1);
         public static float GlobalFade = 255;
-        public static RenderOrder RenderingOrder = RenderOrder.TopDown;
+        public static RenderOrder RenderingOrder = RenderOrder.SideScrolling;
 
         public static List<RenderTarget2D> RenderTargets;
         public static List<SpriteRenderer> Sprites;
@@ -132,13 +132,13 @@ namespace MonoGame_Core.Scripts
 
             foreach (Camera c in cameras)
             {
-                if (RenderingOrder == RenderOrder.TopDown)
+                if (RenderingOrder == RenderOrder.SideScrolling)
                     s = Sprites.OrderBy(s => s.Shader)
                                 .ThenBy(s => s.Transform.Layer)
                                 .ThenBy(s => s.OrderInLayer)
                                 .Where(s => s.Cameras.Contains(c))
                                 .Where(s => Vector2.Distance(s.Transform.Position, c.Transform.Position) <= s.Transform.Radius + c.Transform.Radius);
-                else if (RenderingOrder == RenderOrder.YSort)
+                else if (RenderingOrder == RenderOrder.TopDown)
                     s = Sprites.OrderBy(s => s.Shader)
                                 .ThenBy(s => s.Transform.Layer)
                                 .ThenBy(s => s.Transform.Position.Y)
