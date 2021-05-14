@@ -9,8 +9,14 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoGame_Core.Scripts
 {
+    /// <summary>
+    /// Manageages the current scene, scene transitions and the state of the scene
+    /// </summary>
     static class SceneManager
     {
+        /// <summary>
+        /// Determines how to handle the game loop based on what the scene is performing
+        /// </summary>
         public enum State { Running, Paused, SceneOut, SceneIn };
         public static Scene CurrentScene = new TestScene();
         public static Scene NextScene = null;
@@ -33,6 +39,10 @@ namespace MonoGame_Core.Scripts
             NextScene = s;
         }
 
+        /// <summary>
+        /// Run the update of the current scene, or load the next schene if it is null
+        /// </summary>
+        /// <param name="gt">Game Time</param>
         public static void Update(float gt)
         {
             if(CurrentScene == null)

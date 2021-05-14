@@ -85,15 +85,14 @@ namespace MonoGame_Core.Scripts
             distanceToParent = Vector2.Distance(position, t.position);
             position = position - t.position;
         }
+
         public void DetachFromParent()
         {
             position = Position;
             rotation = Rotation;
             parent = null;
             degreesFromParent = 0;
-            startingRotation = 0;
-            
+            startingRotation = 0;          
         }
-
     }
 }

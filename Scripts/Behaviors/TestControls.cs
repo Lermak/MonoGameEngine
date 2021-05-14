@@ -35,8 +35,8 @@ namespace MonoGame_Core.Scripts
             else if (state.IsKeyDown(Keys.E))
                 r = (1 * gt);
 
-            rigidBody.UpdateVelocity(v);
-            rigidBody.UpdateRotationalVelocity(r);
+            rigidBody.MoveVelocity = v;
+            rigidBody.AngularVelocity = r;
             base.Update(gt);
         }
     }

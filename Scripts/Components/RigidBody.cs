@@ -17,8 +17,8 @@ namespace MonoGame_Core.Scripts
 
         public Transform Transform { get { return transform; } }
         public RigidBodyType BodyType { get { return bodyType; } }
-        public float AngularVelocity { get { return angularVelocity; } }
-        public Vector2 MoveVelocity { get { return moveVelocity; } }
+        public float AngularVelocity { get { return angularVelocity; } set { angularVelocity = value; } }
+        public Vector2 MoveVelocity { get { return moveVelocity; } set { moveVelocity = value; } }
         public float Mass { get { return mass; } }
         public float Force { get { return mass * moveVelocity.Length(); } }
 
@@ -44,16 +44,6 @@ namespace MonoGame_Core.Scripts
             Transform.Move(moveVelocity);
             transform.Rotate(angularVelocity);
             base.Update(gt);
-        }
-
-        public void UpdateVelocity(Vector2 v)
-        {
-            moveVelocity = v;
-        }
-
-        public void UpdateRotationalVelocity(float r)
-        {
-            angularVelocity = r;
         }
     }
 }

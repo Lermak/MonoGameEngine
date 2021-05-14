@@ -5,6 +5,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MonoGame_Core.Scripts
 {
+    /// <summary>
+    /// A wrapper class to help manage user input functions
+    /// </summary>
     public static class InputManager
     {
         const float DOUBLE_CLICK_DELAY = 1f;
@@ -25,6 +28,11 @@ namespace MonoGame_Core.Scripts
             return currentKeyboardState.IsKeyDown(k);
         }
 
+        /// <summary>
+        /// A key is triggered if it was pressed this loop
+        /// </summary>
+        /// <param name="k">The key to check</param>
+        /// <returns>true if the key was pressed this loop</returns>
         public static bool IsKeyTriggered(Keys k)
         {
             return currentKeyboardState.IsKeyDown(k) && !previousKeyboardState.IsKeyDown(k);
@@ -47,7 +55,11 @@ namespace MonoGame_Core.Scripts
 
             return false;
         }
-
+        /// <summary>
+        /// A mouse button is triggered if it was pressed this loop
+        /// </summary>
+        /// <param name="k">The mouse button to check</param>
+        /// <returns>true if the mouse button was pressed this loop</returns>
         public static bool IsMouseTriggered(MouseKeys b)
         {
             if (b == MouseKeys.LeftButton)
@@ -72,6 +84,10 @@ namespace MonoGame_Core.Scripts
             currentMouseState = new MouseState();
         }
 
+        /// <summary>
+        /// Check if a double click has occured, and change the double click flag to true if it has.
+        /// </summary>
+        /// <param name="gt">Game Time</param>
         private static void checkDoubleClick(float gt)
         {
             if (IsDoubleClick)
@@ -104,6 +120,10 @@ namespace MonoGame_Core.Scripts
             }
         }
 
+        /// <summary>
+        /// Get the current state of they keyboard, and move the current state to the previous
+        /// </summary>
+        /// <param name="gt">Game Time</param>
         public static void Update(float gt)
         {
             previousKeyboardState = currentKeyboardState;

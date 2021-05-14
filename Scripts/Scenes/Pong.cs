@@ -16,10 +16,10 @@ namespace MonoGame_Core.Scripts
 
             Fonts["BasicFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
 
-            GameObjects.Add("TopWall", new Wall("TopWall", new Vector2(0, 100 - RenderingManager.HEIGHT / 2), new Vector2(RenderingManager.WIDTH, 200)));
-            GameObjects.Add("BottomWall", new Wall("BottomWall", new Vector2(0, 100 + RenderingManager.HEIGHT / 2), new Vector2(RenderingManager.WIDTH, 200)));
-            GameObjects.Add("LeftWall", new Wall("LeftWall", new Vector2(-RenderingManager.WIDTH/2-100, 0), new Vector2(200, RenderingManager.HEIGHT)));
-            GameObjects.Add("RightWall", new Wall("RightWall", new Vector2(RenderingManager.WIDTH/2+100,0), new Vector2(200, RenderingManager.HEIGHT)));
+            GameObjects.Add("TopWall", new Wall("TopWall", new Vector2(0, 100 - RenderingManager.HEIGHT / 2), new Vector2(RenderingManager.WIDTH, 200), 1));
+            GameObjects.Add("BottomWall", new Wall("BottomWall", new Vector2(0, 100 + RenderingManager.HEIGHT / 2), new Vector2(RenderingManager.WIDTH, 200), 1));
+            GameObjects.Add("LeftWall", new Wall("LeftWall", new Vector2(-RenderingManager.WIDTH/2-100, 0), new Vector2(200, RenderingManager.HEIGHT), 1));
+            GameObjects.Add("RightWall", new Wall("RightWall", new Vector2(RenderingManager.WIDTH/2+100,0), new Vector2(200, RenderingManager.HEIGHT), 1));
 
             GameObjects.Add("PlayerScore", new Score("BasicFont", "PlayerScore", new Vector2(-RenderingManager.WIDTH / 2 + 200, -RenderingManager.HEIGHT / 2 + 50), new Vector2(100, 50)));
             GameObjects.Add("OpponentScore", new Score("BasicFont", "PlayerScore", new Vector2(RenderingManager.WIDTH / 2 - 200, -RenderingManager.HEIGHT / 2 + 50), new Vector2(100, 50)));

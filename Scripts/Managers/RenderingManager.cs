@@ -8,24 +8,69 @@ using Microsoft.Xna.Framework.Content;
 
 namespace MonoGame_Core.Scripts
 {
+    /// <summary>
+    /// Handles the orginization and rendering of all spriteRenders to their sources
+    /// </summary>
     public static class RenderingManager
     {
+        /// <summary>
+        /// Rendering order determines how items will be layered and orgized
+        /// </summary>
         public enum RenderOrder { SideScrolling, TopDown, Isometric }
+        /// <summary>
+        /// Width of the target BackBuffer
+        /// </summary>
         public const float WIDTH = 1920;
+        /// <summary>
+        /// Heigh of the target BackBuffer
+        /// </summary>
         public const float HEIGHT = 1080;
 
+        /// <summary>
+        /// The global scale of the game after adjusting for the window size
+        /// </summary>
         public static Vector2 GameScale { get { return WindowScale * BaseScale; } }
+        /// <summary>
+        /// The global scale of the game, before adjusting for window size
+        /// </summary>
         public static Vector2 BaseScale = new Vector2(1, 1);
+        /// <summary>
+        /// The scale of the window compaired to the target size
+        /// </summary>
         public static Vector2 WindowScale = new Vector2(1, 1);
+        /// <summary>
+        /// Global color value applied to produce a fade effect between scenes
+        /// </summary>
         public static float GlobalFade = 255;
+        /// <summary>
+        /// Set the rendering order
+        /// </summary>
         public static RenderOrder RenderingOrder = RenderOrder.SideScrolling;
 
+        /// <summary>
+        /// Render targets are what Cameras use to store image data
+        /// </summary>
         public static List<RenderTarget2D> RenderTargets;
+        /// <summary>
+        /// The list of all game sprites
+        /// </summary>
         public static List<SpriteRenderer> Sprites;
+        /// <summary>
+        /// The batch to use for sending clustered sprite data to render targets
+        /// **NOTE** consider using multiple to allow for multiple processes
+        /// </summary>
         private static SpriteBatch spriteBatch;
+        /// <summary>
+        /// MonoGame's object for handling communication with the graphics card
+        /// </summary>
         private static GraphicsDevice graphicsDevice;
         
 
+        /// <summary>
+        /// Setup the current state of the rendering manager.
+        /// This includes creating any render targets that cameras will need
+        /// </summary>
+        /// <param name="gd">Game Time</param>
         public static void Initilize(GraphicsDevice gd)
         {
             graphicsDevice = gd;
@@ -43,12 +88,23 @@ namespace MonoGame_Core.Scripts
                 RenderTargetUsage.PreserveContents));
         }
 
+        /// <summary>
+        /// Remove all items from the list of sprites
+        /// reset the spriteBatch
+        /// </summary>
         public static void Clear()
         {
             spriteBatch = new SpriteBatch(graphicsDevice);
             Sprites = new List<SpriteRenderer>();
         }
 
+        /// <summary>
+        /// Update the window scale to reperesent the current window size
+        /// Set the target, then sort all items by their camera
+        /// Render all items to their designated targets
+        /// Draw all cameras
+        /// </summary>
+        /// <param name="gt"></param>
         public static void Draw(float gt)
         {
             var x = graphicsDevice.GetRenderTargets();
@@ -124,6 +180,9 @@ namespace MonoGame_Core.Scripts
             spriteBatch.End();
         }
 
+        /// <summary>
+        /// Sort the sprite list based on the current sort type
+        /// </summary>
         public static void Sort()
         {
             IEnumerable<Camera> cameras = CameraManager.Cameras.OrderByDescending(s => s.Target);
@@ -155,6 +214,10 @@ namespace MonoGame_Core.Scripts
             Sprites = s.ToList();
         }
 
+        /// <summary>
+        /// Changes the current Render Target
+        /// </summary>
+        /// <param name="Target">new target id</param>
         private static void SetTarget(int Target)
         {
             if (Target == -1)

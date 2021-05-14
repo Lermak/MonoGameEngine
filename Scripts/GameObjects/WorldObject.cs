@@ -13,7 +13,7 @@ namespace MonoGame_Core.Scripts
         {           
             componentHandler.AddComponent(new CollisionHandler(0, this));           
             componentHandler.AddComponent(new Transform(0, pos, size.X, size.Y, 0, layer));
-            componentHandler.AddComponent(new RigidBody(this, RigidBody.RigidBodyType.Dynamic, 0));
+            componentHandler.AddComponent(new RigidBody(this, RigidBody.RigidBodyType.Static, 0));
             componentHandler.AddComponent(new SpriteRenderer(texID,
                                             Transform,
                                             new Vector2(0, 0),

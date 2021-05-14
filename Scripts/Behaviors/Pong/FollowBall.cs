@@ -23,7 +23,7 @@ namespace MonoGame_Core.Scripts
             v.Y = Math.Min(Math.Abs(toFollow.RigidBody.MoveVelocity.Y), speed*TimeManager.DeltaTime);
             if (toFollow.RigidBody.MoveVelocity.Y < 1)
                 v.Y *= -1;
-            rigidBody.UpdateVelocity(v);
+            rigidBody.MoveVelocity = v;
             base.Update(gt);
         }
     }

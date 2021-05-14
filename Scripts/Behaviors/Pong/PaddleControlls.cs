@@ -26,7 +26,7 @@ namespace MonoGame_Core.Scripts
                 v.Y = (speed * gt);
 
 
-            rigidBody.UpdateVelocity(v);
+            rigidBody.MoveVelocity = v;
             base.Update(gt);
         }
     }

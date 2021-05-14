@@ -16,7 +16,7 @@ namespace MonoGame_Core.Scripts
         public void Score(bool forPlayer)
         {
             Transform.Place(new Vector2());
-            RigidBody.UpdateVelocity(new Vector2());
+            RigidBody.MoveVelocity = new Vector2();
             ((BallLaunch)behaviorHandler.GetBehavior("ballLaunch")).isLanch = false;
             if (forPlayer)
                 ((Score)SceneManager.CurrentScene.GameObjects["PlayerScore"]).Points++;

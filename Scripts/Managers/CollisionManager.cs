@@ -9,24 +9,38 @@ using System.Linq;
 
 namespace MonoGame_Core.Scripts
 {
+    /// <summary>
+    /// Maintains a collection of moving and static colliders
+    /// moving colliders check collision with all other colliders
+    /// static colliders don't check collision
+    /// When collision is detected, a collision event is posted to the detecting object's collisionHandler component
+    /// </summary>
     public static class CollisionManager
     {
+        //CollisionType will determine what collision detection method to utilize
         public enum CollisionType { AABB, SAT, TileMapFree, TileMap, IsometricFree, Isometric }
         public static CollisionType CollisionDetection = CollisionType.SAT;
 
         public static List<Collider> ActiveStaticColliders;
         public static List<Collider> ActiveMovingColliders;
+
+        //These can be vistigial variabls in a non-tile based game. 
         public static bool[,,] TileMap;
         public static Vector2 TileSize;
-        public static void Initilize()
-        {
-            Clear();
-        }
 
-        public static void Clear()
+        public static void Initilize()
         {
             ActiveStaticColliders = new List<Collider>();
             ActiveMovingColliders = new List<Collider>();
+        }
+
+        /// <summary>
+        /// Remove all elements from the moving and static collider lists
+        /// </summary>
+        public static void Clear()
+        {
+            ActiveStaticColliders.Clear();
+            ActiveMovingColliders.Clear();
         }
 
         public static void AddStaticCollider(Collider c)
@@ -39,6 +53,13 @@ namespace MonoGame_Core.Scripts
             ActiveMovingColliders.Add(c);
         }
 
+        /// <summary>
+        /// Collision for Axis Aligned Bounding Box collision detection
+        /// </summary>
+        /// <param name="b1">The current detecting collider</param>
+        /// <param name="b2">The collider to compair against</param>
+        /// <param name="p">The vector of penitration</param>
+        /// <returns>true when collision has occured</returns>
         static bool AABBCollision(CollisionBox b1, CollisionBox b2, out Vector2 p)
         {
             p = new Vector2();
@@ -62,22 +83,42 @@ namespace MonoGame_Core.Scripts
                     return true;
                 }
 
-
-
             return false;
         }
 
+        /// <summary>
+        /// Determines if a sphere and box are overlaping
+        /// </summary>
+        /// <param name="s1">The detecting sphere</param>
+        /// <param name="b2">The box to check against</param>
+        /// <param name="p">The penetration vector</param>
+        /// <returns>true when collision occurs</returns>
         static bool SphereToBoxCollision(CollisionSphere s1, CollisionBox b2, out Vector2 p)
         {
             p = new Vector2();
             return false;
         }
+
+        /// <summary>
+        /// Determine if two objects are close enough to have collision be possible
+        /// </summary>
+        /// <param name="b1">Collision Box 1</param>
+        /// <param name="b2">Collision Box 2</param>
+        /// <returns>true if collision is possible</returns>
         static bool distanceHuristic(Collider b1, Collider b2)
         {
             if (Vector2.Distance(b1.Transform.Position, b2.Transform.Position) > b1.Radius + b2.Radius)
                 return false;
             else return true;
         }
+
+        /// <summary>
+        /// Perform Seperating Axis Theorum collision detection
+        /// </summary>
+        /// <param name="c1">Current checking collider</param>
+        /// <param name="c2">Collider to check against</param>
+        /// <param name="penitrationVector">The penetration vector</param>
+        /// <returns>true if collision occurs</returns>
         public static bool SATcollision(Collider c1, Collider c2, out Vector2 penitrationVector)
         {
             //find the rotated vectors to use for dot products and put them in a list
@@ -152,6 +193,11 @@ namespace MonoGame_Core.Scripts
             return true;
         }
 
+        /// <summary>
+        /// Perform collision detection for all currently moving colliders
+        /// Type of collision detection is determined by CollisionType
+        /// </summary>
+        /// <param name="gt">Game Time</param>
         public static void Update(float gt)
         {
             if (CollisionDetection == CollisionType.SAT)
@@ -166,6 +212,9 @@ namespace MonoGame_Core.Scripts
             ActiveStaticColliders.Clear();
         }
 
+        /// <summary>
+        /// Performs the collision detection on all moving colliders utilizing the SATCollision method
+        /// </summary>
         private static void PerformSATCollision()
         {
             foreach (Camera c in CameraManager.Cameras)
@@ -220,6 +269,10 @@ namespace MonoGame_Core.Scripts
             }
         }
 
+        /// <summary>
+        /// Performs collision detection with the tilemap for any moving objects
+        /// This collision should only be used if objects are not constrained to move by the tilemap grid, but can move freely
+        /// </summary>
         private static void PerformFreeTileCollision()
         {
             Vector2 p = new Vector2();

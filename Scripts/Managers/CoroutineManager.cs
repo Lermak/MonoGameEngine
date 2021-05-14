@@ -4,9 +4,17 @@ using System.Text;
 
 namespace MonoGame_Core.Scripts
 {
+    /// <summary>
+    /// Class to manage the run cycles of coroutines
+    /// </summary>
     public static class CoroutineManager
     {
+        /// <summary>
+        /// Determines if a coroutine should progress or wait
+        /// </summary>
         public enum CoroutineState { Paused, Running }
+
+
         public struct Coroutine
         {
             public string Name;
@@ -15,6 +23,13 @@ namespace MonoGame_Core.Scripts
             public float TimeBetweenSteps;
             public IEnumerator<bool> Routine;
 
+            /// <summary>
+            /// Create a new coroutine
+            /// </summary>
+            /// <param name="routine">The enumerator function to iterate through</param>
+            /// <param name="name">The coroutine name</param>
+            /// <param name="timeBetween">Delay in seconds between iterations</param>
+            /// <param name="start">Start immediately</param>
             public Coroutine(IEnumerator<bool> routine, string name, float timeBetween, bool start)
             {
                 if (start)
@@ -27,8 +42,13 @@ namespace MonoGame_Core.Scripts
                 TimeSinceLast = 0;
             }
         }
+
         static List<string> keys = new List<string>();
         static Dictionary<string, Coroutine> coroutines = new Dictionary<string, Coroutine>();
+
+        /// <summary>
+        /// Remove all coroutines from the list
+        /// </summary>
         public static void Clear()
         {
             coroutines.Clear();
@@ -41,11 +61,21 @@ namespace MonoGame_Core.Scripts
                 coroutines[name] = new Coroutine(coroutine, name, timeBetween, start);
             }
         }
+
+        /// <summary>
+        /// Check if a coroutine is currently running
+        /// </summary>
+        /// <param name="coroutine">The name of the coroutine</param>
+        /// <returns>true if the coroutine' CoroutineStat is Running</returns>
         public static bool IsRunning(string coroutine)
         {
             return coroutines.ContainsKey(coroutine) && coroutines[coroutine].State == CoroutineState.Running;
         }
 
+        /// <summary>
+        /// Changes the named coroutine's CoroutineState to Paused
+        /// </summary>
+        /// <param name="coroutine">The coroutine's name</param>
         public static void Pause(string coroutine)
         {
             if (coroutines.ContainsKey(coroutine))
@@ -56,6 +86,10 @@ namespace MonoGame_Core.Scripts
             }
         }
 
+        /// <summary>
+        /// Changes the named coroutine's CoroutineState to Running
+        /// </summary>
+        /// <param name="coroutine">The coroutine's name</param>
         public static void Start(string coroutine)
         {
             if (coroutines.ContainsKey(coroutine))
@@ -68,6 +102,10 @@ namespace MonoGame_Core.Scripts
             }
         }
 
+        /// <summary>
+        /// Removes a coroutine from the list of coroutines
+        /// </summary>
+        /// <param name="coroutine">The coroutine's name</param>
         public static void Stop(string coroutine)
         {
             if (coroutines.ContainsKey(coroutine))
@@ -81,6 +119,11 @@ namespace MonoGame_Core.Scripts
             coroutines = new Dictionary<string, Coroutine>();
         }
 
+        /// <summary>
+        /// Iterate through all coroutines that are currently running by one loop, provided there has been enough delay
+        /// If a coroutine is finished, remove it from the list
+        /// </summary>
+        /// <param name="gt">Game Time</param>
         public static void Update(float gt)
         {
             List<string> k = new List<string>(coroutines.Keys);

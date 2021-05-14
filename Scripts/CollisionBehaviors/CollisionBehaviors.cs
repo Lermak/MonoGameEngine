@@ -19,11 +19,11 @@ namespace MonoGame_Core.Scripts
         public static void Reflect(Collider a, Collider b, Vector2 p)
         {
             UndoMinPen(a, b, p);
-            ((WorldObject)a.GameObject).RigidBody.UpdateVelocity(((WorldObject)a.GameObject).RigidBody.MoveVelocity * 1.1f);
+            ((WorldObject)a.GameObject).RigidBody.MoveVelocity = (((WorldObject)a.GameObject).RigidBody.MoveVelocity * 1.1f);
             if(Math.Abs(p.Y) >= Math.Abs(p.X))
-                ((WorldObject)a.GameObject).RigidBody.UpdateVelocity(((WorldObject)a.GameObject).RigidBody.MoveVelocity * new Vector2(1, -1));
+                ((WorldObject)a.GameObject).RigidBody.MoveVelocity = (((WorldObject)a.GameObject).RigidBody.MoveVelocity * new Vector2(1, -1));
             else
-                ((WorldObject)a.GameObject).RigidBody.UpdateVelocity(((WorldObject)a.GameObject).RigidBody.MoveVelocity * new Vector2(-1, 1));
+                ((WorldObject)a.GameObject).RigidBody.MoveVelocity = (((WorldObject)a.GameObject).RigidBody.MoveVelocity * new Vector2(-1, 1));
         }
 
         public static void ScorePoints(Collider a, Collider b, Vector2 p)

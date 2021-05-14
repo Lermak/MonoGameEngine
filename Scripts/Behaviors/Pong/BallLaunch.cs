@@ -22,12 +22,13 @@ namespace MonoGame_Core.Scripts
         {
             if (!isLanch && InputManager.IsKeyPressed(Keys.Space))
             {
-                Random r = new Random();                
+                Random r = new Random();
                 isLanch = true;
                 Vector2 dir = new Vector2((r.Next(-1, 1) + .1f), (r.Next(-1, 1) + .1f));
                 dir.Normalize();
-                rigidBody.UpdateVelocity(new Vector2(speed, speed) * dir * TimeManager.DeltaTime);
-            }            
+                rigidBody.MoveVelocity = (new Vector2(speed, speed) * dir * TimeManager.DeltaTime);
+            }
+
             base.Update(gt);
         }
     }

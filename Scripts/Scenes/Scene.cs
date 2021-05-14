@@ -39,7 +39,7 @@ namespace MonoGame_Core.Scripts
                 go.Initilize();
             }
 
-            RenderingManager.Sort();
+            RenderingManager.Sort();//Sort the items in the renderingManager, this should only be done when new items are added
         }
 
         public virtual void OnLoad()
