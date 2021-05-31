@@ -10,7 +10,7 @@ namespace MonoGame_Core.Scripts
             ComponentHandler.AddComponent(new CollisionSphere(0, "Ball", this, new Vector2(), true, false, false));
             CollisionHandler.myActions.Add(new CollisionActions("Ball", new List<string>() { "TopWall", "BottomWall", "Paddle" }, new List<collisionAction>() { CollisionBehaviors.Reflect }));
             CollisionHandler.myActions.Add(new CollisionActions("Ball", new List<string>() { "LeftWall", "RightWall" }, new List<collisionAction>() { CollisionBehaviors.ScorePoints }));
-            BehaviorHandler.AddBehavior(new BallLaunch(0, RigidBody));
+            BehaviorHandler.AddBehavior(new BallLaunch(this, 0, RigidBody));
         }
 
         public void Score(bool forPlayer)

@@ -27,7 +27,6 @@ namespace MonoGame_Core.Scripts
             RenderingManager.Clear();
             SoundManager.Clear();
             CoroutineManager.Clear();   
-            MainCamera.Initilize();
 
             loadContent();
         }

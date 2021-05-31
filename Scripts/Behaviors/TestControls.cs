@@ -7,12 +7,8 @@ namespace MonoGame_Core.Scripts
     {
         RigidBody rigidBody;
         float speed = 500;
-        public TestControls(int uo, string name, RigidBody rb) : base(uo, name)
+        public TestControls(GameObject go, int uo, string name, RigidBody rb) : base(go, uo, name)
         {           
-            rigidBody = rb;
-        }
-        public TestControls(int uo, RigidBody rb) : base(uo, "testControls")
-        {
             rigidBody = rb;
         }
 

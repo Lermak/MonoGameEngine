@@ -9,7 +9,7 @@ namespace MonoGame_Core.Scripts
         float speed = 500;
         Ball toFollow;
         Transform transform;
-        public FollowBall(int uo, RigidBody rb, Ball b, Transform t) : base(uo, "followBall")
+        public FollowBall(GameObject go, int uo, RigidBody rb, Ball b, Transform t) : base(go, uo, "followBall")
         {
             transform = t;
             rigidBody = rb;

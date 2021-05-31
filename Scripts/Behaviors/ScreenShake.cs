@@ -8,7 +8,7 @@ namespace MonoGame_Core.Scripts
     {
         Transform transform;
 
-        public ScreenShake(int uo, string name, Transform t) : base(uo, name)
+        public ScreenShake(GameObject go, int uo, string name, Transform t) : base(go, uo, name)
         {
             transform = t;
         }

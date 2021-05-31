@@ -19,7 +19,7 @@ namespace MonoGame_Core.Scripts
         {
             cameras = new List<Camera>();
             //MainCamera should always been the 0th element in the cameras list
-            cameras.Add(new Camera("MainCamera", -1, 0, new Transform(0, new Vector2(), RenderingManager.WIDTH, RenderingManager.HEIGHT, 0,0), new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT), new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * -1, new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * 1));
+            cameras.Add(new Camera("MainCamera", -1, 0, RenderingManager.WIDTH, RenderingManager.HEIGHT, new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT), new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * -1, new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * 1));
 
         }
 

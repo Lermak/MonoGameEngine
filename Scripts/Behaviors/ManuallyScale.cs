@@ -8,7 +8,7 @@ namespace MonoGame_Core.Scripts
     {
         Transform myTransform;
 
-        public ManuallyScale(int uo, string name, Transform t) : base(uo, name)
+        public ManuallyScale(GameObject go, int uo, string name, Transform t) : base(go, uo, name)
         {
             myTransform = t;
         }

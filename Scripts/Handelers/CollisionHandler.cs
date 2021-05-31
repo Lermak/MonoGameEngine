@@ -42,7 +42,7 @@ namespace MonoGame_Core.Scripts
         WorldObject myObject;
         public List<CollisionActions> myActions;
 
-        public CollisionHandler(int uo, WorldObject myObj) : base(uo, "collisionHandler")
+        public CollisionHandler(int uo, WorldObject myObj) : base(myObj, uo, "collisionHandler")
         {
             myObject = myObj;
             myActions = new List<CollisionActions>();

@@ -16,7 +16,7 @@ namespace MonoGame_Core.Scripts
         public float Angle { get { return (float)(Math.Acos((Width / 2) / Radius)) * (180 / (float)Math.PI); } }
         public override float Radius { get { return (float)Math.Sqrt(Math.Pow(Height / 2, 2) + Math.Pow(Width / 2, 2)); } }
 
-        public CollisionBox(string name, List<string> t, bool check, Vector2 off, Transform transform, float width, float height, int uo, bool isStatic) : base(uo, name, isStatic)
+        public CollisionBox(GameObject go, string name, List<string> t, bool check, Vector2 off, Transform transform, float width, float height, int uo, bool isStatic) : base(go, uo, name, isStatic)
         {
             checkCollision = check;
             offset = off;
@@ -25,7 +25,7 @@ namespace MonoGame_Core.Scripts
             this.height = height;
         }
 
-        public CollisionBox(string name, int uo, GameObject myObj, Transform myTrans, bool isStatic) : base(uo, name, isStatic)
+        public CollisionBox(GameObject go, string name, int uo, GameObject myObj, Transform myTrans, bool isStatic) : base(go, uo, name, isStatic)
         {
             transform = myTrans;
             gameObject = myObj;
@@ -35,7 +35,7 @@ namespace MonoGame_Core.Scripts
             height = myTrans.Height;
         }
 
-        public CollisionBox(WorldObject myObj, int uo, string name, bool isStatic) : base(uo, name, isStatic)
+        public CollisionBox(WorldObject myObj, int uo, string name, bool isStatic) : base(myObj, uo, name, isStatic)
         {                       
             transform = myObj.Transform;
             gameObject = myObj;
@@ -45,7 +45,7 @@ namespace MonoGame_Core.Scripts
             height = transform.Height;
         }
 
-        public CollisionBox(Transform trans, string name) : base(0, name, true)
+        public CollisionBox(GameObject go, Transform trans, string name) : base(go, 0, name, true)
         {
             transform = trans;
             gameObject = null;

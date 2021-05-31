@@ -9,11 +9,8 @@ namespace MonoGame_Core.Scripts
         RigidBody rigidBody;
         float speed = 300;
         public bool isLanch = false;
-        public BallLaunch(int uo, string name, RigidBody rb) : base(uo, name)
-        {
-            rigidBody = rb;
-        }
-        public BallLaunch(int uo, RigidBody rb) : base(uo, "ballLaunch")
+
+        public BallLaunch(GameObject go, int uo, RigidBody rb) : base(go, uo, "ballLaunch")
         {
             rigidBody = rb;
         }

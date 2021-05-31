@@ -47,8 +47,9 @@ namespace MonoGame_Core.Scripts
         public Vector2 ScreenPosition { get { return screenPosition; } set { screenPosition = value; } }
         public byte Layer { get { return layer; } set { layer = value; } }
 
-        public Camera(string tag, int target, byte layer, Transform t, Vector2 size, Vector2 min, Vector2 max) : base(tag)
+        public Camera(string tag, int target, byte layer, float width, float height, Vector2 size, Vector2 min, Vector2 max) : base(tag)
         {
+            Transform t = new Transform(this, 0, new Vector2(), width, height, 0, 0);
             minPos = min;
             maxPos = max;
             Target = target;

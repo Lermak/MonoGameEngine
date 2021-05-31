@@ -22,7 +22,7 @@ namespace MonoGame_Core.Scripts
         public float Mass { get { return mass; } }
         public float Force { get { return mass * moveVelocity.Length(); } }
 
-        public RigidBody(string name, GameObject go, RigidBodyType rbt, int uo) : base(uo, name)
+        public RigidBody(string name, GameObject go, RigidBodyType rbt, int uo) : base(go, uo, name)
         {
             transform = (Transform)go.ComponentHandler.GetComponent("transform");
             bodyType = rbt;
@@ -30,7 +30,7 @@ namespace MonoGame_Core.Scripts
             moveVelocity = new Vector2(0,0);
             mass = 0;
         }
-        public RigidBody(GameObject go, RigidBodyType rbt, int uo) : base(uo, "rigidBody")
+        public RigidBody(GameObject go, RigidBodyType rbt, int uo) : base(go, uo, "rigidBody")
         {
             transform = (Transform)go.ComponentHandler.GetComponent("transform");
             bodyType = rbt;

@@ -8,7 +8,7 @@ namespace MonoGame_Core.Scripts
         Transform transform;
         float speed = 100;
 
-        public ManualCameraControl(int uo, Transform t) : base(uo, "manualControlls")
+        public ManualCameraControl(GameObject go, int uo, Transform t) : base(go, uo, "manualControlls")
         {
             transform = t;
         }

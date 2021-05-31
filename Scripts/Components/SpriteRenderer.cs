@@ -51,7 +51,7 @@ namespace MonoGame_Core.Scripts
         public bool Visible { get { return visible; } set { visible = value; } }
         public float AddedRotation { get { return addedRotation; } set { addedRotation = value; } }
         public List<Camera> Cameras { get { return cameras; } }
-        public SpriteRenderer(string name, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, Color clr, int frames, int uo) : base(uo, name)
+        public SpriteRenderer(GameObject go, string name, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, Color clr, int frames, int uo) : base(go, uo, name)
         {
             Texture = texID;
             transform = t;
@@ -63,7 +63,7 @@ namespace MonoGame_Core.Scripts
 
             RenderingManager.Sprites.Add(this);
         }
-        public SpriteRenderer(string name, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, int frames, int uo) : base(uo, name)
+        public SpriteRenderer(GameObject go, string name, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, int frames, int uo) : base(go, uo, name)
         {
             Texture = texID;
             transform = t;
@@ -75,7 +75,7 @@ namespace MonoGame_Core.Scripts
 
             RenderingManager.Sprites.Add(this);
         }
-        public SpriteRenderer(string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, int frames, int uo) : base(uo, "spriteRenderer")
+        public SpriteRenderer(GameObject go, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, int frames, int uo) : base(go, uo, "spriteRenderer")
         {
             Texture = texID;
             transform = t;

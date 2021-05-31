@@ -18,7 +18,7 @@ namespace MonoGame_Core.Scripts
     public static class CollisionManager
     {
         //CollisionType will determine what collision detection method to utilize
-        public enum CollisionType { AABB, SAT, TileMapFree, TileMap, IsometricFree, Isometric }
+        public enum CollisionType { AABB, SAT, TileMapFree, IsometricFree }
         public static CollisionType CollisionDetection = CollisionType.SAT;
 
         public static List<Collider> ActiveStaticColliders;
@@ -209,7 +209,7 @@ namespace MonoGame_Core.Scripts
                 PerformFreeTileCollision();
             }
             ActiveMovingColliders.Clear();
-            ActiveStaticColliders.Clear();
+            //ActiveStaticColliders.Clear();
         }
 
         /// <summary>
@@ -217,50 +217,28 @@ namespace MonoGame_Core.Scripts
         /// </summary>
         private static void PerformSATCollision()
         {
-            foreach (Camera c in CameraManager.Cameras)
+            Vector2 p = new Vector2();                
+
+            foreach (Collider a in ActiveMovingColliders)
             {
-                IEnumerable<Collider> ab = ActiveMovingColliders;
-                IEnumerable<Collider> sb = ActiveStaticColliders;
-                Vector2 p = new Vector2();
+                IEnumerable<Collider> colliders = ActiveStaticColliders.Union(ActiveMovingColliders)
+                    .OrderBy(s => Vector2.Distance(s.Transform.Position, a.Transform.Position))
+                    .Where(s => s.GameObject != a.GameObject)
+                    .Where(s => s.Transform.Layer == a.Transform.Layer)
+                    .Where(s => Vector2.Distance(s.Transform.Position, a.Transform.Position) < s.Transform.Radius + a.Transform.Radius);                      
 
-                foreach (Collider a in ab)
+                for (int t = 0; t < 4; ++t)
                 {
-                    sb = ActiveStaticColliders.OrderBy(s => Vector2.Distance(s.Transform.Position, a.Transform.Position))
-                        .Where(s => s.Transform.Layer == a.Transform.Layer)
-                        .Where(s => Vector2.Distance(s.Transform.Position, a.Transform.Position) < s.Transform.Radius + a.Transform.Radius);
-
-                    ab = ActiveMovingColliders.OrderBy(s => Vector2.Distance(s.Transform.Position, a.Transform.Position))
-                        .Where(s => s.Transform.Layer == a.Transform.Layer)
-                        .Where(s => Vector2.Distance(s.Transform.Position, a.Transform.Position) < s.Transform.Radius + a.Transform.Radius);
-
-                    for (int t = 0; t < 4; ++t)
+                    foreach (Collider s in colliders)
                     {
-                        foreach (Collider s in ab)
+                        if (a.GameObject != s.GameObject)
                         {
-                            if (a.GameObject != s.GameObject)
+                            if (distanceHuristic(a, s))
                             {
-                                if (distanceHuristic(a, s))
+                                if (SATcollision(a, s, out p))
                                 {
-                                    if (SATcollision(a, s, out p))
-                                    {
-                                        ((CollisionHandler)a.GameObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(a, s, p);
-                                        p = new Vector2();
-                                    }
-                                }
-                            }
-                        }
-
-                        foreach (Collider s in sb)
-                        {
-                            if (a.GameObject != s.GameObject)
-                            {
-                                if (distanceHuristic(a, s))
-                                {
-                                    if (SATcollision(a, s, out p))
-                                    {
-                                        ((CollisionHandler)a.GameObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(a, s, p);
-                                        p = new Vector2();
-                                    }
+                                    ((CollisionHandler)a.GameObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(a, s, p);
+                                    p = new Vector2();
                                 }
                             }
                         }
@@ -291,12 +269,14 @@ namespace MonoGame_Core.Scripts
                                     collisionChecks.Add(new Vector2(TileSize.X * x - TileSize.X / 2 - TileSize.X * TileMap.GetUpperBound(0) / 2, TileSize.Y * y - TileSize.Y / 2 - TileSize.Y * TileMap.GetUpperBound(1) / 2));
                                 }
 
+                //perform collision resolution in order of closest to furthest
                 IEnumerable<Vector2> cc = collisionChecks.OrderBy(s => Vector2.Distance(s, c.Transform.Position));
 
                 foreach(Vector2 v in cc)
                 {
+                    GameObject go = new GameObject("TileWall");
                     //create a collision box
-                    CollisionBox cb = new CollisionBox(new Transform(0, v, TileSize.X, TileSize.Y, 0, c.Transform.Layer), "TileWall"); ;
+                    CollisionBox cb = new CollisionBox(go, new Transform(go, 0, v, TileSize.X, TileSize.Y, 0, c.Transform.Layer), "TileWall");
                     //test collision against it
                     if(SATcollision(c, cb, out p))
                         ((CollisionHandler)c.GameObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(c, cb, p);
