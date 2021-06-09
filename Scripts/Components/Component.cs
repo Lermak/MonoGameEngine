@@ -23,11 +23,6 @@ namespace MonoGame_Core.Scripts
 
         }
 
-        public virtual void Update(float gt)
-        {
-
-        }
-
         public virtual void OnCreate()
         {
 

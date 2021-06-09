@@ -208,7 +208,7 @@ namespace MonoGame_Core.Scripts
             {
                 PerformFreeTileCollision();
             }
-            ActiveMovingColliders.Clear();
+            //ActiveMovingColliders.Clear();
             //ActiveStaticColliders.Clear();
         }
 

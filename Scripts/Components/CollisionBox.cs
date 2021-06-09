@@ -64,10 +64,6 @@ namespace MonoGame_Core.Scripts
         {
             return new List<Vector2>() { TopRight(), TopLeft(), BottomLeft(), BottomRight() };
         }
-        public override void Update(float gt)
-        {
-            base.Update(gt);
-        }
 
         public Vector2 TopRight()
         {

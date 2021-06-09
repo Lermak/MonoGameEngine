@@ -46,7 +46,7 @@ namespace MonoGame_Core.Scripts
                 new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * -1,
                 new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * 1));
 
-            CameraManager.Cameras[1].BehaviorHandler.AddBehavior(new ScreenShake(CameraManager.Cameras[1], 0, "screenShake", CameraManager.Cameras[1].Transform));
+            CameraManager.Cameras[1].BehaviorHandler.AddBehavior("ScreenShake", Behaviors.ScreenShake, new Component[] { CameraManager.Cameras[1].Transform });
 
             GameObjects = new Dictionary<string, GameObject>();
             GameObjects.Add("test", new TestObject("Test", "testObj"));

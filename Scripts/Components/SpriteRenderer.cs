@@ -51,7 +51,7 @@ namespace MonoGame_Core.Scripts
         public bool Visible { get { return visible; } set { visible = value; } }
         public float AddedRotation { get { return addedRotation; } set { addedRotation = value; } }
         public List<Camera> Cameras { get { return cameras; } }
-        public SpriteRenderer(GameObject go, string name, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, Color clr, int frames, int uo) : base(go, uo, name)
+        public SpriteRenderer(GameObject go, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, Color clr, int frames, int uo) : base(go, uo, "spriteRenderer")
         {
             Texture = texID;
             transform = t;
@@ -59,18 +59,6 @@ namespace MonoGame_Core.Scripts
             this.orderInLayer = orderInLayer;
             this.drawArea = drawArea;
             color = clr;
-            this.frames = frames;
-
-            RenderingManager.Sprites.Add(this);
-        }
-        public SpriteRenderer(GameObject go, string name, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, int frames, int uo) : base(go, uo, name)
-        {
-            Texture = texID;
-            transform = t;
-            offSet = off;
-            this.orderInLayer = orderInLayer;
-            this.drawArea = drawArea;
-            color = Color.White;
             this.frames = frames;
 
             RenderingManager.Sprites.Add(this);
@@ -92,23 +80,6 @@ namespace MonoGame_Core.Scripts
         {
             return new Rectangle(currentFrame * (int)DrawArea.X, 0, (int)DrawArea.X, (int)DrawArea.Y);
         }
-
-        public override void Update(float gt)
-        {
-            timeSinceFrameChange += gt;
-            if (timeSinceFrameChange > 1)
-            {
-                timeSinceFrameChange = 0;
-
-                currentFrame++;
-
-                if (currentFrame >= frames)
-                    currentFrame = 0;
-            }
-            base.Update(gt);
-        }
-
-
 
         public override void OnDestroy()
         {

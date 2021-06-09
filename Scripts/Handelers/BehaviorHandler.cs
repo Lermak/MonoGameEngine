@@ -8,44 +8,57 @@ namespace MonoGame_Core.Scripts
 {
     public class BehaviorHandler
     {
+        public delegate void Act(float uo, Component[] c);
+        public struct Behavior
+        {
+            public Component[] Components;
+            public Act Run;
+
+            public Behavior(Component[] c, Act a)
+            {
+                Components = c;
+                Run = a;
+            }
+        }
+
         Dictionary<string, Behavior> behaviors;
+        GameObject gameObject;
         public Dictionary<string, Behavior> Behaviors { get { return behaviors; } }
+        public GameObject GameObject { get { return gameObject; } }
 
         public Behavior GetBehavior(string t)
         {
             return Behaviors[t];
         }
 
-        public List<Behavior> GetBehaviorsOfType(string type)
+        //public List<Behavior> GetBehaviorsOfType(string type)
+        //{
+        //    List<Behavior> bl = new List<Behavior>();
+
+        //    foreach (Behavior b in behaviors.Values)
+        //    {
+        //        if (b.Type == type)
+        //        {
+        //            bl.Add(b);
+        //        }
+        //    }
+
+        //    return bl;
+        //}
+
+        public BehaviorHandler(GameObject go)
         {
-            List<Behavior> bl = new List<Behavior>();
-
-            foreach(Behavior b in behaviors.Values)
-            {
-                if (b.Type == type)
-                {
-                    bl.Add(b);
-                }
-            }
-
-            return bl;
-        }
-
-        public BehaviorHandler()
-        {
+            gameObject = go;
             behaviors = new Dictionary<string, Behavior>();
         }
 
-        public Behavior AddBehavior(Behavior b)
+        public void AddBehavior(string name, Act b, Component[] c)
         {
-            behaviors.Add(b.Name, b);
-
-            return behaviors[b.Name];
+            behaviors[name] = new Behavior(c, b);
         }
 
         public void Inizilize()
         {
-            Behaviors.OrderBy(b => b.Value.UpdateOrder);
         }
 
         public void Update(float gt)
@@ -54,18 +67,13 @@ namespace MonoGame_Core.Scripts
             {
                 foreach (Behavior b in Behaviors.Values)
                 {
-                    b.Update(gt);
+                    b.Run(gt, b.Components);
                 }
             }
         }
 
         public void OnDestroy()
         {
-            foreach(Behavior b in Behaviors.Values)
-            {
-                b.OnDestroy();
-            }
-            Behaviors.Clear();
         }
     }
 }

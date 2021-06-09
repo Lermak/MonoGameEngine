@@ -7,8 +7,11 @@ namespace MonoGame_Core.Scripts
     public class ComponentHandler
     {
         Dictionary<string, Component> components;
-        public ComponentHandler()
+        GameObject gameObject;
+        public GameObject GameObject { get { return gameObject; } }
+        public ComponentHandler(GameObject go)
         {
+            gameObject = go;
             components = new Dictionary<string, Component>();
         }
 
@@ -48,14 +51,6 @@ namespace MonoGame_Core.Scripts
         public void Initilize()
         {
             components.OrderBy(c => c.Value.UpdateOrder);
-        }
-
-        public void Update(float gt)
-        {
-            foreach(Component c in components.Values)
-            {
-                c.Update(gt);
-            }
         }
 
         public void OnDestroy()

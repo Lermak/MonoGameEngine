@@ -16,8 +16,8 @@ namespace MonoGame_Core.Scripts
         public GameObject(string tag)
         {
             this.tag = tag;
-            behaviorHandler = new BehaviorHandler();
-            componentHandler = new ComponentHandler();
+            behaviorHandler = new BehaviorHandler(this);
+            componentHandler = new ComponentHandler(this);
         }
 
         public virtual void Initilize()
@@ -34,7 +34,6 @@ namespace MonoGame_Core.Scripts
             }
             else
             {
-                componentHandler.Update(gt);
                 behaviorHandler.Update(gt);
             }
         }
