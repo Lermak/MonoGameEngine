@@ -216,7 +216,7 @@ namespace MonoGame_Core.Scripts
                 List<Collider> quadTreeColliders = new List<Collider>();
                 foreach (Quadtree q in quads)
                 {
-                    quadTreeColliders.AddRange(q.GetColliders()); //PassiveColliders.GetColliders(new Rectangle(new Point((int)(a.Transform.Position.X - a.Transform.Width / 2), (int)(a.Transform.Position.Y - a.Transform.Height / 2)), new Point((int)a.Transform.Width, (int)a.Transform.Height)));
+                    quadTreeColliders.AddRange(q.GetColliders());
                 }
 
                 IEnumerable<Collider> toCheck = quadTreeColliders.Where(c => c.Transform.Layer == a.Transform.Layer)

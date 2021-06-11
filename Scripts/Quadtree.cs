@@ -7,7 +7,7 @@ namespace MonoGame_Core.Scripts
 {
     public class Quadtree
     {
-        const int NUM_COLLIDERS = 2;
+        const int NUM_COLLIDERS = 10;
         const int NUM_CHILDREN = 4;
 
         public Collider[] Colliders;
