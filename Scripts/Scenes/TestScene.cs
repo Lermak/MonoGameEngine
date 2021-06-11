@@ -21,6 +21,8 @@ namespace MonoGame_Core.Scripts
         protected override void loadContent()
         {
             size = new Vector2(2100, 1080);
+            CollisionManager.Initilize();
+
             CameraManager.Cameras[0].SetMinPos(Size/2*-1);
             CameraManager.Cameras[0].SetMaxPos(Size / 2);
 
@@ -50,12 +52,12 @@ namespace MonoGame_Core.Scripts
 
             GameObjects = new Dictionary<string, GameObject>();
             GameObjects.Add("test", new TestObject("Test", "testObj"));
-            GameObjects.Add("testStatic", new TestStaticObject("Test"));
-            GameObjects.Add("testStatic2", new TestStaticObject("Test"));
+            GameObjects.Add("testStatic", new TestStaticObject("Test", 1));
+            GameObjects.Add("testStatic2", new TestStaticObject("Test", 1));
             GameObjects.Add("BG", new WorldObject("BG", "Background", new Vector2(1920,1080), new Vector2(), 0));
             ((WorldObject)GameObjects["BG"]).SpriteRenderer.Transform.Layer = 0;
             ((WorldObject)GameObjects["BG"]).SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);
-            ((WorldObject)GameObjects["testStatic"]).Transform.Place(new Vector2(100, 10));
+            ((WorldObject)GameObjects["testStatic"]).Transform.Place(new Vector2(200, 200));
             ((WorldObject)GameObjects["testStatic2"]).Transform.Place(new Vector2(-200, 0));
             //((WorldObject)GameObjects["testStatic2"]).SpriteRenderer.Shader = "BlueShader";
 

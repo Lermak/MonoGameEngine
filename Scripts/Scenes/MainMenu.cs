@@ -33,7 +33,7 @@ namespace MonoGame_Core.Scripts
 
             GameObjects = new Dictionary<string, GameObject>();
             GameObjects.Add("test", new TestObject("Test", "testObj"));
-            GameObjects.Add("testStatic", new TestStaticObject("Test"));
+            GameObjects.Add("testStatic", new TestStaticObject("Test", 1));
         }
 
         public override void Update(float gt)

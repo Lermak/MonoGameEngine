@@ -51,6 +51,8 @@ namespace MonoGame_Core.Scripts
         public void Initilize()
         {
             components.OrderBy(c => c.Value.UpdateOrder);
+            foreach (Component c in components.Values)
+                c.Initilize();
         }
 
         public void OnDestroy()

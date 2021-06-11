@@ -16,39 +16,24 @@ namespace MonoGame_Core.Scripts
         public float Angle { get { return (float)(Math.Acos((Width / 2) / Radius)) * (180 / (float)Math.PI); } }
         public override float Radius { get { return (float)Math.Sqrt(Math.Pow(Height / 2, 2) + Math.Pow(Width / 2, 2)); } }
 
-        public CollisionBox(GameObject go, string name, List<string> t, bool check, Vector2 off, Transform transform, float width, float height, int uo, bool isStatic) : base(go, uo, name, isStatic)
+        public CollisionBox(GameObject go, string name, int uo, Transform myTrans, bool isStatic) : base(go, myTrans, uo, name, isStatic)
         {
-            checkCollision = check;
-            offset = off;
-            this.transform = transform;
-            this.width = width;
-            this.height = height;
-        }
-
-        public CollisionBox(GameObject go, string name, int uo, GameObject myObj, Transform myTrans, bool isStatic) : base(go, uo, name, isStatic)
-        {
-            transform = myTrans;
-            gameObject = myObj;
             checkCollision = true;
             offset = new Vector2();
             width = myTrans.Width;
             height = myTrans.Height;
         }
 
-        public CollisionBox(WorldObject myObj, int uo, string name, bool isStatic) : base(myObj, uo, name, isStatic)
+        public CollisionBox(WorldObject myObj, int uo, string name, bool isStatic) : base(myObj, myObj.Transform, uo, name, isStatic)
         {                       
-            transform = myObj.Transform;
-            gameObject = myObj;
             checkCollision = true;
             offset = new Vector2();
             width = transform.Width;
             height = transform.Height;
         }
 
-        public CollisionBox(GameObject go, Transform trans, string name) : base(go, 0, name, true)
+        public CollisionBox(GameObject go, Transform trans, string name) : base(go, trans, 0, name, true)
         {
-            transform = trans;
-            gameObject = null;
             checkCollision = true;
             offset = new Vector2();
             width = transform.Width;
@@ -103,10 +88,10 @@ namespace MonoGame_Core.Scripts
 
         public override void OnDestroy()
         {
-            if (isStatic)
-                CollisionManager.ActiveStaticColliders.Remove(this);
-            else
-                CollisionManager.ActiveMovingColliders.Remove(this);
+            //if (isStatic)
+                //CollisionManager.ActiveStaticColliders.Remove(this);
+            //else
+                //CollisionManager.ActiveMovingColliders.Remove(this);
             base.OnDestroy();
         }
     }

@@ -11,7 +11,7 @@ namespace MonoGame_Core.Scripts
         {
             componentHandler.AddComponent(new Transform(this, 0, position, size.X, size.Y, 0, layer));
             
-            ComponentHandler.AddComponent(new CollisionBox(this, name, 0, this, Transform, true));
+            ComponentHandler.AddComponent(new CollisionBox(this, name, 0, Transform, true));
         }
 
     }

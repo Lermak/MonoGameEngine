@@ -21,8 +21,8 @@ namespace MonoGame_Core.Scripts
         public enum CollisionType { AABB, SAT, TileMapFree, IsometricFree }
         public static CollisionType CollisionDetection = CollisionType.SAT;
 
-        public static List<Collider> ActiveStaticColliders;
-        public static List<Collider> ActiveMovingColliders;
+        public static Quadtree ActiveColliders;
+        public static Quadtree PassiveColliders;
 
         //These can be vistigial variabls in a non-tile based game. 
         public static bool[,,] TileMap;
@@ -30,8 +30,8 @@ namespace MonoGame_Core.Scripts
 
         public static void Initilize()
         {
-            ActiveStaticColliders = new List<Collider>();
-            ActiveMovingColliders = new List<Collider>();
+            ActiveColliders = new Quadtree(new Rectangle(-(int)SceneManager.CurrentScene.Size.X / 2, -(int)SceneManager.CurrentScene.Size.Y / 2, (int)SceneManager.CurrentScene.Size.X, (int)SceneManager.CurrentScene.Size.Y), null);
+            PassiveColliders = new Quadtree(new Rectangle(-(int)SceneManager.CurrentScene.Size.X / 2, -(int)SceneManager.CurrentScene.Size.Y / 2, (int)SceneManager.CurrentScene.Size.X, (int)SceneManager.CurrentScene.Size.Y), null);
         }
 
         /// <summary>
@@ -39,18 +39,8 @@ namespace MonoGame_Core.Scripts
         /// </summary>
         public static void Clear()
         {
-            ActiveStaticColliders.Clear();
-            ActiveMovingColliders.Clear();
-        }
-
-        public static void AddStaticCollider(Collider c)
-        {
-            ActiveStaticColliders.Add(c);
-        }
-
-        public static void AddMovingCollider(Collider c)
-        {
-            ActiveMovingColliders.Add(c);
+            ActiveColliders = new Quadtree(new Rectangle(-(int)SceneManager.CurrentScene.Size.X / 2, -(int)SceneManager.CurrentScene.Size.Y / 2, (int)SceneManager.CurrentScene.Size.X, (int)SceneManager.CurrentScene.Size.Y), null);
+            PassiveColliders = new Quadtree(new Rectangle(-(int)SceneManager.CurrentScene.Size.X / 2, -(int)SceneManager.CurrentScene.Size.Y / 2, (int)SceneManager.CurrentScene.Size.X, (int)SceneManager.CurrentScene.Size.Y), null);
         }
 
         /// <summary>
@@ -210,6 +200,7 @@ namespace MonoGame_Core.Scripts
             }
             //ActiveMovingColliders.Clear();
             //ActiveStaticColliders.Clear();
+            ActiveColliders = new Quadtree(new Rectangle(-(int)SceneManager.CurrentScene.Size.X / 2, -(int)SceneManager.CurrentScene.Size.Y / 2, (int)SceneManager.CurrentScene.Size.X, (int)SceneManager.CurrentScene.Size.Y), null);
         }
 
         /// <summary>
@@ -217,19 +208,23 @@ namespace MonoGame_Core.Scripts
         /// </summary>
         private static void PerformSATCollision()
         {
-            Vector2 p = new Vector2();                
+            Vector2 p = new Vector2();
 
-            foreach (Collider a in ActiveMovingColliders)
-            {
-                IEnumerable<Collider> colliders = ActiveStaticColliders.Union(ActiveMovingColliders)
-                    .OrderBy(s => Vector2.Distance(s.Transform.Position, a.Transform.Position))
-                    .Where(s => s.GameObject != a.GameObject)
-                    .Where(s => s.Transform.Layer == a.Transform.Layer)
-                    .Where(s => Vector2.Distance(s.Transform.Position, a.Transform.Position) < s.Transform.Radius + a.Transform.Radius);                      
+            foreach (Collider a in ActiveColliders.GetColliders())
+            {                
+                List<Quadtree> quads = PassiveColliders.GetQuads(new Rectangle(new Point((int)(a.Transform.Position.X - a.Transform.Width / 2), (int)(a.Transform.Position.Y - a.Transform.Height / 2)), new Point((int)a.Transform.Width, (int)a.Transform.Height)));
+                List<Collider> quadTreeColliders = new List<Collider>();
+                foreach (Quadtree q in quads)
+                {
+                    quadTreeColliders.AddRange(q.GetColliders()); //PassiveColliders.GetColliders(new Rectangle(new Point((int)(a.Transform.Position.X - a.Transform.Width / 2), (int)(a.Transform.Position.Y - a.Transform.Height / 2)), new Point((int)a.Transform.Width, (int)a.Transform.Height)));
+                }
+
+                IEnumerable<Collider> toCheck = quadTreeColliders.Where(c => c.Transform.Layer == a.Transform.Layer)
+                    .OrderBy(c => Vector2.Distance(a.Transform.Position, c.Transform.Position));
 
                 for (int t = 0; t < 4; ++t)
                 {
-                    foreach (Collider s in colliders)
+                    foreach (Collider s in toCheck)
                     {
                         if (a.GameObject != s.GameObject)
                         {
@@ -254,7 +249,7 @@ namespace MonoGame_Core.Scripts
         private static void PerformFreeTileCollision()
         {
             Vector2 p = new Vector2();
-            foreach(Collider c in ActiveMovingColliders)
+            foreach(Collider c in ActiveColliders.GetColliders())
             {
                 Vector2 pos = c.Transform.Position + c.Offset;
                 Vector2 gridPos = new Vector2((pos.X + TileSize.X / 2 + TileMap.GetUpperBound(0) * TileSize.X / 2)/TileSize.X, (pos.Y + TileSize.Y / 2 + TileMap.GetUpperBound(1) * TileSize.Y / 2) / TileSize.Y);

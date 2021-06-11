@@ -23,10 +23,10 @@ namespace MonoGame_Core.Scripts
         {
             size = new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT);
             Content = c;
-            CollisionManager.Clear();
+            CollisionManager.Initilize();
             RenderingManager.Clear();
-            SoundManager.Clear();
-            CoroutineManager.Clear();   
+            SoundManager.Initilize();
+            CoroutineManager.Initilize();   
 
             loadContent();
         }

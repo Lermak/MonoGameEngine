@@ -27,14 +27,29 @@ namespace MonoGame_Core.Scripts
         public abstract List<Vector2> Axies();
 
 
-        public Collider(GameObject go, int uo, string name, bool isStatic) : base(go, uo, name)
+        public Collider(GameObject go, Transform t, int uo, string name, bool isStatic) : base(go, uo, name)
+        {
+            transform = t;
+            this.isStatic = isStatic;
+        }
+
+        public override void Initilize()
         {
             if (isStatic)
-                CollisionManager.ActiveStaticColliders.Add(this);
+            {
+                CollisionManager.PassiveColliders.Insert(this);
+            }
             else
-                CollisionManager.ActiveMovingColliders.Add(this);
+            {
+                gameObject.BehaviorHandler.AddBehavior("activeCollider", addToActiveColliders, new Component[] { this });
+            }
 
-            this.isStatic = isStatic;
+            base.Initilize();
+        }
+
+        private static void addToActiveColliders(float gt, Component[] c)
+        {
+            CollisionManager.ActiveColliders.Insert((Collider)c[0]);
         }
     }
 }
