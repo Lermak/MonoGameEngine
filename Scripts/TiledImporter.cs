@@ -41,7 +41,7 @@ namespace MonoGame_Core.Scripts
                         {
                             mapArr[x, y] = int.Parse(row[x]);
                             string name = "TileX" + x + "Y" + y + "L" + l;
-                            Vector2 pos = new Vector2(imageWidth * x - width * imageWidth / 2, imageHeight * y - height * imageHeight / 2);
+                            Vector2 pos = new Vector2(imageWidth * x - width * imageWidth / 2, height * imageHeight / 2 - imageHeight * y );
                             switch (int.Parse(row[x]))
                             {
                                 case 2:

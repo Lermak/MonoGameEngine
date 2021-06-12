@@ -252,7 +252,7 @@ namespace MonoGame_Core.Scripts
             foreach(Collider c in ActiveColliders.GetColliders())
             {
                 Vector2 pos = c.Transform.Position + c.Offset;
-                Vector2 gridPos = new Vector2((pos.X + TileSize.X / 2 + TileMap.GetUpperBound(0) * TileSize.X / 2)/TileSize.X, (pos.Y + TileSize.Y / 2 + TileMap.GetUpperBound(1) * TileSize.Y / 2) / TileSize.Y);
+                Vector2 gridPos = new Vector2((pos.X + TileSize.X / 2 + TileMap.GetUpperBound(0) * TileSize.X / 2)/TileSize.X, (TileMap.GetUpperBound(1) * TileSize.Y / 2 - pos.Y + TileSize.Y / 2) / TileSize.Y);
 
                 List<Vector2> collisionChecks = new List<Vector2>();
                 for (int y = (int)gridPos.Y - 1; y <= (int)gridPos.Y + 1; y++)//check surrounding tiles on y axis
@@ -261,7 +261,7 @@ namespace MonoGame_Core.Scripts
                             if (x >= 0 && x < TileMap.GetUpperBound(0))//that are within the tile map
                                 if (TileMap[x, y, c.Transform.Layer] == true)//if there is collision there
                                 {
-                                    collisionChecks.Add(new Vector2(TileSize.X * x - TileSize.X / 2 - TileSize.X * TileMap.GetUpperBound(0) / 2, TileSize.Y * y - TileSize.Y / 2 - TileSize.Y * TileMap.GetUpperBound(1) / 2));
+                                    collisionChecks.Add(new Vector2(TileSize.X * x - TileSize.X / 2 - TileSize.X * TileMap.GetUpperBound(0) / 2, TileSize.Y * TileMap.GetUpperBound(1) / 2 - TileSize.Y * y + TileSize.Y / 2));
                                 }
 
                 //perform collision resolution in order of closest to furthest
