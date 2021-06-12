@@ -73,8 +73,9 @@ namespace MonoGame_Core.Scripts
         public static void PointAtMouse(float gt, Component[] c)
         {
             Transform t = (Transform)c[0];
-            if (t.Parent.Parent != null)
-                t.Rotate(hf_Math.getAngle(t.Position, InputManager.MousePos) - 90 * (float)Math.PI / 180 - t.Parent.Radians);
+            t.Radians = hf_Math.getAngle(InputManager.MousePos, t.Position) + 90 * (float)Math.PI / 180;
+            if (t.Parent != null)
+                t.Rotate(t.Radians - t.Parent.Radians);
         }
 
         public static void FaceTransform(float gt, Component[] c)

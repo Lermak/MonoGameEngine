@@ -11,50 +11,37 @@ namespace MonoGame_Core.Scripts
         public delegate void Act(float uo, Component[] c);
         public struct Behavior
         {
+            public string Name;
             public Component[] Components;
             public Act Run;
 
-            public Behavior(Component[] c, Act a)
+            public Behavior(string name, Component[] c, Act a)
             {
+                Name = name;
                 Components = c;
                 Run = a;
             }
         }
 
-        Dictionary<string, Behavior> behaviors;
+        List<Behavior> behaviors;
         GameObject gameObject;
-        public Dictionary<string, Behavior> Behaviors { get { return behaviors; } }
+        public List<Behavior> Behaviors { get { return behaviors; } }
         public GameObject GameObject { get { return gameObject; } }
 
         public Behavior GetBehavior(string t)
         {
-            return Behaviors[t];
+            return behaviors.Where(b => b.Name == t).First();
         }
-
-        //public List<Behavior> GetBehaviorsOfType(string type)
-        //{
-        //    List<Behavior> bl = new List<Behavior>();
-
-        //    foreach (Behavior b in behaviors.Values)
-        //    {
-        //        if (b.Type == type)
-        //        {
-        //            bl.Add(b);
-        //        }
-        //    }
-
-        //    return bl;
-        //}
 
         public BehaviorHandler(GameObject go)
         {
             gameObject = go;
-            behaviors = new Dictionary<string, Behavior>();
+            behaviors = new List<Behavior>();
         }
 
         public void AddBehavior(string name, Act b, Component[] c)
         {
-            behaviors[name] = new Behavior(c, b);
+            behaviors.Add(new Behavior(name, c, b));
         }
 
         public void Inizilize()
@@ -65,7 +52,7 @@ namespace MonoGame_Core.Scripts
         {
             if (SceneManager.SceneState == SceneManager.State.Running)
             {
-                foreach (Behavior b in Behaviors.Values)
+                foreach (Behavior b in Behaviors)
                 {
                     b.Run(gt, b.Components);
                 }

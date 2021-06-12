@@ -31,7 +31,9 @@ namespace MonoGame_Core.Scripts
                     return radians;
                 else
                     return radians + parent.radians - startingRotation;
-            } }
+            }
+            set { radians = value; }
+        }
         public Vector2 Scale { get { return scale; } }
         public float Radius { get { return (float)Math.Sqrt(Math.Pow(Height / 2, 2) + Math.Pow(Width / 2, 2)); } }
         public Transform Parent { get { return parent; } }
@@ -74,7 +76,7 @@ namespace MonoGame_Core.Scripts
         public Vector2 WorldPosition(Vector2 offSet)
         {
             return (Position
-                + hf_Math.getRotationPosition(hf_Math.RadiansToDegres(Radians) + 90, (float)Math.Sqrt(Math.Pow(offSet.X, 2) + Math.Pow(offSet.Y, 2)), new Vector2()) * Scale) * RenderingManager.GameScale;
+                + hf_Math.getRotationPosition(hf_Math.RadiansToDegres(Radians) + 90, (float)Math.Sqrt(Math.Pow(offSet.X, 2) + Math.Pow(offSet.Y, 2)), new Vector2()) * Scale) * RenderingManager.GameScale * new Vector2(1,-1);
         }
 
         public void AttachToTransform(Transform t)

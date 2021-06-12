@@ -37,7 +37,9 @@ namespace MonoGame_Core.Scripts
 
             Textures = new Dictionary<string, Texture2D>();
             Textures["Test"] = Content.Load<Texture2D>("Images/Test");
-            Textures["BG"] = Content.Load<Texture2D>("Images/MainMenuBG");
+            Textures["PeaShooter"] = Content.Load<Texture2D>("Images/PeaShooter");
+            Textures["Base"] = Content.Load<Texture2D>("Images/Base");
+            Textures["BG"] = Content.Load<Texture2D>("Images/Background");
 
             Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
 
@@ -51,12 +53,12 @@ namespace MonoGame_Core.Scripts
             CameraManager.Cameras[1].BehaviorHandler.AddBehavior("ScreenShake", Behaviors.ScreenShake, new Component[] { CameraManager.Cameras[1].Transform });
 
             GameObjects = new List<GameObject>();
-            GameObjects.Add(new TestObject("Test", "testObj"));
-            GameObjects.Add(new TestStaticObject("Test", 1));
+            GameObjects.Add(new TestObject("PeaShooter", "testObj"));
+            GameObjects.Add(new TestStaticObject("Base", 1));
             ((WorldObject)GameObjects[GameObjects.Count - 1]).Transform.Place(new Vector2(200, 200));
             ((WorldObject)GameObjects[GameObjects.Count - 1]).Transform.AttachToTransform(((WorldObject)GameObjects[0]).Transform);
 
-            GameObjects.Add(new TestStaticObject("Test", 1));
+            GameObjects.Add(new TestStaticObject("Base", 1));
             ((WorldObject)GameObjects[GameObjects.Count - 1]).Transform.Place(new Vector2(-200, 0));
             ((WorldObject)GameObjects[GameObjects.Count - 1]).Transform.AttachToTransform(((WorldObject)GameObjects[0]).Transform);
 
