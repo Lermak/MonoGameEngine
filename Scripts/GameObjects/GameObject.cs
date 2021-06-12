@@ -9,6 +9,7 @@ namespace MonoGame_Core.Scripts
         protected string tag;
         protected bool destroy = false;
 
+        public bool ToDestroy { get { return destroy; } }
         public string Tag { get { return tag; } }
         public ComponentHandler ComponentHandler { get { return componentHandler; } }
         public BehaviorHandler BehaviorHandler { get { return behaviorHandler; } }
@@ -48,11 +49,10 @@ namespace MonoGame_Core.Scripts
             destroy = true;
         }
 
-        protected virtual void OnDestroy()
+        public virtual void OnDestroy()
         {
             behaviorHandler.OnDestroy();
             componentHandler.OnDestroy();
-            SceneManager.CurrentScene.GameObjects.Remove(tag);
         }
     }
 }

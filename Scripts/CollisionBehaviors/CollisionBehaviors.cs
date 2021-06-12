@@ -25,11 +25,5 @@ namespace MonoGame_Core.Scripts
             else
                 ((WorldObject)a.GameObject).RigidBody.MoveVelocity = (((WorldObject)a.GameObject).RigidBody.MoveVelocity * new Vector2(-1, 1));
         }
-
-        public static void ScorePoints(Collider a, Collider b, Vector2 p)
-        {
-            ((Ball)a.GameObject).Score(b.Name != "LeftWall");
-        }
-
     }
 }

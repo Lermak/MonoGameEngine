@@ -13,8 +13,10 @@ namespace MonoGame_Core.Scripts
         protected ContentManager Content;
         public Vector2 Size { get { return size; } }
 
+        public List<GameObject> ToAdd = new List<GameObject>();
+        public List<GameObject> GameObjects = new List<GameObject>();
+
         public Dictionary<string, Texture2D> Textures = new Dictionary<string, Texture2D>();
-        public Dictionary<string, GameObject> GameObjects = new Dictionary<string, GameObject>();
         public Dictionary<string, Song> Songs = new Dictionary<string, Song>();
         public Dictionary<string, SoundEffect> SoundEffects = new Dictionary<string, SoundEffect>();
         public Dictionary<string, Effect> Effects = new Dictionary<string, Effect>();
@@ -33,7 +35,7 @@ namespace MonoGame_Core.Scripts
 
         protected virtual void loadContent()
         {
-            foreach (GameObject go in GameObjects.Values)
+            foreach (GameObject go in GameObjects)
             {
                 go.Initilize();
             }
@@ -61,10 +63,24 @@ namespace MonoGame_Core.Scripts
 
         public virtual void SceneRunning(float gt)
         {
-            foreach (GameObject go in GameObjects.Values)
+            List<GameObject> destroy = new List<GameObject>();
+            foreach (GameObject go in GameObjects)
             {
                 go.Update(gt);
+                if (go.ToDestroy)
+                    destroy.Add(go);
             }
+            foreach (GameObject go in destroy)
+            {
+                go.OnDestroy();
+                GameObjects.Remove(go);
+            }
+            foreach (GameObject go in ToAdd)
+            {
+                go.Initilize();
+                GameObjects.Add(go);
+            }
+            ToAdd.Clear();
         }
 
         public virtual void ScenePaused(float gt)

@@ -31,9 +31,9 @@ namespace MonoGame_Core.Scripts
             Textures = new Dictionary<string, Texture2D>();
             Textures["Test"] = Content.Load<Texture2D>("Test");
 
-            GameObjects = new Dictionary<string, GameObject>();
-            GameObjects.Add("test", new TestObject("Test", "testObj"));
-            GameObjects.Add("testStatic", new TestStaticObject("Test", 1));
+            GameObjects = new List<GameObject>();
+            GameObjects.Add(new TestObject("Test", "testObj"));
+            GameObjects.Add(new TestStaticObject("Test", 1));
         }
 
         public override void Update(float gt)

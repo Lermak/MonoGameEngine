@@ -50,19 +50,23 @@ namespace MonoGame_Core.Scripts
 
             CameraManager.Cameras[1].BehaviorHandler.AddBehavior("ScreenShake", Behaviors.ScreenShake, new Component[] { CameraManager.Cameras[1].Transform });
 
-            GameObjects = new Dictionary<string, GameObject>();
-            GameObjects.Add("test", new TestObject("Test", "testObj"));
-            GameObjects.Add("testStatic", new TestStaticObject("Test", 1));
-            GameObjects.Add("testStatic2", new TestStaticObject("Test", 1));
-            GameObjects.Add("BG", new WorldObject("BG", "Background", new Vector2(1920,1080), new Vector2(), 0));
-            ((WorldObject)GameObjects["BG"]).SpriteRenderer.Transform.Layer = 0;
-            ((WorldObject)GameObjects["BG"]).SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);
-            ((WorldObject)GameObjects["testStatic"]).Transform.Place(new Vector2(200, 200));
-            ((WorldObject)GameObjects["testStatic2"]).Transform.Place(new Vector2(-200, 0));
+            GameObjects = new List<GameObject>();
+            GameObjects.Add(new TestObject("Test", "testObj"));
+            GameObjects.Add(new TestStaticObject("Test", 1));
+            ((WorldObject)GameObjects[GameObjects.Count - 1]).Transform.Place(new Vector2(200, 200));
+            ((WorldObject)GameObjects[GameObjects.Count - 1]).Transform.AttachToTransform(((WorldObject)GameObjects[0]).Transform);
+
+            GameObjects.Add(new TestStaticObject("Test", 1));
+            ((WorldObject)GameObjects[GameObjects.Count - 1]).Transform.Place(new Vector2(-200, 0));
+            ((WorldObject)GameObjects[GameObjects.Count - 1]).Transform.AttachToTransform(((WorldObject)GameObjects[0]).Transform);
+
+            GameObjects.Add(new WorldObject("BG", "Background", new Vector2(1920,1080), new Vector2(), 0));
+            ((WorldObject)GameObjects[GameObjects.Count-1]).SpriteRenderer.Transform.Layer = 0;
+            ((WorldObject)GameObjects[GameObjects.Count - 1]).SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);
+
+
             //((WorldObject)GameObjects["testStatic2"]).SpriteRenderer.Shader = "BlueShader";
 
-            ((WorldObject)GameObjects["testStatic"]).Transform.AttachToTransform(((WorldObject)GameObjects["test"]).Transform);
-            ((WorldObject)GameObjects["testStatic2"]).Transform.AttachToTransform(((WorldObject)GameObjects["test"]).Transform);
 
             CameraManager.Cameras[1].ScreenPosition = new Vector2(480, 270) / 2;
             CameraManager.Cameras[1].Shader = "CRT";
