@@ -69,5 +69,31 @@ namespace MonoGame_Core.Scripts
             if (InputManager.IsKeyTriggered(Microsoft.Xna.Framework.Input.Keys.Space))
                 CoroutineManager.AddCoroutine(Coroutines.ScreenShake(.1f, -10, 10, t), "screenShake", 0, true);
         }
+
+        public static void PointAtMouse(float gt, Component[] c)
+        {
+            Transform t = (Transform)c[0];
+            if (t.Parent.Parent != null)
+                t.Rotate(hf_Math.getAngle(t.Position, InputManager.MousePos) - 90 * (float)Math.PI / 180 - t.Parent.Radians);
+        }
+
+        public static void FaceTransform(float gt, Component[] c)
+        {
+            Transform t = (Transform)c[0];
+            Transform t2 = (Transform)c[1];
+            RigidBody rb = (RigidBody)c[2];
+
+
+            float newRot = (hf_Math.getAngle(t.Position - t2.Position, new Vector2(1, 0))) - 90 * (float)Math.PI / 180;
+            rb.AngularVelocity = (newRot - t.Radians) / 1 * gt;
+        }
+
+        public static void MoveTowardRotation(float gt, Component[] c)
+        {
+            Transform t = (Transform)c[0];
+            RigidBody rb = (RigidBody)c[1];
+
+            rb.MoveVelocity = hf_Math.RadiansToUnitVector(t.Radians + 90 * (float)Math.PI / 180) * gt * 100;
+        }
     }
 }

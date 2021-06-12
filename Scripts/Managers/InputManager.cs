@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace MonoGame_Core.Scripts
@@ -12,12 +13,15 @@ namespace MonoGame_Core.Scripts
     {
         const float DOUBLE_CLICK_DELAY = 1f;
         static float timeSinceLastLeftClick = 0;
-       
+        static Vector2 mousePos;
         static bool firstClick = false;
         public static bool IsDoubleClick = false;
         public enum MouseKeys { LeftButton, RightButton, MiddleButton }
         
         static KeyboardState currentKeyboardState;
+
+        public static Vector2 MousePos { get { return mousePos; } }
+
         static KeyboardState previousKeyboardState;
 
         static MouseState currentMouseState;
@@ -126,6 +130,9 @@ namespace MonoGame_Core.Scripts
         /// <param name="gt">Game Time</param>
         public static void Update(float gt)
         {
+            Point p = Mouse.GetState().Position;
+            mousePos = new Vector2(p.X, p.Y) / RenderingManager.WindowScale - new Vector2(RenderingManager.WIDTH / 2, RenderingManager.HEIGHT / 2);
+
             previousKeyboardState = currentKeyboardState;
             currentKeyboardState = Keyboard.GetState();
 

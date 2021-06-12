@@ -38,10 +38,5 @@ namespace MonoGame_Core.Scripts
         {
             base.OnCreate();
         }
-
-        protected override void OnDestroy()
-        {
-            base.OnDestroy();
-        }
     }
 }

@@ -27,6 +27,11 @@ namespace MonoGame_Core.Scripts
             return (float)Math.Atan2(dy, dx);
         }
 
+        public static Vector2 RadiansToUnitVector(float r)
+        {
+            return getRotationPosition(r, 1, new Vector2());
+        }
+
         public static float DegreesToRadians(float d)
         {
             return d * (float)Math.PI / 180;
