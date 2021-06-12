@@ -10,7 +10,7 @@ namespace MonoGame_Core.Scripts
         Vector2 position;
         float width;
         float height;
-        float rotation;
+        float radians;
         Vector2 scale = new Vector2(1,1);
         Transform parent;
         float degreesFromParent = 0f;
@@ -22,15 +22,15 @@ namespace MonoGame_Core.Scripts
                 if (parent == null)
                     return position;
                 else
-                    return hf_Math.getRotationPosition(degreesFromParent, distanceToParent, -parent.rotation, parent.position);
+                    return hf_Math.getRotationPosition(hf_Math.RadiansToDegres(degreesFromParent + parent.radians), distanceToParent, parent.position);
             } }    
         public float Width { get { return width; } }
         public float Height { get { return height; } }
-        public float Rotation { get {
+        public float Radians { get {
                 if (parent == null)
-                    return rotation;
+                    return radians;
                 else
-                    return rotation + parent.rotation - startingRotation;
+                    return radians + parent.radians - startingRotation;
             } }
         public Vector2 Scale { get { return scale; } }
         public float Radius { get { return (float)Math.Sqrt(Math.Pow(Height / 2, 2) + Math.Pow(Width / 2, 2)); } }
@@ -38,7 +38,7 @@ namespace MonoGame_Core.Scripts
         public byte Layer { get { return layer; } set { layer = value; } }
         public Transform(GameObject go, int uo, Vector2 pos, float w, float h, float r, byte l) : base(go, uo, "transform")
         {
-            rotation = r;
+            radians = r;
             position = pos;
             width = w;
             height = h;
@@ -68,20 +68,20 @@ namespace MonoGame_Core.Scripts
 
         public void Rotate(float r)
         {
-            rotation += r;
+            radians += r;
         }
 
         public Vector2 WorldPosition(Vector2 offSet)
         {
             return (Position
-                + hf_Math.getRotationPosition(90, (float)Math.Sqrt(Math.Pow(offSet.X, 2) + Math.Pow(offSet.Y, 2)), -Rotation, new Vector2()) * Scale) * RenderingManager.GameScale;
+                + hf_Math.getRotationPosition(hf_Math.RadiansToDegres(Radians) + 90, (float)Math.Sqrt(Math.Pow(offSet.X, 2) + Math.Pow(offSet.Y, 2)), new Vector2()) * Scale) * RenderingManager.GameScale;
         }
 
         public void AttachToTransform(Transform t)
         {
             parent = t;
-            startingRotation = t.rotation;
-            degreesFromParent = hf_Math.getAngle(t.position, position) - t.rotation;
+            startingRotation = t.radians;
+            degreesFromParent = hf_Math.getAngle(t.position, position) - t.radians;
             distanceToParent = Vector2.Distance(position, t.position);
             position = position - t.position;
         }
@@ -89,7 +89,7 @@ namespace MonoGame_Core.Scripts
         public void DetachFromParent()
         {
             position = Position;
-            rotation = Rotation;
+            radians = Radians;
             parent = null;
             degreesFromParent = 0;
             startingRotation = 0;          

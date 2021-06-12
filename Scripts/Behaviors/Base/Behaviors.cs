@@ -42,9 +42,9 @@ namespace MonoGame_Core.Scripts
                 v.X = (m.Speed * gt);
 
             if (state.IsKeyDown(Keys.Q))
-                r = -(1 * gt);
-            else if (state.IsKeyDown(Keys.E))
                 r = (1 * gt);
+            else if (state.IsKeyDown(Keys.E))
+                r = -(1 * gt);
 
             RigidBody rb = (RigidBody)c[0];
 

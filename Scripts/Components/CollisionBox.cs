@@ -42,7 +42,8 @@ namespace MonoGame_Core.Scripts
 
         public override List<Vector2> Axies()
         {
-            return new List<Vector2>() { hf_Math.getRotationPosition(0, 1, -transform.Rotation, new Vector2()), hf_Math.getRotationPosition(90, 1, -transform.Rotation, new Vector2()) };
+            return new List<Vector2>() { hf_Math.getRotationPosition(hf_Math.RadiansToDegres(transform.Radians), 1, new Vector2()), 
+                                        hf_Math.getRotationPosition(hf_Math.RadiansToDegres(transform.Radians) + 90, 1, new Vector2()) };
         }
 
         public override List<Vector2> Verticies()
@@ -52,22 +53,22 @@ namespace MonoGame_Core.Scripts
 
         public Vector2 TopRight()
         {
-            return hf_Math.getRotationPosition(Angle, Radius, -transform.Rotation, transform.Position + offset);
+            return hf_Math.getRotationPosition(hf_Math.RadiansToDegres(transform.Radians) + Angle, Radius, transform.Position + offset);
         }
 
         public Vector2 TopLeft()
         {
-            return hf_Math.getRotationPosition((180 - Angle), Radius, -transform.Rotation, transform.Position + offset);//use half side angle because at 0 rotation the box should be cut through the middle, so only half the side angle is needed
+            return hf_Math.getRotationPosition(hf_Math.RadiansToDegres(transform.Radians) + (180 - Angle), Radius, transform.Position + offset);//use half side angle because at 0 rotation the box should be cut through the middle, so only half the side angle is needed
         }
 
         public Vector2 BottomLeft()
         {
-            return hf_Math.getRotationPosition(180 + Angle, Radius, -transform.Rotation, transform.Position + offset);
+            return hf_Math.getRotationPosition(hf_Math.RadiansToDegres(transform.Radians) + 180 + Angle, Radius, transform.Position + offset);
         }
 
         public Vector2 BottomRight()
         {
-            return hf_Math.getRotationPosition(360 - Angle, Radius, -transform.Rotation, transform.Position + offset);
+            return hf_Math.getRotationPosition(hf_Math.RadiansToDegres(transform.Radians) + 360 - Angle, Radius, transform.Position + offset);
         }
 
         public void ReplaceOffset(Vector2 newOff)
