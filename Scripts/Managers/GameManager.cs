@@ -10,7 +10,7 @@ namespace MonoGame_Core.Scripts
     public class GameManager : Game
     {
         private GraphicsDeviceManager _graphics;
-
+        private static bool quit;
         public GameManager()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -37,10 +37,14 @@ namespace MonoGame_Core.Scripts
         {
             // TODO: use this.Content to load your game content here
         }
+        public static void Quit()
+        {
+            quit = true;
+        }
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (quit)
                 Exit();
 
             // TODO: Add your update logic here

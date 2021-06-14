@@ -117,7 +117,7 @@ namespace MonoGame_Core.Scripts
 
             graphicsDevice.Clear(Color.Black);
 
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Opaque);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
             IEnumerable<Camera> cameras = CameraManager.Cameras.OrderByDescending(s => s.Target);
            
             foreach (Camera c in cameras)

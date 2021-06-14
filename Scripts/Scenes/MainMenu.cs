@@ -19,10 +19,8 @@ namespace MonoGame_Core.Scripts
 
         }
 
-        public override void Initilize(ContentManager c)
-        {
-            base.Initilize(c);
-
+        protected override void loadContent()
+        {      
             SoundManager.SongChannels["Melody"] = Content.Load<Song>("Music/TestSong");
             MediaPlayer.Play(SoundManager.SongChannels["Melody"]);
 
@@ -30,10 +28,16 @@ namespace MonoGame_Core.Scripts
 
             Textures = new Dictionary<string, Texture2D>();
             Textures["Test"] = Content.Load<Texture2D>("Test");
+            Textures["Base"] = Content.Load<Texture2D>("Images/Base");
+
+            Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
 
             GameObjects = new List<GameObject>();
-            GameObjects.Add(new TestObject("Test", "testObj"));
+            //GameObjects.Add(new TestObject("Test", "testObj"));
             GameObjects.Add(new TestStaticObject("Test", 1));
+            GameObjects.Add(new Button("Test", "Base", "PlayButton", new Vector2(40, 40), new Vector2(500, 100), 1, null));
+            GameObjects.Add(new Button("Test", "Base", "QuitButton", new Vector2(40, 40), new Vector2(500, 40), 1, Behaviors.QuitOnClick));
+            base.loadContent();
         }
 
         public override void Update(float gt)

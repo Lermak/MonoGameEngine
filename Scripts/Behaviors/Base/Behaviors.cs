@@ -96,5 +96,44 @@ namespace MonoGame_Core.Scripts
 
             rb.MoveVelocity = hf_Math.RadiansToUnitVector(t.Radians + 90 * (float)Math.PI / 180) * gt * 100;
         }
+
+        public static void ScreenShakeOnClick(float gt, Component[] c)
+        {
+            Transform t = (Transform)c[0];
+            Vector2 v = InputManager.MousePos;
+            if (InputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton) && 
+                v.X > t.Position.X - t.Width / 2 &&
+                v.X < t.Position.X + t.Width / 2 &&
+                v.Y > t.Position.Y - t.Height / 2 &&
+                v.Y < t.Position.Y + t.Height / 2 )
+                CoroutineManager.AddCoroutine(Coroutines.ScreenShake(.1f, 10, 10, CameraManager.Cameras[0].Transform), "ClickShake", 0, true);
+        }
+
+        public static void ButtonSwapImagesOnHover(float gt, Component[] c)
+        {
+            Transform t = (Transform)c[0];
+            ButtonData b = (ButtonData)c[1];
+            Vector2 v = InputManager.MousePos;
+
+            if (v.X > t.Position.X - t.Width / 2 &&
+                v.X < t.Position.X + t.Width / 2 &&
+                v.Y > t.Position.Y - t.Height / 2 &&
+                v.Y < t.Position.Y + t.Height / 2)
+                ((WorldObject)b.GameObject).SpriteRenderer.Texture = b.SelectedTexID;
+            else
+                ((WorldObject)b.GameObject).SpriteRenderer.Texture = b.DeselectedTexID;
+        }
+
+        public static void QuitOnClick(float gt, Component[] c)
+        {
+            Transform t = (Transform)c[0];
+            Vector2 v = InputManager.MousePos;
+            if (InputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton) &&
+                v.X > t.Position.X - t.Width / 2 &&
+                v.X < t.Position.X + t.Width / 2 &&
+                v.Y > t.Position.Y - t.Height / 2 &&
+                v.Y < t.Position.Y + t.Height / 2)
+                GameManager.Quit();
+        }
     }
 }

@@ -211,15 +211,23 @@ namespace MonoGame_Core.Scripts
             Vector2 p = new Vector2();
 
             foreach (Collider a in ActiveColliders.GetColliders())
-            {                
-                List<Quadtree> quads = PassiveColliders.GetQuads(new Rectangle(new Point((int)(a.Transform.Position.X - a.Transform.Width / 2), (int)(a.Transform.Position.Y - a.Transform.Height / 2)), new Point((int)a.Transform.Width, (int)a.Transform.Height)));
+            {
+                Rectangle r = new Rectangle(new Point((int)(a.Transform.Position.X - a.Transform.Width / 2), (int)(a.Transform.Position.Y - a.Transform.Height / 2)), new Point((int)a.Transform.Width, (int)a.Transform.Height));
+                List<Quadtree> quads = PassiveColliders.GetQuads(r);
+                List<Quadtree> aQuads = ActiveColliders.GetQuads(r);
+
                 List<Collider> quadTreeColliders = new List<Collider>();
                 foreach (Quadtree q in quads)
                 {
                     quadTreeColliders.AddRange(q.GetColliders());
                 }
+                foreach (Quadtree q in aQuads)
+                {
+                    quadTreeColliders.AddRange(q.GetColliders());
+                }
 
                 IEnumerable<Collider> toCheck = quadTreeColliders.Where(c => c.Transform.Layer == a.Transform.Layer)
+                    .Where(c => distanceHuristic(c, a) == true)
                     .OrderBy(c => Vector2.Distance(a.Transform.Position, c.Transform.Position));
 
                 for (int t = 0; t < 4; ++t)
@@ -228,13 +236,10 @@ namespace MonoGame_Core.Scripts
                     {
                         if (a.GameObject != s.GameObject)
                         {
-                            if (distanceHuristic(a, s))
+                            if (SATcollision(a, s, out p))
                             {
-                                if (SATcollision(a, s, out p))
-                                {
-                                    ((CollisionHandler)a.GameObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(a, s, p);
-                                    p = new Vector2();
-                                }
+                                ((CollisionHandler)a.GameObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(a, s, p);
+                                p = new Vector2();
                             }
                         }
                     }
