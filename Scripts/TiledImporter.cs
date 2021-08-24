@@ -42,13 +42,13 @@ namespace MonoGame_Core.Scripts
                             mapArr[x, y] = int.Parse(row[x]);
                             string name = "TileX" + x + "Y" + y + "L" + l;
                             Vector2 pos = new Vector2(imageWidth * x - width * imageWidth / 2, height * imageHeight / 2 - imageHeight * y );
-                            //switch (int.Parse(row[x]))
+                            switch (int.Parse(row[x]))
                             {
-                                //case 2:
-                                    SceneManager.CurrentScene.GameObjects.Add(new TestStaticObject("Test", (byte)0));
+                                case 2:
+                                    SceneManager.CurrentScene.GameObjects.Add(new TestStaticObject("Test", (byte)l));
                                     ((WorldObject)SceneManager.CurrentScene.GameObjects[SceneManager.CurrentScene.GameObjects.Count - 1]).Transform.Place(pos);
-                                    CollisionManager.TileMap[x, y, 0] = true;
-                                    //break;
+                                    CollisionManager.TileMap[x, y, l] = true;
+                                    break;
                             }
 
                         }

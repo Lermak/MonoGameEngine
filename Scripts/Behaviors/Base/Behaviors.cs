@@ -101,11 +101,8 @@ namespace MonoGame_Core.Scripts
         {
             Transform t = (Transform)c[0];
             Vector2 v = InputManager.MousePos;
-            if (InputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton) && 
-                v.X > t.Position.X - t.Width / 2 &&
-                v.X < t.Position.X + t.Width / 2 &&
-                v.Y > t.Position.Y - t.Height / 2 &&
-                v.Y < t.Position.Y + t.Height / 2 )
+            if (InputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton) &&
+                t.ContainsPoint(v))
                 CoroutineManager.AddCoroutine(Coroutines.ScreenShake(.1f, 10, 10, CameraManager.Cameras[0].Transform), "ClickShake", 0, true);
         }
 
@@ -115,10 +112,7 @@ namespace MonoGame_Core.Scripts
             ButtonData b = (ButtonData)c[1];
             Vector2 v = InputManager.MousePos;
 
-            if (v.X > t.Position.X - t.Width / 2 &&
-                v.X < t.Position.X + t.Width / 2 &&
-                v.Y > t.Position.Y - t.Height / 2 &&
-                v.Y < t.Position.Y + t.Height / 2)
+            if (t.ContainsPoint(v))
                 ((WorldObject)b.GameObject).SpriteRenderer.Texture = b.SelectedTexID;
             else
                 ((WorldObject)b.GameObject).SpriteRenderer.Texture = b.DeselectedTexID;
@@ -129,10 +123,7 @@ namespace MonoGame_Core.Scripts
             Transform t = (Transform)c[0];
             Vector2 v = InputManager.MousePos;
             if (InputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton) &&
-                v.X > t.Position.X - t.Width / 2 &&
-                v.X < t.Position.X + t.Width / 2 &&
-                v.Y > t.Position.Y - t.Height / 2 &&
-                v.Y < t.Position.Y + t.Height / 2)
+                t.ContainsPoint(v))
                 GameManager.Quit();
         }
     }

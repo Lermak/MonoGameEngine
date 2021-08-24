@@ -117,7 +117,7 @@ namespace MonoGame_Core.Scripts
 
             graphicsDevice.Clear(Color.Black);
 
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             IEnumerable<Camera> cameras = CameraManager.Cameras.OrderByDescending(s => s.Target);
            
             foreach (Camera c in cameras)
@@ -131,7 +131,7 @@ namespace MonoGame_Core.Scripts
                             if (c.Target == Target)
                             {
                                 spriteBatch.End();
-                                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+                                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
                             }
 
                             prevShader = sr.Shader;
@@ -146,7 +146,7 @@ namespace MonoGame_Core.Scripts
 
                             Target = c.Target;
 
-                            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+                            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
                         }
 
                         if (sr.Shader != "")
@@ -175,7 +175,7 @@ namespace MonoGame_Core.Scripts
                 SetTarget(-1);
             }
 
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             CameraManager.Draw(spriteBatch);
             spriteBatch.End();
         }

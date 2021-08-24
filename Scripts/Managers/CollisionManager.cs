@@ -57,18 +57,18 @@ namespace MonoGame_Core.Scripts
             foreach(Vector2 v in b1.Verticies())
             if (v.X > b2.TopLeft().X
                 && v.X < b2.TopRight().X
-                && v.Y > b2.TopRight().Y
-                && v.Y < b2.BottomLeft().Y)
+                && v.Y < b2.TopRight().Y
+                && v.Y > b2.BottomLeft().Y)
                 {
                     if (b1.Transform.Position.X > b2.Transform.Position.X)
                         p.X = b1.Transform.Position.X - b2.Transform.Position.X;
                     else
                         p.X = b2.Transform.Position.X - b1.Transform.Position.X;
 
-                    if (b1.Transform.Position.Y > b2.Transform.Position.Y)
-                        p.X = b1.Transform.Position.Y - b2.Transform.Position.Y;
+                    if (b1.Transform.Position.Y < b2.Transform.Position.Y)
+                        p.Y = b1.Transform.Position.Y - b2.Transform.Position.Y;
                     else
-                        p.X = b2.Transform.Position.Y - b1.Transform.Position.Y;
+                        p.Y = b2.Transform.Position.Y - b1.Transform.Position.Y;
 
                     return true;
                 }

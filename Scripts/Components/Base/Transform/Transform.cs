@@ -88,6 +88,14 @@ namespace MonoGame_Core.Scripts
             position = position - t.position;
         }
 
+        public bool ContainsPoint(Vector2 v)
+        {
+            return v.X > Position.X - Width / 2 &&
+                    v.X < Position.X + Width / 2 &&
+                    v.Y > Position.Y - Height / 2 &&
+                    v.Y < Position.Y + Height / 2;
+        }
+
         public void DetachFromParent()
         {
             position = Position;
