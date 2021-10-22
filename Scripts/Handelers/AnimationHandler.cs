@@ -14,6 +14,9 @@ namespace MonoGame_Core.Scripts
         public AnimationHandler(GameObject go)
         {
             gameObject = go;
+            spriteRenderer = (SpriteRenderer)go.ComponentHandler.GetComponent("spriteRenderer");
         }
+
+
     }
 }

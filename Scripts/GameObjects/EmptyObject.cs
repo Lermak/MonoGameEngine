@@ -4,7 +4,7 @@ namespace MonoGame_Core.Scripts
 {
     public class EmptyObject : GameObject
     {
-        public EmptyObject(string tag) : base(tag)
+        public EmptyObject(string name, string[] tags) : base(name, tags)
         {
 
         }
@@ -14,9 +14,9 @@ namespace MonoGame_Core.Scripts
             base.Initilize();
         }
 
-        public override void Update(float gt)
+        public override void Update(float dt)
         {
-            base.Update(gt);
+            base.Update(dt);
         }
 
         public override void OnCreate()

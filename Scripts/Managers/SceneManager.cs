@@ -42,8 +42,8 @@ namespace MonoGame_Core.Scripts
         /// <summary>
         /// Run the update of the current scene, or load the next schene if it is null
         /// </summary>
-        /// <param name="gt">Game Time</param>
-        public static void Update(float gt)
+        /// <param name="dt">Game Time</param>
+        public static void Update(float dt)
         {
             if(CurrentScene == null)
             {
@@ -54,7 +54,7 @@ namespace MonoGame_Core.Scripts
                 SceneState = State.SceneIn;
             }
             else if(CurrentScene != null)
-                CurrentScene.Update(gt);         
+                CurrentScene.Update(dt);         
         }
 
         public static void InitilizeCurrentScene()

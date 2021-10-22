@@ -48,13 +48,13 @@ namespace MonoGame_Core.Scripts
         {
         }
 
-        public void Update(float gt)
+        public void Update(float dt)
         {
             if (SceneManager.SceneState == SceneManager.State.Running)
             {
                 foreach (Behavior b in Behaviors)
                 {
-                    b.Run(gt, b.Components);
+                    b.Run(dt, b.Components);
                 }
             }
         }

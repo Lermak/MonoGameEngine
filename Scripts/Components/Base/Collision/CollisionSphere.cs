@@ -8,7 +8,7 @@ namespace MonoGame_Core.Scripts
     public class CollisionSphere : Collider
     {
         public override float Radius { get { return radius; } }
-        public CollisionSphere(int uo, string name, WorldObject go, Vector2 offset, bool checkCollision, bool isStatic, bool isTrigger) : base(go, go.Transform, uo, name, isStatic)
+        public CollisionSphere(int uo, string name, GameObject go, Vector2 offset, bool checkCollision, bool isStatic, bool isTrigger) : base(go, name, isStatic)
         {
             this.offset = offset;
             this.checkCollision = checkCollision;

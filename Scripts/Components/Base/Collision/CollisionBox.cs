@@ -16,23 +16,7 @@ namespace MonoGame_Core.Scripts
         public float Angle { get { return (float)(Math.Acos((Width / 2) / Radius)) * (180 / (float)Math.PI); } }
         public override float Radius { get { return (float)Math.Sqrt(Math.Pow(Height / 2, 2) + Math.Pow(Width / 2, 2)); } }
 
-        public CollisionBox(GameObject go, string name, int uo, Transform myTrans, bool isStatic) : base(go, myTrans, uo, name, isStatic)
-        {
-            checkCollision = true;
-            offset = new Vector2();
-            width = myTrans.Width;
-            height = myTrans.Height;
-        }
-
-        public CollisionBox(WorldObject myObj, int uo, string name, bool isStatic) : base(myObj, myObj.Transform, uo, name, isStatic)
-        {                       
-            checkCollision = true;
-            offset = new Vector2();
-            width = transform.Width;
-            height = transform.Height;
-        }
-
-        public CollisionBox(GameObject go, Transform trans, string name) : base(go, trans, 0, name, true)
+        public CollisionBox(GameObject go, string name, bool isStatic) : base(go, name, isStatic)
         {
             checkCollision = true;
             offset = new Vector2();

@@ -27,9 +27,9 @@ namespace MonoGame_Core.Scripts
         public abstract List<Vector2> Axies();
 
 
-        public Collider(GameObject go, Transform t, int uo, string name, bool isStatic) : base(go, uo, name)
+        public Collider(GameObject go, string name, bool isStatic) : base(go, name)
         {
-            transform = t;
+            transform = (Transform)go.ComponentHandler.GetComponent("transform");
             this.isStatic = isStatic;
         }
 
@@ -47,7 +47,7 @@ namespace MonoGame_Core.Scripts
             base.Initilize();
         }
 
-        private static void addToActiveColliders(float gt, Component[] c)
+        private static void addToActiveColliders(float dt, Component[] c)
         {
             if(((Collider)c[0]).checkCollision)
                 CollisionManager.ActiveColliders.Insert((Collider)c[0]);

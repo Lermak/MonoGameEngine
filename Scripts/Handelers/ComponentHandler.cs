@@ -9,6 +9,7 @@ namespace MonoGame_Core.Scripts
         List<Component> components;
         GameObject gameObject;
         public GameObject GameObject { get { return gameObject; } }
+
         public ComponentHandler(GameObject go)
         {
             gameObject = go;
@@ -43,6 +44,10 @@ namespace MonoGame_Core.Scripts
 
         public Component AddComponent(Component c)
         {
+            if(components.Where(x => x.Name == c.Name).Count() > 0)
+            {
+                throw new System.Exception("Duplicate component " + c.Name + " created on object");
+            }
             components.Add(c);
 
             return components[components.Count - 1];
@@ -50,7 +55,6 @@ namespace MonoGame_Core.Scripts
 
         public void Initilize()
         {
-            components.OrderBy(c => c.UpdateOrder);
             foreach (Component c in components)
                 c.Initilize();
         }

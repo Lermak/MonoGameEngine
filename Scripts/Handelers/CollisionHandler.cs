@@ -42,7 +42,7 @@ namespace MonoGame_Core.Scripts
         WorldObject myObject;
         public List<CollisionActions> myActions;
 
-        public CollisionHandler(int uo, WorldObject myObj) : base(myObj, uo, "collisionHandler")
+        public CollisionHandler(WorldObject myObj) : base(myObj, "collisionHandler")
         {
             myObject = myObj;
             myActions = new List<CollisionActions>();
@@ -86,7 +86,7 @@ namespace MonoGame_Core.Scripts
                 }
             }
         }
-        public void Update(GameTime gt)
+        public void Update(GameTime dt)
         {
            
         }

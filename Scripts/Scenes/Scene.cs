@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Media;
+using System.Linq;
 
 namespace MonoGame_Core.Scripts
 {
@@ -13,34 +14,88 @@ namespace MonoGame_Core.Scripts
         protected ContentManager Content;
         public Vector2 Size { get { return size; } }
 
-        public List<GameObject> ToAdd = new List<GameObject>();
-        public List<GameObject> GameObjects = new List<GameObject>();
+        protected List<GameObject> toAdd = new List<GameObject>();
+        protected List<GameObject> gameObjects = new List<GameObject>();
 
-        public Dictionary<string, Texture2D> Textures = new Dictionary<string, Texture2D>();
-        public Dictionary<string, Song> Songs = new Dictionary<string, Song>();
-        public Dictionary<string, SoundEffect> SoundEffects = new Dictionary<string, SoundEffect>();
-        public Dictionary<string, Effect> Effects = new Dictionary<string, Effect>();
-        public Dictionary<string, SpriteFont> Fonts = new Dictionary<string, SpriteFont>();
+        public IList<GameObject> GameObjects { get { return gameObjects.AsReadOnly(); } }
+
+        /// <summary>
+        /// Add a gameObject during scene loading
+        /// </summary>
+        /// <param name="go">Object to add</param>
+        /// <returns>The object added</returns>
+        public GameObject InitGameObject(GameObject go)
+        {
+            VerifyUniqueName(go);
+            go.Initilize();
+            gameObjects.Add(go);
+            return gameObjects[^1];
+        }
+
+        /// <summary>
+        /// Add a worldObject during scene loading
+        /// </summary>
+        /// <param name="wo">Object to add</param>
+        /// <returns>The object added</returns>
+        public WorldObject InitWorldObject(WorldObject wo)
+        {
+            VerifyUniqueName(wo);
+            wo.Initilize();
+            gameObjects.Add(wo);
+            return (WorldObject)gameObjects[^1];
+        }
+
+        /// <summary>
+        /// Add a gameObject at runtime
+        /// </summary>
+        /// <param name="go">Object to add</param>
+        /// <returns>The object added</returns>
+        public GameObject AddGameObject(GameObject go)
+        {
+            VerifyUniqueName(go);
+            toAdd.Add(go);
+            return toAdd[^1];
+        }
+
+        /// <summary>
+        /// Add a worldObject at runtime
+        /// </summary>
+        /// <param name="wo">Object to add</param>
+        /// <returns>The object added</returns>
+        public WorldObject AddWorldObject(GameObject wo)
+        {
+            VerifyUniqueName(wo);
+            toAdd.Add(wo);
+            return (WorldObject)toAdd[^1];
+        }
+
+        public List<GameObject> GetObjectsByTag(string tag)
+        {
+            return gameObjects.Where(o => o.Tags.Contains(tag)).ToList();
+        }
+
+        public GameObject GetObjectByName(string name)
+        {
+            return gameObjects.Where(o => o.Name == name).First();
+        }
+
         public virtual void Initilize(ContentManager c)
         {
             size = new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT);
             Content = c;
             CollisionManager.Initilize();
-            RenderingManager.Clear();
+            RenderingManager.Initilize();
             SoundManager.Initilize();
             CoroutineManager.Initilize();   
 
             loadContent();
+
+            RenderingManager.Sort();//Sort the items in the renderingManager, this should only be done when new items are added
         }
 
         protected virtual void loadContent()
         {
-            foreach (GameObject go in GameObjects)
-            {
-                go.Initilize();
-            }
 
-            RenderingManager.Sort();//Sort the items in the renderingManager, this should only be done when new items are added
         }
 
         public virtual void OnLoad()
@@ -53,39 +108,51 @@ namespace MonoGame_Core.Scripts
             CoroutineManager.AddCoroutine(Coroutines.FadeOutSceneTransision(), "FadeOut", 0, true);
         }
 
-        public virtual void Update(float gt)
+        public virtual void Update(float dt)
         {
             if (SceneManager.SceneState == SceneManager.State.Running)
-                SceneRunning(gt);
+                SceneRunning(dt);
             else if (SceneManager.SceneState == SceneManager.State.Paused)
-                ScenePaused(gt);
+                ScenePaused(dt);
         }
 
-        public virtual void SceneRunning(float gt)
+        public virtual void SceneRunning(float dt)
         {
             List<GameObject> destroy = new List<GameObject>();
-            foreach (GameObject go in GameObjects)
+            foreach (GameObject go in gameObjects)
             {
-                go.Update(gt);
+                go.Update(dt);
                 if (go.ToDestroy)
                     destroy.Add(go);
             }
             foreach (GameObject go in destroy)
             {
                 go.OnDestroy();
-                GameObjects.Remove(go);
+                gameObjects.Remove(go);
             }
-            foreach (GameObject go in ToAdd)
+            foreach (GameObject go in toAdd)
             {
                 go.Initilize();
-                GameObjects.Add(go);
+                gameObjects.Add(go);
             }
-            ToAdd.Clear();
+            toAdd.Clear();
         }
 
-        public virtual void ScenePaused(float gt)
+        public virtual void ScenePaused(float dt)
         {
 
+        }
+
+        private void VerifyUniqueName(GameObject go)
+        {
+            if (gameObjects.Where(o => o.Name == go.Name).Count() > 0)
+            {
+                throw new System.Exception("An object with name '" + go.Name + "' already exists in the current scene");
+            }
+            if (toAdd.Where(o => o.Name == go.Name).Count() > 0)
+            {
+                throw new System.Exception("An object with name '" + go.Name + "' is already being added to the scene");
+            }
         }
     }
 }

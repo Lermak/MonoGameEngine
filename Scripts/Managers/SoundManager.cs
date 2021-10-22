@@ -32,7 +32,7 @@ namespace MonoGame_Core.Scripts
             SoundEffectChannels.Clear();
         }
 
-        public static void Update(float gt)
+        public static void Update(float dt)
         {
 
         }

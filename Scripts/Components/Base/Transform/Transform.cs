@@ -38,7 +38,7 @@ namespace MonoGame_Core.Scripts
         public float Radius { get { return (float)Math.Sqrt(Math.Pow(Height / 2, 2) + Math.Pow(Width / 2, 2)); } }
         public Transform Parent { get { return parent; } }
         public byte Layer { get { return layer; } set { layer = value; } }
-        public Transform(GameObject go, int uo, Vector2 pos, float w, float h, float r, byte l) : base(go, uo, "transform")
+        public Transform(GameObject go, Vector2 pos, float w, float h, float r, byte l) : base(go, "transform")
         {
             radians = r;
             position = pos;
@@ -73,10 +73,9 @@ namespace MonoGame_Core.Scripts
             radians += r;
         }
 
-        public Vector2 WorldPosition(Vector2 offSet)
+        public Vector2 WorldPosition()
         {
-            return (Position
-                + hf_Math.getRotationPosition(hf_Math.RadiansToDegres(Radians) + 90, (float)Math.Sqrt(Math.Pow(offSet.X, 2) + Math.Pow(offSet.Y, 2)), new Vector2()) * Scale) * RenderingManager.GameScale * new Vector2(1,-1);
+            return Position * RenderingManager.GameScale * new Vector2(1,-1);
         }
 
         public void AttachToTransform(Transform t)

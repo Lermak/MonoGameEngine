@@ -9,29 +9,26 @@ namespace MonoGame_Core.Scripts
         public Transform Transform { get { return (Transform)componentHandler.GetComponent("transform"); } }
         public SpriteRenderer SpriteRenderer{ get { return (SpriteRenderer)componentHandler.GetComponent("spriteRenderer"); } }
         public CollisionHandler CollisionHandler { get { return (CollisionHandler)componentHandler.GetComponent("collisionHandler"); } }
-        public WorldObject(string texID, string tag, Vector2 size, Vector2 pos, byte layer) : base(tag)
+        public WorldObject(string texID, string name, string[] tags, Vector2 size, Vector2 pos, byte layer) : base(name, tags)
         {           
-            componentHandler.AddComponent(new CollisionHandler(0, this));           
-            componentHandler.AddComponent(new Transform(this, 0, pos, size.X, size.Y, 0, layer));
-            componentHandler.AddComponent(new RigidBody(this, RigidBody.RigidBodyType.Static, 0));
+            componentHandler.AddComponent(new CollisionHandler(this));           
+            componentHandler.AddComponent(new Transform(this, pos, size.X, size.Y, 0, layer));
+            componentHandler.AddComponent(new RigidBody(this, RigidBody.RigidBodyType.Static));
             componentHandler.AddComponent(new SpriteRenderer(this, 
                                             texID,
-                                            Transform,
                                             new Vector2(0, 0),
                                             size,
-                                            0,
-                                            0,
                                             0));
-    }
+        }
 
         public override void Initilize()
         {
             base.Initilize();
         }
 
-        public override void Update(float gt)
+        public override void Update(float dt)
         {
-            base.Update(gt);
+            base.Update(dt);
         }
 
         public override void OnCreate()

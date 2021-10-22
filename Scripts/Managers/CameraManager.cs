@@ -46,13 +46,13 @@ namespace MonoGame_Core.Scripts
         /// <summary>
         /// Perform any behaviors that the cameras have attached
         /// </summary>
-        /// <param name="gt">Game Time</param>
-        public static void Update(float gt)
+        /// <param name="dt">Game Time</param>
+        public static void Update(float dt)
         {
             //Cameras are GameObjects and need to be updated like them
             foreach (Camera c in cameras)
             {
-                c.Update(gt);
+                c.Update(dt);
             }
         }
     }

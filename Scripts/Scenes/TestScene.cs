@@ -31,17 +31,17 @@ namespace MonoGame_Core.Scripts
 
             SoundManager.SoundEffectChannels["TestHit"] = Content.Load<SoundEffect>("Sound/TestHit").CreateInstance();
 
-            Effects["TestShader"] = Content.Load<Effect>("Shaders/TestShader");
-            Effects["BlueShader"] = Content.Load<Effect>("Shaders/BlueShader");
-            Effects["CRT"] = Content.Load<Effect>("Shaders/CRTShader");
+            ResourceManager.Effects["TestShader"] = Content.Load<Effect>("Shaders/TestShader");
+            ResourceManager.Effects["BlueShader"] = Content.Load<Effect>("Shaders/BlueShader");
+            ResourceManager.Effects["CRT"] = Content.Load<Effect>("Shaders/CRTShader");
 
-            Textures = new Dictionary<string, Texture2D>();
-            Textures["Test"] = Content.Load<Texture2D>("Images/Test");
-            Textures["PeaShooter"] = Content.Load<Texture2D>("Images/PeaShooter");
-            Textures["Base"] = Content.Load<Texture2D>("Images/Base");
-            Textures["BG"] = Content.Load<Texture2D>("Images/Background");
+            ResourceManager.Textures = new Dictionary<string, Texture2D>();
+            ResourceManager.Textures["Test"] = Content.Load<Texture2D>("Images/Test");
+            ResourceManager.Textures["PeaShooter"] = Content.Load<Texture2D>("Images/PeaShooter");
+            ResourceManager.Textures["Base"] = Content.Load<Texture2D>("Images/Base");
+            ResourceManager.Textures["BG"] = Content.Load<Texture2D>("Images/Background");
 
-            Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
+            ResourceManager.Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
 
             CameraManager.Cameras.Add(new Camera("CRTCamera", 0, 0,
                 480, 
@@ -52,23 +52,18 @@ namespace MonoGame_Core.Scripts
 
             CameraManager.Cameras[1].BehaviorHandler.AddBehavior("ScreenShake", Behaviors.ScreenShake, new Component[] { CameraManager.Cameras[1].Transform });
 
-            GameObjects = new List<GameObject>();
-            GameObjects.Add(new TestObject("PeaShooter", "testObj"));
-            GameObjects.Add(new TestStaticObject("Base", 1));
-            ((WorldObject)GameObjects[GameObjects.Count - 1]).Transform.Place(new Vector2(200, 200));
-            ((WorldObject)GameObjects[GameObjects.Count - 1]).Transform.AttachToTransform(((WorldObject)GameObjects[0]).Transform);
+            InitWorldObject(new TestObject("PeaShooter", "testObj"));
+            WorldObject tso = InitWorldObject(new TestStaticObject("Base", 1));
+            tso.Transform.Place(new Vector2(200, 200));
+            tso.Transform.AttachToTransform(((WorldObject)gameObjects[0]).Transform);
 
-            GameObjects.Add(new TestStaticObject("Base", 1));
-            ((WorldObject)GameObjects[GameObjects.Count - 1]).Transform.Place(new Vector2(-200, 0));
-            ((WorldObject)GameObjects[GameObjects.Count - 1]).Transform.AttachToTransform(((WorldObject)GameObjects[0]).Transform);
+            tso = InitWorldObject(new TestStaticObject("Base", 1));
+            tso.Transform.Place(new Vector2(-200, 0));
+            tso.Transform.AttachToTransform(((WorldObject)gameObjects[0]).Transform);
 
-            GameObjects.Add(new WorldObject("BG", "Background", new Vector2(1920,1080), new Vector2(), 0));
-            ((WorldObject)GameObjects[GameObjects.Count-1]).SpriteRenderer.Transform.Layer = 0;
-            ((WorldObject)GameObjects[GameObjects.Count - 1]).SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);
-
-
-            //((WorldObject)GameObjects["testStatic2"]).SpriteRenderer.Shader = "BlueShader";
-
+            tso = InitWorldObject(new WorldObject("BG", "Background", new string[] { }, new Vector2(1920,1080), new Vector2(), 0));
+            tso.SpriteRenderer.Transform.Layer = 0;
+            tso.SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);
 
             CameraManager.Cameras[1].ScreenPosition = new Vector2(480, 270) / 2;
             CameraManager.Cameras[1].Shader = "CRT";
@@ -78,9 +73,9 @@ namespace MonoGame_Core.Scripts
             base.loadContent();
         }
 
-        public override void SceneRunning(float gt)
+        public override void SceneRunning(float dt)
         {
-            base.SceneRunning(gt);
+            base.SceneRunning(dt);
         }
     }
 }

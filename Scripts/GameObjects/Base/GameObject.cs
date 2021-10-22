@@ -6,17 +6,19 @@ namespace MonoGame_Core.Scripts
     {
         protected ComponentHandler componentHandler;
         protected BehaviorHandler behaviorHandler;
-        protected string tag;
+        protected string name;
+        protected string[] tags;
         protected bool destroy = false;
 
+        public string Name { get { return name; } }
         public bool ToDestroy { get { return destroy; } }
-        public string Tag { get { return tag; } }
+        public string[] Tags { get { return tags; } }
         public ComponentHandler ComponentHandler { get { return componentHandler; } }
         public BehaviorHandler BehaviorHandler { get { return behaviorHandler; } }
 
-        public GameObject(string tag)
+        public GameObject(string name, string[] tags)
         {
-            this.tag = tag;
+            this.tags = tags;
             behaviorHandler = new BehaviorHandler(this);
             componentHandler = new ComponentHandler(this);
         }
@@ -27,7 +29,7 @@ namespace MonoGame_Core.Scripts
             behaviorHandler.Inizilize();
         }
 
-        public virtual void Update(float gt)
+        public virtual void Update(float dt)
         {
             if (destroy)
             {
@@ -35,7 +37,7 @@ namespace MonoGame_Core.Scripts
             }
             else
             {
-                behaviorHandler.Update(gt);
+                behaviorHandler.Update(dt);
             }
         }
 

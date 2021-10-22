@@ -12,14 +12,14 @@ namespace MonoGame_Core.Scripts
         private static float deltaTime;
         public static float DeltaTime { get { return deltaTime; } }
 
-        public static void Initilize(GameTime gt)
+        public static void Initilize(GameTime dt)
         {
-            deltaTime = (float)gt.ElapsedGameTime.TotalSeconds;
+            deltaTime = 0;
         }
 
-        public static void Update(GameTime gt)
+        public static void Update(GameTime dt)
         {
-            deltaTime = (float)gt.ElapsedGameTime.TotalSeconds;
+            deltaTime = (float)dt.ElapsedGameTime.TotalSeconds;
         }
     }
 }

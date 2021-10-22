@@ -45,8 +45,8 @@ namespace MonoGame_Core.Scripts
                             switch (int.Parse(row[x]))
                             {
                                 case 2:
-                                    SceneManager.CurrentScene.GameObjects.Add(new TestStaticObject("Test", (byte)l));
-                                    ((WorldObject)SceneManager.CurrentScene.GameObjects[SceneManager.CurrentScene.GameObjects.Count - 1]).Transform.Place(pos);
+                                    SceneManager.CurrentScene.gameObjects.Add(new TestStaticObject("Test", (byte)l));
+                                    ((WorldObject)SceneManager.CurrentScene.gameObjects[SceneManager.CurrentScene.gameObjects.Count - 1]).Transform.Place(pos);
                                     CollisionManager.TileMap[x, y, l] = true;
                                     break;
                             }

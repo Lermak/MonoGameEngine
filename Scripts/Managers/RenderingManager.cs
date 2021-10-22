@@ -63,7 +63,7 @@ namespace MonoGame_Core.Scripts
         /// <summary>
         /// MonoGame's object for handling communication with the graphics card
         /// </summary>
-        private static GraphicsDevice graphicsDevice;
+        public static GraphicsDevice GraphicsDevice;
         
 
         /// <summary>
@@ -71,18 +71,17 @@ namespace MonoGame_Core.Scripts
         /// This includes creating any render targets that cameras will need
         /// </summary>
         /// <param name="gd">Game Time</param>
-        public static void Initilize(GraphicsDevice gd)
-        {
-            graphicsDevice = gd;
-            spriteBatch = new SpriteBatch(graphicsDevice);
+        public static void Initilize()
+        { 
+            spriteBatch = new SpriteBatch(GraphicsDevice);
             Sprites = new List<SpriteRenderer>();
             RenderTargets = new List<RenderTarget2D>();
 
-            RenderTargets.Add(new RenderTarget2D(graphicsDevice,
+            RenderTargets.Add(new RenderTarget2D(GraphicsDevice,
                 (int)1920,
                 (int)1080,
                 false,
-                graphicsDevice.PresentationParameters.BackBufferFormat,
+                GraphicsDevice.PresentationParameters.BackBufferFormat,
                 DepthFormat.Depth24,
                 0,
                 RenderTargetUsage.PreserveContents));
@@ -94,7 +93,7 @@ namespace MonoGame_Core.Scripts
         /// </summary>
         public static void Clear()
         {
-            spriteBatch = new SpriteBatch(graphicsDevice);
+            spriteBatch = new SpriteBatch(GraphicsDevice);
             Sprites = new List<SpriteRenderer>();
         }
 
@@ -104,18 +103,18 @@ namespace MonoGame_Core.Scripts
         /// Render all items to their designated targets
         /// Draw all cameras
         /// </summary>
-        /// <param name="gt"></param>
-        public static void Draw(float gt)
+        /// <param name="dt"></param>
+        public static void Draw(float dt)
         {
-            var x = graphicsDevice.GetRenderTargets();
-            WindowScale = new Vector2(graphicsDevice.Viewport.Width / WIDTH, graphicsDevice.Viewport.Height / HEIGHT);
+            var x = GraphicsDevice.GetRenderTargets();
+            WindowScale = new Vector2(GraphicsDevice.Viewport.Width / WIDTH, GraphicsDevice.Viewport.Height / HEIGHT);
 
             string prevShader = "";
             int Target = -1;
 
             SetTarget(Target);
 
-            graphicsDevice.Clear(Color.Black);
+            GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             IEnumerable<Camera> cameras = CameraManager.Cameras.OrderByDescending(s => s.Target);
@@ -142,7 +141,7 @@ namespace MonoGame_Core.Scripts
                             spriteBatch.End();
 
                             SetTarget(c.Target);
-                            graphicsDevice.Clear(Color.Transparent);
+                            GraphicsDevice.Clear(Color.Transparent);
 
                             Target = c.Target;
 
@@ -151,7 +150,7 @@ namespace MonoGame_Core.Scripts
 
                         if (sr.Shader != "")
                         {
-                            foreach (EffectTechnique t in SceneManager.CurrentScene.Effects[sr.Shader].Techniques)
+                            foreach (EffectTechnique t in ResourceManager.Effects[sr.Shader].Techniques)
                             {
                                 foreach (EffectPass p in t.Passes)
                                 {
@@ -221,9 +220,9 @@ namespace MonoGame_Core.Scripts
         private static void SetTarget(int Target)
         {
             if (Target == -1)
-                graphicsDevice.SetRenderTarget(null);
+                GraphicsDevice.SetRenderTarget(null);
             else
-                graphicsDevice.SetRenderTarget(RenderTargets[Target]);
+                GraphicsDevice.SetRenderTarget(RenderTargets[Target]);
         }
     }
 }

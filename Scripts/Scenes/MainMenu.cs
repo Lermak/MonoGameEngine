@@ -26,21 +26,21 @@ namespace MonoGame_Core.Scripts
 
             SoundManager.SoundEffectChannels["TestHit"] = Content.Load<SoundEffect>("Sound/TestHit").CreateInstance();
 
-            Textures = new Dictionary<string, Texture2D>();
-            Textures["Test"] = Content.Load<Texture2D>("Test");
-            Textures["Base"] = Content.Load<Texture2D>("Images/Base");
+            ResourceManager.Textures = new Dictionary<string, Texture2D>();
+            ResourceManager.Textures["Test"] = Content.Load<Texture2D>("Test");
+            ResourceManager.Textures["Base"] = Content.Load<Texture2D>("Images/Base");
 
-            Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
+            ResourceManager.Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
 
-            GameObjects = new List<GameObject>();
+            gameObjects = new List<GameObject>();
             //GameObjects.Add(new TestObject("Test", "testObj"));
-            GameObjects.Add(new TestStaticObject("Test", 1));
-            GameObjects.Add(new Button("Test", "Base", "PlayButton", new Vector2(40, 40), new Vector2(500, 100), 1, null));
-            GameObjects.Add(new Button("Test", "Base", "QuitButton", new Vector2(40, 40), new Vector2(500, 40), 1, Behaviors.QuitOnClick));
+            gameObjects.Add(new TestStaticObject("Test", 1));
+            gameObjects.Add(new Button("Test", "Base", "PlayButton", new Vector2(40, 40), new Vector2(500, 100), 1, null));
+            gameObjects.Add(new Button("Test", "Base", "QuitButton", new Vector2(40, 40), new Vector2(500, 40), 1, Behaviors.QuitOnClick));
             base.loadContent();
         }
 
-        public override void Update(float gt)
+        public override void Update(float dt)
         {
             if (SceneManager.SceneState == SceneManager.State.Running)
             {
@@ -51,7 +51,7 @@ namespace MonoGame_Core.Scripts
                 }
             }
 
-            base.Update(gt);
+            base.Update(dt);
         }
     }
 }

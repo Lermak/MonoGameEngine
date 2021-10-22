@@ -13,13 +13,13 @@ namespace MonoGame_Core.Scripts
         protected int orderInLayer;
         protected Color color;
         protected Transform transform;
-        protected Vector2 offSet;
+        protected Vector2 offset;
         protected Vector2 drawArea;
         protected string shader = "";
         protected List<Camera> cameras = new List<Camera>() { CameraManager.Cameras[0] };
-        protected SpriteEffects spriteEffect = SpriteEffects.None;
-        protected int frames;
+        protected SpriteEffects flip = SpriteEffects.None;
         protected int currentFrame = 0;
+        protected int currentAnimation = 0;
         protected float timeSinceFrameChange = 0;
         protected bool isHUD = false;
         protected bool visible = true;
@@ -27,7 +27,7 @@ namespace MonoGame_Core.Scripts
 
         public virtual string Texture { get { return texture; } 
             set {
-                if (SceneManager.CurrentScene.Textures.ContainsKey(value))
+                if (ResourceManager.Textures.ContainsKey(value))
                     texture = value;
                 else
                     texture = null;
@@ -36,49 +36,39 @@ namespace MonoGame_Core.Scripts
         public int OrderInLayer { get { return orderInLayer; } }
         public Color Color { get { return color; } }
         public Transform Transform { get { return transform; } }
-        public Vector2 Offset { get { return offSet; } }
+        public Vector2 Offset { get { return offset; } }
         public Vector2 DrawArea { get { return drawArea; } }
         public string Shader { get { return shader; } 
             set {
-                if (SceneManager.CurrentScene.Effects.ContainsKey(value))
+                if (ResourceManager.Effects.ContainsKey(value))
                     shader = value;
                 else
                     shader = "";
             } 
         }
-        public SpriteEffects SpriteEffect { get { return spriteEffect; } }
+        public SpriteEffects Flip { get { return flip; } set { flip = value; } }
         public bool IsHUD { get { return isHUD; } set { isHUD = value; } }
         public bool Visible { get { return visible; } set { visible = value; } }
         public float AddedRotation { get { return addedRotation; } set { addedRotation = value; } }
         public List<Camera> Cameras { get { return cameras; } }
-        public SpriteRenderer(GameObject go, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, Color clr, int frames, int uo) : base(go, uo, "spriteRenderer")
+        public SpriteRenderer(GameObject go, string texID, Vector2 off, Vector2 drawArea, int orderInLayer) : base(go, "spriteRenderer")
         {
             Texture = texID;
-            transform = t;
-            offSet = off;
-            this.orderInLayer = orderInLayer;
-            this.drawArea = drawArea;
-            color = clr;
-            this.frames = frames;
-
-            RenderingManager.Sprites.Add(this);
-        }
-        public SpriteRenderer(GameObject go, string texID, Transform t, Vector2 off, Vector2 drawArea, int orderInLayer, int frames, int uo) : base(go, uo, "spriteRenderer")
-        {
-            Texture = texID;
-            transform = t;
-            offSet = off;
+            transform = (Transform)go.ComponentHandler.GetComponent("transform");
+            offset = off;
             this.orderInLayer = orderInLayer;
             this.drawArea = drawArea;
             color = Color.White;
-            this.frames = frames;
 
             RenderingManager.Sprites.Add(this);
         }
 
         public Rectangle DrawRect()
         {
-            return new Rectangle(currentFrame * (int)DrawArea.X, 0, (int)DrawArea.X, (int)DrawArea.Y);
+            return new Rectangle(currentFrame * (int)DrawArea.X + (int)offset.X, //left x pos for the frame
+                                currentAnimation * (int)DrawArea.Y + (int)offset.Y, //top y pos for the animation
+                                (int)DrawArea.X, //width of frame
+                                (int)DrawArea.Y); //height of frame
         }
 
         public override void OnDestroy()
@@ -97,26 +87,26 @@ namespace MonoGame_Core.Scripts
         {
             if (isHUD)
             {
-                sb.Draw(SceneManager.CurrentScene.Textures[Texture],
+                sb.Draw(ResourceManager.Textures[Texture],
                     ScreenPosition(c),
                     DrawRect(),
                     new Color(Color.R - (int)RenderingManager.GlobalFade, Color.G - (int)RenderingManager.GlobalFade, Color.B - (int)RenderingManager.GlobalFade, Color.A),
                     -(Transform.Radians + addedRotation),
                     new Vector2(Transform.Width / 2, Transform.Height / 2),
                     RenderingManager.WindowScale * Transform.Scale,
-                    SpriteEffect,
+                    Flip,
                     1);
             }
             else
             {
-                sb.Draw(SceneManager.CurrentScene.Textures[Texture],
+                sb.Draw(ResourceManager.Textures[Texture],
                     ScreenPosition(c),
                     DrawRect(),
                     new Color(Color.R - (int)RenderingManager.GlobalFade, Color.G - (int)RenderingManager.GlobalFade, Color.B - (int)RenderingManager.GlobalFade, Color.A),
                     -(Transform.Radians + addedRotation),
                     new Vector2(Transform.Width / 2, Transform.Height / 2),
                     RenderingManager.GameScale * Transform.Scale,
-                    SpriteEffect,
+                    Flip,
                     (float)transform.Layer / 256f);
             }
         }
@@ -124,10 +114,10 @@ namespace MonoGame_Core.Scripts
         protected Vector2 ScreenPosition(Camera camera)
         {
             if (isHUD)
-                return Transform.WorldPosition(offSet) + (new Vector2(RenderingManager.WIDTH / 2, RenderingManager.HEIGHT / 2) * RenderingManager.WindowScale);
+                return Transform.WorldPosition() + (new Vector2(RenderingManager.WIDTH / 2, RenderingManager.HEIGHT / 2) * RenderingManager.WindowScale);
 
             else
-                return (Transform.WorldPosition(offSet) - camera.Position + (new Vector2(RenderingManager.WIDTH / 2, RenderingManager.HEIGHT / 2) * RenderingManager.WindowScale));
+                return (Transform.WorldPosition() - camera.Position + (new Vector2(RenderingManager.WIDTH / 2, RenderingManager.HEIGHT / 2) * RenderingManager.WindowScale));
         }
     }
 }

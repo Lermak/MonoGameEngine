@@ -91,8 +91,8 @@ namespace MonoGame_Core.Scripts
         /// <summary>
         /// Check if a double click has occured, and change the double click flag to true if it has.
         /// </summary>
-        /// <param name="gt">Game Time</param>
-        private static void checkDoubleClick(float gt)
+        /// <param name="dt">Game Time</param>
+        private static void checkDoubleClick(float dt)
         {
             if (IsDoubleClick)
                 IsDoubleClick = false;
@@ -108,7 +108,7 @@ namespace MonoGame_Core.Scripts
             {
                 if (timeSinceLastLeftClick < DOUBLE_CLICK_DELAY)
                 {
-                    timeSinceLastLeftClick += gt;
+                    timeSinceLastLeftClick += dt;
                     if (IsMouseTriggered(MouseKeys.LeftButton))
                     {
                         timeSinceLastLeftClick = 0;
@@ -127,8 +127,8 @@ namespace MonoGame_Core.Scripts
         /// <summary>
         /// Get the current state of they keyboard, and move the current state to the previous
         /// </summary>
-        /// <param name="gt">Game Time</param>
-        public static void Update(float gt)
+        /// <param name="dt">Game Time</param>
+        public static void Update(float dt)
         {
             Point p = Mouse.GetState().Position;
             mousePos = new Vector2(p.X, -p.Y) / RenderingManager.WindowScale - new Vector2(RenderingManager.WIDTH / 2, -RenderingManager.HEIGHT / 2);
@@ -139,7 +139,7 @@ namespace MonoGame_Core.Scripts
             previousMouseState = currentMouseState;
             currentMouseState = Mouse.GetState();
 
-            checkDoubleClick(gt);
+            checkDoubleClick(dt);
         }
     }
 }

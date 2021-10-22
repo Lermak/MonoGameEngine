@@ -8,7 +8,7 @@ namespace MonoGame_Core.Scripts
     {
         float speed;
         public float Speed { get { return speed; } }
-        public Movement(GameObject go, int uo, string name, float s) : base(go, uo, name)
+        public Movement(GameObject go, string name, float s) : base(go, name)
         {
             speed = s;
         }

@@ -187,8 +187,8 @@ namespace MonoGame_Core.Scripts
         /// Perform collision detection for all currently moving colliders
         /// Type of collision detection is determined by CollisionType
         /// </summary>
-        /// <param name="gt">Game Time</param>
-        public static void Update(float gt)
+        /// <param name="dt">Game Time</param>
+        public static void Update(float dt)
         {
             if (CollisionDetection == CollisionType.SAT)
             {
@@ -274,9 +274,9 @@ namespace MonoGame_Core.Scripts
 
                 foreach(Vector2 v in cc)
                 {
-                    GameObject go = new GameObject("TileWall");
+                    GameObject go = new GameObject("TileWall", new string[] { });
                     //create a collision box
-                    CollisionBox cb = new CollisionBox(go, new Transform(go, 0, v, TileSize.X, TileSize.Y, 0, c.Transform.Layer), "TileWall");
+                    CollisionBox cb = new CollisionBox(go, "TileWall", true);
                     //test collision against it
                     if(SATcollision(c, cb, out p))
                         ((CollisionHandler)c.GameObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(c, cb, p);

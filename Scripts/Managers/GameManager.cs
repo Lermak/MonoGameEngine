@@ -21,9 +21,11 @@ namespace MonoGame_Core.Scripts
 
         protected override void Initialize()
         {
+            RenderingManager.GraphicsDevice = GraphicsDevice;
             // TODO: Add your initialization logic here
+            ResourceManager.Initilize();
             InputManager.Initilize();
-            RenderingManager.Initilize(GraphicsDevice);
+            RenderingManager.Initilize();
             SoundManager.Initilize();
             CollisionManager.Initilize();
             CoroutineManager.Initilize();
@@ -42,13 +44,13 @@ namespace MonoGame_Core.Scripts
             quit = true;
         }
 
-        protected override void Update(GameTime gameTime)
+        protected override void Update(GameTime deltaTime)
         {
             if (quit)
                 Exit();
 
             // TODO: Add your update logic here
-            TimeManager.Update(gameTime);
+            TimeManager.Update(deltaTime);
 
             InputManager.Update(TimeManager.DeltaTime);
 
@@ -60,7 +62,7 @@ namespace MonoGame_Core.Scripts
 
             CollisionManager.Update(TimeManager.DeltaTime);
 
-            base.Update(gameTime);
+            base.Update(deltaTime);
         }
 
         protected override void Draw(GameTime gameTime)

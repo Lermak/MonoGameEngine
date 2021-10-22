@@ -32,7 +32,7 @@ namespace MonoGame_Core.Scripts
             get { return shader; }
             set
             {
-                if (SceneManager.CurrentScene.Effects.ContainsKey(value))
+                if (ResourceManager.Effects.ContainsKey(value))
                     shader = value;
                 else
                     shader = "";
@@ -47,9 +47,9 @@ namespace MonoGame_Core.Scripts
         public Vector2 ScreenPosition { get { return screenPosition; } set { screenPosition = value; } }
         public byte Layer { get { return layer; } set { layer = value; } }
 
-        public Camera(string tag, int target, byte layer, float width, float height, Vector2 size, Vector2 min, Vector2 max) : base(tag)
+        public Camera(string name, int target, byte layer, float width, float height, Vector2 size, Vector2 min, Vector2 max) : base(name, new string[] { "camera" })
         {
-            Transform t = new Transform(this, 0, new Vector2(), width, height, 0, 0);
+            Transform t = new Transform(this, new Vector2(), width, height, 0, 0);
             minPos = min;
             maxPos = max;
             Target = target;
@@ -59,9 +59,9 @@ namespace MonoGame_Core.Scripts
             screenPosition = new Vector2(RenderingManager.WIDTH / 2, RenderingManager.HEIGHT / 2);
         }
 
-        public override void Update(float gt)
+        public override void Update(float dt)
         {
-            base.Update(gt);
+            base.Update(dt);
             clamp();
         }
 
@@ -91,7 +91,7 @@ namespace MonoGame_Core.Scripts
         public void Draw(SpriteBatch sb)
         {
             if (shader != "")
-                foreach (EffectTechnique t in SceneManager.CurrentScene.Effects[shader].Techniques)
+                foreach (EffectTechnique t in ResourceManager.Effects[shader].Techniques)
                 {
                     foreach (EffectPass p in t.Passes)
                     {

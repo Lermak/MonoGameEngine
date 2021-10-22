@@ -123,8 +123,8 @@ namespace MonoGame_Core.Scripts
         /// Iterate through all coroutines that are currently running by one loop, provided there has been enough delay
         /// If a coroutine is finished, remove it from the list
         /// </summary>
-        /// <param name="gt">Game Time</param>
-        public static void Update(float gt)
+        /// <param name="dt">Game Time</param>
+        public static void Update(float dt)
         {
             List<string> k = new List<string>(coroutines.Keys);
             List<string> toRemove = new List<string>();
@@ -134,7 +134,7 @@ namespace MonoGame_Core.Scripts
                 Coroutine c = coroutines[k[i]];
                 if (c.State == CoroutineState.Running)
                 {
-                    c.TimeSinceLast += gt;
+                    c.TimeSinceLast += dt;
                     if (c.TimeSinceLast > c.TimeBetweenSteps)
                     {
                         c.Routine.MoveNext();
