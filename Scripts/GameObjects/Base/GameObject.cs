@@ -18,6 +18,7 @@ namespace MonoGame_Core.Scripts
 
         public GameObject(string name, string[] tags)
         {
+            this.name = name;
             this.tags = tags;
             behaviorHandler = new BehaviorHandler(this);
             componentHandler = new ComponentHandler(this);

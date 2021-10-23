@@ -13,13 +13,10 @@ namespace MonoGame_Core.Scripts
 {
     public class TestScene:Scene
     {
-        public TestScene():base()
-        {
-            
-        }
-
         protected override void loadContent()
         {
+            base.loadContent();
+
             size = new Vector2(2100, 1080);
             CollisionManager.Initilize();
 
@@ -27,7 +24,7 @@ namespace MonoGame_Core.Scripts
             CameraManager.Cameras[0].SetMaxPos(Size / 2);
 
             SoundManager.SongChannels["Melody"] = Content.Load<Song>("Music/TestSong");
-            MediaPlayer.Play(SoundManager.SongChannels["Melody"]);
+            //MediaPlayer.Play(SoundManager.SongChannels["Melody"]);
 
             SoundManager.SoundEffectChannels["TestHit"] = Content.Load<SoundEffect>("Sound/TestHit").CreateInstance();
 
@@ -53,13 +50,11 @@ namespace MonoGame_Core.Scripts
             CameraManager.Cameras[1].BehaviorHandler.AddBehavior("ScreenShake", Behaviors.ScreenShake, new Component[] { CameraManager.Cameras[1].Transform });
 
             InitWorldObject(new TestObject("PeaShooter", "testObj"));
-            WorldObject tso = InitWorldObject(new TestStaticObject("Base", 1));
-            tso.Transform.Place(new Vector2(200, 200));
-            tso.Transform.AttachToTransform(((WorldObject)gameObjects[0]).Transform);
+            WorldObject tso = InitWorldObject(new TestStaticObject("Base", new Vector2(200, 200), "Test1", 1));
+            //tso.Transform.AttachToTransform(((WorldObject)gameObjects[0]).Transform);
 
-            tso = InitWorldObject(new TestStaticObject("Base", 1));
-            tso.Transform.Place(new Vector2(-200, 0));
-            tso.Transform.AttachToTransform(((WorldObject)gameObjects[0]).Transform);
+            tso = InitWorldObject(new TestStaticObject("Base", new Vector2(200, -100), "Test2", 1));
+            //tso.Transform.AttachToTransform(((WorldObject)gameObjects[0]).Transform);
 
             tso = InitWorldObject(new WorldObject("BG", "Background", new string[] { }, new Vector2(1920,1080), new Vector2(), 0));
             tso.SpriteRenderer.Transform.Layer = 0;
@@ -69,8 +64,6 @@ namespace MonoGame_Core.Scripts
             CameraManager.Cameras[1].Shader = "CRT";
 
             TiledImporter.LoadFromFile(this, @"E:\Programming\C#\MonoGame\MonoGame Core\Content\Tiled\Test.tmx");
-
-            base.loadContent();
         }
 
         public override void SceneRunning(float dt)

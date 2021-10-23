@@ -25,6 +25,37 @@ namespace MonoGame_Core.Scripts
         protected bool visible = true;
         protected float addedRotation = 0;
 
+        public int Frames { get { return (int)(ResourceManager.Textures[texture].Width / drawArea.X); } }
+        public int Animations { get { return (int)(ResourceManager.Textures[texture].Height / drawArea.Y); } }
+
+        public int CurrentFrame
+        {
+            get { return currentFrame; }
+            set 
+            {
+                if (value > Frames)
+                {
+                    currentFrame = 0;
+                }
+                else
+                    currentFrame = value;
+            }
+        }
+
+        public int CurrentAnimation
+        {
+            get { return currentAnimation; }
+            set
+            {
+                if (value > Animations)
+                {
+                    currentAnimation = 0;
+                }
+                else
+                    currentAnimation = value;
+            }
+        }
+
         public virtual string Texture { get { return texture; } 
             set {
                 if (ResourceManager.Textures.ContainsKey(value))

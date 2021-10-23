@@ -13,6 +13,23 @@ namespace MonoGame_Core.Scripts
 
         }
 
+        public static void Animate(float dt, Component[] c)
+        {
+            AnimationData ad = (AnimationData)c[0];
+            ad.TimeSinceLastFrameChange += dt;
+            if (ad.TimeSinceLastFrameChange >= ad.AnimationSpeed)
+            {
+                ad.TimeSinceLastFrameChange = 0;
+
+                if ((ad.SpriteRenderer.CurrentFrame == 0 && !ad.AnimationDirection) ||
+                    (ad.SpriteRenderer.CurrentFrame == ad.SpriteRenderer.Frames && ad.AnimationDirection))
+                {
+                    ad.AnimationDirection = !ad.AnimationDirection;
+                }
+
+                ad.SpriteRenderer.CurrentFrame += ad.AnimationDirection ? 1 : -1;
+            }
+        }
         public static void ArrowControls(float dt, Component[] c)
         {
             KeyboardState state = Keyboard.GetState();

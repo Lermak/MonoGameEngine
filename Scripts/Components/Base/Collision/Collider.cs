@@ -37,7 +37,7 @@ namespace MonoGame_Core.Scripts
         {
             if (isStatic)
             {
-                CollisionManager.PassiveColliders.Insert(this);
+                 CollisionManager.PassiveColliders.Insert(this);
             }
             else
             {

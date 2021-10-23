@@ -54,14 +54,11 @@ namespace MonoGame_Core.Scripts
             {
                 if(ca.MyBox == b1.Name)
                 {
-                    foreach(string s in ca.OtherBoxs)
+                    if(ca.OtherBoxs.Contains(b2.Name))
                     {
-                        if(b2.Name == "" || s == b2.Name)
+                        foreach(collisionAction c in ca.Actions)
                         {
-                            foreach(collisionAction c in ca.Actions)
-                            {
-                                c(b1, b2, v);
-                            }
+                            c(b1, b2, v);
                         }
                     }
                 }
@@ -73,22 +70,15 @@ namespace MonoGame_Core.Scripts
             {
                 if (ca.MyBox == b1.Name)
                 {
-                    foreach (string s in ca.OtherBoxs)
+                    if (ca.OtherBoxs.Contains(t))
                     {
-                        if(t == s)
+                        foreach (collisionAction c in ca.Actions)
                         {
-                            foreach (collisionAction c in ca.Actions)
-                            {
-                                c(b1, null, v);
-                            }
+                            c(b1, null, v);
                         }
                     }
                 }
             }
-        }
-        public void Update(GameTime dt)
-        {
-           
         }
     }
 }
