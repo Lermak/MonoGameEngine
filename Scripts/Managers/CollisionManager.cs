@@ -275,7 +275,7 @@ namespace MonoGame_Core.Scripts
                 foreach(Vector2 v in cc)
                 {
                     GameObject go = new GameObject("TileWall", new string[] { });
-                    go.ComponentHandler.AddComponent(new Transform(go, v, 40, 40, 0, 0));
+                    go.ComponentHandler.AddComponent(new Transform(go, v, TileSize.X, TileSize.Y, 0, 0));
                     //create a collision box
                     CollisionBox cb = (CollisionBox)go.ComponentHandler.AddComponent(new CollisionBox(go, "TileWall", true));
                     //test collision against it
