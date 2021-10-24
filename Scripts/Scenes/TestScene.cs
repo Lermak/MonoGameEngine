@@ -41,8 +41,8 @@ namespace MonoGame_Core.Scripts
                                         480,
                                         270,
                                         new Vector2(480, 270),
-                                        new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * -1,
-                                        new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * 1));
+                                        new Vector2(Globals.SCREEN_WIDTH, Globals.SCREEN_HEIGHT) * -1,
+                                        new Vector2(Globals.SCREEN_WIDTH, Globals.SCREEN_HEIGHT) * 1));
 
             CameraManager.Cameras[1].BehaviorHandler.Add("ScreenShake", Behaviors.ScreenShake, new Component[] { CameraManager.Cameras[1].Transform });
 
@@ -53,7 +53,7 @@ namespace MonoGame_Core.Scripts
             tso = InitWorldObject(new TestStaticObject("Base", new Vector2(200, -100), "Test2", 1));
             //tso.Transform.AttachToTransform(((WorldObject)gameObjects[0]).Transform);
 
-            tso = InitWorldObject(new WorldObject("BG", "Background", new string[] { }, new Vector2(1920, 1080), new Vector2(), 0));
+            tso = InitWorldObject(new WorldObject("BG", "Background", new string[] { }, new Vector2(), 0));
             tso.SpriteRenderer.Transform.Layer = 0;
             tso.SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);
 

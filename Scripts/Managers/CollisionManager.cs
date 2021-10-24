@@ -83,7 +83,7 @@ namespace MonoGame_Core.Scripts
         /// <param name="b2">The box to check against</param>
         /// <param name="p">The penetration vector</param>
         /// <returns>true when collision occurs</returns>
-        static bool SphereToBoxCollision(CollisionSphere s1, CollisionBox b2, out Vector2 p)
+        static bool SphereToBoxCollision(CollisionCircle s1, CollisionBox b2, out Vector2 p)
         {
             p = new Vector2();
             return false;
@@ -97,7 +97,7 @@ namespace MonoGame_Core.Scripts
         /// <returns>true if collision is possible</returns>
         static bool distanceHuristic(Collider b1, Collider b2)
         {
-            if (Vector2.Distance(b1.Transform.Position, b2.Transform.Position) > b1.Radius + b2.Radius)
+            if (Vector2.Distance(b1.Transform.Position, b2.Transform.Position) > b1.Hypotenuse + b2.Hypotenuse)
                 return false;
             else return true;
         }
@@ -212,7 +212,7 @@ namespace MonoGame_Core.Scripts
 
             foreach (Collider a in ActiveColliders.GetColliders())
             {
-                Rectangle r = new Rectangle(new Point((int)(a.Transform.Position.X - a.Transform.Width / 2), (int)(a.Transform.Position.Y - a.Transform.Height / 2)), new Point((int)a.Transform.Width, (int)a.Transform.Height));
+                Rectangle r = new Rectangle(new Point((int)(a.Transform.Position.X - a.Width / 2), (int)(a.Transform.Position.Y - a.Height / 2)), new Point((int)a.Width, (int)a.Height));
                 List<Quadtree> quads = PassiveColliders.GetQuads(r);
                 List<Quadtree> aQuads = ActiveColliders.GetQuads(r);
 
@@ -275,9 +275,9 @@ namespace MonoGame_Core.Scripts
                 foreach(Vector2 v in cc)
                 {
                     GameObject go = new GameObject("TileWall", new string[] { });
-                    go.ComponentHandler.Add(new Transform(go, v, TileSize.X, TileSize.Y, 0, 0));
+                    go.ComponentHandler.Add(new Transform(go, v, 0, 0));
                     //create a collision box
-                    CollisionBox cb = (CollisionBox)go.ComponentHandler.Add(new CollisionBox(go, "TileWall", true));
+                    CollisionBox cb = (CollisionBox)go.ComponentHandler.Add(new CollisionBox(go, "TileWall", true, new Vector2(Globals.TILE_WIDTH, Globals.TILE_HEIGHT)));
                     //test collision against it
                     if(SATcollision(c, cb, out p))
                         ((CollisionHandler)c.GameObject.ComponentHandler.Get("collisionHandler")).RunCollisionActions(c, cb, p);
@@ -369,7 +369,7 @@ namespace MonoGame_Core.Scripts
 
         public void Insert(Collider c)
         {
-            Rectangle r = new Rectangle(new Point((int)(c.Transform.Position.X - c.Transform.Width / 2), (int)(c.Transform.Position.Y - c.Transform.Height / 2)), new Point((int)c.Transform.Width, (int)c.Transform.Height));
+            Rectangle r = new Rectangle(new Point((int)(c.Transform.Position.X - c.Width / 2), (int)(c.Transform.Position.Y - c.Height / 2)), new Point((int)c.Width, (int)c.Height));
 
             if (Area.Intersects(r))
             {
@@ -391,7 +391,7 @@ namespace MonoGame_Core.Scripts
 
                     for (int i = 0; i < NUM_COLLIDERS; ++i)
                     {
-                        Rectangle r1 = new Rectangle(new Point((int)(Colliders[i].Transform.Position.X - Colliders[i].Transform.Width / 2), (int)(Colliders[i].Transform.Position.Y - Colliders[i].Transform.Height / 2)), new Point((int)Colliders[i].Transform.Width, (int)Colliders[i].Transform.Height));
+                        Rectangle r1 = new Rectangle(new Point((int)(Colliders[i].Transform.Position.X - Colliders[i].Width / 2), (int)(Colliders[i].Transform.Position.Y - Colliders[i].Height / 2)), new Point((int)Colliders[i].Width, (int)Colliders[i].Height));
 
                         for (int x = 0; x < NUM_CHILDREN; ++x)
                         {

@@ -22,7 +22,7 @@ namespace MonoGame_Core.Scripts
                     texture = null;
             }
         }
-        public FontRenderer(GameObject go, string text, string texID, Vector2 off, Vector2 drawArea, int orderInLayer) : base(go, texID, off, drawArea, orderInLayer)
+        public FontRenderer(GameObject go, string text, string texID, Vector2 drawArea, int orderInLayer) : base(go, texID, orderInLayer, drawArea)
         {
             name = "fontRenderer";
             this.text = text;

@@ -82,11 +82,23 @@ namespace MonoGame_Core.Scripts
         public bool Visible { get { return visible; } set { visible = value; } }
         public float AddedRotation { get { return addedRotation; } set { addedRotation = value; } }
         public List<Camera> Cameras { get { return cameras; } }
-        public SpriteRenderer(GameObject go, string texID, Vector2 off, Vector2 drawArea, int orderInLayer) : base(go, "spriteRenderer")
+        public float Hypotenuse { get { return hf_Math.Hypotenuse(drawArea.X / 2, drawArea.Y / 2); } }
+        public SpriteRenderer(GameObject go, string texID, int orderInLayer) : base(go, "spriteRenderer")
         {
             Texture = texID;
             transform = (Transform)go.ComponentHandler.Get("transform");
-            offset = off;
+            offset = new Vector2();
+            this.orderInLayer = orderInLayer;
+            this.drawArea = new Vector2(ResourceManager.Textures[texID].Width, ResourceManager.Textures[texID].Height);
+            color = Color.White;
+
+            RenderingManager.Sprites.Add(this);
+        }
+        public SpriteRenderer(GameObject go, string texID, int orderInLayer, Vector2 drawArea) : base(go, "spriteRenderer")
+        {
+            Texture = texID;
+            transform = (Transform)go.ComponentHandler.Get("transform");
+            offset = new Vector2();
             this.orderInLayer = orderInLayer;
             this.drawArea = drawArea;
             color = Color.White;
@@ -123,7 +135,7 @@ namespace MonoGame_Core.Scripts
                     DrawRect(),
                     new Color(Color.R - (int)RenderingManager.GlobalFade, Color.G - (int)RenderingManager.GlobalFade, Color.B - (int)RenderingManager.GlobalFade, Color.A),
                     -(Transform.Radians + addedRotation),
-                    new Vector2(Transform.Width / 2, Transform.Height / 2),
+                    new Vector2(drawArea.X / 2, drawArea.Y / 2),
                     RenderingManager.WindowScale * Transform.Scale,
                     Flip,
                     1);
@@ -135,7 +147,7 @@ namespace MonoGame_Core.Scripts
                     DrawRect(),
                     new Color(Color.R - (int)RenderingManager.GlobalFade, Color.G - (int)RenderingManager.GlobalFade, Color.B - (int)RenderingManager.GlobalFade, Color.A),
                     -(Transform.Radians + addedRotation),
-                    new Vector2(Transform.Width / 2, Transform.Height / 2),
+                    new Vector2(drawArea.X / 2, drawArea.Y / 2),
                     RenderingManager.GameScale * Transform.Scale,
                     Flip,
                     (float)transform.Layer / 256f);
@@ -145,10 +157,10 @@ namespace MonoGame_Core.Scripts
         protected Vector2 ScreenPosition(Camera camera)
         {
             if (isHUD)
-                return Transform.WorldPosition() + (new Vector2(RenderingManager.WIDTH / 2, RenderingManager.HEIGHT / 2) * RenderingManager.WindowScale);
+                return Transform.WorldPosition() + (new Vector2(Globals.SCREEN_WIDTH / 2, Globals.SCREEN_HEIGHT / 2) * RenderingManager.WindowScale);
 
             else
-                return (Transform.WorldPosition() - camera.Position + (new Vector2(RenderingManager.WIDTH / 2, RenderingManager.HEIGHT / 2) * RenderingManager.WindowScale));
+                return (Transform.WorldPosition() - camera.Position + (new Vector2(Globals.SCREEN_WIDTH / 2, Globals.SCREEN_HEIGHT / 2) * RenderingManager.WindowScale));
         }
     }
 }

@@ -17,14 +17,7 @@ namespace MonoGame_Core.Scripts
         /// Rendering order determines how items will be layered and orgized
         /// </summary>
         public enum RenderOrder { SideScrolling, TopDown, Isometric }
-        /// <summary>
-        /// Width of the target BackBuffer
-        /// </summary>
-        public const float WIDTH = 1920;
-        /// <summary>
-        /// Heigh of the target BackBuffer
-        /// </summary>
-        public const float HEIGHT = 1080;
+
 
         /// <summary>
         /// The global scale of the game after adjusting for the window size
@@ -107,7 +100,7 @@ namespace MonoGame_Core.Scripts
         public static void Draw(float dt)
         {
             var x = GraphicsDevice.GetRenderTargets();
-            WindowScale = new Vector2(GraphicsDevice.Viewport.Width / WIDTH, GraphicsDevice.Viewport.Height / HEIGHT);
+            WindowScale = new Vector2(GraphicsDevice.Viewport.Width / Globals.SCREEN_WIDTH, GraphicsDevice.Viewport.Height / Globals.SCREEN_HEIGHT);
 
             string prevShader = "";
             int Target = -1;
@@ -195,14 +188,14 @@ namespace MonoGame_Core.Scripts
                                 .ThenBy(s => s.Transform.Layer)
                                 .ThenBy(s => s.OrderInLayer)
                                 .Where(s => s.Cameras.Contains(c))
-                                .Where(s => Vector2.Distance(s.Transform.Position, c.Transform.Position) <= s.Transform.Radius + c.Transform.Radius);
+                                .Where(s => Vector2.Distance(s.Transform.Position, c.Transform.Position) <= s.Hypotenuse + Globals.SCREEN_HYPOTENUSE);
                 else if (RenderingOrder == RenderOrder.TopDown)
                     s = Sprites.OrderBy(s => s.Shader)
                                 .ThenBy(s => s.Transform.Layer)
                                 .ThenBy(s => s.Transform.Position.Y)
                                 .ThenBy(s => s.OrderInLayer)
                                 .Where(s => s.Cameras.Contains(c))
-                                .Where(s => Vector2.Distance(s.Transform.Position, c.Transform.Position) <= s.Transform.Radius + c.Transform.Radius);
+                                .Where(s => Vector2.Distance(s.Transform.Position, c.Transform.Position) <= s.Hypotenuse + Globals.SCREEN_HYPOTENUSE);
 
                 else if (RenderingOrder == RenderOrder.Isometric)
                 {

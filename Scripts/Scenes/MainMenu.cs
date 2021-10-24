@@ -25,8 +25,8 @@ namespace MonoGame_Core.Scripts
             gameObjects = new List<GameObject>();
             //GameObjects.Add(new TestObject("Test", "testObj"));
             InitGameObject(new TestStaticObject("Test", new Vector2(100, 100), "Test1", 1));
-            InitGameObject(new Button("Test", "Base", "PlayButton", new Vector2(40, 40), new Vector2(500, 100), 1, null));
-            InitGameObject(new Button("Test", "Base", "QuitButton", new Vector2(40, 40), new Vector2(500, 40), 1, Behaviors.QuitOnClick));
+            InitGameObject(new Button("Test", "Base", "PlayButton", new Vector2(500, 100), 1, null));
+            InitGameObject(new Button("Test", "Base", "QuitButton", new Vector2(500, 40), 1, Behaviors.QuitOnClick));
 
         }
 

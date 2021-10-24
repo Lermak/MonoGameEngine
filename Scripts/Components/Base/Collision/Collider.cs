@@ -7,8 +7,10 @@ namespace MonoGame_Core.Scripts
 {
     public abstract class Collider : Component
     {
+        protected float width;
+        protected float height;
+
         protected bool checkCollision;
-        protected bool isTrigger;
         protected bool isStatic;
         protected Vector2 offset;
         protected Transform transform;
@@ -16,11 +18,12 @@ namespace MonoGame_Core.Scripts
         protected float radius;
 
         public bool CheckCollision { get { return checkCollision; } }
-        public bool IsTrigger { get { return isTrigger; } }
         public bool IsStatic { get { return isStatic; } }
         public Vector2 Offset { get { return offset * transform.Scale; } }
         public Transform Transform { get { return transform; } }
-        public virtual float Radius { get { return radius; } }
+        public float Hypotenuse { get { return hf_Math.Hypotenuse(Width/2,Height/2); } }
+        public float Width { get { return width * transform.Scale.X; } }
+        public float Height { get { return height * transform.Scale.Y; } }
 
         public abstract List<Vector2> Verticies();
 
@@ -45,6 +48,13 @@ namespace MonoGame_Core.Scripts
             }
 
             base.Initilize();
+        }
+        public virtual bool ContainsPoint(Vector2 v)
+        {
+            return v.X > transform.Position.X - Width / 2 &&
+                    v.X < transform.Position.X + Width / 2 &&
+                    v.Y > transform.Position.Y - Height / 2 &&
+                    v.Y < transform.Position.Y + Height / 2;
         }
 
         private static void addToActiveColliders(float dt, GameObject go, Component[] c)

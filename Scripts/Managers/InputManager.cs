@@ -131,7 +131,7 @@ namespace MonoGame_Core.Scripts
         public static void Update(float dt)
         {
             Point p = Mouse.GetState().Position;
-            mousePos = new Vector2(p.X, -p.Y) / RenderingManager.WindowScale - new Vector2(RenderingManager.WIDTH / 2, -RenderingManager.HEIGHT / 2);
+            mousePos = new Vector2(p.X, -p.Y) / RenderingManager.WindowScale - new Vector2(Globals.SCREEN_WIDTH / 2, -Globals.SCREEN_HEIGHT / 2);
 
             previousKeyboardState = currentKeyboardState;
             currentKeyboardState = Keyboard.GetState();

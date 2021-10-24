@@ -8,20 +8,14 @@ namespace MonoGame_Core.Scripts
 {
     public class CollisionBox : Collider
     {
-        float width;
-        float height;
+        private float cornerAngle { get { return (float)(Math.Acos((Width / 2) / Hypotenuse)) * (180 / (float)Math.PI); } }
 
-        public float Width { get { return width * transform.Scale.X; } }
-        public float Height { get { return height * transform.Scale.Y; } }
-        public float Angle { get { return (float)(Math.Acos((Width / 2) / Radius)) * (180 / (float)Math.PI); } }
-        public override float Radius { get { return (float)Math.Sqrt(Math.Pow(Height / 2, 2) + Math.Pow(Width / 2, 2)); } }
-
-        public CollisionBox(GameObject go, string name, bool isStatic) : base(go, name, isStatic)
+        public CollisionBox(GameObject go, string name, bool isStatic, Vector2 size) : base(go, name, isStatic)
         {
             checkCollision = true;
             offset = new Vector2();
-            width = transform.Width;
-            height = transform.Height;
+            width = size.X;
+            height = size.Y;
         }
 
         public override List<Vector2> Axies()
@@ -37,22 +31,22 @@ namespace MonoGame_Core.Scripts
 
         public Vector2 TopRight()
         {
-            return hf_Math.getRotationPosition(hf_Math.RadiansToDegres(transform.Radians) + Angle, Radius, transform.Position + offset);
+            return hf_Math.getRotationPosition(hf_Math.RadiansToDegres(transform.Radians) + cornerAngle, Hypotenuse, transform.Position + offset);
         }
 
         public Vector2 TopLeft()
         {
-            return hf_Math.getRotationPosition(hf_Math.RadiansToDegres(transform.Radians) + (180 - Angle), Radius, transform.Position + offset);//use half side angle because at 0 rotation the box should be cut through the middle, so only half the side angle is needed
+            return hf_Math.getRotationPosition(hf_Math.RadiansToDegres(transform.Radians) + (180 - cornerAngle), Hypotenuse, transform.Position + offset);//use half side angle because at 0 rotation the box should be cut through the middle, so only half the side angle is needed
         }
 
         public Vector2 BottomLeft()
         {
-            return hf_Math.getRotationPosition(hf_Math.RadiansToDegres(transform.Radians) + 180 + Angle, Radius, transform.Position + offset);
+            return hf_Math.getRotationPosition(hf_Math.RadiansToDegres(transform.Radians) + 180 + cornerAngle, Hypotenuse, transform.Position + offset);
         }
 
         public Vector2 BottomRight()
         {
-            return hf_Math.getRotationPosition(hf_Math.RadiansToDegres(transform.Radians) + 360 - Angle, Radius, transform.Position + offset);
+            return hf_Math.getRotationPosition(hf_Math.RadiansToDegres(transform.Radians) + 360 - cornerAngle, Hypotenuse, transform.Position + offset);
         }
 
         public void ReplaceOffset(Vector2 newOff)

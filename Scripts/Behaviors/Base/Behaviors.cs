@@ -119,22 +119,13 @@ namespace MonoGame_Core.Scripts
             rb.MoveVelocity = hf_Math.RadiansToUnitVector(t.Radians + 90 * (float)Math.PI / 180) * dt * 100;
         }
 
-        public static void ScreenShakeOnClick(float dt, GameObject go, Component[] c)
-        {
-            Transform t = (Transform)go.GetComponent("transform");
-            Vector2 v = InputManager.MousePos;
-            if (InputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton) &&
-                t.ContainsPoint(v))
-                CoroutineManager.AddCoroutine(Coroutines.ScreenShake(.1f, 10, 10, CameraManager.Cameras[0].Transform), "ClickShake", 0, true);
-        }
-
         public static void ButtonSwapImagesOnHover(float dt, GameObject go, Component[] c)
         {
-            Transform t = (Transform)go.GetComponent("transform");
+            Collider col = (Collider)go.GetComponent("myBox");
             ButtonData b = (ButtonData)go.GetComponent("buttonData");
             Vector2 v = InputManager.MousePos;
 
-            if (t.ContainsPoint(v))
+            if (col.ContainsPoint(v))
                 ((WorldObject)b.GameObject).SpriteRenderer.Texture = b.SelectedTexID;
             else
                 ((WorldObject)b.GameObject).SpriteRenderer.Texture = b.DeselectedTexID;
@@ -142,10 +133,10 @@ namespace MonoGame_Core.Scripts
 
         public static void QuitOnClick(float dt, GameObject go, Component[] c)
         {
-            Transform t = (Transform)go.GetComponent("transform");
+            Collider col = (Collider)go.GetComponent("myBox");
             Vector2 v = InputManager.MousePos;
             if (InputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton) &&
-                t.ContainsPoint(v))
+                col.ContainsPoint(v))
                 GameManager.Quit();
         }
     }

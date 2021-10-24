@@ -41,5 +41,10 @@ namespace MonoGame_Core.Scripts
         {
             return r / (float)Math.PI * 180;
         }
+
+        public static float Hypotenuse(float x, float y)
+        {
+            return (float)Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2));
+        }
     }
 }

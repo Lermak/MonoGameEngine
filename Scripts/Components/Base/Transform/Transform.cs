@@ -8,8 +8,6 @@ namespace MonoGame_Core.Scripts
     public class Transform : Component
     {
         Vector2 position;
-        float width;
-        float height;
         float radians;
         Vector2 scale = new Vector2(1,1);
         Transform parent;
@@ -24,8 +22,6 @@ namespace MonoGame_Core.Scripts
                 else
                     return hf_Math.getRotationPosition(hf_Math.RadiansToDegres(degreesFromParent + parent.radians), distanceToParent, parent.position);
             } }    
-        public float Width { get { return width; } }
-        public float Height { get { return height; } }
         public float Radians { get {
                 if (parent == null)
                     return radians;
@@ -35,15 +31,13 @@ namespace MonoGame_Core.Scripts
             set { radians = value; }
         }
         public Vector2 Scale { get { return scale; } }
-        public float Radius { get { return (float)Math.Sqrt(Math.Pow(Height / 2, 2) + Math.Pow(Width / 2, 2)); } }
         public Transform Parent { get { return parent; } }
         public byte Layer { get { return layer; } set { layer = value; } }
-        public Transform(GameObject go, Vector2 pos, float w, float h, float r, byte l) : base(go, "transform")
+        public Transform(GameObject go, Vector2 pos, float degrees, byte l) : base(go, "transform")
         {
-            radians = r;
+            radians = hf_Math.DegreesToRadians(degrees);
             position = pos;
-            width = w;
-            height = h;
+
             layer = l;
         }
 
@@ -51,13 +45,6 @@ namespace MonoGame_Core.Scripts
         {
             scale = new Vector2(x, y);
         }
-
-        public void Resize(float x, float y)
-        {
-            width = x;
-            height = y;
-        }
-
         public void Move(Vector2 dist)
         {
             position += dist;
@@ -67,17 +54,14 @@ namespace MonoGame_Core.Scripts
         {
             position = pos;
         }
-
         public void Rotate(float r)
         {
             radians += r;
         }
-
         public Vector2 WorldPosition()
         {
             return Position * RenderingManager.GameScale * new Vector2(1,-1);
         }
-
         public void AttachToTransform(Transform t)
         {
             parent = t;
@@ -86,15 +70,6 @@ namespace MonoGame_Core.Scripts
             distanceToParent = Vector2.Distance(position, t.position);
             position = position - t.position;
         }
-
-        public bool ContainsPoint(Vector2 v)
-        {
-            return v.X > Position.X - Width / 2 &&
-                    v.X < Position.X + Width / 2 &&
-                    v.Y > Position.Y - Height / 2 &&
-                    v.Y < Position.Y + Height / 2;
-        }
-
         public void DetachFromParent()
         {
             position = Position;

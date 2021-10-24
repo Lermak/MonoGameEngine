@@ -80,7 +80,7 @@ namespace MonoGame_Core.Scripts
 
         public virtual void Initilize()
         {
-            size = new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT);
+            size = new Vector2(Globals.SCREEN_WIDTH, Globals.SCREEN_HEIGHT);
             CollisionManager.Initilize();
             RenderingManager.Initilize();
             SoundManager.Initilize();
@@ -149,13 +149,16 @@ namespace MonoGame_Core.Scripts
 
         private void VerifyUniqueName(GameObject go)
         {
-            if (gameObjects.Where(o => o.Name == go.Name).Count() > 0)
+            if (go.Name != "")
             {
-                throw new System.Exception("An object with name '" + go.Name + "' already exists in the current scene");
-            }
-            if (toAdd.Where(o => o.Name == go.Name).Count() > 0)
-            {
-                throw new System.Exception("An object with name '" + go.Name + "' is already being added to the scene");
+                if (gameObjects.Where(o => o.Name == go.Name).Count() > 0)
+                {
+                    throw new System.Exception("An object with name '" + go.Name + "' already exists in the current scene");
+                }
+                if (toAdd.Where(o => o.Name == go.Name).Count() > 0)
+                {
+                    throw new System.Exception("An object with name '" + go.Name + "' is already being added to the scene");
+                }
             }
         }
     }

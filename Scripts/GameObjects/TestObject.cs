@@ -8,11 +8,11 @@ namespace MonoGame_Core.Scripts
 {
     public class TestObject : WorldObject
     {
-        public TestObject(string texID, string name) : base(texID, name, new string[] { "testObject" }, new Vector2(40,40), new Vector2(0,0), 1)
+        public TestObject(string texID, string name) : base(texID, name, new string[] { "testObject" }, new Vector2(0,0), 1)
         {
-            ComponentHandler.Add(new CollisionBox(this, "myBox", false));
+            ComponentHandler.Add(new CollisionBox(this, "myBox", false, new Vector2(40,40)));
             ComponentHandler.Add(new Movement(this, "Movement", 500));
-            ComponentHandler.Add(new FontRenderer(this, "Test", "TestFont", new Vector2(0, 100), new Vector2(1920,1080),1));
+            ComponentHandler.Add(new FontRenderer(this, "Test", "TestFont", new Vector2(1920,1080),1));
 
             //BehaviorHandler.AddBehavior("MoveControls", Behaviors.WASDcontrols, new Component[] { RigidBody, componentHandler.GetComponent("Movement") });
             BehaviorHandler.Add("FaceMouse", Behaviors.PointAtMouse);

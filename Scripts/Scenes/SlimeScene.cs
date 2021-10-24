@@ -19,7 +19,7 @@ namespace MonoGame_Core.Scripts
 
         protected override void loadObjects()
         {
-            WorldObject slime = InitWorldObject(new WorldObject("SlimeSpriteSheet", "Slime", new string[] { }, new Vector2(48, 48), new Vector2(), 0));
+            WorldObject slime = InitWorldObject(new WorldObject("SlimeSpriteSheet", "Slime", new string[] { }, new Vector2(), 0));
             slime.ComponentHandler.Add(new AnimationData(slime, .125f));
             slime.BehaviorHandler.Add("Animate", Behaviors.Animate, new Component[] { slime.ComponentHandler.Get("animationData") });
 

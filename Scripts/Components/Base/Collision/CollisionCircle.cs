@@ -5,16 +5,16 @@ using System.Text;
 
 namespace MonoGame_Core.Scripts
 {
-    public class CollisionSphere : Collider
-    {
-        public override float Radius { get { return radius; } }
-        public CollisionSphere(int uo, string name, GameObject go, Vector2 offset, bool checkCollision, bool isStatic, bool isTrigger) : base(go, name, isStatic)
+    public class CollisionCircle : Collider
+    {        
+        public CollisionCircle(int uo, string name, GameObject go, float radius, Vector2 offset, bool checkCollision, bool isStatic, bool isTrigger) : base(go, name, isStatic)
         {
             this.offset = offset;
             this.checkCollision = checkCollision;
-            this.isTrigger = isTrigger;
             gameObject = go;
-            radius = transform.Width/2;
+            this.radius = radius;
+            width = radius * 2;
+            height = radius * 2;
         }
 
         public override List<Vector2> Axies()
