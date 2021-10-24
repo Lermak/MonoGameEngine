@@ -14,13 +14,11 @@ namespace MonoGame_Core.Scripts
     {
         protected override void loadContent()
         {
-            base.loadContent();
-
             size = new Vector2(2100, 1080);
-            CollisionManager.Initilize();
-
-            CameraManager.Cameras[0].SetMinPos(Size/2*-1);
+            CameraManager.Cameras[0].SetMinPos(Size / 2 * -1);
             CameraManager.Cameras[0].SetMaxPos(Size / 2);
+
+            CollisionManager.Initilize();
 
             SoundManager.SongChannels["Melody"] = Content.Load<Song>("Music/TestSong");
             //MediaPlayer.Play(SoundManager.SongChannels["Melody"]);
@@ -38,13 +36,16 @@ namespace MonoGame_Core.Scripts
             ResourceManager.Textures["BG"] = Content.Load<Texture2D>("Images/Background");
 
             ResourceManager.Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
+        }
 
+        protected override void loadObjects()
+        {
             CameraManager.Cameras.Add(new Camera("CRTCamera", 0, 0,
-                480, 
-                270,
-                new Vector2(480, 270),
-                new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * -1,
-                new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * 1));
+                                        480,
+                                        270,
+                                        new Vector2(480, 270),
+                                        new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * -1,
+                                        new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * 1));
 
             CameraManager.Cameras[1].BehaviorHandler.Add("ScreenShake", Behaviors.ScreenShake, new Component[] { CameraManager.Cameras[1].Transform });
 
@@ -55,7 +56,7 @@ namespace MonoGame_Core.Scripts
             tso = InitWorldObject(new TestStaticObject("Base", new Vector2(200, -100), "Test2", 1));
             //tso.Transform.AttachToTransform(((WorldObject)gameObjects[0]).Transform);
 
-            tso = InitWorldObject(new WorldObject("BG", "Background", new string[] { }, new Vector2(1920,1080), new Vector2(), 0));
+            tso = InitWorldObject(new WorldObject("BG", "Background", new string[] { }, new Vector2(1920, 1080), new Vector2(), 0));
             tso.SpriteRenderer.Transform.Layer = 0;
             tso.SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);
 
@@ -63,6 +64,7 @@ namespace MonoGame_Core.Scripts
             CameraManager.Cameras[1].Shader = "CRT";
 
             TiledImporter.LoadFromFile(this, @"E:\Programming\C#\MonoGame\MonoGame Core\Content\Tiled\Test.tmx");
+
         }
 
         public override void SceneRunning(float dt)
