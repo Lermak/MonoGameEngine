@@ -47,5 +47,12 @@ namespace MonoGame_Core.Scripts
         {
             SoundEffects[name] = Content.Load<SoundEffect>(location);
         }
+        public static Vector2 GetTextureSize(string name)
+        {
+            if (Textures.ContainsKey(name))
+                return new Vector2(Textures[name].Width, Textures[name].Height);
+            else
+                return new Vector2();
+        }
     }
 }

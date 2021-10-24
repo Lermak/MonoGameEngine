@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
@@ -23,8 +22,6 @@ namespace MonoGame_Core.Scripts
         protected override void loadObjects()
         {
             gameObjects = new List<GameObject>();
-            //GameObjects.Add(new TestObject("Test", "testObj"));
-            InitGameObject(new TestStaticObject("Test", new Vector2(100, 100), "Test1", 1));
             InitGameObject(new Button("Test", "Base", "PlayButton", new Vector2(500, 100), 1, null));
             InitGameObject(new Button("Test", "Base", "QuitButton", new Vector2(500, 40), 1, Behaviors.QuitOnClick));
 
