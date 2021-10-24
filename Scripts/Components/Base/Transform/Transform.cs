@@ -50,19 +50,23 @@ namespace MonoGame_Core.Scripts
             position += dist;
         }
 
-        public void Place(Vector2 pos)
+        public void SetPosition(Vector2 pos)
         {
             position = pos;
         }
-        public void Rotate(float r)
+        public void Rotate(float degree)
         {
-            radians += r;
+            radians += hf_Math.DegreesToRadians(degree);
+        }
+        public void SetRotation(float degree)
+        {
+            radians = hf_Math.DegreesToRadians(degree);
         }
         public Vector2 WorldPosition()
         {
             return Position * RenderingManager.GameScale * new Vector2(1,-1);
         }
-        public void AttachToTransform(Transform t)
+        public void Attach(Transform t)
         {
             parent = t;
             startingRotation = t.radians;
@@ -70,7 +74,7 @@ namespace MonoGame_Core.Scripts
             distanceToParent = Vector2.Distance(position, t.position);
             position = position - t.position;
         }
-        public void DetachFromParent()
+        public void Detach()
         {
             position = Position;
             radians = Radians;

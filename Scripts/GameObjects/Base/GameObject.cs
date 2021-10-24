@@ -42,11 +42,6 @@ namespace MonoGame_Core.Scripts
             }
         }
 
-        public virtual void OnCreate()
-        {
-
-        }
-
         public void Destroy()
         {
             destroy = true;

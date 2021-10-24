@@ -46,13 +46,13 @@ namespace MonoGame_Core.Scripts
             int dir = -1;
             while (timeElapsed < duration)
             {
-                t.Place(origonalPos);
+                t.SetPosition(origonalPos);
                 timeElapsed += TimeManager.DeltaTime;
                 t.Move(new Vector2(r.Next(min, max) * dir, 1));
                 dir *= -1;
                 yield return false;
             }
-            t.Place(origonalPos);
+            t.SetPosition(origonalPos);
             yield return true;
         }
     }

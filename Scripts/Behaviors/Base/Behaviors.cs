@@ -35,13 +35,13 @@ namespace MonoGame_Core.Scripts
             KeyboardState state = Keyboard.GetState();
             Vector2 v = new Vector2();
             Movement m = (Movement)go.GetComponent("movement");
-            if (InputManager.IsKeyPressed(Keys.Up))
+            if (InputManager.IsPressed(Keys.Up))
                 v.Y = -m.Speed * dt;
-            else if (InputManager.IsKeyPressed(Keys.Down))
+            else if (InputManager.IsPressed(Keys.Down))
                 v.Y = m.Speed * dt;
-            if (InputManager.IsKeyPressed(Keys.Left))
+            if (InputManager.IsPressed(Keys.Left))
                 v.X = -m.Speed * dt;
-            else if (InputManager.IsKeyPressed(Keys.Right))
+            else if (InputManager.IsPressed(Keys.Right))
                 v.X = m.Speed * dt;
 
             ((Transform)go.GetComponent("transform")).Move(v);
@@ -77,9 +77,9 @@ namespace MonoGame_Core.Scripts
         public static void ManualScale(float dt, GameObject go, Component[] c)
         {
             Transform t = (Transform)go.GetComponent("transform");
-            if (InputManager.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.Add) && t.Scale.X < 5)
+            if (InputManager.IsPressed(Microsoft.Xna.Framework.Input.Keys.Add) && t.Scale.X < 5)
             { t.SetScale(t.Scale.X + .1f, t.Scale.Y + .1f); }
-            if (InputManager.IsKeyPressed(Microsoft.Xna.Framework.Input.Keys.Subtract) && t.Scale.X > 0)
+            if (InputManager.IsPressed(Microsoft.Xna.Framework.Input.Keys.Subtract) && t.Scale.X > 0)
             { t.SetScale(t.Scale.X - .1f, t.Scale.Y - .1f); }
 
         }
@@ -88,8 +88,8 @@ namespace MonoGame_Core.Scripts
         {
             Transform t = (Transform)go.GetComponent("transform");
 
-            if (InputManager.IsKeyTriggered(Microsoft.Xna.Framework.Input.Keys.Space))
-                CoroutineManager.AddCoroutine(Coroutines.ScreenShake(.1f, -10, 10, t), "screenShake", 0, true);
+            if (InputManager.IsTriggered(Microsoft.Xna.Framework.Input.Keys.Space))
+                CoroutineManager.Add(Coroutines.ScreenShake(.1f, -10, 10, t), "screenShake", 0, true);
         }
 
         public static void PointAtMouse(float dt, GameObject go, Component[] c)
@@ -135,7 +135,7 @@ namespace MonoGame_Core.Scripts
         {
             Collider col = (Collider)go.GetComponent("myBox");
             Vector2 v = InputManager.MousePos;
-            if (InputManager.IsMouseTriggered(InputManager.MouseKeys.LeftButton) &&
+            if (InputManager.IsTriggered(InputManager.MouseKeys.Left) &&
                 col.ContainsPoint(v))
                 GameManager.Quit();
         }

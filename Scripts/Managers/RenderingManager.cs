@@ -17,8 +17,6 @@ namespace MonoGame_Core.Scripts
         /// Rendering order determines how items will be layered and orgized
         /// </summary>
         public enum RenderOrder { SideScrolling, TopDown, Isometric }
-
-
         /// <summary>
         /// The global scale of the game after adjusting for the window size
         /// </summary>
@@ -56,14 +54,11 @@ namespace MonoGame_Core.Scripts
         /// <summary>
         /// MonoGame's object for handling communication with the graphics card
         /// </summary>
-        public static GraphicsDevice GraphicsDevice;
-        
-
+        public static GraphicsDevice GraphicsDevice;      
         /// <summary>
         /// Setup the current state of the rendering manager.
         /// This includes creating any render targets that cameras will need
         /// </summary>
-        /// <param name="gd">Game Time</param>
         public static void Initilize()
         { 
             spriteBatch = new SpriteBatch(GraphicsDevice);
@@ -71,8 +66,8 @@ namespace MonoGame_Core.Scripts
             RenderTargets = new List<RenderTarget2D>();
 
             RenderTargets.Add(new RenderTarget2D(GraphicsDevice,
-                (int)1920,
-                (int)1080,
+                (int)Globals.SCREEN_WIDTH,
+                (int)Globals.SCREEN_HEIGHT,
                 false,
                 GraphicsDevice.PresentationParameters.BackBufferFormat,
                 DepthFormat.Depth24,

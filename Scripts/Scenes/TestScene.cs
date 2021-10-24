@@ -52,7 +52,7 @@ namespace MonoGame_Core.Scripts
 
             tso = InitWorldObject(new TestStaticObject("Base", new Vector2(200, -100), "Test2", 1));
             //tso.Transform.AttachToTransform(((WorldObject)gameObjects[0]).Transform);
-
+            tso.Transform.SetRotation(45);
             tso = InitWorldObject(new WorldObject("BG", "Background", new string[] { }, new Vector2(), 0));
             tso.SpriteRenderer.Transform.Layer = 0;
             tso.SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);

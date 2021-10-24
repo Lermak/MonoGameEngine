@@ -54,7 +54,7 @@ namespace MonoGame_Core.Scripts
             coroutines.Clear();
         }
 
-        public static void AddCoroutine(IEnumerator<bool> coroutine, string name, float timeBetween, bool start)
+        public static void Add(IEnumerator<bool> coroutine, string name, float timeBetween, bool start)
         {
             if (!coroutines.ContainsKey(name))
             {

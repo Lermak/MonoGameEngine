@@ -18,20 +18,5 @@ namespace MonoGame_Core.Scripts
                                             texID,
                                             0));
         }
-
-        public override void Initilize()
-        {
-            base.Initilize();
-        }
-
-        public override void Update(float dt)
-        {
-            base.Update(dt);
-        }
-
-        public override void OnCreate()
-        {
-            base.OnCreate();
-        }
     }
 }

@@ -78,14 +78,14 @@ namespace MonoGame_Core.Scripts
         void clamp()
         {
             if (Transform.Position.X > MaxPos.X)
-                Transform.Place(new Vector2(MaxPos.X, Transform.Position.Y));
+                Transform.SetPosition(new Vector2(MaxPos.X, Transform.Position.Y));
             else if (Transform.Position.X < MinPos.X)
-                Transform.Place(new Vector2(MinPos.X, Transform.Position.Y));
+                Transform.SetPosition(new Vector2(MinPos.X, Transform.Position.Y));
 
             if (Transform.Position.Y > MaxPos.Y)
-                Transform.Place(new Vector2(Transform.Position.X, MaxPos.Y));
+                Transform.SetPosition(new Vector2(Transform.Position.X, MaxPos.Y));
             else if (Transform.Position.Y < MinPos.Y)
-                Transform.Place(new Vector2(Transform.Position.X, MinPos.Y));
+                Transform.SetPosition(new Vector2(Transform.Position.X, MinPos.Y));
         }
 
         public void Draw(SpriteBatch sb)

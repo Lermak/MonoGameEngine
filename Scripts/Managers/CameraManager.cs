@@ -23,7 +23,7 @@ namespace MonoGame_Core.Scripts
 
         }
 
-        public static void AddCamera(Camera c)
+        public static void Add(Camera c)
         {
             cameras.Add(c);
         }

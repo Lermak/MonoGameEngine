@@ -27,10 +27,5 @@ namespace MonoGame_Core.Scripts
         {
             base.Update(dt);
         }
-
-        public override void OnCreate()
-        {
-            base.OnCreate();
-        }
     }
 }
