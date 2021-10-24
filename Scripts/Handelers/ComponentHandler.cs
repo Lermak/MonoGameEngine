@@ -16,12 +16,12 @@ namespace MonoGame_Core.Scripts
             components = new List<Component>();
         }
 
-        public Component GetComponent(string t)
+        public Component Get(string t)
         {
             return components.Where(c => c.Name == t).First();
         }
 
-        public void RemoveComponent(Component c)
+        public void Remove(Component c)
         {
             c.OnDestroy();
             components.Remove(c);
@@ -42,7 +42,7 @@ namespace MonoGame_Core.Scripts
             return cl;
         }
 
-        public Component AddComponent(Component c)
+        public Component Add(Component c)
         {
             if(components.Where(x => x.Name == c.Name).Count() > 0)
             {

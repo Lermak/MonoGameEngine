@@ -39,7 +39,7 @@ namespace MonoGame_Core.Scripts
             }
         }
 
-        public Transform Transform { get { return (Transform)componentHandler.GetComponent("transform"); } }
+        public Transform Transform { get { return (Transform)componentHandler.Get("transform"); } }
         public Vector2 Position { get { return Transform.Position * RenderingManager.WindowScale; } }
         public Vector2 MinPos { get { return minPos; } }
         public Vector2 MaxPos { get { return maxPos; } }
@@ -54,7 +54,7 @@ namespace MonoGame_Core.Scripts
             maxPos = max;
             Target = target;
             drawArea = new Rectangle(0, 0, (int)(RenderingManager.WIDTH * RenderingManager.WindowScale.X), (int)(RenderingManager.HEIGHT * RenderingManager.WindowScale.Y));
-            componentHandler.AddComponent(t);
+            componentHandler.Add(t);
 
             screenPosition = new Vector2(RenderingManager.WIDTH / 2, RenderingManager.HEIGHT / 2);
         }

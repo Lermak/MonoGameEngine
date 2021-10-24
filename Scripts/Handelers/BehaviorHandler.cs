@@ -8,17 +8,17 @@ namespace MonoGame_Core.Scripts
 {
     public class BehaviorHandler
     {
-        public delegate void Act(float uo, Component[] c);
+        public delegate void Act(float uo, GameObject go, Component[] c);
         public struct Behavior
         {
             public string Name;
             public Component[] Components;
             public Act Run;
 
-            public Behavior(string name, Component[] c, Act a)
+            public Behavior(string name, Act a, Component[] c = null)
             {
                 Name = name;
-                Components = c;
+                Components = c != null ? c : new Component[] { };
                 Run = a;
             }
         }
@@ -28,7 +28,7 @@ namespace MonoGame_Core.Scripts
         public List<Behavior> Behaviors { get { return behaviors; } }
         public GameObject GameObject { get { return gameObject; } }
 
-        public Behavior GetBehavior(string t)
+        public Behavior Get(string t)
         {
             return behaviors.Where(b => b.Name == t).First();
         }
@@ -39,9 +39,9 @@ namespace MonoGame_Core.Scripts
             behaviors = new List<Behavior>();
         }
 
-        public void AddBehavior(string name, Act b, Component[] c)
+        public void Add(string name, Act b, Component[] c = null)
         {
-            behaviors.Add(new Behavior(name, c, b));
+            behaviors.Add(new Behavior(name, b, c));
         }
 
         public void Inizilize()
@@ -54,7 +54,7 @@ namespace MonoGame_Core.Scripts
             {
                 foreach (Behavior b in Behaviors)
                 {
-                    b.Run(dt, b.Components);
+                    b.Run(dt, gameObject, b.Components);
                 }
             }
         }

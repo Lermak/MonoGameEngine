@@ -238,7 +238,7 @@ namespace MonoGame_Core.Scripts
                         {
                             if (SATcollision(a, s, out p))
                             {
-                                ((CollisionHandler)a.GameObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(a, s, p);
+                                ((CollisionHandler)a.GameObject.ComponentHandler.Get("collisionHandler")).RunCollisionActions(a, s, p);
                                 p = new Vector2();
                             }
                         }
@@ -275,12 +275,12 @@ namespace MonoGame_Core.Scripts
                 foreach(Vector2 v in cc)
                 {
                     GameObject go = new GameObject("TileWall", new string[] { });
-                    go.ComponentHandler.AddComponent(new Transform(go, v, TileSize.X, TileSize.Y, 0, 0));
+                    go.ComponentHandler.Add(new Transform(go, v, TileSize.X, TileSize.Y, 0, 0));
                     //create a collision box
-                    CollisionBox cb = (CollisionBox)go.ComponentHandler.AddComponent(new CollisionBox(go, "TileWall", true));
+                    CollisionBox cb = (CollisionBox)go.ComponentHandler.Add(new CollisionBox(go, "TileWall", true));
                     //test collision against it
                     if(SATcollision(c, cb, out p))
-                        ((CollisionHandler)c.GameObject.ComponentHandler.GetComponent("collisionHandler")).RunCollisionActions(c, cb, p);
+                        ((CollisionHandler)c.GameObject.ComponentHandler.Get("collisionHandler")).RunCollisionActions(c, cb, p);
                 }
             }
         }

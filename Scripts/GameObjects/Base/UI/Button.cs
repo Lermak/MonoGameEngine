@@ -10,10 +10,10 @@ namespace MonoGame_Core.Scripts
         public Button(string deselectedTex, string selectedTex, string name, Vector2 size, Vector2 pos, byte layer, BehaviorHandler.Act onClick) : base(deselectedTex, name, new string[] { "button" }, size, pos, layer)
         {
             SpriteRenderer.IsHUD = true;
-            ButtonData b = (ButtonData)componentHandler.AddComponent(new ButtonData(this, "ButtonData", selectedTex, deselectedTex));
-            behaviorHandler.AddBehavior("Hover", Behaviors.ButtonSwapImagesOnHover, new Component[] { Transform, b });
+            ButtonData b = (ButtonData)componentHandler.Add(new ButtonData(this, "ButtonData", selectedTex, deselectedTex));
+            behaviorHandler.Add("Hover", Behaviors.ButtonSwapImagesOnHover, new Component[] { Transform, b });
             if(onClick != null)
-                behaviorHandler.AddBehavior("OnClick", onClick, new Component[] { Transform });
+                behaviorHandler.Add("OnClick", onClick, new Component[] { Transform });
         }
     }
 }

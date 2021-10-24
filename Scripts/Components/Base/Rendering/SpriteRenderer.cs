@@ -85,7 +85,7 @@ namespace MonoGame_Core.Scripts
         public SpriteRenderer(GameObject go, string texID, Vector2 off, Vector2 drawArea, int orderInLayer) : base(go, "spriteRenderer")
         {
             Texture = texID;
-            transform = (Transform)go.ComponentHandler.GetComponent("transform");
+            transform = (Transform)go.ComponentHandler.Get("transform");
             offset = off;
             this.orderInLayer = orderInLayer;
             this.drawArea = drawArea;

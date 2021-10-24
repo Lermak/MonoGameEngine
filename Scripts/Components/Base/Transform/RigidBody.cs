@@ -24,19 +24,19 @@ namespace MonoGame_Core.Scripts
 
         public RigidBody(GameObject go, RigidBodyType rbt) : base(go, "rigidBody")
         {
-            transform = (Transform)go.ComponentHandler.GetComponent("transform");
+            transform = (Transform)go.ComponentHandler.Get("transform");
             bodyType = rbt;
             angularVelocity = 0;
             moveVelocity = new Vector2(0, 0);
             mass = 0;
 
-            gameObject.BehaviorHandler.AddBehavior("rigidBody", Update, new Component[] { transform, this });
+            gameObject.AddBehavior("rigidBody", Update);
         }
 
-        private static void Update(float gt, Component[] c)
+        private static void Update(float gt, GameObject go, Component[] c)
         {
-            Transform t = (Transform)c[0];
-            RigidBody rb = (RigidBody)c[1];
+            Transform t = (Transform)go.GetComponent("transform");
+            RigidBody rb = (RigidBody)go.GetComponent("rigidBody");
             t.Move(rb.MoveVelocity);
             t.Rotate(rb.AngularVelocity);
         }

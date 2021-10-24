@@ -13,7 +13,7 @@ namespace MonoGame_Core.Scripts
 
         public AnimationData(GameObject go, float speed) : base(go, "animationData")
         {
-            SpriteRenderer = (SpriteRenderer)go.ComponentHandler.GetComponent("spriteRenderer");
+            SpriteRenderer = (SpriteRenderer)go.ComponentHandler.Get("spriteRenderer");
             AnimationSpeed = speed;
         }      
 

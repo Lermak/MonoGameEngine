@@ -89,11 +89,17 @@ namespace MonoGame_Core.Scripts
             CoroutineManager.Initilize();   
 
             loadContent();
+            loadObjects();
 
             RenderingManager.Sort();//Sort the items in the renderingManager, this should only be done when new items are added
         }
 
         protected virtual void loadContent()
+        {
+
+        }
+
+        protected virtual void loadObjects()
         {
 
         }

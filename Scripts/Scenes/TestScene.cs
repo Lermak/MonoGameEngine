@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -47,7 +46,7 @@ namespace MonoGame_Core.Scripts
                 new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * -1,
                 new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT) * 1));
 
-            CameraManager.Cameras[1].BehaviorHandler.AddBehavior("ScreenShake", Behaviors.ScreenShake, new Component[] { CameraManager.Cameras[1].Transform });
+            CameraManager.Cameras[1].BehaviorHandler.Add("ScreenShake", Behaviors.ScreenShake, new Component[] { CameraManager.Cameras[1].Transform });
 
             InitWorldObject(new TestObject("PeaShooter", "testObj"));
             WorldObject tso = InitWorldObject(new TestStaticObject("Base", new Vector2(200, 200), "Test1", 1));

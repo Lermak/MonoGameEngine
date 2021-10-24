@@ -57,5 +57,18 @@ namespace MonoGame_Core.Scripts
             behaviorHandler.OnDestroy();
             componentHandler.OnDestroy();
         }
+
+        public virtual Component GetComponent(string name)
+        {
+            return componentHandler.Get(name);
+        }
+        public virtual Component AddComponent(Component c)
+        {
+            return componentHandler.Add(c);
+        }
+        public virtual void AddBehavior(string name, BehaviorHandler.Act b, Component[] c = null)
+        {
+            behaviorHandler.Add(name, b, c);
+        }
     }
 }

@@ -10,16 +10,16 @@ namespace MonoGame_Core.Scripts
     {
         public TestObject(string texID, string name) : base(texID, name, new string[] { "testObject" }, new Vector2(40,40), new Vector2(0,0), 1)
         {
-            ComponentHandler.AddComponent(new CollisionBox(this, "myBox", false));
-            ComponentHandler.AddComponent(new Movement(this, "Movement", 500));
-            ComponentHandler.AddComponent(new FontRenderer(this, "Test", "TestFont", new Vector2(0, 100), new Vector2(1920,1080),1));
+            ComponentHandler.Add(new CollisionBox(this, "myBox", false));
+            ComponentHandler.Add(new Movement(this, "Movement", 500));
+            ComponentHandler.Add(new FontRenderer(this, "Test", "TestFont", new Vector2(0, 100), new Vector2(1920,1080),1));
 
             //BehaviorHandler.AddBehavior("MoveControls", Behaviors.WASDcontrols, new Component[] { RigidBody, componentHandler.GetComponent("Movement") });
-            BehaviorHandler.AddBehavior("FaceMouse", Behaviors.PointAtMouse, new Component[] { Transform });
-            behaviorHandler.AddBehavior("MoveForward", Behaviors.MoveTowardRotation, new Component[] { Transform, RigidBody });
-            BehaviorHandler.AddBehavior("Scaler", Behaviors.ManualScale, new Component[] { Transform });
+            BehaviorHandler.Add("FaceMouse", Behaviors.PointAtMouse);
+            behaviorHandler.Add("MoveForward", Behaviors.MoveTowardRotation);
+            BehaviorHandler.Add("Scaler", Behaviors.ManualScale);
             //SpriteRenderer.Shader = "TestShader";
-            ((CollisionHandler)ComponentHandler.GetComponent("collisionHandler")).myActions.Add(new CollisionActions("myBox", new List<string> { "myBox", "TileWall", "tile" }, new List<collisionAction> { CollisionBehaviors.UndoMinPen }));
+            ((CollisionHandler)GetComponent("collisionHandler")).myActions.Add(new CollisionActions("myBox", new List<string> { "myBox", "TileWall", "tile" }, new List<collisionAction> { CollisionBehaviors.UndoMinPen }));
         }
     }
 }

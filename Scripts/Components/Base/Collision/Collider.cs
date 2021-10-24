@@ -29,7 +29,7 @@ namespace MonoGame_Core.Scripts
 
         public Collider(GameObject go, string name, bool isStatic) : base(go, name)
         {
-            transform = (Transform)go.ComponentHandler.GetComponent("transform");
+            transform = (Transform)go.ComponentHandler.Get("transform");
             this.isStatic = isStatic;
         }
 
@@ -41,13 +41,13 @@ namespace MonoGame_Core.Scripts
             }
             else
             {
-                gameObject.BehaviorHandler.AddBehavior("activeCollider", addToActiveColliders, new Component[] { this });
+                gameObject.AddBehavior("activeCollider", addToActiveColliders, new Component[] { this });
             }
 
             base.Initilize();
         }
 
-        private static void addToActiveColliders(float dt, Component[] c)
+        private static void addToActiveColliders(float dt, GameObject go, Component[] c)
         {
             if(((Collider)c[0]).checkCollision)
                 CollisionManager.ActiveColliders.Insert((Collider)c[0]);
