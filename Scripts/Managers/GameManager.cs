@@ -23,14 +23,14 @@ namespace MonoGame_Core.Scripts
         {
             RenderingManager.GraphicsDevice = GraphicsDevice;
             // TODO: Add your initialization logic here
-            ResourceManager.Initilize();
+            ResourceManager.Initilize(Content);
             InputManager.Initilize();
             RenderingManager.Initilize();
             SoundManager.Initilize();
             CollisionManager.Initilize();
             CoroutineManager.Initilize();
             CameraManager.Initilize();
-            SceneManager.Initilize(Content, new TestScene());
+            SceneManager.Initilize(new TestScene());
             
             base.Initialize();
         }

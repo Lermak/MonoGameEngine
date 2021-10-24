@@ -226,9 +226,9 @@ namespace MonoGame_Core.Scripts
                     quadTreeColliders.AddRange(q.GetColliders());
                 }
 
-                IEnumerable<Collider> toCheck = quadTreeColliders;//.Where(c => c.Transform.Layer == a.Transform.Layer)
-                    //.Where(c => distanceHuristic(c, a) == true)
-                    //.OrderBy(c => Vector2.Distance(a.Transform.Position, c.Transform.Position));
+                IEnumerable<Collider> toCheck = quadTreeColliders.Where(c => c.Transform.Layer == a.Transform.Layer)
+                    .Where(c => distanceHuristic(c, a) == true)
+                    .OrderBy(c => Vector2.Distance(a.Transform.Position, c.Transform.Position));
 
                 for (int t = 0; t < 4; ++t)
                 {

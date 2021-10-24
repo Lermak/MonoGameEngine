@@ -18,24 +18,21 @@ namespace MonoGame_Core.Scripts
             CameraManager.Cameras[0].SetMinPos(Size / 2 * -1);
             CameraManager.Cameras[0].SetMaxPos(Size / 2);
 
-            CollisionManager.Initilize();
-
-            SoundManager.SongChannels["Melody"] = Content.Load<Song>("Music/TestSong");
+            ResourceManager.AddSong("Melody", "Music/TestSong");
             //MediaPlayer.Play(SoundManager.SongChannels["Melody"]);
 
-            SoundManager.SoundEffectChannels["TestHit"] = Content.Load<SoundEffect>("Sound/TestHit").CreateInstance();
+            ResourceManager.AddSoundEffect("TestHit", "Sound/TestHit");
 
-            ResourceManager.Effects["TestShader"] = Content.Load<Effect>("Shaders/TestShader");
-            ResourceManager.Effects["BlueShader"] = Content.Load<Effect>("Shaders/BlueShader");
-            ResourceManager.Effects["CRT"] = Content.Load<Effect>("Shaders/CRTShader");
+            ResourceManager.AddEffect("TestShader","Shaders/TestShader");
+            ResourceManager.AddEffect("BlueShader", "Shaders/BlueShader");
+            ResourceManager.AddEffect("CRT", "Shaders/CRTShader");
 
-            ResourceManager.Textures = new Dictionary<string, Texture2D>();
-            ResourceManager.Textures["Test"] = Content.Load<Texture2D>("Images/Test");
-            ResourceManager.Textures["PeaShooter"] = Content.Load<Texture2D>("Images/PeaShooter");
-            ResourceManager.Textures["Base"] = Content.Load<Texture2D>("Images/Base");
-            ResourceManager.Textures["BG"] = Content.Load<Texture2D>("Images/Background");
+            ResourceManager.AddTexture("Test", "Images/Test");
+            ResourceManager.AddTexture("PeaShooter", "Images/PeaShooter");
+            ResourceManager.AddTexture("Base", "Images/Base");
+            ResourceManager.AddTexture("BG", "Images/Background");
 
-            ResourceManager.Fonts["TestFont"] = Content.Load<SpriteFont>("Fonts/TestFont");
+            ResourceManager.AddFont("TestFont", "Fonts/TestFont");
         }
 
         protected override void loadObjects()

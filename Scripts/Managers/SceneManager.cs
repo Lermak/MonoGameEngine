@@ -21,12 +21,10 @@ namespace MonoGame_Core.Scripts
         public static Scene CurrentScene = new TestScene();
         public static Scene NextScene = null;
         public static State SceneState;
-        static ContentManager cm;
 
-        public static void Initilize(ContentManager c, Scene s)
+        public static void Initilize(Scene s)
         {
             SceneState = State.SceneIn;
-            cm = c;
             CurrentScene = s;
             InitilizeCurrentScene();
             CurrentScene.OnLoad();
@@ -49,7 +47,7 @@ namespace MonoGame_Core.Scripts
             {
                 CurrentScene = NextScene;
                 NextScene = null;
-                CurrentScene.Initilize(cm);
+                CurrentScene.Initilize();
                 CurrentScene.OnLoad();
                 SceneState = State.SceneIn;
             }
@@ -59,7 +57,7 @@ namespace MonoGame_Core.Scripts
 
         public static void InitilizeCurrentScene()
         {
-            CurrentScene.Initilize(cm);
+            CurrentScene.Initilize();
         }
     }
 }

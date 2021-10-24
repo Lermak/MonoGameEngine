@@ -25,7 +25,7 @@ namespace MonoGame_Core.Scripts
 
             CollisionManager.TileMap = new bool[width, height, doc.ChildNodes[1].ChildNodes.Count - 1];
             CollisionManager.TileSize = new Vector2(imageWidth, imageHeight);
-            CollisionManager.CollisionDetection = CollisionManager.CollisionType.TileMapFree;
+            //CollisionManager.CollisionDetection = CollisionManager.CollisionType.TileMapFree;
             if (doc.ChildNodes[1].Attributes[2].Value == "orthogonal")
             {
                 for (int l = 0; l < layers; ++l)

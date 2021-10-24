@@ -11,19 +11,18 @@ namespace MonoGame_Core.Scripts
     {
         protected override void loadContent()
         {
-            SoundManager.SongChannels["Melody"] = Content.Load<Song>("Music/TestSong");
-            SoundManager.SoundEffectChannels["TestHit"] = Content.Load<SoundEffect>("Sound/TestHit").CreateInstance();
+            ResourceManager.AddSong("Melody", "Music/TestSong");
+            ResourceManager.AddSoundEffect("TestHit", "Sound/TestHit");
 
-            ResourceManager.Textures = new Dictionary<string, Texture2D>();
-            ResourceManager.Textures["SlimeSpriteSheet"] = Content.Load<Texture2D>("Slime");
+            ResourceManager.AddTexture("SlimeSpriteSheet", "Slime");
+        }
 
-            gameObjects = new List<GameObject>();
-            
-            WorldObject slime = InitWorldObject(new WorldObject("SlimeSpriteSheet", "Slime", new string[] { }, new Vector2(48,48), new Vector2(), 0));
+        protected override void loadObjects()
+        {
+            WorldObject slime = InitWorldObject(new WorldObject("SlimeSpriteSheet", "Slime", new string[] { }, new Vector2(48, 48), new Vector2(), 0));
             slime.ComponentHandler.Add(new AnimationData(slime, .125f));
             slime.BehaviorHandler.Add("Animate", Behaviors.Animate, new Component[] { slime.ComponentHandler.Get("animationData") });
 
-            base.loadContent();
         }
     }
 }

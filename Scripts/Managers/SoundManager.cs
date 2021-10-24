@@ -12,14 +12,12 @@ namespace MonoGame_Core.Scripts
     /// </summary>
     public static class SoundManager
     {
-        /// <summary>
-        /// List of currently available songs
-        /// </summary>
-        public static Dictionary<string, Song> SongChannels = new Dictionary<string, Song>();
+        public static float volume = 1;
+
         /// <summary>
         /// List of currently available sound effects
         /// </summary>
-        public static Dictionary<string, SoundEffectInstance> SoundEffectChannels = new Dictionary<string, SoundEffectInstance>();
+        public static Dictionary<string, SoundEffectInstance> SoundEffects = new Dictionary<string, SoundEffectInstance>();
 
         public static void Initilize()
         {
@@ -28,13 +26,43 @@ namespace MonoGame_Core.Scripts
 
         public static void Clear()
         {
-            SongChannels.Clear();
-            SoundEffectChannels.Clear();
+            SoundEffects.Clear();
         }
 
-        public static void Update(float dt)
+        public static void Update(float gt)
         {
+            MediaPlayer.Volume = volume;
+            //SoundEffect.MasterVolume = volume;
+        }
 
+        public static void SetVolume(float v)
+        {
+            if (v < 0) v = 0;
+            if (v > 1) v = 1;
+            volume = v;
+        }
+
+        public static string CurrentSong;
+        public static void PlaySong(string name)
+        {
+            ////Add logic to transition between songs
+            //if(MediaPlayer.State == MediaState.Playing)
+            //{
+            //    MediaPlayer.Play(ResourceManager.Songs[name]);
+            //}
+            CurrentSong = name;
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(ResourceManager.Songs[name]);
+        }
+
+        public static void PlaySoundEffect(string name)
+        {
+            if (!SoundEffects.ContainsKey(name) || SoundEffects[name].State != SoundState.Playing)
+            {
+                SoundEffectInstance se = ResourceManager.SoundEffects[name].CreateInstance();
+                se.Play();
+                SoundEffects[name] = se;
+            }
         }
     }
 }

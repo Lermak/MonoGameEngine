@@ -13,15 +13,6 @@ using Microsoft.Xna.Framework.Media;
 namespace MonoGame_Core.Scripts
 {
     public class Credits : Scene
-    {
-        public Credits() : base()
-        {
-
-        }
-
-        public override void Initilize(ContentManager c)
-        {
-            base.Initilize(c);
-        }
+    { 
     }
 }

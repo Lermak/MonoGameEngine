@@ -11,7 +11,6 @@ namespace MonoGame_Core.Scripts
     public class Scene
     {
         protected Vector2 size;//Scene size must never be smaller than the rendering size
-        protected ContentManager Content;
         public Vector2 Size { get { return size; } }
 
         protected List<GameObject> toAdd = new List<GameObject>();
@@ -79,10 +78,9 @@ namespace MonoGame_Core.Scripts
             return gameObjects.Where(o => o.Name == name).First();
         }
 
-        public virtual void Initilize(ContentManager c)
+        public virtual void Initilize()
         {
             size = new Vector2(RenderingManager.WIDTH, RenderingManager.HEIGHT);
-            Content = c;
             CollisionManager.Initilize();
             RenderingManager.Initilize();
             SoundManager.Initilize();
