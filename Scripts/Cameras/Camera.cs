@@ -84,16 +84,17 @@ namespace MonoGame_Core.Scripts
         public void Draw(SpriteBatch sb)
         {
             if (shader != "")
+            {
                 foreach (EffectTechnique t in ResourceManager.Effects[shader].Techniques)
                 {
                     foreach (EffectPass p in t.Passes)
                     {
                         p.Apply();
-                        DrawToSpriteBatch(sb);
                     }
                 }
-            else
-                DrawToSpriteBatch(sb);
+            }
+
+            DrawToSpriteBatch(sb);
         }
 
         private void DrawToSpriteBatch(SpriteBatch sb)
@@ -102,9 +103,9 @@ namespace MonoGame_Core.Scripts
                     ScreenPosition,
                     new Rectangle(0, 0, (int)(RenderingManager.RenderTargets[target].Width * RenderingManager.GameScale.X), (int)(RenderingManager.RenderTargets[target].Height * RenderingManager.GameScale.Y)),
                     Color.White,
-                    -Transform.Radians,
+                    0,//-Transform.Radians, //Gotta figure out rotation when it comes to attaching the transform to another object
                     (new Vector2(drawSize.Width / 2, drawSize.Height / 2) / new Vector2(RenderingManager.RenderTargets[target].Width, RenderingManager.RenderTargets[target].Height)) * RenderingManager.GameScale,
-                    new Vector2(drawSize.Width, drawSize.Height) / new Vector2(RenderingManager.RenderTargets[target].Width, RenderingManager.RenderTargets[target].Height) * transform.Scale,
+                    new Vector2(drawSize.Width, drawSize.Height) / new Vector2(RenderingManager.RenderTargets[target].Width, RenderingManager.RenderTargets[target].Height) * transform.Scale,//all items being drawn were already scaled by gamescale, no need to scale down again
                     SpriteEffects.None,
                     (float)Transform.Layer / 256f);
         }

@@ -33,7 +33,7 @@ namespace MonoGame_Core.Scripts
             get { return currentFrame; }
             set 
             {
-                if (value > Frames)
+                if (value > Frames || value < 0)
                 {
                     currentFrame = 0;
                 }

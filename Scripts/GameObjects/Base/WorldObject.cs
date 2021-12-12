@@ -18,5 +18,15 @@ namespace MonoGame_Core.Scripts
                                             texID,
                                             0));
         }
+        public WorldObject(string texID, string name, string[] tags, Vector2 pos, byte layer, Vector2 drawArea) : base(name, tags)
+        {
+            componentHandler.Add(new CollisionHandler(this));
+            componentHandler.Add(new Transform(this, pos, 0, layer));
+            componentHandler.Add(new RigidBody(this, RigidBody.RigidBodyType.Static));
+            componentHandler.Add(new SpriteRenderer(this,
+                                            texID,
+                                            0,
+                                            drawArea));
+        }
     }
 }

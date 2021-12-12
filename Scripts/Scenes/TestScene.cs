@@ -48,6 +48,7 @@ namespace MonoGame_Core.Scripts
 
             WorldObject wo = InitWorldObject(new TestObject("PeaShooter", "testObj"));
             wo.SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);
+            CameraManager.Cameras[1].Transform.Attach(wo.Transform);
             wo = InitWorldObject(new TestStaticObject("Base", new Vector2(200, 200), "Test1", 1));
             //tso.Transform.AttachToTransform(((WorldObject)gameObjects[0]).Transform);
 
