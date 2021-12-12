@@ -128,39 +128,29 @@ namespace MonoGame_Core.Scripts
 
         public virtual void Draw(SpriteBatch sb, Camera c)
         {
+            float zOrder = 0;
             if (isHUD)
-            {
-                sb.Draw(ResourceManager.Textures[Texture],
-                    ScreenPosition(c),
-                    DrawRect(),
-                    new Color(Color.R - (int)RenderingManager.GlobalFade, Color.G - (int)RenderingManager.GlobalFade, Color.B - (int)RenderingManager.GlobalFade, Color.A),
-                    -(Transform.Radians + addedRotation),
-                    new Vector2(drawArea.X / 2, drawArea.Y / 2),
-                    RenderingManager.WindowScale * Transform.Scale,
-                    Flip,
-                    1);
-            }
+                zOrder = 1;
             else
-            {
-                sb.Draw(ResourceManager.Textures[Texture],
-                    ScreenPosition(c),
-                    DrawRect(),
-                    new Color(Color.R - (int)RenderingManager.GlobalFade, Color.G - (int)RenderingManager.GlobalFade, Color.B - (int)RenderingManager.GlobalFade, Color.A),
-                    -(Transform.Radians + addedRotation),
-                    new Vector2(drawArea.X / 2, drawArea.Y / 2),
-                    RenderingManager.GameScale * Transform.Scale,
-                    Flip,
-                    (float)transform.Layer / 256f);
-            }
+                zOrder = (float)transform.Layer / 256f;
+
+            sb.Draw(ResourceManager.Textures[Texture],
+                ScreenPosition(c),
+                DrawRect(),
+                new Color(Color.R - (int)RenderingManager.GlobalFade, Color.G - (int)RenderingManager.GlobalFade, Color.B - (int)RenderingManager.GlobalFade, Color.A),
+                -(Transform.Radians + addedRotation),
+                new Vector2(drawArea.X / 2, drawArea.Y / 2),
+                RenderingManager.GameScale * Transform.Scale,
+                Flip,
+                zOrder);
         }
 
         protected Vector2 ScreenPosition(Camera camera)
         {
             if (isHUD)
-                return Transform.WorldPosition() + (new Vector2(Globals.SCREEN_WIDTH / 2, Globals.SCREEN_HEIGHT / 2) * RenderingManager.WindowScale);
-
+                return Transform.WorldPosition() + new Vector2(Globals.SCREEN_WIDTH / 2, Globals.SCREEN_HEIGHT / 2) * RenderingManager.WindowScale;
             else
-                return (Transform.WorldPosition() - camera.Position + (new Vector2(Globals.SCREEN_WIDTH / 2, Globals.SCREEN_HEIGHT / 2) * RenderingManager.WindowScale));
+                return Transform.WorldPosition() - camera.Transform.WorldPosition() + new Vector2(Globals.SCREEN_WIDTH / 2, Globals.SCREEN_HEIGHT / 2) * RenderingManager.WindowScale;
         }
     }
 }

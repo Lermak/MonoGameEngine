@@ -12,10 +12,11 @@ namespace MonoGame_Core.Scripts
         int target;
         Vector2 minPos;
         Vector2 maxPos;
-        Rectangle drawArea;
+        Rectangle drawSize;
+        Transform transform;
+        Vector2 renderPosition;
         string shader = "";
-        Vector2 screenPosition;
-        byte layer;
+
         public int Target
         {
             get { return target; }
@@ -39,40 +40,33 @@ namespace MonoGame_Core.Scripts
             }
         }
 
-        public Transform Transform { get { return (Transform)componentHandler.Get("transform"); } }
-        public Vector2 Position { get { return Transform.Position * RenderingManager.WindowScale; } }
-        public Vector2 MinPos { get { return minPos; } }
-        public Vector2 MaxPos { get { return maxPos; } }
-        public Rectangle DrawArea { get { return drawArea; } set { drawArea = value; } }
-        public Vector2 ScreenPosition { get { return screenPosition; } set { screenPosition = value; } }
-        public byte Layer { get { return layer; } set { layer = value; } }
-
-        public Camera(string name, int target, byte layer, float width, float height, Vector2 size, Vector2 min, Vector2 max) : base(name, new string[] { "camera" })
+        public Transform Transform { get { return transform; } }
+        public Vector2 MinPos { get { return minPos; } set { minPos = value; } }
+        public Vector2 MaxPos { get { return maxPos; } set { maxPos = value; } }
+        public Rectangle DrawSize { get { return drawSize; } set { drawSize = value; } }
+        //WFT is the 60,35 offset??
+        public Vector2 ScreenPosition { get { return (renderPosition * new Vector2(1,-1) + new Vector2(60,33.75f) - new Vector2(drawSize.Width / 2, drawSize.Height / 2)) * RenderingManager.GameScale + new Vector2(Globals.SCREEN_WIDTH / 2, Globals.SCREEN_HEIGHT / 2) * RenderingManager.WindowScale; } }
+        public Camera(string name, int target, byte layer, Vector2 size, Vector2 min, Vector2 max, Vector2 pos, Vector2 screenPos) : base(name, new string[] { "camera" })
         {
-            Transform t = new Transform(this, new Vector2(), 0, 0);
+            RenderTarget2D rt;
+            if (target >= 0)
+                rt = RenderingManager.RenderTargets[target];
+            else
+                rt = new RenderTarget2D(RenderingManager.GraphicsDevice, (int)Globals.SCREEN_WIDTH, (int)Globals.SCREEN_HEIGHT);
+            
+            renderPosition = screenPos;
+            transform = new Transform(this, pos, 0, layer);
             minPos = min;
             maxPos = max;
             Target = target;
-            drawArea = new Rectangle(0, 0, (int)(Globals.SCREEN_WIDTH * RenderingManager.WindowScale.X), (int)(Globals.SCREEN_HEIGHT * RenderingManager.WindowScale.Y));
-            componentHandler.Add(t);
-
-            screenPosition = new Vector2(Globals.SCREEN_WIDTH / 2, Globals.SCREEN_HEIGHT / 2);
+            drawSize = new Rectangle(0, 0, (int)size.X, (int)size.Y);
+            componentHandler.Add(transform);
         }
 
         public override void Update(float dt)
         {
             base.Update(dt);
             clamp();
-        }
-
-        public void SetMinPos(Vector2 min)
-        {
-            minPos = min;
-        }
-
-        public void SetMaxPos(Vector2 max)
-        {
-            maxPos = max;
         }
 
         void clamp()
@@ -96,28 +90,24 @@ namespace MonoGame_Core.Scripts
                     foreach (EffectPass p in t.Passes)
                     {
                         p.Apply();
-                        sb.Draw(RenderingManager.RenderTargets[Target],
-                                (screenPosition - new Vector2(drawArea.X / 2, drawArea.Y / 2)) * RenderingManager.WindowScale,
-                                new Rectangle(0, 0, (int)(RenderingManager.RenderTargets[target].Width * RenderingManager.WindowScale.X), (int)(RenderingManager.RenderTargets[target].Height * RenderingManager.WindowScale.Y)),
-                                Color.White,
-                                Transform.Radians,
-                                new Vector2(),
-                                new Vector2(drawArea.X, drawArea.Y) / new Vector2(RenderingManager.RenderTargets[target].Width, RenderingManager.RenderTargets[target].Height),
-                                SpriteEffects.None,
-                                Layer / 256);
+                        DrawToSpriteBatch(sb);
                     }
                 }
             else
-                sb.Draw(RenderingManager.RenderTargets[Target],
-                        (screenPosition - new Vector2(drawArea.X / 2, drawArea.Y / 2)) * RenderingManager.WindowScale,
-                        new Rectangle(0, 0, (int)(RenderingManager.RenderTargets[target].Width * RenderingManager.WindowScale.X), (int)(RenderingManager.RenderTargets[target].Height * RenderingManager.WindowScale.Y)),
-                        Color.White,
-                        Transform.Radians,
-                        new Vector2(),
-                        new Vector2(drawArea.X, drawArea.Y) / new Vector2(RenderingManager.RenderTargets[target].Width, RenderingManager.RenderTargets[target].Height),
-                        SpriteEffects.None,
-                        Layer / 256);
-        
+                DrawToSpriteBatch(sb);
+        }
+
+        private void DrawToSpriteBatch(SpriteBatch sb)
+        {
+            sb.Draw(RenderingManager.RenderTargets[Target],
+                    ScreenPosition,
+                    new Rectangle(0, 0, (int)(RenderingManager.RenderTargets[target].Width * RenderingManager.GameScale.X), (int)(RenderingManager.RenderTargets[target].Height * RenderingManager.GameScale.Y)),
+                    Color.White,
+                    -Transform.Radians,
+                    new Vector2(drawSize.Width / 2, drawSize.Height / 2) * RenderingManager.GameScale,
+                    new Vector2(drawSize.Width, drawSize.Height) / new Vector2(RenderingManager.RenderTargets[target].Width, RenderingManager.RenderTargets[target].Height) * transform.Scale,
+                    SpriteEffects.None,
+                    (float)Transform.Layer / 256f);
         }
     }
 }

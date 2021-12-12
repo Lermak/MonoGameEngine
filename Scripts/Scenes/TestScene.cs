@@ -15,8 +15,8 @@ namespace MonoGame_Core.Scripts
         protected override void loadContent()
         {
             size = new Vector2(2100, 1080);
-            CameraManager.Cameras[0].SetMinPos(Size / 2 * -1);
-            CameraManager.Cameras[0].SetMaxPos(Size / 2);
+            CameraManager.Cameras[0].MinPos = Size / -2;
+            CameraManager.Cameras[0].MaxPos = Size / 2;
 
             ResourceManager.AddSong("Melody", "Music/TestSong");
             //MediaPlayer.Play(SoundManager.SongChannels["Melody"]);
@@ -37,28 +37,31 @@ namespace MonoGame_Core.Scripts
 
         protected override void loadObjects()
         {
-            CameraManager.Cameras.Add(new Camera("CRTCamera", 0, 0,
-                                        480,
-                                        270,
+            CameraManager.Cameras.Add(new Camera("CRTCamera", 0, 2,
                                         new Vector2(480, 270),
                                         new Vector2(Globals.SCREEN_WIDTH, Globals.SCREEN_HEIGHT) * -1,
-                                        new Vector2(Globals.SCREEN_WIDTH, Globals.SCREEN_HEIGHT) * 1));
+                                        new Vector2(Globals.SCREEN_WIDTH, Globals.SCREEN_HEIGHT) * 1,
+                                        new Vector2(),
+                                        new Vector2(-1920/2+480/2, 1080/2-270/2)));
 
             CameraManager.Cameras[1].BehaviorHandler.Add("ScreenShake", Behaviors.ScreenShake, new Component[] { CameraManager.Cameras[1].Transform });
 
-            InitWorldObject(new TestObject("PeaShooter", "testObj"));
-            WorldObject tso = InitWorldObject(new TestStaticObject("Base", new Vector2(200, 200), "Test1", 1));
+            WorldObject wo = InitWorldObject(new TestObject("PeaShooter", "testObj"));
+            wo.SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);
+            wo = InitWorldObject(new TestStaticObject("Base", new Vector2(200, 200), "Test1", 1));
             //tso.Transform.AttachToTransform(((WorldObject)gameObjects[0]).Transform);
 
-            tso = InitWorldObject(new TestStaticObject("Base", new Vector2(200, -100), "Test2", 1));
+            wo = InitWorldObject(new TestStaticObject("Base", new Vector2(200, -100), "Test2", 1));
             //tso.Transform.AttachToTransform(((WorldObject)gameObjects[0]).Transform);
-            tso.Transform.SetRotation(45);
-            tso = InitWorldObject(new WorldObject("BG", "Background", new string[] { }, new Vector2(), 0));
-            tso.SpriteRenderer.Transform.Layer = 0;
-            tso.SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);
+            wo.Transform.SetRotation(45);
 
-            CameraManager.Cameras[1].ScreenPosition = new Vector2(480, 270) / 2;
-            CameraManager.Cameras[1].Shader = "CRT";
+            wo = InitWorldObject(new WorldObject("BG", "Background", new string[] { }, new Vector2(), 0));
+            wo.SpriteRenderer.Transform.Layer = 0;
+            wo.SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);
+            //tso.SpriteRenderer.Cameras.Remove(CameraManager.Cameras[0]);
+
+            //CameraManager.Cameras[1].ScreenPosition = new Vector2(480, 270) / 2;
+            //CameraManager.Cameras[1].Shader = "CRT";
 
             TiledImporter.LoadFromFile(this, @"E:\Programming\C#\MonoGame\MonoGame Core\Content\Tiled\Test.tmx");
 

@@ -109,9 +109,10 @@ namespace MonoGame_Core.Scripts
            
             foreach (Camera c in cameras)
             {
-                foreach (SpriteRenderer sr in Sprites)
+                IEnumerable<SpriteRenderer> sprites = Sprites.Where(s => s.Cameras.Contains(c));
+                foreach (SpriteRenderer sr in sprites)
                 {
-                    if (sr.Visible && sr.Cameras.Contains(c))
+                    if (sr.Visible)
                     {
                         if (sr.Shader != prevShader)
                         {
