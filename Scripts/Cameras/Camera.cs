@@ -44,8 +44,7 @@ namespace MonoGame_Core.Scripts
         public Vector2 MinPos { get { return minPos; } set { minPos = value; } }
         public Vector2 MaxPos { get { return maxPos; } set { maxPos = value; } }
         public Rectangle DrawSize { get { return drawSize; } set { drawSize = value; } }
-        //WFT is the 60,35 offset??
-        public Vector2 ScreenPosition { get { return (renderPosition * new Vector2(1,-1) + new Vector2(60,33.75f) - new Vector2(drawSize.Width / 2, drawSize.Height / 2)) * RenderingManager.GameScale + new Vector2(Globals.SCREEN_WIDTH / 2, Globals.SCREEN_HEIGHT / 2) * RenderingManager.WindowScale; } }
+        public Vector2 ScreenPosition { get { return (renderPosition * new Vector2(1,-1) - new Vector2(drawSize.Width / 2, drawSize.Height / 2)) * RenderingManager.GameScale + new Vector2(Globals.SCREEN_WIDTH / 2, Globals.SCREEN_HEIGHT / 2) * RenderingManager.WindowScale; } }
         public Camera(string name, int target, byte layer, Vector2 size, Vector2 min, Vector2 max, Vector2 pos, Vector2 screenPos) : base(name, new string[] { "camera" })
         {
             RenderTarget2D rt;
@@ -104,7 +103,7 @@ namespace MonoGame_Core.Scripts
                     new Rectangle(0, 0, (int)(RenderingManager.RenderTargets[target].Width * RenderingManager.GameScale.X), (int)(RenderingManager.RenderTargets[target].Height * RenderingManager.GameScale.Y)),
                     Color.White,
                     -Transform.Radians,
-                    new Vector2(drawSize.Width / 2, drawSize.Height / 2) * RenderingManager.GameScale,
+                    (new Vector2(drawSize.Width / 2, drawSize.Height / 2) / new Vector2(RenderingManager.RenderTargets[target].Width, RenderingManager.RenderTargets[target].Height)) * RenderingManager.GameScale,
                     new Vector2(drawSize.Width, drawSize.Height) / new Vector2(RenderingManager.RenderTargets[target].Width, RenderingManager.RenderTargets[target].Height) * transform.Scale,
                     SpriteEffects.None,
                     (float)Transform.Layer / 256f);
