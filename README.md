@@ -3,6 +3,7 @@ Building an engine to learn the fundamentals of video game architecture
 
 ## Exemplary works
 - [Beside Us Alone (GEJAM), 2021](https://fermak.itch.io/beside-us-alone)
+- [Remote Work (LUDUM DARE 49), 2021](https://ldjam.com/events/ludum-dare/49/remote-work)
 
 ## Installation
 - clone the repository, and open the project to let OmniSharp do it's thing.
