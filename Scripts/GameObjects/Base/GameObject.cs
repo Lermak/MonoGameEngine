@@ -65,5 +65,9 @@ namespace MonoGame_Core.Scripts
         {
             behaviorHandler.Add(name, b, c);
         }
+        public virtual void GetBehavior(string name)
+        {
+            behaviorHandler.Get(name);
+        }
     }
 }
