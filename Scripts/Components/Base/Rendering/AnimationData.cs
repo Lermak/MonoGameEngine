@@ -8,7 +8,7 @@ namespace MonoGame_Core.Scripts
     {
         public float TimeSinceLastFrameChange = 0;
         public float AnimationSpeed;
-        public bool AnimationDirection = true;
+        public bool Flip = true;
         public SpriteRenderer SpriteRenderer;
 
         public AnimationData(GameObject go, float speed) : base(go, "animationData")

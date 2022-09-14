@@ -23,13 +23,13 @@ namespace MonoGame_Core.Scripts
                 {
                     ad.TimeSinceLastFrameChange = 0;
 
-                    if ((ad.SpriteRenderer.CurrentFrame == 0 && !ad.AnimationDirection) ||
-                        (ad.SpriteRenderer.CurrentFrame == ad.SpriteRenderer.Frames - 1 && ad.AnimationDirection))
+                    if ((ad.SpriteRenderer.CurrentFrame == 0 && !ad.Flip) ||
+                        (ad.SpriteRenderer.CurrentFrame == ad.SpriteRenderer.Frames - 1 && ad.Flip))
                     {
-                        ad.AnimationDirection = !ad.AnimationDirection;
+                        ad.Flip = !ad.Flip;
                     }
 
-                    ad.SpriteRenderer.CurrentFrame += ad.AnimationDirection ? 1 : -1;
+                    ad.SpriteRenderer.CurrentFrame += ad.Flip ? 1 : -1;
                 }
             }
         }
