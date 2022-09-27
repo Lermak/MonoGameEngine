@@ -7,7 +7,7 @@ namespace MonoGame_Core.Scripts
 {
     public static class hf_Math
     {
-        public static Vector2 getRotationPosition(float angleInDegrees, float radius, Vector2 center)
+        public static Vector2 GetPosFromPoint(float angleInDegrees, float radius, Vector2 center)
         {
             Vector2 newPosition = center;
 
@@ -19,7 +19,7 @@ namespace MonoGame_Core.Scripts
             return newPosition;
         }
 
-        public static float getAngle(Vector2 p1, Vector2 p2)
+        public static float GetAngleDeg(Vector2 p1, Vector2 p2)
         {
             float dx = p2.X - p1.X;
             float dy = p2.Y - p1.Y;
@@ -27,22 +27,22 @@ namespace MonoGame_Core.Scripts
             return (float)Math.Atan2(dy, dx);
         }
 
-        public static Vector2 RadiansToUnitVector(float r)
+        public static Vector2 RadToUnit(float r)
         {
             return new Vector2((float)Math.Cos(r), (float)Math.Sin(r));
         }
 
-        public static float DegreesToRadians(float d)
+        public static float DegToRad(float d)
         {
             return d * (float)Math.PI / 180;
         }
 
-        public static float RadiansToDegres(float r)
+        public static float RadToDeg(float r)
         {
             return r / (float)Math.PI * 180;
         }
 
-        public static float Hypotenuse(float x, float y)
+        public static float Hypot(float x, float y)
         {
             return (float)Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2));
         }

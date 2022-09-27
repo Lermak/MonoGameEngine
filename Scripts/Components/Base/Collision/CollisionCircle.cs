@@ -22,7 +22,7 @@ namespace MonoGame_Core.Scripts
             List<Vector2> v = new List<Vector2>();
             for (int i = 0; i < 90; ++i)
             {
-                v.Add(hf_Math.getRotationPosition(i * 2, 1, new Vector2()));
+                v.Add(hf_Math.GetPosFromPoint(i * 2, 1, new Vector2()));
             }
             return v;
         }
@@ -31,7 +31,7 @@ namespace MonoGame_Core.Scripts
             List<Vector2> v = new List<Vector2>();
             for(int i = 0; i < 6; ++i)
             {
-                v.Add(hf_Math.getRotationPosition(i*60, radius, transform.Position + offset));
+                v.Add(hf_Math.GetPosFromPoint(i*60, radius, transform.Position + offset));
             }
             return v;
         }

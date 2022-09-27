@@ -82,7 +82,7 @@ namespace MonoGame_Core.Scripts
         public bool Visible { get { return visible; } set { visible = value; } }
         public float AddedRotation { get { return addedRotation; } set { addedRotation = value; } }
         public List<Camera> Cameras { get { return cameras; } }
-        public float Hypotenuse { get { return hf_Math.Hypotenuse(drawArea.X / 2, drawArea.Y / 2); } }
+        public float Hypotenuse { get { return hf_Math.Hypot(drawArea.X / 2, drawArea.Y / 2); } }
         public SpriteRenderer(GameObject go, string texID, int orderInLayer) : base(go, "spriteRenderer")
         {
             Texture = texID;

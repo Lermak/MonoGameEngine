@@ -21,7 +21,7 @@ namespace MonoGame_Core.Scripts
         public bool IsStatic { get { return isStatic; } }
         public Vector2 Offset { get { return offset * transform.Scale; } }
         public Transform Transform { get { return transform; } }
-        public float Hypotenuse { get { return hf_Math.Hypotenuse(Width/2,Height/2); } }
+        public float Hypotenuse { get { return hf_Math.Hypot(Width/2,Height/2); } }
         public float Width { get { return width * transform.Scale.X; } }
         public float Height { get { return height * transform.Scale.Y; } }
 
