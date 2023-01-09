@@ -102,13 +102,12 @@ namespace MonoGame_Core.Scripts
 
             SetTarget(Target);
 
-            GraphicsDevice.Clear(Color.Black);
-
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend);
             IEnumerable<Camera> cameras = CameraManager.Cameras.OrderByDescending(s => s.Target);
            
             foreach (Camera c in cameras)
             {
+                GraphicsDevice.Clear(c.BG_Color);
                 IEnumerable<SpriteRenderer> sprites = Sprites.Where(s => s.Cameras.Contains(c));
                 foreach (SpriteRenderer sr in sprites)
                 {

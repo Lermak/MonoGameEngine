@@ -16,7 +16,7 @@ namespace MonoGame_Core.Scripts
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            Window.AllowUserResizing = true;
+            Window.AllowUserResizing = false;
         }
 
         protected override void Initialize()

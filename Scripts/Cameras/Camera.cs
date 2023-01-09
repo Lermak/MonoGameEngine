@@ -16,6 +16,7 @@ namespace MonoGame_Core.Scripts
         Transform transform;
         Vector2 renderPosition;
         string shader = "";
+        Color bg_color = Color.Black;
 
         public int Target
         {
@@ -45,6 +46,7 @@ namespace MonoGame_Core.Scripts
         public Vector2 MaxPos { get { return maxPos; } set { maxPos = value; } }
         public Rectangle DrawSize { get { return drawSize; } set { drawSize = value; } }
         public Vector2 ScreenPosition { get { return (renderPosition * new Vector2(1,-1) - new Vector2(drawSize.Width / 2, drawSize.Height / 2)) * RenderingManager.GameScale + new Vector2(Globals.SCREEN_WIDTH / 2, Globals.SCREEN_HEIGHT / 2) * RenderingManager.WindowScale; } }
+        public Color BG_Color { get { return bg_color; } set { bg_color = value; } }
         public Camera(string name, int target, byte layer, Vector2 size, Vector2 min, Vector2 max, Vector2 pos, Vector2 screenPos) : base(name, new string[] { "camera" })
         {
             RenderTarget2D rt;
