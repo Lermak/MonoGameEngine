@@ -183,14 +183,12 @@ namespace MonoGame_Core.Scripts
                     s = Sprites.OrderBy(s => s.Shader)
                                 .ThenBy(s => s.Transform.Layer)
                                 .ThenBy(s => s.OrderInLayer)
-                                .Where(s => s.Cameras.Contains(c))
                                 .Where(s => Vector2.Distance(s.Transform.Position, c.Transform.Position) <= s.Hypotenuse + Globals.SCREEN_HYPOTENUSE);
                 else if (RenderingOrder == RenderOrder.TopDown)
                     s = Sprites.OrderBy(s => s.Shader)
                                 .ThenBy(s => s.Transform.Layer)
                                 .ThenBy(s => s.Transform.Position.Y)
                                 .ThenBy(s => s.OrderInLayer)
-                                .Where(s => s.Cameras.Contains(c))
                                 .Where(s => Vector2.Distance(s.Transform.Position, c.Transform.Position) <= s.Hypotenuse + Globals.SCREEN_HYPOTENUSE);
 
                 else if (RenderingOrder == RenderOrder.Isometric)
@@ -200,7 +198,6 @@ namespace MonoGame_Core.Scripts
                                 .ThenBy(s => s.Transform.Position.Y)
                                 .ThenBy(s => s.Transform.Position.X)
                                 .ThenBy(s => s.OrderInLayer)
-                                .Where(s => s.Cameras.Contains(c))
                                 .Where(s => Vector2.Distance(s.Transform.Position, c.Transform.Position) <= s.Hypotenuse + Globals.SCREEN_HYPOTENUSE);
                 }
             }
