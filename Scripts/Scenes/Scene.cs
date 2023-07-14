@@ -84,7 +84,8 @@ namespace MonoGame_Core.Scripts
             CollisionManager.Initilize();
             RenderingManager.Initilize();
             SoundManager.Initilize();
-            CoroutineManager.Initilize();   
+            CoroutineManager.Initilize();
+            CameraManager.Initilize();
 
             loadContent();
             loadObjects();

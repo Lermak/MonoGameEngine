@@ -74,6 +74,7 @@ namespace MonoGame_Core.Scripts
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Sprites = new List<SpriteRenderer>();
+            RenderTargets = new List<RenderTarget2D>();
         }
 
         /// <summary>

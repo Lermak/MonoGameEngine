@@ -12,7 +12,7 @@ namespace MonoGame_Core.Scripts
     /// </summary>
     public static class SoundManager
     {
-        public static float volume = 1;
+        public static float MasterVolume;
 
         /// <summary>
         /// List of currently available sound effects
@@ -21,7 +21,7 @@ namespace MonoGame_Core.Scripts
 
         public static void Initilize()
         {
-
+            MasterVolume = ConfigurationManager.Configuration.Volume;
         }
 
         public static void Clear()
@@ -31,7 +31,7 @@ namespace MonoGame_Core.Scripts
 
         public static void Update(float gt)
         {
-            MediaPlayer.Volume = volume;
+            MediaPlayer.Volume = MasterVolume;
             //SoundEffect.MasterVolume = volume;
         }
 
@@ -39,7 +39,7 @@ namespace MonoGame_Core.Scripts
         {
             if (v < 0) v = 0;
             if (v > 1) v = 1;
-            volume = v;
+            MasterVolume = v;
         }
 
         public static string CurrentSong;

@@ -14,17 +14,24 @@ namespace MonoGame_Core.Scripts
     public class MainMenu : Scene
     {
         protected override void loadContent()
-        {      
-            ResourceManager.AddTexture("Test", "Images/Test");
-            ResourceManager.AddTexture("Base", "Images/Base");
+        {
+            ResourceManager.AddSong("Melody", "Music/TestSong");
+            SoundManager.PlaySong("Melody");
+
+            ResourceManager.AddTexture("PlayBtn", "Images/Default UI/btn_play");
+            ResourceManager.AddTexture("SelPlayBtn", "Images/Default UI/btn_play_sel");
+            ResourceManager.AddTexture("ExitBtn", "Images/Default UI/btn_exit");
+            ResourceManager.AddTexture("SelExitBtn", "Images/Default UI/btn_exit_sel");
+            ResourceManager.AddTexture("SettingsBtn", "Images/Default UI/btn_settings");
+            ResourceManager.AddTexture("SelSettingsBtn", "Images/Default UI/btn_settings_sel");
         }
 
         protected override void loadObjects()
         {
             gameObjects = new List<GameObject>();
-            InitGameObject(new Button("Test", "Base", "PlayButton", new Vector2(500, 100), 1, null));
-            InitGameObject(new Button("Test", "Base", "QuitButton", new Vector2(500, 40), 1, Behaviors.QuitOnClick));
-
+            InitGameObject(new Button("PlayBtn", "SelPlayBtn", "PlayButton", new Vector2(500, 100), 1, null));
+            InitGameObject(new Button("ExitBtn", "SelExitBtn", "QuitButton", new Vector2(500, -20), 1, Behaviors.QuitOnClick));
+            InitGameObject(new Button("SettingsBtn", "SelSettingsBtn", "SettingsButton", new Vector2(500, 40), 1, null));
         }
 
         public override void Update(float dt)

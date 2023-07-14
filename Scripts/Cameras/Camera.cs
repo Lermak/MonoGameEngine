@@ -49,15 +49,11 @@ namespace MonoGame_Core.Scripts
         public Color BG_Color { get { return bg_color; } set { bg_color = value; } }
         public Camera(string name, int target, byte layer, Vector2 size, Vector2 min, Vector2 max, Vector2 pos, Vector2 screenPos) : base(name, new string[] { "camera" })
         {
-            RenderTarget2D rt;
-            if (target >= 0 && target < RenderingManager.RenderTargets.Count())
-                rt = RenderingManager.RenderTargets[target];
-            else
+            if (target >= 0 && target >= RenderingManager.RenderTargets.Count())
             {
                 while (RenderingManager.RenderTargets.Count() <= target)
                 {
-                    rt = new RenderTarget2D(RenderingManager.GraphicsDevice, (int)Globals.SCREEN_WIDTH, (int)Globals.SCREEN_HEIGHT, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8, 0, RenderTargetUsage.PreserveContents);
-                    RenderingManager.RenderTargets.Add(rt);
+                    RenderingManager.RenderTargets.Add(new RenderTarget2D(RenderingManager.GraphicsDevice, (int)Globals.SCREEN_WIDTH, (int)Globals.SCREEN_HEIGHT, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8, 0, RenderTargetUsage.PreserveContents));
                 }
             }
             renderPosition = screenPos;
