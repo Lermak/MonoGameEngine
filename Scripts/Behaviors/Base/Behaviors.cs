@@ -33,56 +33,59 @@ namespace MonoGame_Core.Scripts
                 }
             }
         }
-        public static void ArrowControls(float dt, GameObject go, Component[] c = null)
+        public static void Move(float dt, GameObject go, Component[] c = null)
         {
             KeyboardState state = Keyboard.GetState();
             Vector2 v = new Vector2();
             Movement m = (Movement)go.GetComponent("movement");
-            if (InputManager.IsPressed(Keys.Up))
-                v.Y = -m.Speed * dt;
-            else if (InputManager.IsPressed(Keys.Down))
-                v.Y = m.Speed * dt;
-            if (InputManager.IsPressed(Keys.Left))
-                v.X = -m.Speed * dt;
-            else if (InputManager.IsPressed(Keys.Right))
-                v.X = m.Speed * dt;
+            if (state.IsKeyDown(InputManager.KeyMap["down"]))
+                v.Y = -(m.Speed * dt);
+            else if (state.IsKeyDown(InputManager.KeyMap["up"]))
+                v.Y = (m.Speed * dt);
+            if (state.IsKeyDown(InputManager.KeyMap["left"]))
+                v.X = -(m.Speed * dt);
+            else if (state.IsKeyDown(InputManager.KeyMap["right"]))
+                v.X = (m.Speed * dt);
 
             ((Transform)go.GetComponent("transform")).Move(v);
         }
 
-        public static void WASDcontrols(float dt, GameObject go, Component[] c = null)
+        public static void MoveWithRot(float dt, GameObject go, Component[] c = null)
         {
             Movement m = (Movement)go.GetComponent("movement");
 
             KeyboardState state = Keyboard.GetState();
             Vector2 v = new Vector2();
             float r = 0;
-            if (state.IsKeyDown(Keys.W))
+            if (state.IsKeyDown(InputManager.KeyMap["down"]))
                 v.Y = -(m.Speed * dt);
-            else if (state.IsKeyDown(Keys.S))
+            else if (state.IsKeyDown(InputManager.KeyMap["up"]))
                 v.Y = (m.Speed * dt);
-            if (state.IsKeyDown(Keys.A))
+            if (state.IsKeyDown(InputManager.KeyMap["left"]))
                 v.X = -(m.Speed * dt);
-            else if (state.IsKeyDown(Keys.D))
+            else if (state.IsKeyDown(InputManager.KeyMap["right"]))
                 v.X = (m.Speed * dt);
 
-            if (state.IsKeyDown(Keys.Q))
-                r = (1 * dt);
-            else if (state.IsKeyDown(Keys.E))
-                r = -(1 * dt);
+            if (state.IsKeyDown(InputManager.KeyMap["rot_left"]))
+                r = (m.RotSpeed * dt);
+            else if (state.IsKeyDown(InputManager.KeyMap["rot_right"]))
+                r = -(m.RotSpeed * dt);
 
             RigidBody rb = (RigidBody)go.GetComponent("rigidBody");
 
             rb.MoveVelocity = v;
             rb.AngularVelocity = r;
+
+            //((Transform)go.GetComponent("transform")).Move(v);
+            //((Transform)go.GetComponent("transform")).Rotate(r);
         }
 
         public static void ManualScale(float dt, GameObject go, Component[] c = null)
         {
             Transform t = (Transform)go.GetComponent("transform");
-            if (InputManager.IsPressed(Microsoft.Xna.Framework.Input.Keys.Add) && t.Scale.X < 5)
+            if (InputManager.IsPressed(InputManager.KeyMap["zoom_in"]) && t.Scale.X < 5)
             { t.SetScale(t.Scale.X + .1f, t.Scale.Y + .1f); }
-            if (InputManager.IsPressed(Microsoft.Xna.Framework.Input.Keys.Subtract) && t.Scale.X > 0)
+            if (InputManager.IsPressed(InputManager.KeyMap["zoom_out"]) && t.Scale.X > 0)
             { t.SetScale(t.Scale.X - .1f, t.Scale.Y - .1f); }
 
         }
@@ -91,7 +94,7 @@ namespace MonoGame_Core.Scripts
         {
             Transform t = (Transform)go.GetComponent("transform");
 
-            if (InputManager.IsTriggered(Keys.Space))
+            if (InputManager.IsTriggered(InputManager.KeyMap["space"]))
                 CoroutineManager.Add(Coroutines.ScreenShake(.1f, -10, 10, t), "screenShake", 0, true);
         }
 

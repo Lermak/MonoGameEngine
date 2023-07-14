@@ -21,7 +21,13 @@ namespace MonoGame_Core.Scripts
         {
             WorldObject slime = InitWorldObject(new WorldObject("SlimeSpriteSheet", "Slime", new string[] { }, new Vector2(), 0, new Vector2(48,48)));
             slime.ComponentHandler.Add(new AnimationData(slime, .125f));
+            slime.ComponentHandler.Add(new Movement(slime, "movement", 400, 360));
             slime.BehaviorHandler.Add("Animate", Behaviors.Animate);
+            slime.BehaviorHandler.Add("Move", Behaviors.MoveWithRot);
+
+            WorldObject slime2 = InitWorldObject(new WorldObject("SlimeSpriteSheet", "Slime2", new string[] { }, new Vector2(100,100), 0, new Vector2(48, 48)));
+            slime2.ComponentHandler.Add(new AnimationData(slime2, .125f));
+            slime2.BehaviorHandler.Add("Animate", Behaviors.Animate);
         }
     }
 }

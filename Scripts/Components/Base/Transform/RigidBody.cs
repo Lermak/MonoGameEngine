@@ -30,10 +30,10 @@ namespace MonoGame_Core.Scripts
             moveVelocity = new Vector2(0, 0);
             mass = 0;
 
-            gameObject.AddBehavior("rigidBody", Update);
+            gameObject.AddBehavior("rigidBody", ApplyMovement);
         }
 
-        private static void Update(float gt, GameObject go, Component[] c)
+        private static void ApplyMovement(float gt, GameObject go, Component[] c)
         {
             Transform t = (Transform)go.GetComponent("transform");
             RigidBody rb = (RigidBody)go.GetComponent("rigidBody");

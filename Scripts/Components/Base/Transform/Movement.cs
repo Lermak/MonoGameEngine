@@ -7,10 +7,13 @@ namespace MonoGame_Core.Scripts
     public class Movement : Component
     {
         float speed;
+        float rotSpeed;
         public float Speed { get { return speed; } }
-        public Movement(GameObject go, string name, float s) : base(go, name)
+        public float RotSpeed { get { return rotSpeed; } }
+        public Movement(GameObject go, string name, float s, float rs) : base(go, name)
         {
             speed = s;
+            rotSpeed = rs;
         }
     }
 }
