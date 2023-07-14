@@ -27,17 +27,7 @@ namespace MonoGame_Core.Scripts
         static MouseState mouseState;
         static MouseState prevMouseState;
 
-        public static Dictionary<string, Keys> KeyMap = new Dictionary<string, Keys>() {  
-            { "left", Keys.A },
-            { "right", Keys.D },
-            { "up", Keys.W },
-            { "down", Keys.S },
-            { "rot_left", Keys.Q },
-            { "rot_right", Keys.E },
-            { "zoom_in", Keys.Add },
-            { "zoom_out", Keys.Subtract },
-            { "space", Keys.Space }
-        };
+        public static Dictionary<string, Keys> KeyMap = ConfigurationManager.Configuration.Keybindings;
 
         public static bool IsPressed(Keys k)
         {

@@ -11,19 +11,19 @@
 
 #define CRTAmount            1.00    //[0.00 to 1.00]  Amount of CRT effect you want
 
-#define CRTResolution        2.0     //[1.0 to 8.0]    Input size coefficent (low values gives the "low-res retro look"). Default is 1.2
+#define CRTResolution        6.0     //[1.0 to 8.0]    Input size coefficent (low values gives the "low-res retro look"). Default is 1.2
 #define CRTgamma             2.2     //[0.0 to 4.0]    Gamma of simulated CRT (default 2.2)
-#define CRTmonitorgamma      2.4     //[0.0 to 4.0]    Gamma of display monitor (typically 2.2 is correct)
-#define CRTBrightness        1.2     //[1.0 to 3.0]    Used to boost brightness a little. Default is 1.0
+#define CRTmonitorgamma      2.2     //[0.0 to 4.0]    Gamma of display monitor (typically 2.2 is correct)
+#define CRTBrightness        1.0     //[1.0 to 3.0]    Used to boost brightness a little. Default is 1.0
 #define CRTScanlineIntensity 2.0     //[2.0 to 4.0]    Scanlines intensity (use integer values preferably). Default is 2.0
 #define CRTScanlineGaussian  0       //[0 or 1]        Use the "new nongaussian scanlines bloom effect". Default is on
 
 #define CRTCurvature         1       //[[0 or 1]          "Barrel effect" enabled (1) or off (0)
-#define CRTCurvatureRadius   2.0     //[0.0 to 2.0]       Curvature Radius (only effective when Curvature is enabled). Default is 1.5
-#define CRTCornerSize        0.0020  //[0.0000 to 0.0020] Higher values, more rounded corner. Default is 0.001
+#define CRTCurvatureRadius   1.5     //[0.0 to 2.0]       Curvature Radius (only effective when Curvature is enabled). Default is 1.5
+#define CRTCornerSize        0.0010  //[0.0000 to 0.0020] Higher values, more rounded corner. Default is 0.001
 #define CRTDistance          2.00    //[0.00 to 4.00]     Simulated distance from viewer to monitor. Default is 2.00
 #define CRTAngleX            0.00    //[-0.20 to 0.20]    Tilt angle in radians (X coordinates)
-#define CRTAngleY           -0.15   //[-0.20 to 0.20]    Tilt angle in radians (Y coordinates). (Value of -0.15 gives the 'arcade tilt' look)
+#define CRTAngleY            0.10   //[-0.20 to 0.20]    Tilt angle in radians (Y coordinates). (Value of -0.15 gives the 'arcade tilt' look)
 #define CRTOverScan          1.00    //[1.00 to 1.10]     Overscan (e.g. 1.02 for 2% overscan). Default is 1.01
 #define CRTOversample        0       //[0 or 1]           Enable 3x oversampling of the beam profile (warning : performance hit)
 

@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Configuration;
 
 namespace MonoGame_Core.Scripts
 {
@@ -16,13 +17,16 @@ namespace MonoGame_Core.Scripts
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            Window.AllowUserResizing = false;
+            Window.AllowUserResizing = true;
         }
 
         protected override void Initialize()
         {
+            Window.Title = Globals.GAME_TITLE;
+
             RenderingManager.GraphicsDevice = GraphicsDevice;
             // TODO: Add your initialization logic here
+            ConfigurationManager.Initilize();
             ResourceManager.Initilize(Content);
             InputManager.Initilize();
             RenderingManager.Initilize();
