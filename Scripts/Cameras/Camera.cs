@@ -50,11 +50,16 @@ namespace MonoGame_Core.Scripts
         public Camera(string name, int target, byte layer, Vector2 size, Vector2 min, Vector2 max, Vector2 pos, Vector2 screenPos) : base(name, new string[] { "camera" })
         {
             RenderTarget2D rt;
-            if (target >= 0)
+            if (target >= 0 && target < RenderingManager.RenderTargets.Count())
                 rt = RenderingManager.RenderTargets[target];
             else
-                rt = new RenderTarget2D(RenderingManager.GraphicsDevice, (int)Globals.SCREEN_WIDTH, (int)Globals.SCREEN_HEIGHT, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8, 0, RenderTargetUsage.PreserveContents);
-            
+            {
+                while (RenderingManager.RenderTargets.Count() <= target)
+                {
+                    rt = new RenderTarget2D(RenderingManager.GraphicsDevice, (int)Globals.SCREEN_WIDTH, (int)Globals.SCREEN_HEIGHT, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8, 0, RenderTargetUsage.PreserveContents);
+                    RenderingManager.RenderTargets.Add(rt);
+                }
+            }
             renderPosition = screenPos;
             transform = new Transform(this, pos, 0, layer);
             minPos = min;

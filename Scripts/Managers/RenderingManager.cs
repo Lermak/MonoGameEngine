@@ -64,15 +64,6 @@ namespace MonoGame_Core.Scripts
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Sprites = new List<SpriteRenderer>();
             RenderTargets = new List<RenderTarget2D>();
-
-            RenderTargets.Add(new RenderTarget2D(GraphicsDevice,
-                (int)Globals.SCREEN_WIDTH,
-                (int)Globals.SCREEN_HEIGHT,
-                false,
-                GraphicsDevice.PresentationParameters.BackBufferFormat,
-                DepthFormat.Depth24,
-                0,
-                RenderTargetUsage.PreserveContents));
         }
 
         /// <summary>
@@ -158,15 +149,20 @@ namespace MonoGame_Core.Scripts
             }
             spriteBatch.End();
 
-            if(Target != -1)
+            if(Target != 0)
             {
-                Target = -1;
-                SetTarget(-1);
+                Target = 0;
+                SetTarget(0);
                 GraphicsDevice.Clear(Color.Transparent);
             }
 
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
             CameraManager.Draw(spriteBatch);
+            spriteBatch.End();
+            SetTarget(-1);
+            GraphicsDevice.Clear(Color.Transparent);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
+            CameraManager.MainCamera.Draw(spriteBatch);
             spriteBatch.End();
         }
 

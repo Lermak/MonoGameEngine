@@ -14,12 +14,12 @@ namespace MonoGame_Core.Scripts
     {
         static List<Camera> cameras;
         public static List<Camera> Cameras { get { return cameras; } }
-
+        public static Camera MainCamera { get { return cameras[0]; } }
         public static void Initilize()
         {
             cameras = new List<Camera>();
             //MainCamera should always been the 0th element in the cameras list
-            cameras.Add(new Camera("MainCamera", -1, 0, new Vector2(Globals.SCREEN_WIDTH, Globals.SCREEN_HEIGHT), new Vector2(Globals.SCREEN_WIDTH, Globals.SCREEN_HEIGHT) * -.5f, new Vector2(Globals.SCREEN_WIDTH, Globals.SCREEN_HEIGHT) * .5f, new Vector2(), new Vector2()));
+            cameras.Add(new Camera("MainCamera", 0, 0, new Vector2(Globals.SCREEN_WIDTH, Globals.SCREEN_HEIGHT), new Vector2(Globals.SCREEN_WIDTH, Globals.SCREEN_HEIGHT) * -.5f, new Vector2(Globals.SCREEN_WIDTH, Globals.SCREEN_HEIGHT) * .5f, new Vector2(), new Vector2()));
 
         }
 
@@ -38,7 +38,7 @@ namespace MonoGame_Core.Scripts
             //They manage thier own drawing
             for(int i = 0; i < cameras.Count; ++i)
             {
-                if(cameras[i].Target != -1)
+                if(cameras[i].Target != 0)
                     cameras[i].Draw(sb);
             }
         }

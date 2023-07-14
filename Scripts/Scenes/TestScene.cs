@@ -37,7 +37,7 @@ namespace MonoGame_Core.Scripts
 
         protected override void loadObjects()
         {
-            CameraManager.Cameras.Add(new Camera("CRTCamera", 0, 2,
+            CameraManager.Cameras.Add(new Camera("CRTCamera", 1, 2,
                                         new Vector2(480, 270),
                                         new Vector2(Globals.SCREEN_WIDTH, Globals.SCREEN_HEIGHT) * -1,
                                         new Vector2(Globals.SCREEN_WIDTH, Globals.SCREEN_HEIGHT) * 1,
@@ -61,6 +61,7 @@ namespace MonoGame_Core.Scripts
             wo.SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);
 
             CameraManager.Cameras[1].Shader = "CRT";
+            CameraManager.Cameras[0].Shader = "CRT";
             TiledImporter.LoadFromFile(this, @"E:\Programming\C#\MonoGame\MonoGame Core\Content\Tiled\Test.tmx");
 
         }
