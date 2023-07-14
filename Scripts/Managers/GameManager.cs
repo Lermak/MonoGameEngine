@@ -30,7 +30,7 @@ namespace MonoGame_Core.Scripts
             CollisionManager.Initilize();
             CoroutineManager.Initilize();
             CameraManager.Initilize();
-            SceneManager.Initilize(new SlimeScene());
+            SceneManager.Initilize(new TestScene());
             
             base.Initialize();
         }

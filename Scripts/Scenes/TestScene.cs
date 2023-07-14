@@ -48,22 +48,19 @@ namespace MonoGame_Core.Scripts
 
             WorldObject wo = InitWorldObject(new TestObject("PeaShooter", "testObj"));
             wo.SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);
-            CameraManager.Cameras[1].Transform.Attach(wo.Transform);
+            //CameraManager.Cameras[1].Transform.Attach(wo.Transform);
             wo = InitWorldObject(new TestStaticObject("Base", new Vector2(200, 200), "Test1", 1));
-            //tso.Transform.AttachToTransform(((WorldObject)gameObjects[0]).Transform);
 
             wo = InitWorldObject(new TestStaticObject("Base", new Vector2(200, -100), "Test2", 1));
-            //tso.Transform.AttachToTransform(((WorldObject)gameObjects[0]).Transform);
             wo.Transform.SetRotation(45);
+            wo.SpriteRenderer.Shader = "BlueShader";
+            wo.SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);
 
             wo = InitWorldObject(new WorldObject("BG", "Background", new string[] { }, new Vector2(), 0));
             wo.SpriteRenderer.Transform.Layer = 0;
             wo.SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);
-            //tso.SpriteRenderer.Cameras.Remove(CameraManager.Cameras[0]);
 
-            //CameraManager.Cameras[1].ScreenPosition = new Vector2(480, 270) / 2;
-            //CameraManager.Cameras[1].Shader = "CRT";
-
+            CameraManager.Cameras[1].Shader = "CRT";
             TiledImporter.LoadFromFile(this, @"E:\Programming\C#\MonoGame\MonoGame Core\Content\Tiled\Test.tmx");
 
         }

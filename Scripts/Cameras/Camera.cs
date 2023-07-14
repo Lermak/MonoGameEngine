@@ -53,7 +53,7 @@ namespace MonoGame_Core.Scripts
             if (target >= 0)
                 rt = RenderingManager.RenderTargets[target];
             else
-                rt = new RenderTarget2D(RenderingManager.GraphicsDevice, (int)Globals.SCREEN_WIDTH, (int)Globals.SCREEN_HEIGHT);
+                rt = new RenderTarget2D(RenderingManager.GraphicsDevice, (int)Globals.SCREEN_WIDTH, (int)Globals.SCREEN_HEIGHT, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8, 0, RenderTargetUsage.PreserveContents);
             
             renderPosition = screenPos;
             transform = new Transform(this, pos, 0, layer);
@@ -92,11 +92,12 @@ namespace MonoGame_Core.Scripts
                     foreach (EffectPass p in t.Passes)
                     {
                         p.Apply();
+                        DrawToSpriteBatch(sb);
                     }
                 }
             }
-
-            DrawToSpriteBatch(sb);
+            else
+                DrawToSpriteBatch(sb);
         }
 
         private void DrawToSpriteBatch(SpriteBatch sb)
