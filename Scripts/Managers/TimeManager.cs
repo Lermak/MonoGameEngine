@@ -10,11 +10,16 @@ namespace MonoGame_Core.Scripts
     public static class TimeManager
     {
         private static float deltaTime;
-        public static float DeltaTime { get { return deltaTime; } }
+        private static float gameSpeed;
 
-        public static void Initilize(GameTime dt)
+        public static float GameSpeed { get { return gameSpeed; } set { gameSpeed = value; } }
+        public static float DeltaTime { get { return deltaTime; } }
+        public static float ProdDelta { get { return deltaTime * gameSpeed; } }
+
+        public static void Initilize()
         {
             deltaTime = 0;
+            gameSpeed = 1;
         }
 
         public static void Update(GameTime dt)

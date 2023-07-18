@@ -44,8 +44,6 @@ namespace MonoGame_Core.Scripts
                                         new Vector2(),
                                         new Vector2(-1920/2+480/2, 1080/2-270/2)));
 
-            CameraManager.Cameras[1].BehaviorHandler.Add("ScreenShake", Behaviors.ScreenShake, new Component[] { CameraManager.Cameras[1].Transform });
-
             WorldObject wo = InitWorldObject(new TestObject("PeaShooter", "testObj"));
             wo.SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);
             //CameraManager.Cameras[1].Transform.Attach(wo.Transform);

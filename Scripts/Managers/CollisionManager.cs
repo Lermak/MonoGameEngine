@@ -187,8 +187,7 @@ namespace MonoGame_Core.Scripts
         /// Perform collision detection for all currently moving colliders
         /// Type of collision detection is determined by CollisionType
         /// </summary>
-        /// <param name="dt">Game Time</param>
-        public static void Update(float dt)
+        public static void Update()
         {
             if (CollisionDetection == CollisionType.SAT)
             {

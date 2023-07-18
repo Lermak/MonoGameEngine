@@ -90,12 +90,16 @@ namespace MonoGame_Core.Scripts
 
         }
 
-        public static void ScreenShake(float dt, GameObject go, Component[] c = null)
+        public static void ShakeOnClick(float dt, GameObject go, Component[] c = null)
         {
             Transform t = (Transform)go.GetComponent("transform");
 
-            if (InputManager.IsTriggered(InputManager.KeyMap["space"]))
-                CoroutineManager.Add(Coroutines.ScreenShake(.1f, -10, 10, t), "screenShake", 0, true);
+            //if (InputManager.IsTriggered(InputManager.KeyMap["space"]))
+            Collider col = (Collider)go.GetComponent("myBox");
+            Vector2 v = InputManager.MousePos;
+            if (InputManager.IsTriggered(InputManager.MouseKeys.Left) &&
+                col.ContainsPoint(v))
+                CoroutineManager.Add(Coroutines.Shake(.1f, -10, 10, t), "screenShake", 0, true);
         }
 
         public static void PointAtMouse(float dt, GameObject go, Component[] c = null)
@@ -143,6 +147,18 @@ namespace MonoGame_Core.Scripts
             if (InputManager.IsTriggered(InputManager.MouseKeys.Left) &&
                 col.ContainsPoint(v))
                 GameManager.Quit();
+        }
+
+        public static void LoadSceneOnClick(float dt, GameObject go, Component[] c = null)
+        {
+            Collider col = (Collider)go.GetComponent("myBox");
+            Vector2 v = InputManager.MousePos;
+            if (InputManager.IsTriggered(InputManager.MouseKeys.Left) &&
+                col.ContainsPoint(v))
+            {
+                ShakeOnClick(dt, go, c);
+                SceneManager.ChangeScene(new TestScene());
+            }
         }
     }
 }

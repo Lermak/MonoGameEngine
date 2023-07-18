@@ -25,7 +25,7 @@ namespace MonoGame_Core.Scripts
             Window.Title = Globals.GAME_TITLE;
 
             RenderingManager.GraphicsDevice = GraphicsDevice;
-            // TODO: Add your initialization logic here
+            TimeManager.Initilize();
             ConfigurationManager.Initilize();
             ResourceManager.Initilize(Content);
             InputManager.Initilize();
@@ -41,7 +41,6 @@ namespace MonoGame_Core.Scripts
 
         protected override void LoadContent()
         {
-            // TODO: use this.Content to load your game content here
         }
         public static void Quit()
         {
@@ -53,18 +52,17 @@ namespace MonoGame_Core.Scripts
             if (quit)
                 Exit();
 
-            // TODO: Add your update logic here
             TimeManager.Update(deltaTime);
 
             InputManager.Update(TimeManager.DeltaTime);
 
-            CoroutineManager.Update(TimeManager.DeltaTime);
+            CoroutineManager.Update(TimeManager.ProdDelta);
 
-            SceneManager.Update(TimeManager.DeltaTime);
+            SceneManager.Update(TimeManager.ProdDelta);
 
-            CameraManager.Update(TimeManager.DeltaTime);
+            CameraManager.Update(TimeManager.ProdDelta);
 
-            CollisionManager.Update(TimeManager.DeltaTime);
+            CollisionManager.Update();
 
             base.Update(deltaTime);
         }
