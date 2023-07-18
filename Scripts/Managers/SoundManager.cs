@@ -15,6 +15,7 @@ namespace MonoGame_Core.Scripts
         public static float MasterVolume;
         public static float SongVolume;
         public static float SoundEffectVolume;
+        public static string CurrentSong;
 
         /// <summary>
         /// List of currently available sound effects
@@ -64,14 +65,8 @@ namespace MonoGame_Core.Scripts
             }
         }
 
-        public static string CurrentSong;
         public static void PlaySong(string name)
         {
-            ////Add logic to transition between songs
-            //if(MediaPlayer.State == MediaState.Playing)
-            //{
-            //    MediaPlayer.Play(ResourceManager.Songs[name]);
-            //}
             CurrentSong = name;
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Play(ResourceManager.Songs[name]);
