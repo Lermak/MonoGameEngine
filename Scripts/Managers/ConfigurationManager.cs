@@ -11,13 +11,17 @@ namespace MonoGame_Core.Scripts
 {
     public class Config
     {
-        public float Volume { get; set; }
+        public float MasterVolume { get; set; }
+        public float SongVolume { get; set; }
+        public float SoundEffectVolume { get; set; }
         public Dictionary<string, Keys> Keybindings { get; set; }
         public bool TestBool { get; set; }
 
-        public Config(float v, Dictionary<string, Keys> k, bool tb)
+        public Config(float mv, float sv, float sev, Dictionary<string, Keys> k, bool tb)
         {
-            Volume = v;
+            MasterVolume = mv;
+            SongVolume = sv;
+            SoundEffectVolume = sev;
             Keybindings = k;
             TestBool = tb;
         }
@@ -29,7 +33,7 @@ namespace MonoGame_Core.Scripts
 
         public static Config NewConfig()
         {
-            float v = .5f;
+            float mv = .2f;
             Dictionary<string, Keys> k = new Dictionary<string, Keys>() {
                 { "left", Keys.A },
                 { "right", Keys.D },
@@ -42,8 +46,10 @@ namespace MonoGame_Core.Scripts
                 { "space", Keys.Space }
             };
             bool tb = false;
+            float sv = 1;
+            float sev = 1;
 
-            return new Config(v, k, tb);
+            return new Config(mv, sv, sev, k, tb);
         }
 
     }

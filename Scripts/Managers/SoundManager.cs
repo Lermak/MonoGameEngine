@@ -13,6 +13,8 @@ namespace MonoGame_Core.Scripts
     public static class SoundManager
     {
         public static float MasterVolume;
+        public static float SongVolume;
+        public static float SoundEffectVolume;
 
         /// <summary>
         /// List of currently available sound effects
@@ -21,7 +23,9 @@ namespace MonoGame_Core.Scripts
 
         public static void Initilize()
         {
-            MasterVolume = ConfigurationManager.Configuration.Volume;
+            MasterVolume = ConfigurationManager.Configuration.MasterVolume;
+            SongVolume = ConfigurationManager.Configuration.SongVolume;
+            SoundEffectVolume = ConfigurationManager.Configuration.SoundEffectVolume;
         }
 
         public static void Clear()
@@ -31,15 +35,33 @@ namespace MonoGame_Core.Scripts
 
         public static void Update(float gt)
         {
-            MediaPlayer.Volume = MasterVolume;
-            //SoundEffect.MasterVolume = volume;
         }
 
-        public static void SetVolume(float v)
+        public static void SetMasterVolume(float v)
         {
             if (v < 0) v = 0;
             if (v > 1) v = 1;
             MasterVolume = v;
+        }
+
+        public static void SetSongVolume(float v)
+        {
+            if (v < 0) v = 0;
+            if (v > 1) v = 1;
+            SongVolume = v;
+            MediaPlayer.Volume = SongVolume * MasterVolume;
+        }
+
+        public static void SetSEVolume(float v)
+        {
+            if (v < 0) v = 0;
+            if (v > 1) v = 1;
+            SoundEffectVolume = v;
+
+            foreach (SoundEffectInstance se in SoundEffects.Values)
+            {
+                se.Volume = SoundEffectVolume * MasterVolume;
+            }
         }
 
         public static string CurrentSong;
@@ -60,6 +82,7 @@ namespace MonoGame_Core.Scripts
             if (!SoundEffects.ContainsKey(name) || SoundEffects[name].State != SoundState.Playing)
             {
                 SoundEffectInstance se = ResourceManager.SoundEffects[name].CreateInstance();
+                se.Volume = MasterVolume * SoundEffectVolume;
                 se.Play();
                 SoundEffects[name] = se;
             }
