@@ -62,6 +62,7 @@ namespace MonoGame_Core.Scripts
         public static void Initilize()
         {
             LoadConfig();
+            SaveConfig();
         }
 
         public static void LoadConfig()
@@ -69,7 +70,7 @@ namespace MonoGame_Core.Scripts
             string appDataDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             string gameDir = "\\" + Globals.GAME_TITLE + "\\";
             appDataDir = appDataDir + gameDir;
-            string settingsFileName = Path.Combine(appDataDir, "Settings.ini");
+            string settingsFileName = Path.Combine(appDataDir, "config.ini");
             if (File.Exists(settingsFileName))
             {
                 using (FileStream f = File.OpenRead(settingsFileName))
@@ -102,7 +103,7 @@ namespace MonoGame_Core.Scripts
             {
                 try
                 {
-                    string settingsFileName = Path.Combine(appDataDir, "Settings.ini");
+                    string settingsFileName = Path.Combine(appDataDir, "config.ini");
                     File.Create(settingsFileName).Close();
                     using (FileStream f = new FileStream(settingsFileName, FileMode.OpenOrCreate))
                     using (StreamWriter fw = new StreamWriter(f))

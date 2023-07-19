@@ -16,6 +16,7 @@ namespace MonoGame_Core.Scripts
         public static float SongVolume;
         public static float SoundEffectVolume;
         public static string CurrentSong;
+        public static float GlobalVolume;
 
         /// <summary>
         /// List of currently available sound effects
@@ -27,10 +28,14 @@ namespace MonoGame_Core.Scripts
             MasterVolume = ConfigurationManager.Configuration.MasterVolume;
             SongVolume = ConfigurationManager.Configuration.SongVolume;
             SoundEffectVolume = ConfigurationManager.Configuration.SoundEffectVolume;
+            GlobalVolume = 1;
+
+            Clear();
         }
 
         public static void Clear()
         {
+            MediaPlayer.Stop();
             SoundEffects.Clear();
         }
 
@@ -38,11 +43,22 @@ namespace MonoGame_Core.Scripts
         {
         }
 
+        public static void SetGlobalVolume(float v)
+        {
+            if (v < 0) v = 0;
+            if (v > 1) v = 1;
+            GlobalVolume = v;
+            SetSEVolume(SoundEffectVolume);
+            SetSongVolume(SongVolume);
+        }
+
         public static void SetMasterVolume(float v)
         {
             if (v < 0) v = 0;
             if (v > 1) v = 1;
             MasterVolume = v;
+            SetSEVolume(SoundEffectVolume);
+            SetSongVolume(SongVolume);
         }
 
         public static void SetSongVolume(float v)
@@ -50,7 +66,7 @@ namespace MonoGame_Core.Scripts
             if (v < 0) v = 0;
             if (v > 1) v = 1;
             SongVolume = v;
-            MediaPlayer.Volume = SongVolume * MasterVolume;
+            MediaPlayer.Volume = SongVolume * MasterVolume * GlobalVolume;
         }
 
         public static void SetSEVolume(float v)
@@ -61,7 +77,7 @@ namespace MonoGame_Core.Scripts
 
             foreach (SoundEffectInstance se in SoundEffects.Values)
             {
-                se.Volume = SoundEffectVolume * MasterVolume;
+                se.Volume = SoundEffectVolume * MasterVolume * GlobalVolume;
             }
         }
 
@@ -77,7 +93,7 @@ namespace MonoGame_Core.Scripts
             if (!SoundEffects.ContainsKey(name) || SoundEffects[name].State != SoundState.Playing)
             {
                 SoundEffectInstance se = ResourceManager.SoundEffects[name].CreateInstance();
-                se.Volume = MasterVolume * SoundEffectVolume;
+                se.Volume = MasterVolume * SoundEffectVolume * GlobalVolume;
                 se.Play();
                 SoundEffects[name] = se;
             }
