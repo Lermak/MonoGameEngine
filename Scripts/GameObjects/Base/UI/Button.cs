@@ -13,7 +13,7 @@ namespace MonoGame_Core.Scripts
             CollisionBox cb = (CollisionBox)AddComponent(new CollisionBox(this, "myBox", true, ResourceManager.GetTextureSize(deselectedTexture)));
             ButtonData b = (ButtonData)componentHandler.Add(new ButtonData(this, "buttonData", selectedTexture, deselectedTexture));
             behaviorHandler.Add("Hover", Behaviors.ButtonSwapImagesOnHover, new Component[] { Transform, b });
-            if(onClick != null)
+            if (onClick != null)
                 behaviorHandler.Add("OnClick", onClick);
         }
     }
