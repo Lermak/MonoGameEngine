@@ -193,6 +193,15 @@ namespace MonoGame_Core.Scripts
 
         }
 
+        public static void DoNothingOnClick(float dt, GameObject go, Component[] c = null) {
+            Collider col = (Collider)go.GetComponent("myBox");
+            Vector2 v = InputManager.MousePos;
+            if (InputManager.IsTriggered(InputManager.MouseKeys.Left) &&
+                col.ContainsPoint(v)) {
+                    // don't do anything, this is a dead button
+                }
+        }
+
         public static void QuitOnClick(float dt, GameObject go, Component[] c = null)
         {
             Collider col = (Collider)go.GetComponent("myBox");
