@@ -21,6 +21,7 @@ namespace MonoGame_Core.Scripts
             // grab & store the texture IDs for the switch
             SwitchOffTexID = switchOffTex;
             SwitchOnTexID = switchOnTex;
+            // default switch to the "off" state
             SwitchOn = false;
             
         }
