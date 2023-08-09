@@ -25,10 +25,10 @@ namespace MonoGame_Core.Scripts
             ResourceManager.AddTexture("SettingsBtn", "Images/Default UI/btn_settings");
             ResourceManager.AddTexture("SelSettingsBtn", "Images/Default UI/btn_settings_sel");
             // load switch test textures
-            ResourceManager.AddTexture("OnNamelessSwitch", "Images/Default UI/switch_base");
-            ResourceManager.AddTexture("SelOnNamelessSwitch", "Images/Default UI/switch_on");
-            ResourceManager.AddTexture("OffNamelessSwitch", "Images/Default UI/switch_base_sel");
-            ResourceManager.AddTexture("SelOffNamelessSwitch", "Images/Default UI/switch_off");
+            ResourceManager.AddTexture("SwitchBaseDeselected", "Images/Default UI/switch_base");
+            ResourceManager.AddTexture("SwitchBaseSelected", "Images/Default UI/switch_base_sel");
+            ResourceManager.AddTexture("SwitchOn", "Images/Default UI/switch_on");
+            ResourceManager.AddTexture("SwitchOff", "Images/Default UI/switch_off");
         }
 
         protected override void loadObjects()
@@ -38,7 +38,7 @@ namespace MonoGame_Core.Scripts
             InitGameObject(new Button("PlayBtn", "SelPlayBtn", "PlayButton", new Vector2(500, 100), 1, Behaviors.LoadSceneOnClick));
             InitGameObject(new Button("ExitBtn", "SelExitBtn", "QuitButton", new Vector2(500, -20), 1, Behaviors.QuitOnClick));
             InitGameObject(new Button("SettingsBtn", "SelSettingsBtn", "SettingsButton", new Vector2(500, 40), 1, null));
-            InitGameObject(new Switch("OnNamlessSwitch", "SelOnNamelessSwitch","OffNamelessSwitch", "SelOffNamelessSwitch", "NoNameSwitch", new Vector2(500, 160), 1, Behaviors.SwapStateOnClick));
+            InitGameObject(new Switch("SwitchOn", "SwitchOff","NoNameSwitch", new Vector2(500, 160), 1, Behaviors.SwitchOnClick));
         }
 
         public override void Update(float dt)

@@ -7,38 +7,19 @@ namespace MonoGame_Core.Scripts
 {
     public class Switch : WorldObject
     {
-        public Switch(string onDeselectedTexture, string onSelectedTexture, string offDeselectedTexture, string offSelectedTexture, string name, Vector2 pos, byte layer, BehaviorHandler.Act onClick) : base(offDeselectedTexture, name, new string[] { "switch" }, pos, layer)
+        public Switch(string switchOnTex, string switchOffTex, string name, Vector2 pos, byte layer, BehaviorHandler.Act onClick) : base(switchOffTex, name, new string[] { "switch", "ui" }, pos, layer)
         {
 
             SpriteRenderer.IsHUD = true;
-            CollisionBox cb = (CollisionBox)AddComponent(new CollisionBox(
-                this,
-                "myBox",
-                true,
-                ResourceManager.GetTextureSize(offDeselectedTexture)
-                )
-            );
+            CollisionBox collisionBox = (CollisionBox)AddComponent(new CollisionBox(this,"myBox",true,ResourceManager.GetTextureSize(switchOffTex)));
 
-            SwitchData swData = (SwitchData)ComponentHandler.Add( new SwitchData(
-                this,
-                "switchData",
-                onDeselectedTexture, onSelectedTexture,
-                offDeselectedTexture, offSelectedTexture
-                )
-            );
+            SwitchData swData = (SwitchData)ComponentHandler.Add(new SwitchData(this,"swData",switchOnTex,switchOffTex));
 
-            behaviorHandler.Add(
-                "Hover",
-                Behaviors.SwitchSwapImagesOnHover,
-                new Component[] { Transform, swData, cb }
-            );
-            behaviorHandler.Add(
-                "Switch",
-                Behaviors.SwitchSwapImagesOnClick,
-                new Component[] { Transform, swData, cb }
-            );
+            BehaviorHandler.Add("Shake",Behaviors.ShakeOnClick,new Component[] { Transform, swData, collisionBox });
             
-            if (onClick != null) {
+
+            if (onClick != null)
+            {
                 behaviorHandler.Add("OnClick", onClick);
             }
         }

@@ -6,27 +6,21 @@ namespace MonoGame_Core.Scripts
 {
     public class SwitchData : Component
     {
-        public string OffDeselectedTexID;
-        public string OffSelectedTexID;
-        public string OnDeselectedTexID;
-        public string OnSelectedTexID;
+        public string SwitchOnTexID;
+        public string SwitchOffTexID;
         // manages the switch trigger state
         public bool SwitchOn;
         
         public SwitchData(
-            GameObject go,
+            GameObject gameObject,
             string name,
-            string onSelectedTex,
-            string onDeselectedTex,
-            string offSelectedTex,
-            string offDeselectedTex
-            ) : base(go, name)
+            string switchOnTex,
+            string switchOffTex
+            ) : base(gameObject, name)
         {
             // grab & store the texture IDs for the switch
-            OffDeselectedTexID = offDeselectedTex;
-            OffSelectedTexID = offSelectedTex;
-            OnDeselectedTexID = onDeselectedTex;
-            OnSelectedTexID = onSelectedTex;
+            SwitchOffTexID = switchOffTex;
+            SwitchOnTexID = switchOnTex;
             SwitchOn = false;
             
         }
