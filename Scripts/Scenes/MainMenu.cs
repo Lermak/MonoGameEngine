@@ -39,6 +39,10 @@ namespace MonoGame_Core.Scripts
             InitGameObject(new Button("ExitBtn", "SelExitBtn", "QuitButton", new Vector2(500, -20), 1, Behaviors.QuitOnClick));
             InitGameObject(new Button("SettingsBtn", "SelSettingsBtn", "SettingsButton", new Vector2(500, 40), 1, null));
             InitGameObject(new Switch("SwitchOn", "SwitchOff","NoNameSwitch", new Vector2(500, 160), 1, Behaviors.SwitchOnClick));
+            
+            // hybrid dead hover button + switch combo
+            InitGameObject(new Button("SwitchBaseDeselected", "SwitchBaseSelected","ComplexSwitchBase", new Vector2(500, 220), 1, Behaviors.DoNothingOnClick));
+            InitGameObject(new Switch("SwitchOn", "SwitchOff","ComplexSwitch", new Vector2(500, 220), 1, Behaviors.SwitchOnClick)); // TODO make this relative to switch base
         }
 
         public override void Update(float dt)
