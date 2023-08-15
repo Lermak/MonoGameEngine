@@ -60,7 +60,7 @@ namespace MonoGame_Core.Scripts
 
             CameraManager.Cameras[1].Shader = "CRT";
             CameraManager.Cameras[0].Shader = "CRT";
-            TiledImporter.LoadFromFile(this, @"E:\Programming\C#\MonoGame\MonoGame Core\Content\Tiled\Test.tmx");
+            //TiledImporter.LoadFromFile(this, @"E:\Programming\C#\MonoGame\MonoGame Core\Content\Tiled\Test.tmx");
 
         }
 

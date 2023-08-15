@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Text;
 
 namespace MonoGame_Core.Scripts
@@ -128,6 +129,12 @@ namespace MonoGame_Core.Scripts
             rb.MoveVelocity = hf_Math.RadToUnit(t.Radians + 90 * (float)Math.PI / 180) * dt * 100;
         }
 
+        /// <summary>
+        /// Checks if the mouse is over a button collision box and re-assigns ButtonData texture fields if so.
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="go"></param>
+        /// <param name="c"></param>
         public static void ButtonSwapImagesOnHover(float dt, GameObject go, Component[] c = null)
         {
             Collider col = (Collider)go.GetComponent("myBox");
@@ -138,6 +145,61 @@ namespace MonoGame_Core.Scripts
                 ((WorldObject)b.GameObject).SpriteRenderer.Texture = b.SelectedTexID;
             else
                 ((WorldObject)b.GameObject).SpriteRenderer.Texture = b.DeselectedTexID;
+        }
+        /// <summary>
+        /// highlights the base of a switch when the mouse hovers over it
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="gameObject"></param>
+        /// <param name="c"></param>
+        public static void SwitchSwapImagesOnHover(GameObject gameObject)
+        {
+            Collider collider = (Collider)gameObject.GetComponent("myBox");
+            SwitchData switchData = (SwitchData)gameObject.GetComponent("switchData");
+            Vector2 v = InputManager.MousePos;
+
+            if (collider.ContainsPoint(v))
+            {
+                ((WorldObject)switchData.GameObject).SpriteRenderer.Texture = switchData.SwitchOnTexID;
+            }
+            else
+            {
+                ((WorldObject)switchData.GameObject).SpriteRenderer.Texture = switchData.SwitchOffTexID;
+            }
+        }
+
+        public static void SwitchOnClick(float dt, GameObject gameObject, Component[] c = null)
+        {
+            Collider swapCollider = (Collider)gameObject.GetComponent("myBox");
+            Vector2 mousePos = InputManager.MousePos;
+            SwitchData switchData = (SwitchData)gameObject.GetComponent("swData");
+
+            // update the state
+            if (InputManager.IsTriggered(InputManager.MouseKeys.Left) &&
+                swapCollider.ContainsPoint(mousePos))
+            {
+                switchData.SwitchOn = !switchData.SwitchOn;
+
+                // update the switch image based on state
+                if (switchData.SwitchOn)
+                {
+                    ((WorldObject)switchData.GameObject).SpriteRenderer.Texture = switchData.SwitchOnTexID;
+                }
+                else
+                {
+                    ((WorldObject)switchData.GameObject).SpriteRenderer.Texture = switchData.SwitchOffTexID;
+                }
+            }
+
+        }
+
+        public static void OnClickTemplate(float dt, GameObject go, Component[] c = null) {
+            Collider col = (Collider)go.GetComponent("myBox");
+            Vector2 v = InputManager.MousePos;
+            if (InputManager.IsTriggered(InputManager.MouseKeys.Left) &&
+                col.ContainsPoint(v)) {
+                    // don't do anything, this is a dead button
+                }
         }
 
         public static void QuitOnClick(float dt, GameObject go, Component[] c = null)
