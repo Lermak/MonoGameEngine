@@ -44,16 +44,18 @@ namespace MonoGame_Core.Scripts
                                         new Vector2(),
                                         new Vector2(-1920/2+480/2, 1080/2-270/2)));
 
-            WorldObject wo = InitWorldObject(new TestObject("PeaShooter", "testObj"));
-            wo.SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);
-            //CameraManager.Cameras[1].Transform.Attach(wo.Transform);
-            wo = InitWorldObject(new TestStaticObject("Base", new Vector2(200, 200), "Test1", 1));
+            CameraManager.Cameras[0].BehaviorHandler.Add("ScreenShake", Behaviors.ShakeOnSpace, new Component[] { CameraManager.Cameras[0].Transform });
 
+            WorldObject p = InitWorldObject(new TestObject("PeaShooter", "testObj"));
+            p.SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);
+            //CameraManager.Cameras[1].Transform.Attach(wo.Transform);
+            WorldObject wo = InitWorldObject(new TestStaticObject("Base", new Vector2(200, 200), "Test1", 1));
+            wo.ComponentHandler.Add(new Movement(wo, "Movement", 500, 360));
             wo = InitWorldObject(new TestStaticObject("Base", new Vector2(200, -100), "Test2", 1));
             wo.Transform.SetRotation(45);
             wo.SpriteRenderer.Shader = "BlueShader";
             wo.SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);
-
+            
             wo = InitWorldObject(new WorldObject("BG", "Background", new string[] { }, new Vector2(), 0));
             wo.SpriteRenderer.Transform.Layer = 0;
             wo.SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);

@@ -44,18 +44,5 @@ namespace MonoGame_Core.Scripts
             InitGameObject(new Button("SwitchBaseDeselected", "SwitchBaseSelected","ComplexSwitchBase", new Vector2(500, 220), 1, Behaviors.OnClickTemplate)); // for implementation purposes; you can also pass null here
             InitGameObject(new Switch("SwitchOn", "SwitchOff","ComplexSwitch", new Vector2(500, 220), 1, Behaviors.SwitchOnClick)); // TODO make this relative to switch base
         }
-
-        public override void Update(float dt)
-        {
-            if (SceneManager.SceneState == SceneManager.State.Running)
-            {
-                KeyboardState state = Keyboard.GetState();
-                if (state.GetPressedKeys().Length > 0)
-                {
-                    SceneManager.ChangeScene(new TestScene());
-                }
-            }
-            base.Update(dt);
-        }
     }
 }

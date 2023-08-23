@@ -103,6 +103,14 @@ namespace MonoGame_Core.Scripts
                 CoroutineManager.Add(Coroutines.Shake(.1f, -10, 10, t), "screenShake", 0, true);
         }
 
+        public static void ShakeOnSpace(float dt, GameObject go, Component[] c = null)
+        {
+            Transform t = (Transform)go.GetComponent("transform");
+
+            if (InputManager.IsTriggered(InputManager.KeyMap["space"]))
+                CoroutineManager.Add(Coroutines.Shake(.1f, -10, 10, t), "screenShake", 0, true);
+        }
+
         public static void PointAtMouse(float dt, GameObject go, Component[] c = null)
         {
             Transform t = (Transform)go.GetComponent("transform");
