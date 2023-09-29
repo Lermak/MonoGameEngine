@@ -227,7 +227,7 @@ namespace MonoGame_Core.Scripts
                 col.ContainsPoint(v))
             {
                 ShakeOnClick(dt, go, c);
-                SceneManager.ChangeScene(new TestScene());
+                SceneManager.ChangeScene(new BlakeScene());
             }
         }
     }
