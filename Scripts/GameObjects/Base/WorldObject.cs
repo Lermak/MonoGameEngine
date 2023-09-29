@@ -13,7 +13,7 @@ namespace MonoGame_Core.Scripts
         {           
             componentHandler.Add(new CollisionHandler(this));           
             componentHandler.Add(new Transform(this, pos, 0, layer));
-            componentHandler.Add(new RigidBody(this, RigidBody.RigidBodyType.Static));
+            componentHandler.Add(new RigidBody(this, RigidBody.RigidBodyType.Dynamic));
             componentHandler.Add(new SpriteRenderer(this, 
                                             texID,
                                             0));
@@ -22,7 +22,7 @@ namespace MonoGame_Core.Scripts
         {
             componentHandler.Add(new CollisionHandler(this));
             componentHandler.Add(new Transform(this, pos, 0, layer));
-            componentHandler.Add(new RigidBody(this, RigidBody.RigidBodyType.Static));
+            componentHandler.Add(new RigidBody(this, RigidBody.RigidBodyType.Dynamic));
             componentHandler.Add(new SpriteRenderer(this,
                                             texID,
                                             0,

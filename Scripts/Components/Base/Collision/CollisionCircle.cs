@@ -11,7 +11,6 @@ namespace MonoGame_Core.Scripts
         {
             this.offset = offset;
             gameObject = go;
-            this.radius = radius;
             width = radius * 2;
             height = radius * 2;
         }
@@ -30,7 +29,7 @@ namespace MonoGame_Core.Scripts
             List<Vector2> v = new List<Vector2>();
             for(int i = 0; i < 6; ++i)
             {
-                v.Add(hf_Math.GetPosFromPoint(i*60, radius, transform.Position + offset));
+                v.Add(hf_Math.GetPosFromPoint(i*60, Hypotenuse, transform.Position + offset));
             }
             return v;
         }

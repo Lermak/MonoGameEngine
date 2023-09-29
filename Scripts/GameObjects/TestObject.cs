@@ -10,10 +10,11 @@ namespace MonoGame_Core.Scripts
     {
         public TestObject(string texID, string name) : base(texID, name, new string[] { "testObject" }, new Vector2(0,0), 1)
         {
-            ComponentHandler.Add(new CollisionBox(this, "myBox", false, new Vector2(40,40)));
+            //ComponentHandler.Add(new CollisionBox(this, "myBox", false, new Vector2(40,40)));
+            ComponentHandler.Add(new CollisionCircle("myBox", this, 10, new Vector2(), false));
             ComponentHandler.Add(new Movement(this, "Movement", 500, 360));
             ComponentHandler.Add(new FontRenderer("FontRenderer", this, "Test", "TestFont", new Vector2(1920,1080),1));
-
+            Transform.SetScale(3, 3);
             //BehaviorHandler.AddBehavior("MoveControls", Behaviors.WASDcontrols, new Component[] { RigidBody, componentHandler.GetComponent("Movement") });
             BehaviorHandler.Add("FaceMouse", Behaviors.PointAtMouse);
             behaviorHandler.Add("MoveForward", Behaviors.MoveTowardRotation);

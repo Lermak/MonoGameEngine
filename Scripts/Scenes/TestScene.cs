@@ -55,6 +55,7 @@ namespace MonoGame_Core.Scripts
             wo.Transform.SetRotation(45);
             wo.SpriteRenderer.Shader = "BlueShader";
             wo.SpriteRenderer.Cameras.Add(CameraManager.Cameras[1]);
+            wo.Transform.SetScale(5, 5);
             
             wo = InitWorldObject(new WorldObject("BG", "Background", new string[] { }, new Vector2(), 0));
             wo.SpriteRenderer.Transform.Layer = 0;
