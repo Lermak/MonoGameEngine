@@ -7,7 +7,7 @@ using System.Diagnostics;
 
 namespace MonoGame_Core.Scripts
 {
-    public delegate void collisionAction(Collider a, Collider b, Vector2 p);
+    public delegate void CollisionAction(Collider a, Collider b, Vector2 p);
 
     public struct Collision
     {
@@ -27,9 +27,9 @@ namespace MonoGame_Core.Scripts
     {
         public string MyBox;
         public List<string> OtherBoxs;
-        public List<collisionAction> Actions;
+        public List<CollisionAction> Actions;
 
-        public CollisionActions(string a, List<string> b, List<collisionAction> ca)
+        public CollisionActions(string a, List<string> b, List<CollisionAction> ca)
         {
             this.MyBox = a;
             this.OtherBoxs = b;
@@ -54,7 +54,7 @@ namespace MonoGame_Core.Scripts
                 {
                     if(ca.OtherBoxs.Contains(b2.Name))
                     {
-                        foreach(collisionAction c in ca.Actions)
+                        foreach(CollisionAction c in ca.Actions)
                         {
                             c(b1, b2, v);
                         }
@@ -70,7 +70,7 @@ namespace MonoGame_Core.Scripts
                 {
                     if (ca.OtherBoxs.Contains(t))
                     {
-                        foreach (collisionAction c in ca.Actions)
+                        foreach (CollisionAction c in ca.Actions)
                         {
                             c(b1, null, v);
                         }
