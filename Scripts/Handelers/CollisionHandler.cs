@@ -29,11 +29,11 @@ namespace MonoGame_Core.Scripts
         public List<string> OtherBoxs;
         public List<CollisionAction> Actions;
 
-        public CollisionActions(string a, List<string> b, List<CollisionAction> ca)
+        public CollisionActions(string myBox, List<string> otherBoxNames, List<CollisionAction> collisionActions)
         {
-            this.MyBox = a;
-            this.OtherBoxs = b;
-            this.Actions = ca;
+            this.MyBox = myBox;
+            this.OtherBoxs = otherBoxNames;
+            this.Actions = collisionActions;
         }
     }
 
