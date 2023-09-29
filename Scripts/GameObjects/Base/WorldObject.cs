@@ -28,5 +28,10 @@ namespace MonoGame_Core.Scripts
                                             0,
                                             drawArea));
         }
+
+        public void AddCollision(CollisionActions ca)
+        {
+            this.CollisionHandler.myActions.Add(ca);
+        }
     }
 }
