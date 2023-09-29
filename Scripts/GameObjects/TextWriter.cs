@@ -11,7 +11,8 @@ namespace MonoGame_Core.Scripts
         public TextWriter(string fontID, string name, string[] tags, string text, Vector2 pos, Vector2 size, Color c, byte layer) : base(name, tags)
         {
             componentHandler.Add(new Transform(this, pos, 0, layer));
-            componentHandler.Add(new FontRenderer(this, 
+            componentHandler.Add(new FontRenderer("fontRenderer",
+                                            this, 
                                             text,
                                             fontID,
                                             new Vector2(0, 0),
