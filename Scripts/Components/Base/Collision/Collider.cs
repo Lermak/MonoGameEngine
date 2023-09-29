@@ -10,14 +10,12 @@ namespace MonoGame_Core.Scripts
         protected float width;
         protected float height;
 
-        protected bool checkCollision;
         protected bool isStatic;
         protected Vector2 offset;
         protected Transform transform;
         
         protected float radius;
 
-        public bool CheckCollision { get { return checkCollision; } }
         public bool IsStatic { get { return isStatic; } }
         public Vector2 Offset { get { return offset * transform.Scale; } }
         public Transform Transform { get { return transform; } }
@@ -59,8 +57,7 @@ namespace MonoGame_Core.Scripts
 
         private static void addToActiveColliders(float dt, GameObject go, Component[] c)
         {
-            if(((Collider)c[0]).checkCollision)
-                CollisionManager.ActiveColliders.Insert((Collider)c[0]);
+            CollisionManager.ActiveColliders.Insert((Collider)c[0]);
         }
     }
 }

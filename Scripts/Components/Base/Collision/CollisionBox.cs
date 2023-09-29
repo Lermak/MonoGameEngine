@@ -12,7 +12,6 @@ namespace MonoGame_Core.Scripts
 
         public CollisionBox(GameObject go, string name, bool isStatic, Vector2 size) : base(go, name, isStatic)
         {
-            checkCollision = true;
             offset = new Vector2();
             width = size.X;
             height = size.Y;
