@@ -10,9 +10,23 @@ namespace MonoGame_Core.Scripts
     {
         
         // todo: scaff/actually put stuff here
+        /// <summary>
+        /// Horizontal count of items in a grid
+        /// </summary>
+        int width;
+        /// <summary>
+        /// Vertical count of items in a grid
+        /// </summary>
+        int height;
+        string[,] cells;
 
-        public InventoryGridData(GameObject go, string name) : base(go, name)
+        public InventoryGridData(GameObject go, string name, int w, int h) : base(go, name)
         {
+
+            width = w;
+            height= h;
+            cells = new string[width,height];
+            
            
         }
     }
