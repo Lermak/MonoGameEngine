@@ -23,6 +23,8 @@ namespace MonoGame_Core.Scripts
         public const float TILE_WIDTH = 48;
         public const float TILE_HEIGHT = 48;
 
+        public static List<GameObject> GalaxyMap = null;
+
         public static CameraManager CameraManager {get{ return SceneManager.CurrentScene.CameraManager;}}
         public static CoroutineManager CoroutineManager { get { return SceneManager.CurrentScene.CoroutineManager; } }
         public static CollisionManager CollisionManager { get { return SceneManager.CurrentScene.CollisionManager; } }
