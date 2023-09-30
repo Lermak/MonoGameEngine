@@ -16,6 +16,9 @@ namespace MonoGame_Core.Scripts
         {
             AddComponent(new ShipData(this, "ShipData"));
             //AddComponent(new RigidBody(this,RigidBody.RigidBodyType.Dynamic));
+            AddBehavior("shoot",ShipBehaviors.ShootOnClick);
+            AddBehavior("pointToMouse",Behaviors.PointAtMouse);
+            AddBehavior("moveToRot",Behaviors.MoveTowardRotation);
         }
         /// <summary>
         ///  checks if there are no spaces filled in the ship inventory grid
