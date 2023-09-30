@@ -8,16 +8,16 @@ namespace MonoGame_Core.Scripts
     public class ShipData : Component
     {
         
-        public bool bobDir = false;
         /// <summary>
-        /// The ship's onscreen position in fight mode
+        /// Count of bullet reserves for the ship's energy weapons
+        /// 
+        /// corbin thought it would be funny to make this a float
         /// </summary>
-        public Vector2 shipPos;
-        
+        public float weaponAmmo;
+
         public ShipData(GameObject go, string name) : base(go, name)
         {
-            shipPos = ((WorldObject)go).Transform.Position;
-
+            weaponAmmo = 50;
         }
     }
 }
