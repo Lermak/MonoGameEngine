@@ -22,5 +22,7 @@ namespace MonoGame_Core.Scripts
 
         public const float TILE_WIDTH = 48;
         public const float TILE_HEIGHT = 48;
+
+        public static List<GameObject> GalaxyMap = null;
     }
 }

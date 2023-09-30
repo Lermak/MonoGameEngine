@@ -11,6 +11,7 @@ namespace MonoGame_Core.Scripts
         private string text;
         float textScale = 5;
         public string Text { get { return text; } set { text = value; } }
+        public float TextScale { get { return textScale; } set { textScale = value; } }
         public override string Texture
         {
             get { return texture; }
@@ -22,9 +23,8 @@ namespace MonoGame_Core.Scripts
                     texture = null;
             }
         }
-        public FontRenderer(string name, GameObject go, string text, string texID, Vector2 drawArea, int orderInLayer) : base(go, texID, orderInLayer, drawArea)
+        public FontRenderer(string name, GameObject go, string text, string texID, Vector2 drawArea, int orderInLayer) : base(go, name, texID, orderInLayer, drawArea)
         {
-            this.name = name;
             this.text = text;
         }
 

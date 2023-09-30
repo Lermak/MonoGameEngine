@@ -7,6 +7,11 @@ namespace MonoGame_Core.Scripts
 {
     public static class hf_Math
     {
+        public static Vector2 WorldPosition(Vector2 v)
+        {
+            return (v * RenderingManager.GameScale * new Vector2(1, -1));
+        }
+
         public static Vector2 GetPosFromPoint(float angleInDegrees, float radius, Vector2 center)
         {
             Vector2 newPosition = center;

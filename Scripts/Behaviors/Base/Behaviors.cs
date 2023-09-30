@@ -207,7 +207,7 @@ namespace MonoGame_Core.Scripts
             if (InputManager.IsTriggered(InputManager.MouseKeys.Left) &&
                 col.ContainsPoint(v)) {
                     // don't do anything, this is a dead button
-                }
+            }
         }
 
         public static void QuitOnClick(float dt, GameObject go, Component[] c = null)
@@ -228,6 +228,14 @@ namespace MonoGame_Core.Scripts
             {
                 ShakeOnClick(dt, go, c);
                 SceneManager.ChangeScene(new TestScene());
+            }
+        }
+
+        public static void reloadLevel(float dt, GameObject go, Component[] c = null)
+        {
+            if (InputManager.IsTriggered(Keys.R))
+            {
+                SceneManager.ChangeScene(new GalaxyMap());
             }
         }
     }

@@ -9,6 +9,7 @@ namespace MonoGame_Core.Scripts
         List<Component> components;
         GameObject gameObject;
         public GameObject GameObject { get { return gameObject; } }
+        public List<Component> Components { get { return components; } }
 
         public ComponentHandler(GameObject go)
         {
