@@ -41,6 +41,9 @@ namespace MonoGame_Core.Scripts
             }
             InventoryItem item = new InventoryItem("TestInventoryItem", InventoryItem.SHAPE.Line, InventoryItem.DIRECTION.Right, new Vector2(0,3), new string[] { "TestInventoryItem" });
             if (Globals.inventoryGrid.canPlaceItem(item) ) { Globals.inventoryGrid.placeItem(item); }
+
+            Ship player = (Ship) InitWorldObject( new Ship("PlayerTex","Player",new Vector2(0,0)));
+            player.AddBehavior("shoot",ShipBehaviors.ShootOnClick);
         }
         public override void SceneRunning(float dt)
         {
