@@ -11,7 +11,7 @@ namespace MonoGame_Core.Scripts
         
         // todo: scaff/actually put stuff here
 
-        public InventoryItemData(GameObject go, string name) : base(go, name)
+        public InventoryItemData(GameObject go) : base(go, Guid.NewGuid().ToString())
         {
            
         }
