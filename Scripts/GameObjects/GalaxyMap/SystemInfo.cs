@@ -26,7 +26,9 @@ namespace MonoGame_Core.Scripts
 
         public override void Initilize()
         {
+            systemName.Cameras = new List<Camera> { CameraManager.MainCamera };
             systemName.Initilize();
+            systemType.Cameras = new List<Camera> { CameraManager.MainCamera };
             systemType.Initilize();
             base.Initilize();
         }
