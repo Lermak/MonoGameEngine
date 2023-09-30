@@ -16,12 +16,13 @@ namespace MonoGame_Core.Scripts
             Vector2 mousePos = InputManager.MousePos;
             Transform shipTF = (Transform) go.GetComponent("transform");
             ShipData shipData = (ShipData) go.GetComponent("ShipData");
-
+            
             if (InputManager.IsTriggered(InputManager.MouseKeys.Left)) {
                 if ( shipData.weaponAmmo >= 1) {
                     
                     // todo: do the shooting
                     shipData.weaponAmmo -= 1;
+
                 } // else dont shoot
             } // else dont do anything
         }
