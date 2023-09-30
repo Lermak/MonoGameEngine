@@ -44,8 +44,8 @@ namespace MonoGame_Core.Scripts
             if (Globals.inventoryGrid.canPlaceItem(item) ) { Globals.inventoryGrid.placeItem(item); }
 
             Ship player = (Ship) InitWorldObject( new Ship("PlayerTex","Player",new Vector2(0,0)));
-            
 
+            
 
         }
         public override void SceneRunning(float dt)
