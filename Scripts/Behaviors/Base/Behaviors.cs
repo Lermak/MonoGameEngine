@@ -227,7 +227,45 @@ namespace MonoGame_Core.Scripts
                 col.ContainsPoint(v))
             {
                 ShakeOnClick(dt, go, c);
-                SceneManager.ChangeScene(new TestScene());
+                SceneManager.ChangeScene(new InventoryScene());
+            }
+        }
+        public static void MarkSlotOnClick(float dt, GameObject go, Component[] c = null)
+        {
+            Vector2 v = InputManager.MousePos;
+            if (InputManager.IsTriggered(InputManager.MouseKeys.Left))
+            {
+                float gridX = (((v.X / (Globals.SCREEN_WIDTH-100)) + 0.5f) * Globals.inventoryGrid.width );
+                float gridY = (((v.Y / (Globals.SCREEN_HEIGHT-100)) + 0.5f) * Globals.inventoryGrid.height );
+                gridX = Math.Clamp(gridX, 0, Globals.inventoryGrid.width-1);
+                gridY = Math.Clamp(gridY, 0, Globals.inventoryGrid.height-1);
+
+                Globals.inventoryGrid.slots[(int)gridX, (int)gridY] = !Globals.inventoryGrid.slots[(int)gridX, (int)gridY];
+
+                if (false)
+                {
+                    for (int i = Globals.inventoryGrid.height - 1; i >= 0; i--)
+                    {
+                        for (int j = 0; j < Globals.inventoryGrid.width; j++)
+                        {
+                            if (Globals.inventoryGrid.slots[j, i])
+                            {
+                                Console.Write('X');
+                            }
+                            else
+                            {
+                                Console.Write(' ');
+                            }
+
+                        }
+                        Console.WriteLine();
+
+                    }
+                }
+                
+                
+
+
             }
         }
     }
