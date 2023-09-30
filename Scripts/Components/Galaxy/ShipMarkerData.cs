@@ -8,7 +8,7 @@ namespace MonoGame_Core.Scripts
     public class ShipMarkerData : Component
     {
         public bool InFlight = false;
-        public int Row = 0;
+        public int Row = -1;
         public bool bobDir = false;
         public Vector2 idePos;
         public ShipMarkerData(GameObject go, string name) : base(go, name)
