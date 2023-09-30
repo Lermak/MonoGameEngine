@@ -24,18 +24,17 @@ namespace MonoGame_Core.Scripts
         {
             ResourceManager.AddSong("Melody", "Music/TestSong");
             SoundManager.PlaySong("Melody");
+            ResourceManager.AddFont("BaseFont", "Fonts/TestFont");
 
             ResourceManager.AddTexture("FarmingBG", "Images/VisitSystem/FarmingBG");
             ResourceManager.AddTexture("IndustryBG", "Images/VisitSystem/IndustryBG");
             ResourceManager.AddTexture("LuxuryBG", "Images/VisitSystem/LuxuryBG");
             ResourceManager.AddTexture("JumpGateBG", "Images/VisitSystem/JumpGateBG");
 
-            ResourceManager.AddTexture("LaunchBtn", "Images/VisitSystem/LaunchButton");
-            ResourceManager.AddTexture("LaunchBtnHover", "Images/VisitSystem/LaunchButtonHover");
-            ResourceManager.AddTexture("ShipBtn", "Images/VisitSystem/ShipButton");
-            ResourceManager.AddTexture("ShipBtnHover", "Images/VisitSystem/ShipButtonHover");
-            ResourceManager.AddTexture("TradeBtn", "Images/VisitSystem/TradeButton");
-            ResourceManager.AddTexture("TradeBtnHover", "Images/VisitSystem/TradeButtonHover");
+            ResourceManager.AddTexture("ShopMenu", "Images/VisitSystem/ShopMenu");
+
+            ResourceManager.AddTexture("Btn", "Images/VisitSystem/ButtonTemplate");
+            ResourceManager.AddTexture("BtnHover", "Images/VisitSystem/ButtonTemplateHover");
         }
 
         protected override void loadObjects()
@@ -56,13 +55,53 @@ namespace MonoGame_Core.Scripts
             {
                 InitWorldObject(new WorldObject("JumpGateBG", "JumpGateBG", new string[] { }, new Vector2(), -0));
             }
-            
-            
-            
-            InitGameObject(new Button("LaunchBtn", "LaunchBtnHover", "LaunchButton", new Vector2(0, -Globals.SCREEN_HEIGHT/2 + ResourceManager.GetTextureSize("LaunchBtn").Y/2), 1, VisitSystemBehaviors.ReturnToMap));
-            InitGameObject(new Button("TradeBtn", "TradeBtnHover", "TradeButton", new Vector2(-Globals.SCREEN_WIDTH/2 + ResourceManager.GetTextureSize("TradeBtn").X/2 + 100, -Globals.SCREEN_HEIGHT / 2 + ResourceManager.GetTextureSize("LaunchBtn").Y / 2), 1, VisitSystemBehaviors.ReturnToMap));
-            InitGameObject(new Button("ShipBtn", "ShipBtnHover", "ShipButton", new Vector2(Globals.SCREEN_WIDTH / 2 - ResourceManager.GetTextureSize("ShipBtn").X / 2 - 100, -Globals.SCREEN_HEIGHT / 2 + ResourceManager.GetTextureSize("LaunchBtn").Y / 2), 1, VisitSystemBehaviors.ReturnToMap));
 
+            Vector2 btnSize = ResourceManager.GetTextureSize("Btn");
+
+            if (type != GalaxyData.GalaxyType.JumpGate)
+            {
+                SellShop sell = (SellShop)InitGameObject(new SellShop("ShopMenu", 
+                    "SellShop", 
+                    new Vector2(Globals.SCREEN_WIDTH/2 - ResourceManager.GetTextureSize("ShopMenu").X/2 - 100, 100)));
+                PurchaseShop purchase = (PurchaseShop)InitGameObject(new PurchaseShop("ShopMenu", 
+                    "PurchaseShop",
+                    new Vector2(-Globals.SCREEN_WIDTH / 2 + ResourceManager.GetTextureSize("ShopMenu").X/2 + 100, 100)));
+
+                InitGameObject(new TextButton("Launch", 
+                    "Btn",
+                    "BtnHover", 
+                    "Launch", 
+                    5,
+                    new Vector2(0, -Globals.SCREEN_HEIGHT / 2 + btnSize.Y / 2), 
+                    new Vector2(), 
+                    1, 
+                    VisitSystemBehaviors.ReturnToMap));
+
+                InitGameObject(new TextButton("Ship",
+                    "Btn",
+                    "BtnHover",
+                    "Ship",
+                    5,
+                    new Vector2(-Globals.SCREEN_WIDTH / 2 + btnSize.X / 2 + 100, -Globals.SCREEN_HEIGHT / 2 + btnSize.Y / 2),
+                    new Vector2(),
+                    1,
+                    VisitSystemBehaviors.ReturnToMap));
+
+                InitGameObject(new TextButton("Trade",
+                    "Btn",
+                    "BtnHover",
+                    "Trade",
+                    5,
+                    new Vector2(Globals.SCREEN_WIDTH / 2 - btnSize.X / 2 - 100, -Globals.SCREEN_HEIGHT / 2 + btnSize.Y / 2),
+                    new Vector2(),
+                    1,
+                    VisitSystemBehaviors.Trade,
+                    new Component[] { sell.SpriteRenderer, purchase.SpriteRenderer }));
+            }
+            else
+            {
+
+            }
         }
     }
 }

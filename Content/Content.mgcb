@@ -356,6 +356,30 @@
 /processorParam:TextureFormat=Color
 /build:Images/Test.png
 
+#begin Images/VisitSystem/ButtonTemplate.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/VisitSystem/ButtonTemplate.png
+
+#begin Images/VisitSystem/ButtonTemplateHover.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Images/VisitSystem/ButtonTemplateHover.png
+
 #begin Images/VisitSystem/FarmingBG.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -392,30 +416,6 @@
 /processorParam:TextureFormat=Color
 /build:Images/VisitSystem/JumpGateBG.png
 
-#begin Images/VisitSystem/LaunchButton.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Images/VisitSystem/LaunchButton.png
-
-#begin Images/VisitSystem/LaunchButtonHover.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Images/VisitSystem/LaunchButtonHover.png
-
 #begin Images/VisitSystem/LuxuryBG.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -428,7 +428,7 @@
 /processorParam:TextureFormat=Color
 /build:Images/VisitSystem/LuxuryBG.png
 
-#begin Images/VisitSystem/ShipButton.png
+#begin Images/VisitSystem/ShopMenu.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -438,43 +438,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Images/VisitSystem/ShipButton.png
-
-#begin Images/VisitSystem/ShipButtonHover.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Images/VisitSystem/ShipButtonHover.png
-
-#begin Images/VisitSystem/TradeButton.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Images/VisitSystem/TradeButton.png
-
-#begin Images/VisitSystem/TradeButtonHover.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Images/VisitSystem/TradeButtonHover.png
+/build:Images/VisitSystem/ShopMenu.png
 
 #begin Music/TestSong.mp3
 /importer:Mp3Importer
