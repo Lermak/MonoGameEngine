@@ -114,5 +114,10 @@ namespace MonoGame_Core.Scripts
         {
             return position;
         }
+
+        public Vector2 GetReletivePosition()
+        {
+            return position;
+        }
     }
 }
