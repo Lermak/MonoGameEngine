@@ -19,5 +19,9 @@ namespace MonoGame_Core.Scripts
                 SceneManager.ChangeScene(new GalaxyMap());
             }
         }
+        public static void Trade(float dt, GameObject go, Component[] c = null)
+        {
+
+        }
     }
 }
