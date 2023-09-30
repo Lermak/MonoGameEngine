@@ -39,7 +39,7 @@ namespace MonoGame_Core.Scripts
             {
                 Globals.inventoryGrid = (InventoryGrid)InitWorldObject(new InventoryGrid("BG", "Background"));
             }
-            InventoryItem item = new InventoryItem("TestInventoryItem", InventoryItem.SHAPE.Line, InventoryItem.DIRECTION.Right, new Vector2(), new string[] { "TestInventoryItem" });
+            InventoryItem item = new InventoryItem("TestInventoryItem", InventoryItem.SHAPE.Line, InventoryItem.DIRECTION.Right, new Vector2(0,3), new string[] { "TestInventoryItem" });
             if (Globals.inventoryGrid.canPlaceItem(item) ) { Globals.inventoryGrid.placeItem(item); }
         }
         public override void SceneRunning(float dt)
