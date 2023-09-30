@@ -60,11 +60,11 @@ namespace MonoGame_Core.Scripts
             return new Vector2(worldX, worldY);
         }
 
-        public InventoryItem grabItem(Vector2 position)
+        /*public InventoryItem grabItem(Vector2 position)
         {
-            this.componentHandler.GetOfType<InventoryItem>()
+            this.componentHandler.GetOfType<InventoryItem>();
             return null;
-        }
+        }*/
 
         public List<InventoryItem> items;
         public string[,] slots = null;
