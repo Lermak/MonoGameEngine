@@ -24,6 +24,7 @@ namespace MonoGame_Core.Scripts
             ResourceManager.AddSoundEffect("TestHit", "Sound/TestHit");
 
             ResourceManager.AddTexture("Test", "Images/Test");
+            ResourceManager.AddTexture("PlayerTex", "Images/Peashooter");
             ResourceManager.AddTexture("PeaShooter", "Images/PeaShooter");
             ResourceManager.AddTexture("Base", "Images/Base");
             ResourceManager.AddTexture("BG", "Images/Background");
@@ -43,7 +44,9 @@ namespace MonoGame_Core.Scripts
             if (Globals.inventoryGrid.canPlaceItem(item) ) { Globals.inventoryGrid.placeItem(item); }
 
             Ship player = (Ship) InitWorldObject( new Ship("PlayerTex","Player",new Vector2(0,0)));
-            player.AddBehavior("shoot",ShipBehaviors.ShootOnClick);
+            
+
+
         }
         public override void SceneRunning(float dt)
         {
