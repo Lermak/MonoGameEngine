@@ -18,23 +18,27 @@ namespace MonoGame_Core.Scripts
         public bool canPlaceItem(InventoryItem item)
         {
             //for each square of the item, see if position in grid is free
-            if (slots[(int)item.gridPos.X, (int)item.gridPos.Y] == true) { return false; }
-            for (int i = 0; i < 3; i++)
+            Vector2 pos = ((Transform)item.GetComponent("transform")).Position;
+
+            for (int i = 0; i < 4; i++)
             {
-                if (slots[(int)(item.gridPos.X + item.blocks[i].X), (int)(item.gridPos.Y + +item.blocks[i].Y)] == true) { return false; }
+                WorldObject obj = (WorldObject)SceneManager.CurrentScene.GetObjectByName(item.blocks[i]);
+                if (slots[(int)(pos.X + obj.Transform.Position.X), (int)(pos.Y + obj.Transform.Position.Y)] == item.blocks[i]) { return false; }
             }
             return true;
         }
 
         public void placeItem(InventoryItem item)
         {
+            Vector2 pos = ((Transform)item.GetComponent("transform")).Position;
             if (canPlaceItem(item)) {
-                slots[(int)item.gridPos.X, (int)item.gridPos.Y] = true;
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 4; i++)
                 {
-                    slots[(int)(item.gridPos.X + item.blocks[i].X), (int)(item.gridPos.Y + +item.blocks[i].Y)] = true;
+                    WorldObject obj = (WorldObject)SceneManager.CurrentScene.GetObjectByName(item.blocks[i]);
+                    slots[(int)(pos.X + obj.Transform.Position.X), (int)(pos.Y + obj.Transform.Position.Y)] = item.blocks[i];
                 }
             }
+            this.items.Add(item);
         }
 
         public InventoryItem grabItem(Vector2 position)
@@ -43,11 +47,11 @@ namespace MonoGame_Core.Scripts
         }
 
         public List<InventoryItem> items;
-        public bool[,] slots = null;
+        public string[,] slots = null;
         public InventoryGrid(string texID, string name) : base(texID, name, new string[] { "InventoryGrid" }, new Vector2(0, 0), 1)
         {
             this.AddBehavior("MarkSlotOnClick", Behaviors.MarkSlotOnClick);
-            this.slots = new bool[width, height];
+            this.slots = new string[width, height];
             items = new List<InventoryItem>();
         }
 

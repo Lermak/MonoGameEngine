@@ -29,6 +29,8 @@ namespace MonoGame_Core.Scripts
             ResourceManager.AddTexture("BG", "Images/Background");
 
             ResourceManager.AddFont("TestFont", "Fonts/TestFont");
+
+            ResourceManager.AddTexture("Block", "Images/Test");
         }
 
         protected override void loadObjects()
