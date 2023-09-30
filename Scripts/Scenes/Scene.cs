@@ -149,7 +149,7 @@ namespace MonoGame_Core.Scripts
         }
 
         private void VerifyUniqueName(GameObject go)
-        {
+        { 
             if (go.Name != "")
             {
                 if (gameObjects.Where(o => o.Name == go.Name).Count() > 0)

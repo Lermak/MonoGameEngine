@@ -339,6 +339,7 @@ ASALocalRun/
 # BeatPulse healthcheck temp database
 healthchecksdb
 
-# parkcitymedia's vscode-specifics
+# itspacrat's vscode-specifics
+*Blake*
 .vscode
 .vscode/*
