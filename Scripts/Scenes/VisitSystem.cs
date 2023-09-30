@@ -25,35 +25,44 @@ namespace MonoGame_Core.Scripts
             ResourceManager.AddSong("Melody", "Music/TestSong");
             SoundManager.PlaySong("Melody");
 
-            ResourceManager.AddTexture("Galaxy", "Images/GalaxyMap/Galaxy");
-            ResourceManager.AddTexture("Ship", "Images/GalaxyMap/Ship");
-            ResourceManager.AddTexture("BG", "Images/GalaxyMap/SpaceBG");
-            ResourceManager.AddTexture("UIBar", "Images/GalaxyMap/UIBar");
-            ResourceManager.AddTexture("JumpGate", "Images/GalaxyMap/JumpGate");
+            ResourceManager.AddTexture("FarmingBG", "Images/VisitSystem/FarmingBG");
+            ResourceManager.AddTexture("IndustryBG", "Images/VisitSystem/IndustryBG");
+            ResourceManager.AddTexture("LuxuryBG", "Images/VisitSystem/LuxuryBG");
+            ResourceManager.AddTexture("JumpGateBG", "Images/VisitSystem/JumpGateBG");
 
-            ResourceManager.AddTexture("PlayBtn", "Images/Default UI/btn_play");
-            ResourceManager.AddTexture("SelPlayBtn", "Images/Default UI/btn_play_sel");
+            ResourceManager.AddTexture("LaunchBtn", "Images/VisitSystem/LaunchButton");
+            ResourceManager.AddTexture("LaunchBtnHover", "Images/VisitSystem/LaunchButtonHover");
+            ResourceManager.AddTexture("ShipBtn", "Images/VisitSystem/ShipButton");
+            ResourceManager.AddTexture("ShipBtnHover", "Images/VisitSystem/ShipButtonHover");
+            ResourceManager.AddTexture("TradeBtn", "Images/VisitSystem/TradeButton");
+            ResourceManager.AddTexture("TradeBtnHover", "Images/VisitSystem/TradeButtonHover");
         }
 
         protected override void loadObjects()
         {
             if(type == GalaxyData.GalaxyType.Farming)
             {
-
+                InitWorldObject(new WorldObject("FarmingBG", "FarmingBG", new string[] { }, new Vector2(), -0));
             }
             else if (type == GalaxyData.GalaxyType.Industry)
             {
-
+                InitWorldObject(new WorldObject("IndustryBG", "IndustryBG", new string[] { }, new Vector2(), -0));
             }
             else if (type == GalaxyData.GalaxyType.Luxury)
             {
-
+                InitWorldObject(new WorldObject("LuxuryBG", "LuxuryBG", new string[] { }, new Vector2(), -0));
             }
             else if (type == GalaxyData.GalaxyType.JumpGate)
             {
-
+                InitWorldObject(new WorldObject("JumpGateBG", "JumpGateBG", new string[] { }, new Vector2(), -0));
             }
-            InitGameObject(new Button("PlayBtn", "SelPlayBtn", "PlayButton", new Vector2(500, 100), 1, VisitSystemBehaviors.ReturnToMap));
+            
+            
+            
+            InitGameObject(new Button("LaunchBtn", "LaunchBtnHover", "LaunchButton", new Vector2(0, -Globals.SCREEN_HEIGHT/2 + ResourceManager.GetTextureSize("LaunchBtn").Y/2), 1, VisitSystemBehaviors.ReturnToMap));
+            InitGameObject(new Button("TradeBtn", "TradeBtnHover", "TradeButton", new Vector2(-Globals.SCREEN_WIDTH/2 + ResourceManager.GetTextureSize("TradeBtn").X/2 + 100, -Globals.SCREEN_HEIGHT / 2 + ResourceManager.GetTextureSize("LaunchBtn").Y / 2), 1, VisitSystemBehaviors.ReturnToMap));
+            InitGameObject(new Button("ShipBtn", "ShipBtnHover", "ShipButton", new Vector2(Globals.SCREEN_WIDTH / 2 - ResourceManager.GetTextureSize("ShipBtn").X / 2 - 100, -Globals.SCREEN_HEIGHT / 2 + ResourceManager.GetTextureSize("LaunchBtn").Y / 2), 1, VisitSystemBehaviors.ReturnToMap));
+
         }
     }
 }
