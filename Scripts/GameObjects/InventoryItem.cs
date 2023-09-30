@@ -22,9 +22,9 @@ namespace MonoGame_Core.Scripts
         public enum DIRECTION
         {
             Right = 0,
-            Up = 90,
-            Left = 180,
-            Down = 270,
+            Up = 1,
+            Left = 2,
+            Down = 3,
         }
 
         public SHAPE shape;
@@ -32,7 +32,7 @@ namespace MonoGame_Core.Scripts
         public string[] blocks;
 
 
-
+        
         
         public InventoryItem(string name, SHAPE s, DIRECTION dir, Vector2 position, string[] tags) : base(name, new string[] { "inventoryItem" })
         {
@@ -77,9 +77,30 @@ namespace MonoGame_Core.Scripts
             for (int i = 0; i < 4; i++)
             {
                 ((Transform)(SceneManager.CurrentScene.GetObjectByName(blocks[i]).GetComponent("transform"))).Attach((Transform)this.GetComponent("transform"), false);
-
+                ((Transform)(SceneManager.CurrentScene.GetObjectByName(blocks[i]).GetComponent("transform"))).SetPosition(positions[i] * Globals.TILE_SIZE);
             }
+            ((Transform)this.GetComponent("transform")).SetPosition(InventoryGrid.gridToWorld(position));
+        }
+        public void rotateLeft()
+        {
+            for(int i = 0; i < 4; i++)
+            {
+                Vector2 oldPos = ((Transform)(SceneManager.CurrentScene.GetObjectByName(blocks[i]).GetComponent("transform"))).GetReletivePosition();
+                Vector2 newPos = new Vector2(-oldPos.Y, oldPos.X);
+                ((Transform)(SceneManager.CurrentScene.GetObjectByName(blocks[i]).GetComponent("transform"))).SetPosition(newPos);
+                this.direction += 1;
+            }
+        }
 
+        public void rotateRight()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                Vector2 oldPos = ((Transform)(SceneManager.CurrentScene.GetObjectByName(blocks[i]).GetComponent("transform"))).GetReletivePosition();
+                Vector2 newPos = new Vector2(oldPos.Y, -oldPos.X);
+                ((Transform)(SceneManager.CurrentScene.GetObjectByName(blocks[i]).GetComponent("transform"))).SetPosition(newPos);
+                this.direction -= 1;
+            }
         }
 
         public override void Initilize()

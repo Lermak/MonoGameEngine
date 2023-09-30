@@ -23,7 +23,8 @@ namespace MonoGame_Core.Scripts
             for (int i = 0; i < 4; i++)
             {
                 WorldObject obj = (WorldObject)SceneManager.CurrentScene.GetObjectByName(item.blocks[i]);
-                if (slots[(int)(pos.X + obj.Transform.Position.X), (int)(pos.Y + obj.Transform.Position.Y)] == item.blocks[i]) { return false; }
+                Vector2 gridPos = worldToGrid(obj.Transform.Position);
+                if (slots[(int)(gridPos.X), (int)( gridPos.Y)] == item.blocks[i]) { return false; }
             }
             return true;
         }
@@ -35,10 +36,26 @@ namespace MonoGame_Core.Scripts
                 for (int i = 0; i < 4; i++)
                 {
                     WorldObject obj = (WorldObject)SceneManager.CurrentScene.GetObjectByName(item.blocks[i]);
-                    slots[(int)(pos.X + obj.Transform.Position.X), (int)(pos.Y + obj.Transform.Position.Y)] = item.blocks[i];
+                    Vector2 gridPos = worldToGrid(obj.Transform.Position);
+                    slots[(int)(gridPos.X), (int)(gridPos.Y)] = item.blocks[i];
                 }
             }
             this.items.Add(item);
+        }
+
+        public static Vector2 worldToGrid(Vector2 world)
+        {
+            float gridX = (((world.X / (Globals.SCREEN_WIDTH - 100)) + 0.5f) * Globals.inventoryGrid.width);
+            float gridY = (((world.Y / (Globals.SCREEN_HEIGHT - 100)) + 0.5f) * Globals.inventoryGrid.height);
+            gridX = Math.Clamp(gridX, 0, Globals.inventoryGrid.width - 1);
+            gridY = Math.Clamp(gridY, 0, Globals.inventoryGrid.height - 1);
+            return new Vector2(gridX, gridY);
+        }
+        public static Vector2 gridToWorld(Vector2 grid)
+        {
+            float worldX = ((grid.X / Globals.inventoryGrid.width) - 0.5f) * (Globals.SCREEN_WIDTH - 200);
+            float worldY = ((grid.Y / Globals.inventoryGrid.height) - 0.5f) * (Globals.SCREEN_HEIGHT - 200);
+            return new Vector2(worldX, worldY);
         }
 
         public InventoryItem grabItem(Vector2 position)

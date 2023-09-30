@@ -96,5 +96,10 @@ namespace MonoGame_Core.Scripts
             radFromParent = 0;
             startingRotation = 0;          
         }
+
+        public Vector2 GetReletivePosition()
+        {
+            return position;
+        }
     }
 }
