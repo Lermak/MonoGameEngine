@@ -38,14 +38,14 @@ namespace MonoGame_Core.Scripts
         {
             shape = s;
             direction = dir;
-            AddComponent(new Transform(this, position, 0 , 0));
+            AddComponent(new Transform(this, InventoryGrid.gridToWorld(position), 0 , 0));
 
             this.blocks = new string[4] { "","","",""};
             for (int i = 0; i < 4; i++) {
                 this.blocks[i] = (Guid.NewGuid().ToString());
                 SceneManager.CurrentScene.InitWorldObject(new WorldObject("Block", blocks[i], new string[] { }, new Vector2(), 1));
             }
-
+            
 
             Vector2[] positions = new Vector2[] { };
             switch (s)
@@ -79,7 +79,7 @@ namespace MonoGame_Core.Scripts
                 ((Transform)(SceneManager.CurrentScene.GetObjectByName(blocks[i]).GetComponent("transform"))).Attach((Transform)this.GetComponent("transform"), false);
                 ((Transform)(SceneManager.CurrentScene.GetObjectByName(blocks[i]).GetComponent("transform"))).SetPosition(positions[i] * Globals.TILE_SIZE);
             }
-            ((Transform)this.GetComponent("transform")).SetPosition(InventoryGrid.gridToWorld(position));
+            
         }
         public void rotateLeft()
         {

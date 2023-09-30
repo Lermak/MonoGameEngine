@@ -10,6 +10,8 @@ namespace MonoGame_Core.Scripts
     {
         public int width = 19;
         public int height = 10;
+
+        
         public bool isCellEmpty()
         {
             return false;
@@ -53,13 +55,14 @@ namespace MonoGame_Core.Scripts
         }
         public static Vector2 gridToWorld(Vector2 grid)
         {
-            float worldX = ((grid.X / Globals.inventoryGrid.width) - 0.5f) * (Globals.SCREEN_WIDTH - 200);
-            float worldY = ((grid.Y / Globals.inventoryGrid.height) - 0.5f) * (Globals.SCREEN_HEIGHT - 200);
+            float worldX = (((grid.X / Globals.inventoryGrid.width) - 0.5f) * (Globals.SCREEN_WIDTH - 100)) + (Globals.TILE_SIZE / 2);
+            float worldY = (((grid.Y / Globals.inventoryGrid.height) - 0.5f) * (Globals.SCREEN_HEIGHT - 100)) + (Globals.TILE_SIZE / 2);
             return new Vector2(worldX, worldY);
         }
 
         public InventoryItem grabItem(Vector2 position)
         {
+            this.componentHandler.GetOfType<InventoryItem>()
             return null;
         }
 
