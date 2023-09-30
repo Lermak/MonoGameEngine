@@ -1,11 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
+using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using static System.Net.Mime.MediaTypeNames;
+
 
 namespace MonoGame_Core.Scripts
 {
     public class InventoryItem : GameObject { 
-            public enum SHAPE
+        public enum SHAPE
         {
             Line,
             Square,
@@ -25,40 +29,56 @@ namespace MonoGame_Core.Scripts
 
         public SHAPE shape;
         public DIRECTION direction;
-        public Vector2[] blocks;
+        public string[] blocks;
+
+
+
         
-        public Vector2 gridPos;
         public InventoryItem(string name, SHAPE s, DIRECTION dir, Vector2 position, string[] tags) : base(name, new string[] { "inventoryItem" })
         {
             shape = s;
             direction = dir;
-            this.gridPos = position;
-            switch(s)
-            {
-                case SHAPE.Line:
-                    blocks = new Vector2[3] { new Vector2(1, 0), new Vector2(2, 0), new Vector2(3, 0)};
-                    break;
-                case SHAPE.Square:
-                    blocks = new Vector2[3] { new Vector2(1, 0), new Vector2(0, 1), new Vector2(1,1) };
-                    break;
-                case SHAPE.T:
-                    blocks = new Vector2[3] { new Vector2(1, 0), new Vector2(2, 0), new Vector2(1, 1) };
-                    break;
-                case SHAPE.J:
-                    blocks = new Vector2[3] { new Vector2(1, 0), new Vector2(1, 1), new Vector2(1, 2) };
-                    break;
-                case SHAPE.L:
-                    blocks = new Vector2[3] { new Vector2(1, 0), new Vector2(0, 1), new Vector2(0, 2) };
-                    break;
-                case SHAPE.S:
-                    blocks = new Vector2[3] { new Vector2(1, 0), new Vector2(1, 1), new Vector2(2, 1) };
-                    break;
-                case SHAPE.Z:
-                    blocks = new Vector2[3] { new Vector2(1, 0), new Vector2(1, -1), new Vector2(2, -1) };
-                    break;
+            AddComponent(new Transform(this, position, 0 , 0));
 
+            this.blocks = new string[4] { "","","",""};
+            for (int i = 0; i < 4; i++) {
+                this.blocks[i] = (Guid.NewGuid().ToString());
+                SceneManager.CurrentScene.InitWorldObject(new WorldObject("Block", blocks[i], new string[] { }, new Vector2(), 1));
             }
 
+
+            Vector2[] positions = new Vector2[] { };
+            switch (s)
+            {
+                case SHAPE.Line:
+                    positions = new Vector2[4] { new Vector2(0,0), new Vector2(1, 0), new Vector2(2, 0), new Vector2(3, 0)};
+                    break;
+                case SHAPE.Square:
+                    positions = new Vector2[4] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(0, 1), new Vector2(1,1) };
+                    break;
+                case SHAPE.T:
+                    positions = new Vector2[4] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0), new Vector2(1, 1) };
+                    break;
+                case SHAPE.J:
+                    positions = new Vector2[4] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, 1), new Vector2(1, 2) };
+                    break;
+                case SHAPE.L:
+                    positions = new Vector2[4] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(0, 1), new Vector2(0, 2) };
+                    break;
+                case SHAPE.S:
+                    positions = new Vector2[4] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, 1), new Vector2(2, 1) };
+                    break;
+                case SHAPE.Z:
+                    positions = new Vector2[4] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, -1), new Vector2(2, -1) };
+                    break;
+            }
+
+
+            for (int i = 0; i < 4; i++)
+            {
+                ((Transform)(SceneManager.CurrentScene.GetObjectByName(blocks[i]).GetComponent("transform"))).Attach((Transform)this.GetComponent("transform"), false);
+
+            }
 
         }
 

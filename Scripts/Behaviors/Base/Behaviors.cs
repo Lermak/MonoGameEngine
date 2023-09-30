@@ -295,7 +295,6 @@ namespace MonoGame_Core.Scripts
                 gridX = Math.Clamp(gridX, 0, Globals.inventoryGrid.width-1);
                 gridY = Math.Clamp(gridY, 0, Globals.inventoryGrid.height-1);
 
-                Globals.inventoryGrid.slots[(int)gridX, (int)gridY] = !Globals.inventoryGrid.slots[(int)gridX, (int)gridY];
 
                 if (false)
                 {
@@ -303,7 +302,7 @@ namespace MonoGame_Core.Scripts
                     {
                         for (int j = 0; j < Globals.inventoryGrid.width; j++)
                         {
-                            if (Globals.inventoryGrid.slots[j, i])
+                            if (Globals.inventoryGrid.slots[j, i] != "")
                             {
                                 Console.Write('X');
                             }
