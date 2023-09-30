@@ -18,7 +18,7 @@ namespace MonoGame_Core.Scripts
             {
                 foreach (GameObject g in galaxies)
                 {
-                    if (sd.Row <= ((GalaxyData)g.GetComponent("GalaxyData")).Row)
+                    if (sd.Row < ((GalaxyData)g.GetComponent("GalaxyData")).Row)
                     {
                         if (((CollisionCircle)g.GetComponent("myCircle")).ContainsPoint(InputManager.MousePos))
                         {
