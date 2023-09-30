@@ -234,13 +234,7 @@ namespace MonoGame_Core.Scripts
         {
             Vector2 v = InputManager.MousePos;
             if (InputManager.IsTriggered(InputManager.MouseKeys.Left))
-            {
-                float gridX = (((v.X / (Globals.SCREEN_WIDTH-100)) + 0.5f) * Globals.inventoryGrid.width );
-                float gridY = (((v.Y / (Globals.SCREEN_HEIGHT-100)) + 0.5f) * Globals.inventoryGrid.height );
-                gridX = Math.Clamp(gridX, 0, Globals.inventoryGrid.width-1);
-                gridY = Math.Clamp(gridY, 0, Globals.inventoryGrid.height-1);
-
-
+            {  
                 if (false)
                 {
                     for (int i = Globals.inventoryGrid.height - 1; i >= 0; i--)
@@ -261,10 +255,17 @@ namespace MonoGame_Core.Scripts
 
                     }
                 }
-                
-                
 
-
+            }
+            if (InputManager.IsTriggered(InputManager.KeyMap["rot_left"]))
+            {
+                Globals.inventoryGrid.items[0].rotateLeft();
+                Console.Write('Q');
+            }
+            if (InputManager.IsTriggered(InputManager.KeyMap["rot_right"]))
+            {
+                Globals.inventoryGrid.items[0].rotateRight();
+                Console.Write('R');
             }
         }
 
