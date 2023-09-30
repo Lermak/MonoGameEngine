@@ -15,17 +15,17 @@ namespace MonoGame_Core.Scripts
         public Ship(string texID, string name, Vector2 pos) : base(texID, name, new string[] { "fighting" }, pos, 2)
         {
             AddComponent(new ShipData(this, "ShipData"));
-            AddComponent(new RigidBody(this,RigidBody.RigidBodyType.Dynamic));
+            //AddComponent(new RigidBody(this,RigidBody.RigidBodyType.Dynamic));
         }
         /// <summary>
-        ///  checks if there are no spaces filled in the ship
+        ///  checks if there are no spaces filled in the ship inventory grid
         /// </summary>
         /// <param name="inv"></param>
         /// <returns></returns>
-        public bool IsDead(InventoryGridData inv) {
+        public bool IsDead(string[] inv) {
             List<string> filled = new List<string> {};
 
-            foreach (string item in inv.cells) {
+            foreach (string item in inv) {
                 if (!(item == "")) {
                     filled.Add(item);
                 }
