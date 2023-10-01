@@ -31,8 +31,10 @@ namespace MonoGame_Core.Scripts
 
         protected override void loadObjects()
         {
-            int enemyCount = 10;
-
+            // spawn in enemies
+            // currently also populates middle of the map,
+            // dangerous to player
+            int enemyCount = 5;
             for (int i = 0;i<enemyCount;i++) {
                 Random rng = new Random();
                 Vector2 spawnPos = new Vector2(
