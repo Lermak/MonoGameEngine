@@ -26,7 +26,7 @@ namespace MonoGame_Core.Scripts
                 newBullet.CollisionHandler.myActions.Add(
                     new CollisionActions(
                         "myBox",
-                        new List<string> {"myBox"},
+                        new List<string> {"enemyBox"},
                         new List<CollisionAction> {CollisionBehaviors.DealDamage}
                         )
                     );
