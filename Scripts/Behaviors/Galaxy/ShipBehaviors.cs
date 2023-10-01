@@ -12,35 +12,28 @@ namespace MonoGame_Core.Scripts
     /// </summary>
     public static class ShipBehaviors
     {
-        public static void ShootOnClick(float dt, GameObject go, Component[] c = null) {
+        public static void ShootOnClick(float dt, GameObject go, Component[] c = null)
+        {
             Vector2 mousePos = InputManager.MousePos;
-            Transform shipTF = (Transform) go.GetComponent("transform");
-            ShipData shipData = (ShipData) go.GetComponent("ShipData");
-            /*
-            if (InputManager.IsTriggered(InputManager.MouseKeys.Left)) {
-                if ( shipData.weaponAmmo >= 1) {
-                    
-                    // todo: do the shooting
-                    shipData.weaponAmmo -= 1;
-                    //! dear corbin: no i dont like how this has to
-                    //! be done either but we are here now so :^)
-                    SceneManager.CurrentScene.AddWorldObject(new Bullet("BulletTex","",shipTF.Position,shipTF.RotationDegrees));
+            Transform shipTF = (Transform)go.GetComponent("transform");
+            ShipData shipData = (ShipData)go.GetComponent("ShipData");
 
-                } // else dont shoot
-            } // else dont do anything
-            */
-            if (InputManager.IsTriggered(InputManager.MouseKeys.Left)) {
-                
-                    
-                    SceneManager.CurrentScene.AddWorldObject(new Bullet("BulletTex","",shipTF.Position,shipTF.RotationDegrees));
+            if (InputManager.IsTriggered(InputManager.MouseKeys.Left))
+            {
+                SceneManager.CurrentScene.AddWorldObject(new Bullet("BulletTex", "", shipTF.Position, shipTF.RotationDegrees));
+            }
+        }
+        /// <summary>
+        /// rotates an object towards a player's position.
+        /// 
+        /// Player transform should be <b>c[0]</b>
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="go"></param>
+        /// <param name="c"></param>
+        public static void PointToPlayer(float dt, GameObject go, Component[] c=null) {
+            // todo: scaff
+        }
 
-                
-            } // else dont do anything
-            
-            
-        }
-        public static void MoveWASD(float dt, GameObject go, Component[] c = null) {
-            // todo:
-        }
     }
 }
