@@ -43,22 +43,22 @@ namespace MonoGame_Core.Scripts
                     GridCells = new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0), new Vector2(3, 0) };
                     break;
                 case Shapes.Square:
-                    GridCells = new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(0, 1), new Vector2(1, 1) };
+                    GridCells = new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(0, -1), new Vector2(1, -1) };
                     break;
                 case Shapes.T:
-                    GridCells = new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0), new Vector2(1, 1) };
+                    GridCells = new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0), new Vector2(1, -1) };
                     break;
                 case Shapes.J:
-                    GridCells = new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, 1), new Vector2(1, 2) };
+                    GridCells = new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, -1), new Vector2(1, -2) };
                     break;
                 case Shapes.L:
-                    GridCells = new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(0, 1), new Vector2(0, 2) };
+                    GridCells = new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(0, -1), new Vector2(0, -2) };
                     break;
                 case Shapes.S:
-                    GridCells = new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, 1), new Vector2(2, 1) };
+                    GridCells = new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, -1), new Vector2(2, -1) };
                     break;
                 case Shapes.Z:
-                    GridCells = new Vector2[] { new Vector2(0, 1), new Vector2(0, 2), new Vector2(1, 2), new Vector2(2, 2) };
+                    GridCells = new Vector2[] { new Vector2(0, -1), new Vector2(1, -1), new Vector2(1, 0), new Vector2(2, 0) };
                     break;
                 case Shapes.Block:
                     GridCells = new Vector2[] { new Vector2(0, 0) };
@@ -70,10 +70,10 @@ namespace MonoGame_Core.Scripts
                     GridCells = new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0) };
                     break;
                 case Shapes.LHook:
-                    GridCells = new Vector2[] { new Vector2(0, 1), new Vector2(1, 1), new Vector2(1, 0) };
+                    GridCells = new Vector2[] { new Vector2(0, -1), new Vector2(1, -1), new Vector2(1, 0) };
                     break;
                 case Shapes.RHook:
-                    GridCells = new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, 1) };
+                    GridCells = new Vector2[] { new Vector2(0, 0), new Vector2(0, -1), new Vector2(1, -1) };
                     break;
             }
         }
