@@ -41,6 +41,18 @@ namespace MonoGame_Core.Scripts
             yield return true;
         }
 
+        public static IEnumerator<bool> CreditScroll(float speed, Transform creditTransform, float height, RigidBody creditRigidbody)
+        {
+            creditRigidbody.MoveVelocity = new Vector2(0, speed);
+            Vector2 startPos = creditTransform.Position;
+            while (creditTransform.Position.Y < startPos.Y + height)
+            {
+                yield return false;
+            }
+
+            creditRigidbody.MoveVelocity = new Vector2(0, 0);
+            yield return true;
+        }
         public static IEnumerator<bool> Shake(float duration, int min, int max, Transform t)
         {
             float timeElapsed = 0;

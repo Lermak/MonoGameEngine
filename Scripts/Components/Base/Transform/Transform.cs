@@ -43,6 +43,7 @@ namespace MonoGame_Core.Scripts
             }
             set { radians = value; }
         }
+        public float RotationDegrees { get { return hf_Math.RadToDeg(Radians); } }
         public Vector2 Scale { get { return scale; } }
         public Transform Parent { get { return parent; } }
         public byte Layer { get { return layer; } set { layer = value; } }
