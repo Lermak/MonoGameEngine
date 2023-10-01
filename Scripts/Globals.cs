@@ -9,7 +9,7 @@ namespace MonoGame_Core.Scripts
     /// </summary>
     public static class Globals
     {
-        public const string GAME_TITLE = "TEST TITLE";
+        public const string GAME_TITLE = "Space: Limited Edition";
         /// <summary>
         /// Width of the target BackBuffer
         /// </summary>

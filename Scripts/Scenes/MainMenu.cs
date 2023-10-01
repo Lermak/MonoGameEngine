@@ -23,31 +23,20 @@ namespace MonoGame_Core.Scripts
             ResourceManager.AddSong("Melody", "Music/TestSong");
             SoundManager.PlaySong("Melody");
 
-            ResourceManager.AddTexture("PlayBtn", "Images/Default UI/btn_play");
-            ResourceManager.AddTexture("SelPlayBtn", "Images/Default UI/btn_play_sel");
-            ResourceManager.AddTexture("ExitBtn", "Images/Default UI/btn_exit");
-            ResourceManager.AddTexture("SelExitBtn", "Images/Default UI/btn_exit_sel");
-            ResourceManager.AddTexture("SettingsBtn", "Images/Default UI/btn_settings");
-            ResourceManager.AddTexture("SelSettingsBtn", "Images/Default UI/btn_settings_sel");
-            // load switch test textures
-            ResourceManager.AddTexture("SwitchBaseDeselected", "Images/Default UI/switch_base");
-            ResourceManager.AddTexture("SwitchBaseSelected", "Images/Default UI/switch_base_sel");
-            ResourceManager.AddTexture("SwitchOn", "Images/Default UI/switch_on");
-            ResourceManager.AddTexture("SwitchOff", "Images/Default UI/switch_off");
+            ResourceManager.AddTexture("BG", "Images/MainMenuBG");
+
+            ResourceManager.AddTexture("Btn", "Images/VisitSystem/ButtonTemplate");
+            ResourceManager.AddTexture("BtnHover", "Images/VisitSystem/ButtonTemplateHover");
         }
 
         protected override void loadObjects()
         {
-            gameObjects = new List<GameObject>();
+            InitWorldObject(new WorldObject("BG", "Background", new string[] { }, new Vector2(), 0));
 
-            InitGameObject(new Button("PlayBtn", "SelPlayBtn", "PlayButton", new Vector2(500, 100), 1, Behaviors.LoadSceneOnClick));
-            InitGameObject(new Button("ExitBtn", "SelExitBtn", "QuitButton", new Vector2(500, -20), 1, Behaviors.QuitOnClick));
-            InitGameObject(new Button("SettingsBtn", "SelSettingsBtn", "SettingsButton", new Vector2(500, 40), 1, null));
-            InitGameObject(new Switch("SwitchOn", "SwitchOff","NoNameSwitch", new Vector2(500, 160), 1, Behaviors.SwitchOnClick));
-            
-            // hybrid dead hover button + switch combo
-            InitGameObject(new Button("SwitchBaseDeselected", "SwitchBaseSelected","ComplexSwitchBase", new Vector2(500, 220), 1, Behaviors.OnClickTemplate)); // for implementation purposes; you can also pass null here
-            InitGameObject(new Switch("SwitchOn", "SwitchOff","ComplexSwitch", new Vector2(500, 220), 1, Behaviors.SwitchOnClick)); // TODO make this relative to switch base
+            Vector2 btnSize = ResourceManager.GetTextureSize("Btn");
+            InitGameObject(new TextButton("PlayBtn", "Btn", "BtnHover", "Play", 5, new Vector2(Globals.SCREEN_WIDTH / 2 - btnSize.X / 2 - 20, 0), new Vector2(), 1, Behaviors.LoadSceneOnClick));
+            TextButton exitBtn = (TextButton)InitGameObject(new TextButton("ExitBtn", "Btn", "BtnHover", "Exit", 5, new Vector2(Globals.SCREEN_WIDTH / 2 - btnSize.X / 2 / 2 - 20, -Globals.SCREEN_HEIGHT/2+btnSize.Y/2/2+20), new Vector2(), 1, Behaviors.QuitOnClick));
+            exitBtn.Transform.SetScale(.5f,.5f);
         }
     }
 }
