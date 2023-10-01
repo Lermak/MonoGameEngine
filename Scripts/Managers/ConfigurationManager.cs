@@ -98,7 +98,7 @@ namespace MonoGame_Core.Scripts
             string appDataDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             string gameDir = "\\" + Globals.GAME_TITLE + "\\";
             appDataDir = appDataDir + gameDir;
-            Directory.CreateDirectory(appDataDir);
+            Directory.CreateDirectory(appDataDir.Replace(":", ""));
             if (Directory.Exists(appDataDir))
             {
                 try
