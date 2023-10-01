@@ -25,7 +25,7 @@ namespace MonoGame_Core.Scripts
                 Bullet newBullet =(Bullet) SceneManager.CurrentScene.AddWorldObject(new Bullet("BulletTex", "", shipTF.Position, shipTF.RotationDegrees));
                 newBullet.CollisionHandler.myActions.Add(
                     new CollisionActions(
-                        "myBox",
+                        "bulletBox",
                         new List<string> {"enemyBox"},
                         new List<CollisionAction> {CollisionBehaviors.DealDamage}
                         )

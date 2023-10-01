@@ -87,13 +87,14 @@ namespace MonoGame_Core.Scripts
             for (int i = 0; i < item.ShapeData.GridCells.Length; i++)
             {
                 Vector2 pos = staringCell + item.ShapeData.GridCells[i];
-                cells[(int)pos.X, (int)pos.Y] = "Filled";
+                cells[(int)pos.X, (int)pos.Y] = item.Name;
+                Console.WriteLine(pos.X + " " + pos.Y + " " + item.Name);
             }
             item.ShapeData.GridPosition = staringCell;
             StoredItems.Add(item);
-            Console.WriteLine(staringCell.X + " " + staringCell.Y);
-        }
+            
 
+        }
         public void RemoveItemFromPosition(InventoryItem item)
         {
             for (int i = 0; i < item.ShapeData.GridCells.Length; i++)

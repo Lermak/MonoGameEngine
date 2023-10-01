@@ -8,7 +8,7 @@ namespace MonoGame_Core.Scripts
 {
     public class InventoryItemShapeData : Component
     {
-        public enum SHAPE
+        public enum Shapes
         {
             Line,
             Square,
@@ -24,7 +24,8 @@ namespace MonoGame_Core.Scripts
             RHook
         }
 
-        public SHAPE shape;
+
+        public Shapes shape;
 
         public Vector2 GridPosition = new Vector2(-1, -1);
         public Vector2[] GridCells;
@@ -34,44 +35,44 @@ namespace MonoGame_Core.Scripts
 
         public static bool CanGrab = true;
 
-        public InventoryItemShapeData(GameObject go, SHAPE shape) : base(go, "inventoryItemShape")
+        public InventoryItemShapeData(GameObject go, Shapes shape) : base(go, "inventoryItemShape")
         {
             switch (shape)
             {
-                case SHAPE.Line:
+                case Shapes.Line:
                     GridCells = new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0), new Vector2(3, 0) };
                     break;
-                case SHAPE.Square:
+                case Shapes.Square:
                     GridCells = new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(0, 1), new Vector2(1, 1) };
                     break;
-                case SHAPE.T:
+                case Shapes.T:
                     GridCells = new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0), new Vector2(1, 1) };
                     break;
-                case SHAPE.J:
+                case Shapes.J:
                     GridCells = new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, 1), new Vector2(1, 2) };
                     break;
-                case SHAPE.L:
+                case Shapes.L:
                     GridCells = new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(0, 1), new Vector2(0, 2) };
                     break;
-                case SHAPE.S:
+                case Shapes.S:
                     GridCells = new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, 1), new Vector2(2, 1) };
                     break;
-                case SHAPE.Z:
+                case Shapes.Z:
                     GridCells = new Vector2[] { new Vector2(0, 1), new Vector2(0, 2), new Vector2(1, 2), new Vector2(2, 2) };
                     break;
-                case SHAPE.Block:
+                case Shapes.Block:
                     GridCells = new Vector2[] { new Vector2(0, 0) };
                     break;
-                case SHAPE.TwoLine:
+                case Shapes.TwoLine:
                     GridCells = new Vector2[] { new Vector2(0, 0), new Vector2(1, 0) };
                     break;
-                case SHAPE.ThreeLine:
+                case Shapes.ThreeLine:
                     GridCells = new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0) };
                     break;
-                case SHAPE.LHook:
+                case Shapes.LHook:
                     GridCells = new Vector2[] { new Vector2(0, 1), new Vector2(1, 1), new Vector2(1, 0) };
                     break;
-                case SHAPE.RHook:
+                case Shapes.RHook:
                     GridCells = new Vector2[] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, 1) };
                     break;
             }
