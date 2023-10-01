@@ -16,7 +16,7 @@ namespace MonoGame_Core.Scripts
             Vector2 mousePos = InputManager.MousePos;
             Transform shipTF = (Transform) go.GetComponent("transform");
             ShipData shipData = (ShipData) go.GetComponent("ShipData");
-            
+            /*
             if (InputManager.IsTriggered(InputManager.MouseKeys.Left)) {
                 if ( shipData.weaponAmmo >= 1) {
                     
@@ -28,6 +28,9 @@ namespace MonoGame_Core.Scripts
 
                 } // else dont shoot
             } // else dont do anything
+            */
+            SceneManager.CurrentScene.AddWorldObject(new Bullet("BulletTex","",shipTF.Position,shipTF.RotationDegrees));
+            
         }
         public static void MoveWASD(float dt, GameObject go, Component[] c = null) {
             // todo:
