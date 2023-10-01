@@ -282,7 +282,7 @@ namespace MonoGame_Core.Scripts
                 col.ContainsPoint(v))
             {
                 ShakeOnClick(dt, go, c);
-                SceneManager.ChangeScene(new InventoryScene());
+                SceneManager.ChangeScene(new CombatScene());
             }
         }
         public static void MarkSlotOnClick(float dt, GameObject go, Component[] c = null)

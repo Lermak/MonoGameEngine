@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace MonoGame_Core.Scripts
 {
-    public class TestCombatScene : Scene
+    public class CombatScene : Scene
     {
         protected override void loadContent()
         {
@@ -31,7 +31,16 @@ namespace MonoGame_Core.Scripts
 
         protected override void loadObjects()
         {
-            
+            int enemyCount = 10;
+
+            for (int i = 0;i<enemyCount;i++) {
+                Random rng = new Random();
+                Vector2 spawnPos = new Vector2(
+                    rng.Next(((int) -Globals.SCREEN_WIDTH/2) + 100,((int) Globals.SCREEN_WIDTH/2) - 100),
+                    rng.Next(((int) -Globals.SCREEN_HEIGHT/2) + 100,((int) Globals.SCREEN_HEIGHT/2) - 100));
+                InitWorldObject(new WorldObject("Ship","",new string[]{"enemy"},spawnPos,1));
+
+            }
             
             
         }
