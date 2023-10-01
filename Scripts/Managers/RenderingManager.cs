@@ -36,7 +36,7 @@ namespace MonoGame_Core.Scripts
         /// <summary>
         /// Set the rendering order
         /// </summary>
-        public static RenderOrder RenderingOrder = RenderOrder.SideScrolling;
+        public static RenderOrder RenderingOrder = RenderOrder.TopDown;
 
         /// <summary>
         /// Render targets are what Cameras use to store image data
@@ -86,6 +86,7 @@ namespace MonoGame_Core.Scripts
         /// <param name="dt"></param>
         public static void Draw(float dt)
         {
+            Sort();
             var x = GraphicsDevice.GetRenderTargets();
             WindowScale = new Vector2(GraphicsDevice.Viewport.Width / Globals.SCREEN_WIDTH, GraphicsDevice.Viewport.Height / Globals.SCREEN_HEIGHT);
 
@@ -187,8 +188,8 @@ namespace MonoGame_Core.Scripts
                     s = Sprites.OrderBy(s => s.Shader)
                                 .ThenBy(s => s.Transform.Layer)
                                 .ThenBy(s => s.Transform.Position.Y)
-                                .ThenBy(s => s.OrderInLayer)
-                                .Where(s => Vector2.Distance(s.Transform.Position, c.Transform.Position) <= s.Hypotenuse + Globals.SCREEN_HYPOTENUSE);
+                                .ThenBy(s => s.OrderInLayer);
+                //.Where(s => Vector2.Distance(s.Transform.Position, c.Transform.Position) <= s.Hypotenuse + Globals.SCREEN_HYPOTENUSE);
 
                 else if (RenderingOrder == RenderOrder.Isometric)
                 {
