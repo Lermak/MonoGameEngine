@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Media;
 
 namespace MonoGame_Core.Scripts
 {
-    public class CombatScene : Scene
+    public class TestCombatScene : Scene
     {
         protected override void loadContent()
         {
