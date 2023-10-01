@@ -29,7 +29,9 @@ namespace MonoGame_Core.Scripts
             float dx = p2.X - p1.X;
             float dy = p2.Y - p1.Y;
 
-            return (float)Math.Atan2(dy, dx);
+            float degrees = (float)Math.Atan2(dy, dx);
+
+            return degrees;
         }
 
         public static Vector2 RadToUnit(float r)
@@ -50,6 +52,12 @@ namespace MonoGame_Core.Scripts
         public static float Hypot(float x, float y)
         {
             return (float)Math.Sqrt(Math.Pow(x, 2) + Math.Pow(y, 2));
+        }
+
+        public static Vector2 GetRotatedPosition(float degrees, Vector2 startPos, Vector2 rotateAround)
+        {
+            return new Vector2((float)(Math.Cos(DegToRad(degrees)) * (rotateAround.X - startPos.X) - Math.Sin(DegToRad(degrees)) * (rotateAround.Y - startPos.Y) + startPos.X),
+            (float)(Math.Sin(DegToRad(degrees)) * (rotateAround.X - startPos.X) + Math.Cos(DegToRad(degrees)) * (rotateAround.Y - startPos.Y) + startPos.Y));
         }
     }
 }

@@ -27,7 +27,7 @@ namespace MonoGame_Core.Scripts
             ResourceManager.AddTexture("PlayerTex", "Images/Galaxy/GoofyEnemyShip");
             ResourceManager.AddTexture("BulletTex", "Images/Bullet");
             ResourceManager.AddTexture("PeaShooter", "Images/PeaShooter");
-            ResourceManager.AddTexture("Base", "Images/Base");
+            ResourceManager.AddTexture("Grid", "Images/Inventory/Grid");
             ResourceManager.AddTexture("BG", "Images/Background");
 
             ResourceManager.AddFont("TestFont", "Fonts/TestFont");
@@ -37,21 +37,11 @@ namespace MonoGame_Core.Scripts
 
         protected override void loadObjects()
         {
-            if (Globals.inventoryGrid == null)
-            {
-                Globals.inventoryGrid = (InventoryGrid)InitWorldObject(new InventoryGrid("BG", "Background"));
-            }
-            InventoryItem item = new InventoryItem("TestInventoryItem", InventoryItem.SHAPE.Line, InventoryItem.DIRECTION.Right, new Vector2(0,3), new string[] { "TestInventoryItem" });
-            if (Globals.inventoryGrid.canPlaceItem(item) ) { Globals.inventoryGrid.placeItem(item); }
+            InitWorldObject(new InventoryGrid("Grid", "Grid", new Vector2(10,10)));
 
-            Ship player = (Ship) InitWorldObject( new Ship("PlayerTex","Player",new Vector2(0,0)));
-
-            
-
-        }
-        public override void SceneRunning(float dt)
-        {
-            base.SceneRunning(dt);
+            InventoryItem item = (InventoryItem)InitWorldObject(new InventoryItem("TestInventoryItem", "Test", new Vector2(), InventoryItemShapeData.SHAPE.Line));
+            InventoryItem item2 = (InventoryItem)InitWorldObject(new InventoryItem("TestInventoryItem2", "Test", new Vector2(100,100), InventoryItemShapeData.SHAPE.Line));
+            InventoryItem item3 = (InventoryItem)InitWorldObject(new InventoryItem("TestInventoryItem3", "Test", new Vector2(-100,-100), InventoryItemShapeData.SHAPE.Line));
         }
     }
 }
