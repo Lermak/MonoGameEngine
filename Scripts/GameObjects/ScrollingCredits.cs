@@ -37,6 +37,8 @@ namespace MonoGame_Core.Scripts
                 new CreditLine(3, "hotpot.ai/s/art-generator/"),
                 new CreditLine(3, "craiyon.com"),
                 new CreditLine(3, "bing.com/images/create"),
+                new CreditLine(3, "bing.com/images/create"),
+                new CreditLine(3, "bing.com/images/create"),
                 new CreditLine(3, "Kenny Game Assets")
             };
 
@@ -53,12 +55,12 @@ namespace MonoGame_Core.Scripts
 
             FontRenderer thanks = (FontRenderer)AddComponent(new FontRenderer("Thanks", this, "Thanks For Playing", "BaseFont", new Vector2(Globals.SCREEN_WIDTH, Globals.SCREEN_HEIGHT), 1));
             thanks.TextScale = 10;
-            thanks.DrawOffset = new Vector2(0, yPos - Globals.SCREEN_HEIGHT/2);
+            thanks.DrawOffset = new Vector2(0, yPos - Globals.SCREEN_HEIGHT/2-100);
             FontRenderer end = (FontRenderer)AddComponent(new FontRenderer("Return", this, "Press 'Space' to Return To Main Menu", "BaseFont", new Vector2(Globals.SCREEN_WIDTH, Globals.SCREEN_HEIGHT), 1));
             end.TextScale = 2;
-            end.DrawOffset = new Vector2(0, yPos - Globals.SCREEN_HEIGHT + end.TextScale*20);
+            end.DrawOffset = new Vector2(0, yPos - Globals.SCREEN_HEIGHT);
 
-            Transform.SetPosition(new Vector2(0, yPos));
+            Transform.SetPosition(new Vector2(0, -Globals.SCREEN_HEIGHT/2));
 
             CoroutineManager.Add(Coroutines.CreditScroll(3, this.Transform, -yPos + ResourceManager.GetTextureSize(texID).Y, this.RigidBody), "ScrollCredits", 0, true);
         }
