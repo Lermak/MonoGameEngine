@@ -24,7 +24,8 @@ namespace MonoGame_Core.Scripts
             ResourceManager.AddSoundEffect("TestHit", "Sound/TestHit");
 
             ResourceManager.AddTexture("Test", "Images/Test");
-            ResourceManager.AddTexture("PlayerTex", "Images/Peashooter");
+            ResourceManager.AddTexture("PlayerTex", "Images/Galaxy/GoofyEnemyShip");
+            ResourceManager.AddTexture("BulletTex", "Images/Bullet");
             ResourceManager.AddTexture("PeaShooter", "Images/PeaShooter");
             ResourceManager.AddTexture("Base", "Images/Base");
             ResourceManager.AddTexture("BG", "Images/Background");
