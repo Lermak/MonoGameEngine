@@ -34,7 +34,8 @@ namespace MonoGame_Core.Scripts
         {
             //
             // spawn in the player first
-            Ship player = (Ship)InitWorldObject(new Ship("Base", "playerShip", new Vector2(0, 0)));
+            PlayerShip player = (PlayerShip)InitWorldObject(new PlayerShip("Base", "playerShip", new Vector2(0, 0)));
+            player.AddBehavior("reload",ShipBehaviors.ReloadWeapon);
             //
             // spawn in enemies
             // currently also populates middle of the map,
@@ -53,18 +54,10 @@ namespace MonoGame_Core.Scripts
                         ((int)Globals.SCREEN_HEIGHT / 2) - 100
                         )
                     );
-                WorldObject newEnemy = InitWorldObject(new WorldObject("Ship", "", new string[] { "enemy" }, spawnPos, 1));
-                newEnemy.AddBehavior(
-                    "playerPoint",
-                    ShipBehaviors.PointToPlayer,
-                    new Component[] { player.Transform }
-                );
-                newEnemy.AddBehavior(
-                    "randomShoot",
-                    ShipBehaviors.EmitRandomBullet
-                    );
+                EnemyShip enemy = (EnemyShip) InitWorldObject(new EnemyShip("Ship", "", spawnPos));
+                enemy.AddBehavior("pointToPlayer",ShipBehaviors.PointToPlayer,new Component[] {player.Transform});
+                
             }
-
 
         }
         public override void OnExit()

@@ -7,6 +7,6 @@ public class EnemyShipData : ShipData {
     public float health;
     
     public EnemyShipData(GameObject go, string name) : base(go,name) {
-        health=100;
+        health=5;
     }
 }

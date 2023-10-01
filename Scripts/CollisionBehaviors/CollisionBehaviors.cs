@@ -25,5 +25,21 @@ namespace MonoGame_Core.Scripts
             else
                 ((WorldObject)a.GameObject).RigidBody.MoveVelocity = (((WorldObject)a.GameObject).RigidBody.MoveVelocity * new Vector2(-1, 1));
         }
+        /// <summary>
+        /// deals damage to enemy health
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="go"></param>
+        /// <param name="c"></param>
+        public static void DealDamage(Collider a, Collider b, Vector2 p) {
+            
+            Bullet bullet = (Bullet)a.GameObject;
+            if (Math.Abs(p.Y) >= Math.Abs(p.X)) {
+                ((EnemyShipData)b.GameObject.GetComponent("ShipData")).health-=1;
+                bullet.Destroy();
+            }
+            
+        }
+
     }
 }
