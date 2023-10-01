@@ -13,7 +13,12 @@ namespace MonoGame_Core.Scripts
         /// 
         /// corbin thought it would be funny to make this a float
         /// </summary>
-        public int reload;
+        public float reload;
+        /// <summary>
+        /// object speed effectively in pix/s
+        /// </summary>
+        public float speed;
+        
 
         public ShipData(GameObject go, string name) : base(go, name)
         {
