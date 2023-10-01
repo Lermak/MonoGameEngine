@@ -22,6 +22,9 @@ namespace MonoGame_Core.Scripts
                     
                     // todo: do the shooting
                     shipData.weaponAmmo -= 1;
+                    //! dear corbin: no i dont like how this has to
+                    //! be done either but we are here now so :^)
+                    SceneManager.CurrentScene.AddWorldObject(new Bullet("BulletTex","",shipTF.Position,shipTF.RotationDegrees));
 
                 } // else dont shoot
             } // else dont do anything
