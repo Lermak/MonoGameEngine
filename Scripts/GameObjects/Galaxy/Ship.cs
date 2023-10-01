@@ -15,9 +15,6 @@ namespace MonoGame_Core.Scripts
         public Ship(string texID, string name, Vector2 pos) : base(texID, name, new string[] { "combat" }, pos, 2)
         {
             AddComponent(new ShipData(this, "ShipData"));
-            AddBehavior("shoot",ShipBehaviors.ShootOnClick);
-            AddBehavior("pointToMouse",Behaviors.PointAtMouse);
-            AddBehavior("moveToRot",Behaviors.MoveTowardRotation);
         }
         /// <summary>
         ///  checks if there are no filled spaces in the ship's inventory grid

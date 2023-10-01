@@ -15,7 +15,7 @@ namespace MonoGame_Core.Scripts
         /// </summary>
         public float reload;
         /// <summary>
-        /// object speed effectively in pix/s
+        /// Object's speed relative to x percent of MoveVelocity
         /// </summary>
         public float speed;
         
