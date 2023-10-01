@@ -69,7 +69,7 @@ namespace MonoGame_Core.Scripts
             if (InputManager.IsTriggered(InputManager.MouseKeys.Left) &&
                 col.ContainsPoint(v))
             {
-                SceneManager.CurrentScene.AddWorldObject(new InventoryItem("TestInventoryItem" + Guid.NewGuid(), "Test", new Vector2(Globals.SCREEN_WIDTH, -400), InventoryItemShapeData.Shapes.Line));
+                SceneManager.CurrentScene.AddWorldObject(new InventoryItem("TestInventoryItem" + Guid.NewGuid(), "Test", new Vector2(Globals.SCREEN_WIDTH, -400), InventoryItemShapeData.Shapes.S));
             }
         }
     }

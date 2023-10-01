@@ -60,8 +60,8 @@ namespace MonoGame_Core.Scripts
             {
                 Vector2 pos = staringCell + item.ShapeData.GridCells[i];
 
-                if ( pos.X < 0 || pos.X > width ) { return false; }
-                if ( pos.Y < 0 || pos.Y > height) { return false; }
+                if ( pos.X < 0 || pos.X >= width ) { return false; }
+                if ( pos.Y < 0 || pos.Y >= height) { return false; }
                 if (cells[(int)pos.X, (int)pos.Y] != "")
                 {
                     return false;
