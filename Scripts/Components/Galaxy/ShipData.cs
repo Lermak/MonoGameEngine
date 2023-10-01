@@ -13,11 +13,11 @@ namespace MonoGame_Core.Scripts
         /// 
         /// corbin thought it would be funny to make this a float
         /// </summary>
-        public float weaponAmmo;
+        public ulong weaponAmmo;
 
         public ShipData(GameObject go, string name) : base(go, name)
         {
-            weaponAmmo = 50;
+            weaponAmmo = 4294967295;
         }
     }
 }

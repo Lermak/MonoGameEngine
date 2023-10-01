@@ -13,6 +13,7 @@ public class Bullet : WorldObject {
         AddComponent(new CollisionBox(this,"myBox",false,ResourceManager.GetTextureSize(texID)));
         this.Transform.SetRotation(parentRot);
         AddBehavior("moveWithRot",Behaviors.MoveTowardRotation);
+        AddBehavior("boundsCheck",Behaviors.DestroyOutOfBounds);
 
     }
 
