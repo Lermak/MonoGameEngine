@@ -29,7 +29,14 @@ namespace MonoGame_Core.Scripts
                 } // else dont shoot
             } // else dont do anything
             */
-            SceneManager.CurrentScene.AddWorldObject(new Bullet("BulletTex","",shipTF.Position,shipTF.RotationDegrees));
+            if (InputManager.IsTriggered(InputManager.MouseKeys.Left)) {
+                
+                    
+                    SceneManager.CurrentScene.AddWorldObject(new Bullet("BulletTex","",shipTF.Position,shipTF.RotationDegrees));
+
+                
+            } // else dont do anything
+            
             
         }
         public static void MoveWASD(float dt, GameObject go, Component[] c = null) {
