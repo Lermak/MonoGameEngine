@@ -285,44 +285,6 @@ namespace MonoGame_Core.Scripts
                 SceneManager.ChangeScene(new CombatScene());
             }
         }
-        public static void MarkSlotOnClick(float dt, GameObject go, Component[] c = null)
-        {
-            Vector2 v = InputManager.MousePos;
-            if (InputManager.IsTriggered(InputManager.MouseKeys.Left))
-            {  
-                if (false)
-                {
-                    for (int i = Globals.inventoryGrid.height - 1; i >= 0; i--)
-                    {
-                        for (int j = 0; j < Globals.inventoryGrid.width; j++)
-                        {
-                            if (Globals.inventoryGrid.slots[j, i] != "")
-                            {
-                                Console.Write('X');
-                            }
-                            else
-                            {
-                                Console.Write(' ');
-                            }
-
-                        }
-                        Console.WriteLine();
-
-                    }
-                }
-
-            }
-            if (InputManager.IsTriggered(InputManager.KeyMap["rot_left"]))
-            {
-                Globals.inventoryGrid.items[0].rotateLeft();
-                Console.Write('Q');
-            }
-            if (InputManager.IsTriggered(InputManager.KeyMap["rot_right"]))
-            {
-                Globals.inventoryGrid.items[0].rotateRight();
-                Console.Write('R');
-            }
-        }
 
         public static void DestroyOutOfBounds(float dt, GameObject go, Component[] c = null)
         {

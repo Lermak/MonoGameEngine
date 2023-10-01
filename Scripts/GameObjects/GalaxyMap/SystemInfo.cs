@@ -15,10 +15,10 @@ namespace MonoGame_Core.Scripts
 
             SpriteRenderer.Visible = false;
             systemName = (FontRenderer)AddComponent(new FontRenderer("SystemName", this, "Test Name", "BaseFont", new Vector2(100, 40), 1));
-            systemName.DrawOffset = new Vector2(0, ResourceManager.GetTextureSize("SystemInfo").Y/2-25);
+            systemName.DrawOffset = new Vector2(0, Globals.ResourceManager.GetTextureSize("SystemInfo").Y/2-25);
             systemName.TextScale = 2;
             systemType = (FontRenderer)AddComponent(new FontRenderer("SystemType", this, "BBBBB", "BaseFont", new Vector2(100, 80), 1));
-            systemType.DrawOffset = new Vector2(0, ResourceManager.GetTextureSize("SystemInfo").Y / 2 - 75);
+            systemType.DrawOffset = new Vector2(0, Globals.ResourceManager.GetTextureSize("SystemInfo").Y / 2 - 75);
             systemType.TextScale = 2;
 
             AddBehavior("DisplaySystemInfo", GalaxyMapBehaviors.DisplaySystemInfo);
@@ -26,9 +26,9 @@ namespace MonoGame_Core.Scripts
 
         public override void Initilize()
         {
-            systemName.Cameras = new List<Camera> { CameraManager.MainCamera };
+            systemName.Cameras = new List<Camera> { Globals.CameraManager.MainCamera };
             systemName.Initilize();
-            systemType.Cameras = new List<Camera> { CameraManager.MainCamera };
+            systemType.Cameras = new List<Camera> { Globals.CameraManager.MainCamera };
             systemType.Initilize();
             base.Initilize();
         }

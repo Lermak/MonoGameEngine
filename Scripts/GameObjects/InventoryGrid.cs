@@ -8,73 +8,16 @@ namespace MonoGame_Core.Scripts
 {
     public class InventoryGrid : WorldObject
     {
-        public int width = 19;
-        public int height = 10;
+        public static InventoryGrid Grid = null;
+        public static InventoryGridData Inventory { get { return (InventoryGridData)Grid.componentHandler.Get("Grid"); } }
 
-        
-        public bool isCellEmpty()
+        public InventoryGrid(string texID, string name, Vector2 gridSize) : base(texID, name, new string[] { "InventoryGrid" }, new Vector2(0, 0), 1)
         {
-            return false;
-        }
-
-        public bool canPlaceItem(InventoryItem item)
-        {
-            //for each square of the item, see if position in grid is free
-            Vector2 pos = ((Transform)item.GetComponent("transform")).Position;
-
-            for (int i = 0; i < 4; i++)
+            if (Grid == null)
             {
-                WorldObject obj = (WorldObject)SceneManager.CurrentScene.GetObjectByName(item.blocks[i]);
-                Vector2 gridPos = worldToGrid(obj.Transform.Position);
-                if (slots[(int)(gridPos.X), (int)( gridPos.Y)] == item.blocks[i]) { return false; }
+                Grid = this;
+                AddComponent(new InventoryGridData(this, "Grid", (int)gridSize.X, (int)gridSize.Y));
             }
-            return true;
         }
-
-        public void placeItem(InventoryItem item)
-        {
-            Vector2 pos = ((Transform)item.GetComponent("transform")).Position;
-            if (canPlaceItem(item)) {
-                for (int i = 0; i < 4; i++)
-                {
-                    WorldObject obj = (WorldObject)SceneManager.CurrentScene.GetObjectByName(item.blocks[i]);
-                    Vector2 gridPos = worldToGrid(obj.Transform.Position);
-                    slots[(int)(gridPos.X), (int)(gridPos.Y)] = item.blocks[i];
-                }
-            }
-            this.items.Add(item);
-        }
-
-        public static Vector2 worldToGrid(Vector2 world)
-        {
-            float gridX = (((world.X / (Globals.SCREEN_WIDTH - 100)) + 0.5f) * Globals.inventoryGrid.width);
-            float gridY = (((world.Y / (Globals.SCREEN_HEIGHT - 100)) + 0.5f) * Globals.inventoryGrid.height);
-            gridX = Math.Clamp(gridX, 0, Globals.inventoryGrid.width - 1);
-            gridY = Math.Clamp(gridY, 0, Globals.inventoryGrid.height - 1);
-            return new Vector2(gridX, gridY);
-        }
-        public static Vector2 gridToWorld(Vector2 grid)
-        {
-            float worldX = (((grid.X / Globals.inventoryGrid.width) - 0.5f) * (Globals.SCREEN_WIDTH - 100)) + (Globals.TILE_SIZE / 2);
-            float worldY = (((grid.Y / Globals.inventoryGrid.height) - 0.5f) * (Globals.SCREEN_HEIGHT - 100)) + (Globals.TILE_SIZE / 2);
-            return new Vector2(worldX, worldY);
-        }
-
-        /*public InventoryItem grabItem(Vector2 position)
-        {
-            this.componentHandler.GetOfType<InventoryItem>();
-            return null;
-        }*/
-
-        public List<InventoryItem> items;
-        public string[,] slots = null;
-        public InventoryGrid(string texID, string name) : base(texID, name, new string[] { "InventoryGrid" }, new Vector2(0, 0), 1)
-        {
-            this.AddBehavior("MarkSlotOnClick", Behaviors.MarkSlotOnClick);
-            this.slots = new string[width, height];
-            items = new List<InventoryItem>();
-        }
-
-        
     }
 }

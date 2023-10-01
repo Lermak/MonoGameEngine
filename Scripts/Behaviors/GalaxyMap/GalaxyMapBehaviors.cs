@@ -12,7 +12,7 @@ namespace MonoGame_Core.Scripts
         public static void TravelOnClick(float dt, GameObject go, Component[] c = null)
         {
             ShipMarkerData sd = (ShipMarkerData)go.GetComponent("ShipMarkerData");
-            List<GameObject> galaxies = SceneManager.CurrentScene.GetObjectsByTag("GalaxyNode");
+            List<GameObject> galaxies = SceneManager.CurrentScene.GetObjects("GalaxyNode");
 
             if (InputManager.IsTriggered(InputManager.MouseKeys.Left))
             {
@@ -23,7 +23,7 @@ namespace MonoGame_Core.Scripts
                         if (((CollisionCircle)g.GetComponent("myCircle")).ContainsPoint(InputManager.MousePos))
                         {
                             sd.InFlight = true;
-                            CoroutineManager.Add(GalaxyMapCoroutines.TravelToGalaxy((WorldObject)go, (Transform)g.GetComponent("transform")), "ShipTravel", 0, true);
+                            Globals.CoroutineManager.Add(GalaxyMapCoroutines.TravelToGalaxy((WorldObject)go, (Transform)g.GetComponent("transform")), "ShipTravel", 0, true);
                         }
                     }
                 }
@@ -64,7 +64,7 @@ namespace MonoGame_Core.Scripts
         }
         public static void DisplaySystemInfo(float dt, GameObject go, Component[] c = null)
         {
-            List<GameObject> galaxies = SceneManager.CurrentScene.GetObjectsByTag("GalaxyNode");
+            List<GameObject> galaxies = SceneManager.CurrentScene.GetObjects("GalaxyNode");
             bool flag = false;
             WorldObject wo = (WorldObject)go;
             FontRenderer systemName = (FontRenderer)(wo.GetComponent("SystemName"));
@@ -77,7 +77,7 @@ namespace MonoGame_Core.Scripts
                     wo.SpriteRenderer.Visible = true;
                     systemName.Visible = true;
                     systemType.Visible = true;
-                    Vector2 tSize = ResourceManager.GetTextureSize("SystemInfo");
+                    Vector2 tSize = Globals.ResourceManager.GetTextureSize("SystemInfo");
                     wo.Transform.SetPosition(InputManager.MousePos + new Vector2(InputManager.MousePos.X > Globals.SCREEN_WIDTH * .25f ? -tSize.X : tSize.X, InputManager.MousePos.Y > Globals.SCREEN_HEIGHT * .25f ? -tSize.Y : tSize.Y) /2);
                     GalaxyData gd = (GalaxyData)(g.GetComponent("GalaxyData"));
                     systemName.Text = gd.SystemName;

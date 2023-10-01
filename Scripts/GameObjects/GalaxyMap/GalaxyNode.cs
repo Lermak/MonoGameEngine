@@ -13,7 +13,7 @@ namespace MonoGame_Core.Scripts
         {
             RigidBody.AngularVelocity = .2f;
             AddComponent(new GalaxyData(this, "GalaxyData", type, row));
-            AddComponent(new CollisionCircle("myCircle", this, ResourceManager.GetTextureSize(texID).Length()/2, new Vector2(), true));
+            AddComponent(new CollisionCircle("myCircle", this, Globals.ResourceManager.GetTextureSize(texID).Length()/2, new Vector2(), true, new List<string> { "myCircle" }));
             AddBehavior("Visit", GalaxyMapBehaviors.VisitSystem);
         }
         public GalaxyNode(string texID, string name, Vector2 pos, int row) : base(texID, name, new string[] { "GalaxyNode" }, pos, 1)
@@ -22,7 +22,7 @@ namespace MonoGame_Core.Scripts
             GalaxyData.GalaxyType t = (GalaxyData.GalaxyType)r.Next(Enum.GetNames(typeof(GalaxyData.GalaxyType)).Length-1);
             RigidBody.AngularVelocity = .2f;
             GalaxyData g = (GalaxyData)AddComponent(new GalaxyData(this, "GalaxyData", t, row));
-            AddComponent(new CollisionCircle("myCircle", this, ResourceManager.GetTextureSize(texID).Length()/2, new Vector2(), true));
+            AddComponent(new CollisionCircle("myCircle", this, Globals.ResourceManager.GetTextureSize(texID).Length()/2, new Vector2(), true, new List<string> { "myCircle" }));
             AddBehavior("Visit", GalaxyMapBehaviors.VisitSystem);
         }
     }

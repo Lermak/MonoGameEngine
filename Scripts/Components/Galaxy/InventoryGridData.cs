@@ -8,8 +8,7 @@ namespace MonoGame_Core.Scripts
 {
     public class InventoryGridData : Component
     {
-        
-        // todo: scaff/actually put stuff here
+        public const int TILE_SIZE = 96;
         /// <summary>
         /// Horizontal count of items in a grid
         /// </summary>
@@ -19,68 +18,107 @@ namespace MonoGame_Core.Scripts
         /// </summary>
         public int height;
         public string[,] cells;
+        public List<WorldObject> StoredItems = new List<WorldObject>();
+
+        public Vector2 Size { get { return new Vector2(width * TILE_SIZE, height * TILE_SIZE); } }
+
+        public Vector2 CellZero
+        {
+            get
+            {
+                return ((WorldObject)this.gameObject).Transform.Position // center of grid object is center of object
+                        + (new Vector2(-width, height) / 2 * TILE_SIZE); //subtract half the size of the grid to get to the top left cell 
+            }
+        }
+        public Vector2 CellMax
+        {
+            get
+            {
+                return ((WorldObject)this.gameObject).Transform.Position // center of grid object is center of object
+                        + (new Vector2(width, -height) / 2 * TILE_SIZE); //add half the size of the grid to get to the bottom right cell
+            }
+        }
 
         public InventoryGridData(GameObject go, string name, int w, int h) : base(go, name)
         {
-
             width = w;
             height= h;
             cells = new string[width,height];
-           
+            for (int x = 0; x < width;  ++x)
+            {
+                for (int y = 0; y < height; ++y)
+                {
+                    cells[x, y] = "";
+                }
+            }
         }
 
-        public bool canPlaceItem(InventoryItemData item)
+        public bool CanPlaceItem(InventoryItem item)
         {
-            for (int i = 0; i < 4; i++)
+            Vector2 staringCell = GetGridPositionFromWorld(item.PosToGrid);
+            for (int i = 0; i < item.ShapeData.GridCells.Length; i++)
             {
-                int x = item.position.X + item.offset[i].X;
-                int y = item.position.Y + item.offset[i].Y;
-                if ( x < 0 || x > width ) { return false; }
-                if ( y < 0 || y > height) { return false; }
-                if (cells[x,y] != "")
+                Vector2 pos = staringCell + item.ShapeData.GridCells[i];
+
+                if ( pos.X < 0 || pos.X > width ) { return false; }
+                if ( pos.Y < 0 || pos.Y > height) { return false; }
+                if (cells[(int)pos.X, (int)pos.Y] != "")
                 {
                     return false;
                 }
             }
             return true;
         }
-        public void placeItem(InventoryItemData item)
+        public bool IsInsideGrid(InventoryItem item)
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < item.ShapeData.GridCells.Length; i++)
             {
-                int x = item.position.X + item.offset[i].X;
-                int y = item.position.Y + item.offset[i].Y;
-                cells[x, y] = item.Name;
+                Vector2 pos = GetGridPositionFromWorld(item.PosToGrid) + item.ShapeData.GridCells[i];
+
+                if (pos.X >= 0 && pos.X <= width &&
+                    pos.Y >= 0 && pos.Y <= height) { return true; }
             }
-            this.GameObject.AddComponent(item);
+            return false;
         }
 
-        public InventoryItemData removeItemFromPosition((int X, int Y) gridPosition)
+        public void PlaceItem(InventoryItem item)
         {
-            InventoryItemData item = (InventoryItemData)this.gameObject.GetComponent(this.cells[gridPosition.X, gridPosition.Y]);
-            this.gameObject.ComponentHandler.Components.Remove(item);
-            for (int i = 0; i < 4; i++)
+            Vector2 staringCell = GetGridPositionFromWorld(item.PosToGrid);
+            for (int i = 0; i < item.ShapeData.GridCells.Length; i++)
             {
-                int x = item.position.X + item.offset[i].X;
-                int y = item.position.Y + item.offset[i].Y;
-                cells[x, y] = "";
+                Vector2 pos = staringCell + item.ShapeData.GridCells[i];
+                cells[(int)pos.X, (int)pos.Y] = "Filled";
             }
-            return item;
+            item.ShapeData.GridPosition = staringCell;
+            StoredItems.Add(item);
+            Console.WriteLine(staringCell.X + " " + staringCell.Y);
         }
 
-        public (int X, int Y) getGridPositionFromWorld(Vector2 worldPos)
+        public void RemoveItemFromPosition(InventoryItem item)
         {
-            float gridX = (((worldPos.X / (Globals.SCREEN_WIDTH - 100)) + 0.5f) * Globals.inventoryGrid.width);
-            float gridY = (((worldPos.Y / (Globals.SCREEN_HEIGHT - 100)) + 0.5f) * Globals.inventoryGrid.height);
-            gridX = Math.Clamp(gridX, 0, Globals.inventoryGrid.width - 1);
-            gridY = Math.Clamp(gridY, 0, Globals.inventoryGrid.height - 1);
-            return ((int)gridX, (int)gridY);
+            for (int i = 0; i < item.ShapeData.GridCells.Length; i++)
+            {
+                Vector2 pos = GetGridPositionFromWorld(item.PosToGrid) + item.ShapeData.GridCells[i];
+                cells[(int)pos.X, (int)pos.Y] = "";
+            }
+            item.ShapeData.GridPosition = new Vector2(-1,-1);
+            StoredItems.Remove(item);
         }
-        public Vector2 getWorldPositionFromGrid( (int X, int Y) grid )
+
+        public Vector2 GetGridPositionFromWorld(Vector2 worldPos)
+        {                                                                 
+            Vector2 gridPos = new Vector2((int)(worldPos.X - CellZero.X)/TILE_SIZE, (int)(CellZero.Y - worldPos.Y)/TILE_SIZE);
+
+            return gridPos;
+        }
+        public Vector2 GetWorldPositionFromGrid(Vector2 grid)
         {
-            float worldX = (((grid.X / Globals.inventoryGrid.width) - 0.5f) * (Globals.SCREEN_WIDTH - 100)) + (Globals.TILE_SIZE / 2);
-            float worldY = (((grid.Y / Globals.inventoryGrid.height) - 0.5f) * (Globals.SCREEN_HEIGHT - 100)) + (Globals.TILE_SIZE / 2);
-            return new Vector2(worldX, worldY);
+            return CellZero + new Vector2(TILE_SIZE, TILE_SIZE)/2 + grid * TILE_SIZE;
+        }
+
+        public bool IsCellEmpty(Vector2 pos)
+        {
+            return this.cells[(int)pos.X, (int)pos.Y] == "";
         }
     }
 }

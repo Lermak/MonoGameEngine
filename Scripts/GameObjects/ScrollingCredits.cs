@@ -60,7 +60,7 @@ namespace MonoGame_Core.Scripts
 
             Transform.SetPosition(new Vector2(0, -Globals.SCREEN_HEIGHT/2-100));
 
-            CoroutineManager.Add(Coroutines.CreditScroll(3, this.Transform, -yPos + Globals.SCREEN_HEIGHT+100, this.RigidBody), "ScrollCredits", 0, true);
+            Globals.CoroutineManager.Add(Coroutines.CreditScroll(3, this.Transform, -yPos + Globals.SCREEN_HEIGHT+100, this.RigidBody), "ScrollCredits", 0, true);
         }
     }
 }
