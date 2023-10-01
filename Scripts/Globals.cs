@@ -24,7 +24,5 @@ namespace MonoGame_Core.Scripts
         public const float TILE_HEIGHT = 48;
 
         public static List<GameObject> GalaxyMap = null;
-        public static InventoryGrid inventoryGrid;
-        public const int TILE_SIZE = 96;
     }
 }

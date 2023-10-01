@@ -8,109 +8,40 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace MonoGame_Core.Scripts
 {
-    public class InventoryItem : GameObject { 
-        public enum SHAPE
-        {
-            Line,
-            Square,
-            T,
-            J,
-            L,
-            S,
-            Z,
-        }
-        public enum DIRECTION
-        {
-            Right = 0,
-            Up = 1,
-            Left = 2,
-            Down = 3,
+    public class InventoryItem : WorldObject 
+    {
+        public Vector2 GridToPos { 
+            get {
+                if (ShapeData.GridPosition.X < 0 || ShapeData.GridPosition.Y < 0) return Transform.Position;
+                else
+                {
+                    Vector2 dist = Transform.Position - (((CollisionBox)GetComponent("myBox")).BottomLeft() + ShapeData.CornerOffset);
+                    return InventoryGrid.Inventory.CellZero // Top left world position
+                        + new Vector2(ShapeData.GridPosition.X, -ShapeData.GridPosition.Y) * InventoryGridData.TILE_SIZE // add position in grid
+                        + new Vector2(InventoryGridData.TILE_SIZE, -InventoryGridData.TILE_SIZE) / 2 // add half a tile
+                        + dist;
+                }
+            } 
         }
 
-        public SHAPE shape;
-        public DIRECTION direction;
-        public string[] blocks;
-
-
-        
-        
-        public InventoryItem(string name, SHAPE s, DIRECTION dir, Vector2 position, string[] tags) : base(name, new string[] { "inventoryItem" })
-        {
-            shape = s;
-            direction = dir;
-            AddComponent(new Transform(this, InventoryGrid.gridToWorld(position), 0 , 0));
-
-            this.blocks = new string[4] { "","","",""};
-            for (int i = 0; i < 4; i++) {
-                this.blocks[i] = (Guid.NewGuid().ToString());
-                SceneManager.CurrentScene.InitWorldObject(new WorldObject("Block", blocks[i], new string[] { }, new Vector2(), 1));
-            }
-            
-
-            Vector2[] positions = new Vector2[] { };
-            switch (s)
-            {
-                case SHAPE.Line:
-                    positions = new Vector2[4] { new Vector2(0,0), new Vector2(1, 0), new Vector2(2, 0), new Vector2(3, 0)};
-                    break;
-                case SHAPE.Square:
-                    positions = new Vector2[4] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(0, 1), new Vector2(1,1) };
-                    break;
-                case SHAPE.T:
-                    positions = new Vector2[4] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(2, 0), new Vector2(1, 1) };
-                    break;
-                case SHAPE.J:
-                    positions = new Vector2[4] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, 1), new Vector2(1, 2) };
-                    break;
-                case SHAPE.L:
-                    positions = new Vector2[4] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(0, 1), new Vector2(0, 2) };
-                    break;
-                case SHAPE.S:
-                    positions = new Vector2[4] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, 1), new Vector2(2, 1) };
-                    break;
-                case SHAPE.Z:
-                    positions = new Vector2[4] { new Vector2(0, 0), new Vector2(1, 0), new Vector2(1, -1), new Vector2(2, -1) };
-                    break;
-            }
-
-
-            for (int i = 0; i < 4; i++)
-            {
-                ((Transform)(SceneManager.CurrentScene.GetObjectByName(blocks[i]).GetComponent("transform"))).Attach((Transform)this.GetComponent("transform"), false);
-                ((Transform)(SceneManager.CurrentScene.GetObjectByName(blocks[i]).GetComponent("transform"))).SetPosition(positions[i] * Globals.TILE_SIZE);
-            }
-            
+        public Vector2 PosToGrid { 
+            get {
+                Vector2 pos = ((CollisionBox)GetComponent("myBox")).BottomLeft() + ShapeData.CornerOffset;
+                return pos;
+            } 
         }
-        public void rotateLeft()
-        {
-            for(int i = 0; i < 4; i++)
-            {
-                Vector2 oldPos = ((Transform)(SceneManager.CurrentScene.GetObjectByName(blocks[i]).GetComponent("transform"))).GetReletivePosition();
-                Vector2 newPos = new Vector2(-oldPos.Y, oldPos.X);
-                ((Transform)(SceneManager.CurrentScene.GetObjectByName(blocks[i]).GetComponent("transform"))).SetPosition(newPos);
-                this.direction += 1;
-            }
-        }
+        public InventoryItemShapeData ShapeData { get { return (InventoryItemShapeData)componentHandler.Get("inventoryItemShape"); } }
 
-        public void rotateRight()
+        public InventoryItem(string name, string texID, Vector2 pos, InventoryItemShapeData.SHAPE shape) : base(texID, name, new string[] { "inventoryItem" }, pos, 2)
         {
-            for (int i = 0; i < 4; i++)
-            {
-                Vector2 oldPos = ((Transform)(SceneManager.CurrentScene.GetObjectByName(blocks[i]).GetComponent("transform"))).GetReletivePosition();
-                Vector2 newPos = new Vector2(oldPos.Y, -oldPos.X);
-                ((Transform)(SceneManager.CurrentScene.GetObjectByName(blocks[i]).GetComponent("transform"))).SetPosition(newPos);
-                this.direction -= 1;
-            }
-        }
+            AddComponent(new CollisionBox(this, "myBox", true, ResourceManager.GetTextureSize(texID)));
+            AddComponent(new InventoryItemShapeData(this, shape));
+            AddComponent(new ItemEconData(this, "EconData"));
+            //AddComponent(new ItemCombatData(this, "CombatData", 1, 1, 1, ""));
 
-        public override void Initilize()
-        {
-            base.Initilize();
-        }
-
-        public override void Update(float dt)
-        {
-            base.Update(dt);
+            AddBehavior("Pickup", InventoryItemBehaviors.PickupItem);
+            AddBehavior("FollowMouse", InventoryItemBehaviors.FollowMouse);
+            AddBehavior("Rotate", InventoryItemBehaviors.RotateItem);
         }
     }
 }

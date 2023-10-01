@@ -93,21 +93,13 @@ namespace MonoGame_Core.Scripts
 
         public static void ShakeOnClick(float dt, GameObject go, Component[] c = null)
         {
-            Transform t = (Transform)go.GetComponent("transform");
+            SpriteRenderer t = (SpriteRenderer)((WorldObject)go).SpriteRenderer;
 
             //if (InputManager.IsTriggered(InputManager.KeyMap["space"]))
             Collider col = (Collider)go.GetComponent("myBox");
             Vector2 v = InputManager.MousePos;
             if (InputManager.IsTriggered(InputManager.MouseKeys.Left) &&
                 col.ContainsPoint(v))
-                CoroutineManager.Add(Coroutines.Shake(.1f, -10, 10, t), "screenShake", 0, true);
-        }
-
-        public static void ShakeOnSpace(float dt, GameObject go, Component[] c = null)
-        {
-            Transform t = (Transform)go.GetComponent("transform");
-
-            if (InputManager.IsTriggered(InputManager.KeyMap["space"]))
                 CoroutineManager.Add(Coroutines.Shake(.1f, -10, 10, t), "screenShake", 0, true);
         }
 
@@ -228,44 +220,6 @@ namespace MonoGame_Core.Scripts
             {
                 ShakeOnClick(dt, go, c);
                 SceneManager.ChangeScene(new CombatScene());
-            }
-        }
-        public static void MarkSlotOnClick(float dt, GameObject go, Component[] c = null)
-        {
-            Vector2 v = InputManager.MousePos;
-            if (InputManager.IsTriggered(InputManager.MouseKeys.Left))
-            {  
-                if (false)
-                {
-                    for (int i = Globals.inventoryGrid.height - 1; i >= 0; i--)
-                    {
-                        for (int j = 0; j < Globals.inventoryGrid.width; j++)
-                        {
-                            if (Globals.inventoryGrid.slots[j, i] != "")
-                            {
-                                Console.Write('X');
-                            }
-                            else
-                            {
-                                Console.Write(' ');
-                            }
-
-                        }
-                        Console.WriteLine();
-
-                    }
-                }
-
-            }
-            if (InputManager.IsTriggered(InputManager.KeyMap["rot_left"]))
-            {
-                Globals.inventoryGrid.items[0].rotateLeft();
-                Console.Write('Q');
-            }
-            if (InputManager.IsTriggered(InputManager.KeyMap["rot_right"]))
-            {
-                Globals.inventoryGrid.items[0].rotateRight();
-                Console.Write('R');
             }
         }
 
