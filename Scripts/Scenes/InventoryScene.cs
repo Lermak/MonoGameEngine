@@ -39,9 +39,9 @@ namespace MonoGame_Core.Scripts
         {
             InitWorldObject(new InventoryGrid("Grid", "Grid", new Vector2(10,10)));
 
-            InventoryItem item = (InventoryItem)InitWorldObject(new InventoryItem("TestInventoryItem", "Test", new Vector2(), InventoryItemShapeData.SHAPE.Line));
-            InventoryItem item2 = (InventoryItem)InitWorldObject(new InventoryItem("TestInventoryItem2", "Test", new Vector2(100,100), InventoryItemShapeData.SHAPE.Line));
-            InventoryItem item3 = (InventoryItem)InitWorldObject(new InventoryItem("TestInventoryItem3", "Test", new Vector2(-100,-100), InventoryItemShapeData.SHAPE.Line));
+            InventoryItem item = (InventoryItem)InitWorldObject(new InventoryItem("TestInventoryItem", "Test", new Vector2(), InventoryItemShapeData.Shapes.Line));
+            InventoryItem item2 = (InventoryItem)InitWorldObject(new InventoryItem("TestInventoryItem2", "Test", new Vector2(100,100), InventoryItemShapeData.Shapes.Line));
+            InventoryItem item3 = (InventoryItem)InitWorldObject(new InventoryItem("TestInventoryItem3", "Test", new Vector2(-100,-100), InventoryItemShapeData.Shapes.Line));
         }
     }
 }

@@ -33,11 +33,11 @@ namespace MonoGame_Core.Scripts
         }
         public InventoryItemShapeData ShapeData { get { return (InventoryItemShapeData)componentHandler.Get("inventoryItemShape"); } }
 
-        public InventoryItem(string name, string texID, Vector2 pos, InventoryItemShapeData.SHAPE shape) : base(texID, name, new string[] { "inventoryItem" }, pos, 2)
+        public InventoryItem(string name, string texID, Vector2 pos, InventoryItemShapeData.Shapes shape) : base(texID, name, new string[] { "inventoryItem" }, pos, 2)
         {
             AddComponent(new CollisionBox(this, "myBox", true, Globals.ResourceManager.GetTextureSize(texID), new List<string> { "myBox" }));
             AddComponent(new InventoryItemShapeData(this, shape));
-            AddComponent(new ItemEconData(this, "EconData"));
+            AddComponent(new ItemData(this, "EconData"));
             //AddComponent(new ItemCombatData(this, "CombatData", 1, 1, 1, ""));
 
             AddBehavior("Pickup", InventoryItemBehaviors.PickupItem);

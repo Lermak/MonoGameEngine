@@ -34,9 +34,8 @@ namespace MonoGame_Core.Scripts
         public static void DealDamage(Collider a, Collider b, Vector2 p) {
             
             Bullet bullet = (Bullet)a.GameObject;
-
-                ((EnemyShipData)b.GameObject.GetComponent("ShipData")).health-=1;
-                bullet.Destroy();
+            ((EnemyShipData)b.GameObject.GetComponent("enemyShipData")).health-=1;
+            bullet.Destroy();
             
         }
 
