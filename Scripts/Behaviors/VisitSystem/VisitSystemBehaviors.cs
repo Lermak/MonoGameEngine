@@ -19,6 +19,26 @@ namespace MonoGame_Core.Scripts
                 SceneManager.ChangeScene(new GalaxyMap());
             }
         }
+        public static void GotoShip(float dt, GameObject go, Component[] c = null)
+        {
+            Collider col = (Collider)go.GetComponent("myBox");
+            Vector2 v = InputManager.MousePos;
+            if (InputManager.IsTriggered(InputManager.MouseKeys.Left) &&
+                col.ContainsPoint(v))
+            {
+                CameraManager.MainCamera.Transform.SetPosition(new Vector2(Globals.SCREEN_WIDTH + 200, 0));
+            }
+        }
+        public static void GotoSystem(float dt, GameObject go, Component[] c = null)
+        {
+            Collider col = (Collider)go.GetComponent("myBox");
+            Vector2 v = InputManager.MousePos;
+            if (InputManager.IsTriggered(InputManager.MouseKeys.Left) &&
+                col.ContainsPoint(v))
+            {
+                CameraManager.MainCamera.Transform.SetPosition(new Vector2());
+            }
+        }
         public static void Trade(float dt, GameObject go, Component[] c = null)
         {
             SpriteRenderer sellMenu = (SpriteRenderer)c[0];
@@ -40,6 +60,16 @@ namespace MonoGame_Core.Scripts
                 }
                 sellMenu.Visible = !sellMenu.Visible;
                 buyMenu.Visible = !buyMenu.Visible;
+            }
+        }
+        public static void Purchase(float dt, GameObject go, Component[] c = null)
+        {
+            Collider col = (Collider)go.GetComponent("myBox");
+            Vector2 v = InputManager.MousePos;
+            if (InputManager.IsTriggered(InputManager.MouseKeys.Left) &&
+                col.ContainsPoint(v))
+            {
+                SceneManager.CurrentScene.AddWorldObject(new InventoryItem("TestInventoryItem" + Guid.NewGuid(), "Test", new Vector2(Globals.SCREEN_WIDTH, -400), InventoryItemShapeData.Shapes.Line));
             }
         }
     }

@@ -44,5 +44,11 @@ namespace MonoGame_Core.Scripts
             AddBehavior("FollowMouse", InventoryItemBehaviors.FollowMouse);
             AddBehavior("Rotate", InventoryItemBehaviors.RotateItem);
         }
+
+        public void Restore()
+        {
+            SpriteRenderer.Cameras = new System.Collections.Generic.List<Camera>() { CameraManager.MainCamera };
+            SceneManager.CurrentScene.InitWorldObject(this);
+        }
     }
 }
