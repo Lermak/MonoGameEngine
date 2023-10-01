@@ -276,5 +276,17 @@ namespace MonoGame_Core.Scripts
                 SceneManager.ChangeScene(new GalaxyMap());
             }
         }
+
+        public static void DestroyOutOfBounds(float dt, GameObject go, Component[] c=null) {
+            Transform t = ((WorldObject)go).Transform;
+            
+            if (   t.Position.X > (Globals.SCREEN_WIDTH/2)
+                || t.Position.X < (-Globals.SCREEN_WIDTH/2)
+                || t.Position.Y > (Globals.SCREEN_HEIGHT/2)
+                || t.Position.Y < (-Globals.SCREEN_HEIGHT/2)) {
+                    go.Destroy();
+            }
+        }
+
     }
 }
