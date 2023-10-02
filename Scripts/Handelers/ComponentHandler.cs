@@ -19,7 +19,7 @@ namespace MonoGame_Core.Scripts
 
         public Component Get(string t)
         {
-            return components.Where(c => c.Name == t).First();
+            return components.Where(c => c.Name == t).FirstOrDefault<Component>();
         }
 
         public void Remove(Component c)
