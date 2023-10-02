@@ -20,8 +20,9 @@ namespace MonoGame_Core.Scripts
             Transform shipTF = (Transform)go.GetComponent("transform");
             ShipData shipData = (ShipData)go.GetComponent("ShipData");
 
-            if (InputManager.IsTriggered(InputManager.MouseKeys.Left))
+            if (InputManager.IsTriggered(InputManager.MouseKeys.Left) & shipData.reload > 99)
             {
+                shipData.reload = 0;
                 Bullet newBullet =(Bullet) SceneManager.CurrentScene.AddWorldObject(new Bullet("BulletTex", "", shipTF.Position, shipTF.RotationDegrees));
                 newBullet.CollisionHandler.myActions.Add(
                     new CollisionActions(
@@ -74,7 +75,7 @@ namespace MonoGame_Core.Scripts
         /// <param name="dt"></param>
         /// <param name="go"></param>
         /// <param name="c"></param>
-        public static void MoveTowardRotation(float dt, GameObject go, Component[] c = null)
+        public static void MoveShipTowardRotation(float dt, GameObject go, Component[] c = null)
         {
             Transform st = (Transform)go.GetComponent("transform");
             RigidBody srb = (RigidBody)go.GetComponent("rigidBody");
@@ -102,6 +103,23 @@ namespace MonoGame_Core.Scripts
                 enemyData.reload = 0;
             }
 
+        }
+        /// <summary>
+        /// makes sure the thing dies when dead
+        ///
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="go"></param>
+        /// <param name="c"></param>
+        public static void DieWhenDead(float dt, GameObject go, Component[] c=null) {
+            EnemyShip eS = (EnemyShip)go;
+            EnemyShipData eSData = (EnemyShipData)eS.GetComponent("enemyShipData");
+
+            if (eSData.health >= 1) {
+                // dont do nuffin
+            } else {
+                eS.Destroy();
+            }
         }
 
     }
