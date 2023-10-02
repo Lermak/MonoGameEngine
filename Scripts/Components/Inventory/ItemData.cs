@@ -31,5 +31,19 @@ namespace MonoGame_Core.Scripts
             DisplayName = display;
             ItemType = t;
         }
+
+        public static ItemData Random(GameObject go)
+        {
+            Random r = new Random();
+
+            int sell = r.Next(1, 10);
+            int purchase = r.Next(1, 4);
+            ItemTypes it = (ItemTypes)r.Next(Enum.GetNames(typeof(ItemTypes)).Length - 1);
+            string display = it.ToString();
+
+            return new ItemData(go, "ItemData", sell, purchase, display, it);
+            
+
+        }
     }
 }

@@ -37,7 +37,7 @@ namespace MonoGame_Core.Scripts
         {
             AddComponent(new CollisionBox(this, "myBox", true, ResourceManager.GetTextureSize(texID)));
             AddComponent(new InventoryItemShapeData(this, shape));
-            ItemData itemData = (ItemData)AddComponent(new ItemData(this, "ItemData", 0,0,"",ItemData.ItemTypes.Combat));
+            ItemData itemData = (ItemData)AddComponent(ItemData.Random(this));
             //AddComponent(new ItemCombatData(this, "CombatData", 1, 1, 1, ""));
 
             AddBehavior("Purchase", VisitSystemBehaviors.Purchase, new Component[] { itemData });

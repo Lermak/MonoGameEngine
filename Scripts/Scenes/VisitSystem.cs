@@ -38,23 +38,27 @@ namespace MonoGame_Core.Scripts
             ResourceManager.AddTexture("BtnHover", "Images/VisitSystem/ButtonTemplateHover");
 
             ResourceManager.AddTexture("Block", "Images/Tetreminos/Block");
-            ResourceManager.AddTexture("TwoLong", "Images/Tetreminos/TwoLong");
-            ResourceManager.AddTexture("ThreeLong", "Images/Tetreminos/ThreeLong");
+            ResourceManager.AddTexture("TwoLine", "Images/Tetreminos/TwoLong");
+            ResourceManager.AddTexture("ThreeLine", "Images/Tetreminos/ThreeLong");
             ResourceManager.AddTexture("J", "Images/Tetreminos/J");
             ResourceManager.AddTexture("L", "Images/Tetreminos/L");
             ResourceManager.AddTexture("S", "Images/Tetreminos/S");
             ResourceManager.AddTexture("Z", "Images/Tetreminos/Z");
-            ResourceManager.AddTexture("LeftHook", "Images/Tetreminos/LeftHook");
-            ResourceManager.AddTexture("RightHook", "Images/Tetreminos/RightHook");
+            ResourceManager.AddTexture("LHook", "Images/Tetreminos/LeftHook");
+            ResourceManager.AddTexture("RHook", "Images/Tetreminos/RightHook");
             ResourceManager.AddTexture("Square", "Images/Tetreminos/Square");
             ResourceManager.AddTexture("T", "Images/Tetreminos/T");
             ResourceManager.AddTexture("Line", "Images/Tetreminos/Line");
+
+            ResourceManager.AddTexture("SystemInfo", "Images/GalaxyMap/SystemInfo");
+
+            ResourceManager.AddFont("BaseFont", "Fonts/TestFont");
         }
 
         protected override void loadObjects()
         {
             Vector2 btnSize = ResourceManager.GetTextureSize("Btn");
-
+            InitGameObject(new ItemInfo("SystemInfo", "ItemInfo", new Vector2()));
             CameraManager.MainCamera.MinPos = new Vector2(0, 0);
             CameraManager.MainCamera.MaxPos = new Vector2(Globals.SCREEN_WIDTH+200, 0);
             if (InventoryGrid.Grid == null)
@@ -102,10 +106,16 @@ namespace MonoGame_Core.Scripts
 
             if (type != GalaxyData.GalaxyType.JumpGate)
             {
-                InitWorldObject(new InventoryItem(Guid.NewGuid().ToString(), "Z", new Vector2(-Globals.SCREEN_WIDTH * .25f + 50, -Globals.SCREEN_HEIGHT / 2 + 100), InventoryItemShapeData.Shapes.Z));
-                InitWorldObject(new InventoryItem(Guid.NewGuid().ToString(), "Z", new Vector2(-Globals.SCREEN_WIDTH * .05f + 50, -Globals.SCREEN_HEIGHT / 2 + 100), InventoryItemShapeData.Shapes.Z));
-                InitWorldObject(new InventoryItem(Guid.NewGuid().ToString(), "Z", new Vector2(Globals.SCREEN_WIDTH * .15f + 50, -Globals.SCREEN_HEIGHT / 2 + 100), InventoryItemShapeData.Shapes.Z));
-                InitWorldObject(new InventoryItem(Guid.NewGuid().ToString(), "Z", new Vector2(Globals.SCREEN_WIDTH * .35f + 50, -Globals.SCREEN_HEIGHT / 2 + 100), InventoryItemShapeData.Shapes.Z));
+                Random r = new Random();
+
+                InventoryItemShapeData.Shapes s = (InventoryItemShapeData.Shapes)r.Next(Enum.GetNames(typeof(InventoryItemShapeData.Shapes)).Length - 1);
+                InitWorldObject(new InventoryItem(Guid.NewGuid().ToString(), s.ToString(), new Vector2(-Globals.SCREEN_WIDTH * .25f + 50, -Globals.SCREEN_HEIGHT / 2 + 100), s));
+                s = (InventoryItemShapeData.Shapes)r.Next(Enum.GetNames(typeof(InventoryItemShapeData.Shapes)).Length - 1);
+                InitWorldObject(new InventoryItem(Guid.NewGuid().ToString(), s.ToString(), new Vector2(-Globals.SCREEN_WIDTH * .05f + 50, -Globals.SCREEN_HEIGHT / 2 + 100), s));
+                s = (InventoryItemShapeData.Shapes)r.Next(Enum.GetNames(typeof(InventoryItemShapeData.Shapes)).Length - 1);
+                InitWorldObject(new InventoryItem(Guid.NewGuid().ToString(), s.ToString(), new Vector2(Globals.SCREEN_WIDTH * .15f + 50, -Globals.SCREEN_HEIGHT / 2 + 100), s));
+                s = (InventoryItemShapeData.Shapes)r.Next(Enum.GetNames(typeof(InventoryItemShapeData.Shapes)).Length - 1);
+                InitWorldObject(new InventoryItem(Guid.NewGuid().ToString(), s.ToString(), new Vector2(Globals.SCREEN_WIDTH * .35f + 50, -Globals.SCREEN_HEIGHT / 2 + 100), s));
 
                 wo = InitWorldObject(new TextButton("LaunchBtn", 
                     "Btn",

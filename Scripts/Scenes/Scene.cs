@@ -126,7 +126,8 @@ namespace MonoGame_Core.Scripts
             List<GameObject> destroy = new List<GameObject>();
             foreach (GameObject go in gameObjects)
             {
-                go.Update(dt);
+                if (!go.ToDestroy)
+                    go.Update(dt);
                 if (go.ToDestroy)
                     destroy.Add(go);
             }
