@@ -33,13 +33,21 @@ namespace MonoGame_Core.Scripts
         protected override void loadObjects()
         {
             //
+            // Assumes the grid exists pre-combat
+            // gg
+            InventoryGridData grid =
+            (InventoryGridData)InventoryGrid.Grid.GetComponent("Grid");
+            //
+            // grab the weapons
+            List<InventoryItem> weapons =
+            InventoryGrid.FetchItemsByType(ItemData.ItemTypes.Combat);
+            //
             // spawn in the player first
             PlayerShip player = (PlayerShip)InitWorldObject(new PlayerShip("Base", "playerShip", new Vector2(0, 0)));
-            player.AddBehavior("reload",ShipBehaviors.ReloadWeapon);
+            player.AddBehavior("reload", ShipBehaviors.ReloadWeapon);
             //
-            // spawn in enemies
-            // currently also populates middle of the map,
-            // dangerous to player
+            // spawn in enemies currently also populates
+            // middle of the map, dangerous to player
             int enemyCount = 5;
             for (int i = 0; i < enemyCount; i++)
             {
@@ -54,9 +62,9 @@ namespace MonoGame_Core.Scripts
                         ((int)Globals.SCREEN_HEIGHT / 2) - 100
                         )
                     );
-                EnemyShip enemy = (EnemyShip) InitWorldObject(new EnemyShip("Ship", "", spawnPos));
-                enemy.AddBehavior("pointToPlayer",ShipBehaviors.PointToPlayer,new Component[] {player.Transform});
-                
+                EnemyShip enemy = (EnemyShip)InitWorldObject(new EnemyShip("Ship", "", spawnPos));
+                enemy.AddBehavior("pointToPlayer", ShipBehaviors.PointToPlayer, new Component[] { player.Transform });
+
             }
 
         }
