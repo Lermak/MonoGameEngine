@@ -23,6 +23,7 @@ namespace MonoGame_Core.Scripts
         public ShipData(GameObject go, string name) : base(go, name)
         {
             reload = 100;
+            speed = 300;
         }
     }
 }
