@@ -122,5 +122,16 @@ namespace MonoGame_Core.Scripts
         {
             return this.cells[(int)pos.X, (int)pos.Y] == "";
         }
+        public List<InventoryItem> FetchItemsByType(ItemData.ItemTypes type) {
+
+            List<InventoryItem> typeFilter = new List<InventoryItem>{};
+            foreach (WorldObject item in this.StoredItems) {
+                // do the casting on add and pray????
+                typeFilter.Add(((InventoryItem)item));
+            }
+            // slice it up
+            return typeFilter;
+
+        }
     }
 }
