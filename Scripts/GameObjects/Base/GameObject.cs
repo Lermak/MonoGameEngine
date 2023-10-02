@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MonoGame_Core.Scripts
 {
@@ -13,11 +14,9 @@ namespace MonoGame_Core.Scripts
         protected List<GameObject> children;
         protected GameObject parent;
 
-        public string Name { get { return name; } }
-        public bool ToDestroy { get { return destroy; } }
-        public string[] Tags { get { return tags; } }
-        public GameObject Parent { get { return this.parent; } set { this.parent = value; } }
-        public List<GameObject> Children { get { return this.children; } set { this.children= value; } }
+        public string Name { get { return name; } set { name = value; } }
+        public bool ToDestroy { get { return destroy; } set { ToDestroy = value; } }
+        public string[] Tags { get { return tags; } set { tags = value; } }
 
         public ComponentHandler ComponentHandler { get { return componentHandler; } }
         public BehaviorHandler BehaviorHandler { get { return behaviorHandler; } }
@@ -48,7 +47,7 @@ namespace MonoGame_Core.Scripts
             }
         }
 
-        public void Destroy()
+        public virtual void Destroy()
         {
             destroy = true;
         }
@@ -74,6 +73,39 @@ namespace MonoGame_Core.Scripts
         public virtual void GetBehavior(string name)
         {
             behaviorHandler.Get(name);
+        }
+
+        public virtual GameObject GetChild(string name)
+        {
+            GameObject go = children.Where(e => e.Name == name).FirstOrDefault();
+            return go;
+        }
+        public virtual GameObject AddChild(GameObject go)
+        {
+            go.parent = this;
+            children.Add(go);
+            return go;
+        }
+        public virtual GameObject RemoveChild(GameObject go)
+        {
+            go.parent = null;
+            children.Remove(go);
+            return go;
+        }
+        public virtual GameObject RemoveChild(string name)
+        {
+            GameObject go = GetChild(name);
+            if (go != null)
+            {
+                go.parent = null;
+                children.Remove(go);
+                return go;
+            }
+            return null;
+        }
+        public virtual List<GameObject> GetChildren(string tag)
+        {
+            return children.Where(e => e.Tags.Contains(tag)).ToList();
         }
     }
 }

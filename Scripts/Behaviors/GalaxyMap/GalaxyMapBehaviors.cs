@@ -12,7 +12,7 @@ namespace MonoGame_Core.Scripts
         public static void TravelOnClick(float dt, GameObject go, Component[] c = null)
         {
             ShipMarkerData sd = (ShipMarkerData)go.GetComponent("ShipMarkerData");
-            List<GameObject> galaxies = SceneManager.CurrentScene.GetObjectsByTag("GalaxyNode");
+            List<GameObject> galaxies = SceneManager.CurrentScene.GetObjects("GalaxyNode");
 
             if (InputManager.IsTriggered(InputManager.MouseKeys.Left))
             {
@@ -64,7 +64,7 @@ namespace MonoGame_Core.Scripts
         }
         public static void DisplaySystemInfo(float dt, GameObject go, Component[] c = null)
         {
-            List<GameObject> galaxies = SceneManager.CurrentScene.GetObjectsByTag("GalaxyNode");
+            List<GameObject> galaxies = SceneManager.CurrentScene.GetObjects("GalaxyNode");
             bool flag = false;
             WorldObject wo = (WorldObject)go;
             FontRenderer systemName = (FontRenderer)(wo.GetComponent("SystemName"));

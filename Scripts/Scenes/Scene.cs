@@ -1,9 +1,5 @@
-﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Media;
+﻿using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MonoGame_Core.Scripts
@@ -68,14 +64,14 @@ namespace MonoGame_Core.Scripts
             return (WorldObject)toAdd[^1];
         }
 
-        public List<GameObject> GetObjectsByTag(string tag)
+        public List<GameObject> GetObjects(string tag)
         {
             return gameObjects.Where(o => o.Tags.Contains(tag)).ToList();
         }
 
-        public GameObject GetObjectByName(string name)
+        public GameObject GetObject(string name)
         {
-            return gameObjects.Where(o => o.Name == name).First();
+            return gameObjects.Where(o => o.Name == name).FirstOrDefault();
         }
 
         public virtual void Initilize()
