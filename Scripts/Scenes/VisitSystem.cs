@@ -107,7 +107,6 @@ namespace MonoGame_Core.Scripts
             if (type != GalaxyData.GalaxyType.JumpGate)
             {
                 Random r = new Random();
-
                 InventoryItemShapeData.Shapes s = (InventoryItemShapeData.Shapes)r.Next(Enum.GetNames(typeof(InventoryItemShapeData.Shapes)).Length - 1);
                 InitWorldObject(new InventoryItem(Guid.NewGuid().ToString(), s.ToString(), new Vector2(-Globals.SCREEN_WIDTH * .25f + 50, -Globals.SCREEN_HEIGHT / 2 + 100), s));
                 s = (InventoryItemShapeData.Shapes)r.Next(Enum.GetNames(typeof(InventoryItemShapeData.Shapes)).Length - 1);

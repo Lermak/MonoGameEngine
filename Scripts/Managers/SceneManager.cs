@@ -37,6 +37,15 @@ namespace MonoGame_Core.Scripts
             NextScene = s;
         }
 
+        public static GameObject AddObject(GameObject go)
+        {
+            return CurrentScene.AddGameObject(go);
+        }
+        public static WorldObject AddObject(WorldObject wo)
+        {
+            return CurrentScene.AddWorldObject(wo);
+        }
+
         /// <summary>
         /// Run the update of the current scene, or load the next schene if it is null
         /// </summary>

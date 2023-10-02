@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace MonoGame_Core.Scripts
 {
@@ -9,10 +10,15 @@ namespace MonoGame_Core.Scripts
         protected string name;
         protected string[] tags;
         protected bool destroy = false;
+        protected List<GameObject> children;
+        protected GameObject parent;
 
         public string Name { get { return name; } }
         public bool ToDestroy { get { return destroy; } }
         public string[] Tags { get { return tags; } }
+        public GameObject Parent { get { return this.parent; } set { this.parent = value; } }
+        public List<GameObject> Children { get { return this.children; } set { this.children= value; } }
+
         public ComponentHandler ComponentHandler { get { return componentHandler; } }
         public BehaviorHandler BehaviorHandler { get { return behaviorHandler; } }
 
