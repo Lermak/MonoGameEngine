@@ -25,6 +25,8 @@ namespace MonoGame_Core.Scripts
             ResourceManager.AddTexture("UIBar", "Images/GalaxyMap/UIBar");
             ResourceManager.AddTexture("JumpGate", "Images/GalaxyMap/JumpGate");
             ResourceManager.AddTexture("SystemInfo", "Images/GalaxyMap/SystemInfo");
+            ResourceManager.AddTexture("combat", "Images/Galaxy/GoofyEnemyShip");
+
 
             ResourceManager.AddFont("BaseFont", "Fonts/TestFont");
         }
@@ -43,7 +45,7 @@ namespace MonoGame_Core.Scripts
             {
                 InitWorldObject(new ShipMarker("Ship", "Player", new Vector2(-900, 100)));
                 InitWorldObject(new WorldObject("BG", "Background", new string[] { }, new Vector2(), -0));
-                InitWorldObject(new UIBar("UIBar", "UIBar", new Vector2(0, (-Globals.SCREEN_HEIGHT / 2)+ResourceManager.GetTextureSize("UIBar").Y/2)));
+                InitWorldObject(new UIBar("UIBar", "UIBar", new Vector2(0, (-Globals.SCREEN_HEIGHT / 2) + ResourceManager.GetTextureSize("UIBar").Y / 2)));
                 InitWorldObject(new JumpGate("JumpGate", "JumpGate", new Vector2((Globals.SCREEN_WIDTH / 2) + ResourceManager.GetTextureSize("JumpGate").X * 0.15f, 100)));
                 InitWorldObject(new SystemInfo("SystemInfo", "SystemInfo", new Vector2(0, (-Globals.SCREEN_HEIGHT / 2) + ResourceManager.GetTextureSize("SystemInfo").Y / 2)));
 
@@ -54,10 +56,13 @@ namespace MonoGame_Core.Scripts
                     int c = r.Next(2, 4); // get number of planets in this "column"
                     for (int i = 0; i < c; ++i)
                     {
-                        InitWorldObject(new GalaxyNode("Galaxy", "Planet" + z + i, new Vector2(-600 + z * 400 + r.Next(-100, 50), 400 - 800/c*i + r.Next(-100, 50)), z));
+                        InitWorldObject(new GalaxyNode("Galaxy", "Planet" + z + i, new Vector2(-600 + z * 400 + r.Next(-100, 50), 400 - 800 / c * i + r.Next(-100, 50)), z));
                     }
                 }
+                Vector2 btnSize = ResourceManager.GetTextureSize("combat");
+                InitGameObject(new TextButton("test combat", "combat", "combat", "TestCombat", 5, new Vector2(0, 0), new Vector2(), 1, Behaviors.LoadSceneOnClick));
             }
+
         }
         public override void OnExit()
         {
