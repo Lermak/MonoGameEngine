@@ -19,5 +19,18 @@ namespace MonoGame_Core.Scripts
                 AddComponent(new InventoryGridData(this, "Grid", (int)gridSize.X, (int)gridSize.Y));
             }
         }
+        public static List<InventoryItem> FetchItemsByType(ItemData.ItemTypes type) {
+
+            List<InventoryItem> filter = new List<InventoryItem>{};
+            InventoryGridData data = (InventoryGridData) Grid.GetComponent("Grid");
+            List<WorldObject> inv = data.StoredItems;
+
+            foreach (WorldObject item in inv) {
+                filter.Add((InventoryItem) item);
+            }
+
+            return filter;
+
+        }
     }
 }
