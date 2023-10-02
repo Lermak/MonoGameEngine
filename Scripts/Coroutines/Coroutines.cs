@@ -71,5 +71,25 @@ namespace MonoGame_Core.Scripts
             s.DrawOffset = new Vector2();
             yield return true;
         }
+        public static IEnumerator<bool> Reload(float speed, float reload, int max, SpriteRenderer s)
+        {
+            float timeElapsed = 0;
+            
+
+            while (timeElapsed < 1)
+            {
+                if (SceneManager.SceneState == SceneManager.State.Running)
+                {
+                    timeElapsed += TimeManager.DeltaTime;
+                    if (reload < 100) {
+                        reload += TimeManager.DeltaTime*(speed/100);
+                    }
+                    
+
+                }
+                yield return false;
+            }
+            yield return true;
+        }
     }
 }

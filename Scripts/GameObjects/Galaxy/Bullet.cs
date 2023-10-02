@@ -10,7 +10,9 @@ public class Bullet : WorldObject {
     : base(texID,name,new string[] {"bullet","damage"},pos,2) {
         //
         // instanciate with default boxes + behaviors + etc.
+        AddComponent(new CollisionBox(this,"myBox",false,ResourceManager.GetTextureSize(texID)));
         AddComponent(new CollisionBox(this,"bulletBox",false,ResourceManager.GetTextureSize(texID)));
+        AddComponent(new BulletData(this,"BulletData"));
         this.Transform.SetRotation(parentRot);
         AddBehavior("moveWithRot",Behaviors.MoveTowardRotation);
         AddBehavior("boundsCheck",Behaviors.DestroyOutOfBounds);
