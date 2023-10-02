@@ -15,13 +15,14 @@ namespace MonoGame_Core.Scripts
         public PlayerShip(string texID, string name, Vector2 pos) : base(texID, name, pos)
         {
             this.ComponentHandler.Remove(this.GetComponent("ShipData"));
-            ComponentHandler.Add((PlayerShipData) new PlayerShipData(this,"ShipData"));
+            ShipData data = (PlayerShipData) new PlayerShipData(this,"ShipData");
+            ComponentHandler.Add(data);
             AddBehavior("shoot",ShipBehaviors.ShootOnClick);
             AddBehavior("pointToMouse",Behaviors.PointAtMouse);
             //AddBehavior("moveToRot",ShipBehaviors.MoveShipTowardRotation);
 
-            // change this to use shipdata.speed
-            AddComponent(new Movement(this,"movement",500,360));
+            // change this to use shipdata.speed, and factor in rotation speed
+            AddComponent(new Movement(this,"movement",data.speed,0));
             AddBehavior("wasd",Behaviors.Move);
         }
 
