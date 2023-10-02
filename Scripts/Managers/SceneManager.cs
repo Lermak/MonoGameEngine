@@ -82,6 +82,15 @@ namespace MonoGame_Core.Scripts
         {
             return CurrentScene.AddWorldObject(wo);
         }
+        public static List<GameObject> GetObjects(string tag)
+        {
+            return CurrentScene.GetObjects(tag);
+        }
+
+        public static GameObject GetObject(string name)
+        {
+            return CurrentScene.GetObject(name);
+        }
 
         /// <summary>
         /// Run the update of the current scene, or load the next schene if it is null

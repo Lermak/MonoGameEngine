@@ -40,7 +40,7 @@ namespace MonoGame_Core.Scripts
             int purchase = r.Next(1, 4);
             ItemTypes it = (ItemTypes)r.Next(Enum.GetNames(typeof(ItemTypes)).Length - 1);
             string display = it.ToString();
-
+            //TODO if item is combat type also have go.addComponent(combatData)
             return new ItemData(go, "ItemData", sell, purchase, display, it);
             
 

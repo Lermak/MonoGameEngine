@@ -82,7 +82,7 @@ namespace MonoGame_Core.Scripts
 
         public static void DisplayItemInfo(float dt, GameObject go, Component[] c = null)
         {
-            List<GameObject> items = SceneManager.CurrentScene.GetObjectsByTag("inventoryItem");
+            List<GameObject> items = SceneManager.CurrentScene.GetObjects("inventoryItem");
             bool flag = false;
             WorldObject wo = (WorldObject)go;
             FontRenderer itemName = (FontRenderer)(wo.GetComponent("ItemName"));
