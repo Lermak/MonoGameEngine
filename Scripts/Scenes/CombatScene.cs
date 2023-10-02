@@ -12,8 +12,28 @@ using Microsoft.Xna.Framework.Media;
 
 namespace MonoGame_Core.Scripts
 {
+
     public class CombatScene : Scene
     {
+        // we dont need to create a billion randoms
+        Random rng = new Random();
+        // idk how to elegantly do this
+        /// <summary>
+        /// recursively generates a random position outside of a given blackout radius
+        /// </summary>
+        /// <returns></returns>
+        Vector2 SpawnPosRe(Vector2 center, float radius)
+        {
+            Vector2 outPos = new Vector2(
+                (float) rng.Next(((int)-radius) - 1000,(int)radius + 1000),
+                rng.Next(((int)-radius) - 1000,(int)radius + 1000)
+            );
+            if (Vector2.Distance(outPos,center) <= radius) {
+                outPos = SpawnPosRe(center,radius);
+            } // else
+            return outPos;
+        }
+        
         protected override void loadContent()
         {
             ResourceManager.AddSong("Melody", "Music/TestSong");
@@ -32,15 +52,21 @@ namespace MonoGame_Core.Scripts
 
         protected override void loadObjects()
         {
-            //
-            // Assumes the grid exists pre-combat
-            // gg
-            InventoryGridData grid =
-            (InventoryGridData)InventoryGrid.Grid.GetComponent("Grid");
-            //
-            // grab the weapons
-            List<InventoryItem> weapons =
-            InventoryGrid.FetchItemsByType(ItemData.ItemTypes.Combat);
+
+            
+
+
+            if (InventoryGrid.Grid != null)
+            {
+
+                InventoryGridData inv = InventoryGrid.Inventory;
+                //
+                // grab the weapons
+                List<InventoryItem> weapons =
+                inv.FetchItemsByType(ItemData.ItemTypes.Combat);
+            }
+            else { }
+
             //
             // spawn in the player first
             PlayerShip player = (PlayerShip)InitWorldObject(new PlayerShip("Base", "playerShip", new Vector2(0, 0)));
@@ -48,22 +74,14 @@ namespace MonoGame_Core.Scripts
             //
             // spawn in enemies currently also populates
             // middle of the map, dangerous to player
-            int enemyCount = 5;
-            for (int i = 0; i < enemyCount; i++)
+            int max = 3;
+            for (int i = 0; i < max; i++)
             {
                 Random rng = new Random();
-                Vector2 spawnPos = new Vector2(
-                    rng.Next(
-                        ((int)-Globals.SCREEN_WIDTH / 2) + 100,
-                        ((int)Globals.SCREEN_WIDTH / 2) - 100
-                        ),
-                    rng.Next(
-                        ((int)-Globals.SCREEN_HEIGHT / 2) + 100,
-                        ((int)Globals.SCREEN_HEIGHT / 2) - 100
-                        )
-                    );
+                Vector2 spawnPos = SpawnPosRe(player.Transform.Position,800);
                 EnemyShip enemy = (EnemyShip)InitWorldObject(new EnemyShip("Ship", "", spawnPos));
                 enemy.AddBehavior("pointToPlayer", ShipBehaviors.PointToPlayer, new Component[] { player.Transform });
+                enemy.AddBehavior("shootPlayer", ShipBehaviors.EmitRandomBullet);
 
             }
 
