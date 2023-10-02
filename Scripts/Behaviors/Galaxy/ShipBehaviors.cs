@@ -115,12 +115,17 @@ namespace MonoGame_Core.Scripts
             EnemyShip eS = (EnemyShip)go;
             EnemyShipData eSData = (EnemyShipData)eS.GetComponent("enemyShipData");
 
-            if (eSData.health >= 1) {
-                // dont do nuffin
-            } else {
-                eS.Destroy();
+            if (!eS.ToDestroy)
+            {
+                if (eSData.health >= 1)
+                {
+                    // dont do nuffin
+                }
+                else
+                {
+                    eS.Destroy();
+                }
             }
         }
-
     }
 }
