@@ -37,8 +37,18 @@ namespace MonoGame_Core.Scripts
             ResourceManager.AddTexture("Btn", "Images/VisitSystem/ButtonTemplate");
             ResourceManager.AddTexture("BtnHover", "Images/VisitSystem/ButtonTemplateHover");
 
-            ResourceManager.AddTexture("Test", "Images/Test");
-
+            ResourceManager.AddTexture("Block", "Images/Tetreminos/Block");
+            ResourceManager.AddTexture("TwoLong", "Images/Tetreminos/TwoLong");
+            ResourceManager.AddTexture("ThreeLong", "Images/Tetreminos/ThreeLong");
+            ResourceManager.AddTexture("J", "Images/Tetreminos/J");
+            ResourceManager.AddTexture("L", "Images/Tetreminos/L");
+            ResourceManager.AddTexture("S", "Images/Tetreminos/S");
+            ResourceManager.AddTexture("Z", "Images/Tetreminos/Z");
+            ResourceManager.AddTexture("LeftHook", "Images/Tetreminos/LeftHook");
+            ResourceManager.AddTexture("RightHook", "Images/Tetreminos/RightHook");
+            ResourceManager.AddTexture("Square", "Images/Tetreminos/Square");
+            ResourceManager.AddTexture("T", "Images/Tetreminos/T");
+            ResourceManager.AddTexture("Line", "Images/Tetreminos/Line");
         }
 
         protected override void loadObjects()
@@ -59,7 +69,7 @@ namespace MonoGame_Core.Scripts
                     i.Restore();
                 }
             }
-            InventoryGrid.Grid.Transform.SetPosition(new Vector2(Globals.SCREEN_WIDTH+200, 100));
+            InventoryGrid.Grid.Transform.SetPosition(new Vector2(100, 100));
 
             WorldObject wo = InitWorldObject(new TextButton("GoToSystemBtn",
                 "Btn",
@@ -92,46 +102,22 @@ namespace MonoGame_Core.Scripts
 
             if (type != GalaxyData.GalaxyType.JumpGate)
             {
-                SellShop sell = (SellShop)InitGameObject(new SellShop("ShopMenu", 
-                    "SellShop", 
-                    new Vector2(Globals.SCREEN_WIDTH/2 - ResourceManager.GetTextureSize("ShopMenu").X/2 - 100, 100)));
-                PurchaseShop purchase = (PurchaseShop)InitGameObject(new PurchaseShop("ShopMenu", 
-                    "PurchaseShop",
-                    new Vector2(-Globals.SCREEN_WIDTH / 2 + ResourceManager.GetTextureSize("ShopMenu").X/2 + 100, 100)));
+                InitWorldObject(new InventoryItem(Guid.NewGuid().ToString(), "Z", new Vector2(-Globals.SCREEN_WIDTH * .25f + 50, -Globals.SCREEN_HEIGHT / 2 + 100), InventoryItemShapeData.Shapes.Z));
+                InitWorldObject(new InventoryItem(Guid.NewGuid().ToString(), "Z", new Vector2(-Globals.SCREEN_WIDTH * .05f + 50, -Globals.SCREEN_HEIGHT / 2 + 100), InventoryItemShapeData.Shapes.Z));
+                InitWorldObject(new InventoryItem(Guid.NewGuid().ToString(), "Z", new Vector2(Globals.SCREEN_WIDTH * .15f + 50, -Globals.SCREEN_HEIGHT / 2 + 100), InventoryItemShapeData.Shapes.Z));
+                InitWorldObject(new InventoryItem(Guid.NewGuid().ToString(), "Z", new Vector2(Globals.SCREEN_WIDTH * .35f + 50, -Globals.SCREEN_HEIGHT / 2 + 100), InventoryItemShapeData.Shapes.Z));
 
                 wo = InitWorldObject(new TextButton("LaunchBtn", 
                     "Btn",
                     "BtnHover", 
                     "Launch", 
                     5,
-                    new Vector2(0, -Globals.SCREEN_HEIGHT / 2 + btnSize.Y / 2), 
+                    new Vector2(-Globals.SCREEN_WIDTH / 2 + btnSize.X / 2, -Globals.SCREEN_HEIGHT / 2 + btnSize.Y / 2), 
                     new Vector2(), 
                     1, 
                     VisitSystemBehaviors.ReturnToMap));
                 wo.SpriteRenderer.IsHUD = false;
-
-                wo = InitWorldObject(new TextButton("GoToShipBtn",
-                    "Btn",
-                    "BtnHover",
-                    "Ship",
-                    5,
-                    new Vector2(-Globals.SCREEN_WIDTH / 2 + btnSize.X / 2 + 100, -Globals.SCREEN_HEIGHT / 2 + btnSize.Y / 2),
-                    new Vector2(),
-                    1,
-                    VisitSystemBehaviors.GotoShip));
-                wo.SpriteRenderer.IsHUD = false;
-
-                wo = InitWorldObject(new TextButton("TradeBtn",
-                    "Btn",
-                    "BtnHover",
-                    "Trade",
-                    5,
-                    new Vector2(Globals.SCREEN_WIDTH / 2 - btnSize.X / 2 - 100, -Globals.SCREEN_HEIGHT / 2 + btnSize.Y / 2),
-                    new Vector2(),
-                    1,
-                    VisitSystemBehaviors.Purchase,
-                    new Component[] { sell.SpriteRenderer, purchase.SpriteRenderer }));
-                wo.SpriteRenderer.IsHUD = false;
+                wo.Transform.SetScale(.5f, .5f);
             }
             else
             {

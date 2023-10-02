@@ -32,42 +32,48 @@ namespace MonoGame_Core.Scripts
             Collider col = (Collider)go.GetComponent("myBox");
             Vector2 v = InputManager.MousePos;
 
-            if (InputManager.IsTriggered(InputManager.MouseKeys.Left) &&
-                col.ContainsPoint(v))
+            if (item.ItemData.Sell)
             {
-                if (!item.ShapeData.FollowMouse)
+                if (InputManager.IsTriggered(InputManager.MouseKeys.Left) &&
+                    col.ContainsPoint(v))
                 {
-                    if (InventoryItemShapeData.CanGrab)
+                    if (!item.ShapeData.FollowMouse)
                     {
-                        InventoryItemShapeData.CanGrab = false;
-
-                        item.ShapeData.FollowMouse = true;
-                        if (item.ShapeData.Placed)
+                        if (InventoryItemShapeData.CanGrab)
                         {
-                            item.ShapeData.Placed = false;
-                            InventoryGrid.Inventory.RemoveItemFromPosition(item);
+                            InventoryItemShapeData.CanGrab = false;
+
+                            item.ShapeData.FollowMouse = true;
+                            item.SpriteRenderer.OrderInLayer = 1;
+                            if (item.ShapeData.Placed)
+                            {
+                                item.ShapeData.Placed = false;
+                                InventoryGrid.Inventory.RemoveItemFromPosition(item);
+                            }
                         }
-                    }
-                }
-                else
-                {
-                    if (InventoryGrid.Inventory.CanPlaceItem(item))
-                    {
-                        InventoryItemShapeData.CanGrab = true;
-                        item.ShapeData.FollowMouse = false;
-                        item.ShapeData.Placed = true;
-                        InventoryGrid.Inventory.PlaceItem(item);
-                        item.Transform.SetPosition(item.GridToPos);
-                    }
-                    else if(!InventoryGrid.Inventory.IsInsideGrid(item))
-                    {
-                        InventoryItemShapeData.CanGrab = true;
-                        item.ShapeData.FollowMouse = false;
-                        item.ShapeData.Placed = false;
                     }
                     else
                     {
-                        Globals.CoroutineManager.Add(Coroutines.Shake(.1f, 10, 15, item.SpriteRenderer), "BadPlacement", 0, true);
+                        if (InventoryGrid.Inventory.CanPlaceItem(item))
+                        {
+                            InventoryItemShapeData.CanGrab = true;
+                            item.ShapeData.FollowMouse = false;
+                            item.ShapeData.Placed = true;
+                            InventoryGrid.Inventory.PlaceItem(item);
+                            item.SpriteRenderer.OrderInLayer = 0;
+                            item.Transform.SetPosition(item.GridToPos);
+                        }
+                        else if (!InventoryGrid.Inventory.IsInsideGrid(item))
+                        {
+                            item.SpriteRenderer.OrderInLayer = 0;
+                            InventoryItemShapeData.CanGrab = true;
+                            item.ShapeData.FollowMouse = false;
+                            item.ShapeData.Placed = false;
+                        }
+                        else
+                        {
+                            CoroutineManager.Add(Coroutines.Shake(.1f, 10, 15, item.SpriteRenderer), "BadPlacement", 0, true);
+                        }
                     }
                 }
             }
