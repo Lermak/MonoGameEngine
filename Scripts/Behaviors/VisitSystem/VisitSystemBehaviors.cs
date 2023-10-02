@@ -64,12 +64,19 @@ namespace MonoGame_Core.Scripts
         }
         public static void Purchase(float dt, GameObject go, Component[] c = null)
         {
+            ItemData id = (ItemData)c[0];
             Collider col = (Collider)go.GetComponent("myBox");
+
             Vector2 v = InputManager.MousePos;
+            
             if (InputManager.IsTriggered(InputManager.MouseKeys.Left) &&
                 col.ContainsPoint(v))
             {
-                SceneManager.CurrentScene.AddWorldObject(new InventoryItem("TestInventoryItem" + Guid.NewGuid(), "Test", new Vector2(Globals.SCREEN_WIDTH, -400), InventoryItemShapeData.Shapes.S));
+                if (!id.Sell && InventoryGrid.Inventory.Money >= id.PurchasePrice)
+                {
+                    id.Sell = true;
+                    InventoryGrid.Inventory.Money -= id.PurchasePrice;
+                }
             }
         }
     }

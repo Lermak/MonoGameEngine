@@ -19,6 +19,7 @@ namespace MonoGame_Core.Scripts
         public int height;
         public string[,] cells;
         public List<WorldObject> StoredItems = new List<WorldObject>();
+        public int Money = 0;
 
         public Vector2 Size { get { return new Vector2(width * TILE_SIZE, height * TILE_SIZE); } }
 

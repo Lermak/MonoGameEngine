@@ -65,7 +65,7 @@ namespace MonoGame_Core.Scripts
                     texture = null;
             } 
         }
-        public int OrderInLayer { get { return orderInLayer; } }
+        public int OrderInLayer { get { return orderInLayer; } set { orderInLayer = value; } }
         public Color Color { get { return color; } set { color = value; } }
         public Transform Transform { get { return transform; } }
         public Vector2 Offset { get { return offset; } set { offset = value; } }

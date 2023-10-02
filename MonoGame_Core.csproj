@@ -32,6 +32,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Tiled\" />
-    <Folder Include="Scripts\GameObjects\VisitSystem\UI\" />
+    <Folder Include="Scripts\Components\Shop\" />
   </ItemGroup>
 </Project>

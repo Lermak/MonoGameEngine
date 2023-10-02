@@ -187,7 +187,6 @@ namespace MonoGame_Core.Scripts
                 else if (RenderingOrder == RenderOrder.TopDown)
                     s = Sprites.OrderBy(s => s.Shader)
                                 .ThenBy(s => s.Transform.Layer)
-                                .ThenBy(s => s.Transform.Position.Y)
                                 .ThenBy(s => s.OrderInLayer);
                 //.Where(s => Vector2.Distance(s.Transform.Position, c.Transform.Position) <= s.Hypotenuse + Globals.SCREEN_HYPOTENUSE);
 
