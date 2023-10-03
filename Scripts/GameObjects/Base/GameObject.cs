@@ -20,6 +20,7 @@ namespace MonoGame_Core.Scripts
 
         public ComponentHandler ComponentHandler { get { return componentHandler; } }
         public BehaviorHandler BehaviorHandler { get { return behaviorHandler; } }
+        public GameObject Parent { get { return parent; } set { parent = value; } }
 
         public GameObject(string name, string[] tags)
         {
@@ -82,13 +83,13 @@ namespace MonoGame_Core.Scripts
         }
         public virtual GameObject AddChild(GameObject go)
         {
-            go.parent = this;
+            go.Parent = this;
             children.Add(go);
             return go;
         }
         public virtual GameObject RemoveChild(GameObject go)
         {
-            go.parent = null;
+            go.Parent = null;
             children.Remove(go);
             return go;
         }
@@ -97,7 +98,7 @@ namespace MonoGame_Core.Scripts
             GameObject go = GetChild(name);
             if (go != null)
             {
-                go.parent = null;
+                go.Parent = null;
                 children.Remove(go);
                 return go;
             }
