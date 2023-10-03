@@ -19,9 +19,6 @@ namespace MonoGame_Core.Scripts
             ComponentHandler.Add(data);
             AddBehavior("shoot",ShipBehaviors.ShootOnClick);
             AddBehavior("pointToMouse",Behaviors.PointAtMouse);
-            //AddBehavior("moveToRot",ShipBehaviors.MoveShipTowardRotation);
-
-            // change this to use shipdata.speed, and factor in rotation speed
             AddComponent(new Movement(this,"movement",data.speed,0));
             AddBehavior("wasd",Behaviors.Move);
         }
