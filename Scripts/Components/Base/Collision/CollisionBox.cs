@@ -16,6 +16,13 @@ namespace MonoGame_Core.Scripts
             width = size.X;
             height = size.Y;
         }
+        public CollisionBox(GameObject go, string name, bool isStatic, SpriteRenderer sprite) : base(go, name, isStatic)
+        {
+            offset = new Vector2();
+            Vector2 size = ResourceManager.GetTextureSize(sprite.Texture);
+            width = size.X;
+            height = size.Y;
+        }
 
         public override List<Vector2> Axies()
         {
