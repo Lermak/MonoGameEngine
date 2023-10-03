@@ -91,7 +91,7 @@ namespace MonoGame_Core.Scripts
             transform = (Transform)go.ComponentHandler.Get("transform");
             offset = new Vector2();
             this.orderInLayer = orderInLayer;
-            this.drawArea = new Vector2(ResourceManager.Textures[texID].Width, ResourceManager.Textures[texID].Height);
+            this.drawArea = ResourceManager.GetTextureSize(texID);
             color = Color.White;    
         }
         public SpriteRenderer(GameObject go, string texID, int orderInLayer, Vector2 drawArea) : base(go, "spriteRenderer")

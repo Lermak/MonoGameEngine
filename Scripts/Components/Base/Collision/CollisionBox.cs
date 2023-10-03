@@ -20,8 +20,8 @@ namespace MonoGame_Core.Scripts
         {
             offset = new Vector2();
             Vector2 size = ResourceManager.GetTextureSize(sprite.Texture);
-            width = size.X;
-            height = size.Y;
+            width = size.X/sprite.Frames;
+            height = size.Y/sprite.Animations;
         }
 
         public override List<Vector2> Axies()
