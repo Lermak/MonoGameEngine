@@ -17,7 +17,7 @@ namespace MonoGame_Core.Scripts
                 else
                 {
                     Vector2 dist = Transform.Position - (((CollisionBox)GetComponent("myBox")).BottomLeft() + ShapeData.CornerOffset);
-                    return InventoryGrid.Inventory.CellZero // Top left world position
+                    return Player.Inventory.CellZero // Top left world position
                         + new Vector2(ShapeData.GridPosition.X, -ShapeData.GridPosition.Y) * InventoryGridData.TILE_SIZE // add position in grid
                         + new Vector2(InventoryGridData.TILE_SIZE, -InventoryGridData.TILE_SIZE) / 2 // add half a tile
                         + dist;
@@ -41,7 +41,6 @@ namespace MonoGame_Core.Scripts
             ItemData itemData = (ItemData)AddComponent(ItemData.Random(this));
             //AddComponent(new ItemCombatData(this, "CombatData", 1, 1, 1, ""));
 
-            AddBehavior("Purchase", VisitSystemBehaviors.Purchase, new Component[] { itemData });
             AddBehavior("Pickup", InventoryItemBehaviors.PickupItem);
             AddBehavior("FollowMouse", InventoryItemBehaviors.FollowMouse);
             AddBehavior("Rotate", InventoryItemBehaviors.RotateItem);

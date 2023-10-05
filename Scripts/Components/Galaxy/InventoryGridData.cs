@@ -19,7 +19,6 @@ namespace MonoGame_Core.Scripts
         public int height;
         public string[,] cells;
         public List<WorldObject> StoredItems = new List<WorldObject>();
-        public int Money = 1000;
 
         public Vector2 Size { get { return new Vector2(width * TILE_SIZE, height * TILE_SIZE); } }
 
@@ -89,12 +88,9 @@ namespace MonoGame_Core.Scripts
             {
                 Vector2 pos = staringCell + item.ShapeData.GridCells[i];
                 cells[(int)pos.X, (int)pos.Y] = item.Name;
-                Console.WriteLine(pos.X + " " + pos.Y + " " + item.Name);
             }
             item.ShapeData.GridPosition = staringCell;
             StoredItems.Add(item);
-            
-
         }
         public void RemoveItemFromPosition(InventoryItem item)
         {
@@ -103,6 +99,7 @@ namespace MonoGame_Core.Scripts
                 Vector2 pos = GetGridPositionFromWorld(item.PosToGrid) + item.ShapeData.GridCells[i];
                 cells[(int)pos.X, (int)pos.Y] = "";
             }
+            item.RemoveParent();
             item.ShapeData.GridPosition = new Vector2(-1,-1);
             StoredItems.Remove(item);
         }

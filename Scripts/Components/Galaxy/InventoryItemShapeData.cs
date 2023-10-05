@@ -32,7 +32,6 @@ namespace MonoGame_Core.Scripts
         public bool Placed = false;
         public bool FollowMouse = false;
         public Vector2 CornerOffset = new Vector2(InventoryGridData.TILE_SIZE, InventoryGridData.TILE_SIZE) / 2;
-
         public static bool CanGrab = true;
 
         public InventoryItemShapeData(GameObject go, Shapes shape) : base(go, "inventoryItemShape")
