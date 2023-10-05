@@ -56,10 +56,10 @@ namespace MonoGame_Core.Scripts
             
 
 
-            if (InventoryGrid.Grid != null)
+            if (Player.Ship != null)
             {
 
-                InventoryGridData inv = InventoryGrid.Inventory;
+                InventoryGridData inv = Player.Inventory;
                 //
                 // grab the weapons
                 List<InventoryItem> weapons =

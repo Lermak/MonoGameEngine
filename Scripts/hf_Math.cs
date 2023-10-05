@@ -24,7 +24,7 @@ namespace MonoGame_Core.Scripts
             return newPosition;
         }
 
-        public static float GetAngleDeg(Vector2 p1, Vector2 p2)
+        public static float GetAngleRad(Vector2 p1, Vector2 p2)
         {
             float dx = p2.X - p1.X;
             float dy = p2.Y - p1.Y;

@@ -106,7 +106,7 @@ namespace MonoGame_Core.Scripts
         public static void PointAtMouse(float dt, GameObject go, Component[] c = null)
         {
             Transform t = (Transform)go.GetComponent("transform");
-            t.Radians = hf_Math.GetAngleDeg(InputManager.MousePos, t.Position) + 90 * (float)Math.PI / 180;
+            t.Radians = hf_Math.GetAngleRad(InputManager.MousePos, t.Position) + 90 * (float)Math.PI / 180;
             if (t.Parent != null)
                 t.Rotate(t.Radians - t.Parent.Radians);
         }
@@ -117,7 +117,7 @@ namespace MonoGame_Core.Scripts
             Transform t2 = (Transform)c[0];
             RigidBody rb = (RigidBody)go.GetComponent("rigidBody");
 
-            float newRot = (hf_Math.GetAngleDeg(t.Position - t2.Position, new Vector2(1, 0))) - 90 * (float)Math.PI / 180;
+            float newRot = (hf_Math.GetAngleRad(t.Position - t2.Position, new Vector2(1, 0))) - 90 * (float)Math.PI / 180;
             rb.AngularVelocity = (newRot - t.Radians) / 1 * dt;
         }
 

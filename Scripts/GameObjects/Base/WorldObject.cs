@@ -34,13 +34,21 @@ namespace MonoGame_Core.Scripts
             this.CollisionHandler.myActions.Add(ca);
         }
 
-        public virtual WorldObject AddChild(WorldObject wo, bool AttachTransform, bool AttachStatic=false)
+        public virtual WorldObject AddChild(WorldObject wo, bool AttachTransform, bool AttachStatic=true)
         {
             if (AttachTransform)
             {
                 wo.Transform.Attach(Transform, AttachStatic);
             }
             return (WorldObject)base.AddChild(wo);
+        }
+        public virtual WorldObject SetParent(WorldObject wo, bool AttachTransform, bool AttachStatic = true)
+        {
+            if (AttachTransform)
+            {
+                Transform.Attach(wo.Transform, AttachStatic);
+            }
+            return (WorldObject)wo.AddChild(wo);
         }
         public virtual WorldObject RemoveChild(WorldObject wo)
         {
@@ -49,6 +57,11 @@ namespace MonoGame_Core.Scripts
                 wo.Transform.Detach();
             }
             return (WorldObject)base.RemoveChild(wo);
+        }
+        public virtual WorldObject RemoveParent()
+        {
+            Transform.Detach();       
+            return (WorldObject)base.RemoveChild(this);
         }
     }
 }

@@ -32,6 +32,7 @@ namespace MonoGame_Core.Scripts
 
         public virtual void Initilize()
         {
+            children = new List<GameObject>();
             componentHandler.Initilize();
             behaviorHandler.Inizilize();
         }

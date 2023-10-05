@@ -46,7 +46,7 @@ namespace MonoGame_Core.Scripts
             Transform t = ((WorldObject)go).Transform;
             Transform playerTF = (Transform )c[0];
 
-            t.Radians = hf_Math.GetAngleDeg(playerTF.Position, t.Position) + 90 * (float)Math.PI / 180;
+            t.Radians = hf_Math.GetAngleRad(playerTF.Position, t.Position) + 90 * (float)Math.PI / 180;
             if (t.Parent != null)
                 t.Rotate(t.Radians - t.Parent.Radians);
 

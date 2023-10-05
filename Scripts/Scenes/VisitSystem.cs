@@ -61,19 +61,19 @@ namespace MonoGame_Core.Scripts
             InitGameObject(new ItemInfo("SystemInfo", "ItemInfo", new Vector2()));
             CameraManager.MainCamera.MinPos = new Vector2(0, 0);
             CameraManager.MainCamera.MaxPos = new Vector2(Globals.SCREEN_WIDTH+200, 0);
-            if (InventoryGrid.Grid == null)
-                InitWorldObject(new InventoryGrid("Grid", "Grid", new Vector2(15, 8)));
+            if (Player.Ship == null)
+                InitWorldObject(new Player("Grid", "Grid", new Vector2(15, 8)));
             else
             {
-                InitWorldObject(InventoryGrid.Grid);
-                InventoryGrid.Grid.SpriteRenderer.Cameras = new List<Camera>() { CameraManager.MainCamera };
+                InitWorldObject(Player.Ship);
+                Player.Ship.SpriteRenderer.Cameras = new List<Camera>() { CameraManager.MainCamera };
                 
-                foreach(InventoryItem i in InventoryGrid.Inventory.StoredItems)
+                foreach(InventoryItem i in Player.Inventory.StoredItems)
                 {
                     i.Restore();
                 }
             }
-            InventoryGrid.Grid.Transform.SetPosition(new Vector2(100, 100));
+            Player.Ship.Transform.SetPosition(new Vector2(100, 100));
 
             WorldObject wo = InitWorldObject(new TextButton("GoToSystemBtn",
                 "Btn",
