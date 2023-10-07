@@ -8,7 +8,7 @@ public class BulletData : Component {
     public float damage;
     public float speed;
     public BulletData(GameObject go, string name) : base(go,name){
-        damage=1;
-        speed=600;
+        damage=2;
+        speed=500;
     }
 }
