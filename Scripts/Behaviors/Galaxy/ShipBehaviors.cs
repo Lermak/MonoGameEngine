@@ -62,10 +62,8 @@ namespace MonoGame_Core.Scripts
             ShipData data = (ShipData)((Ship)go).GetComponent("ShipData");
             
             if (data.reload < 100) {
-                data.reload += dt * 50;
+                data.reload += dt * data.reloadSpeed;
             }
-
-
         }
         /// <summary>
         /// <i>Ship-specific.</i><br />

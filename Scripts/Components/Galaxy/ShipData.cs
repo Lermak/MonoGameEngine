@@ -14,6 +14,7 @@ namespace MonoGame_Core.Scripts
         /// corbin thought it would be funny to make this a float
         /// </summary>
         public float reload;
+        public float reloadSpeed;
         /// <summary>
         /// Object's speed relative to x percent of MoveVelocity
         /// </summary>
@@ -23,7 +24,8 @@ namespace MonoGame_Core.Scripts
         public ShipData(GameObject go, string name) : base(go, name)
         {
             reload = 100;
-            speed = 300;
+            speed = 250;
+            reloadSpeed = 90;
         }
     }
 }
