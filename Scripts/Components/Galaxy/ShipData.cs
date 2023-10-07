@@ -15,6 +15,13 @@ namespace MonoGame_Core.Scripts
         }
 
         /// <summary>
+        /// Count of bullet reserves for the ship's energy weapons
+        /// 
+        /// corbin thought it would be funny to make this a float
+        /// </summary>
+        public float reload;
+        public float reloadSpeed;
+        /// <summary>
         /// Object's speed relative to x percent of MoveVelocity
         /// </summary>
         public float speed;
@@ -24,6 +31,9 @@ namespace MonoGame_Core.Scripts
         {
             speed = 300;
             MyState = ShipState.Sorting;
+            reload = 100;
+            speed = 250;
+            reloadSpeed = 90;
         }
     }
 }
