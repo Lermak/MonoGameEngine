@@ -60,10 +60,13 @@ namespace MonoGame_Core.Scripts
             // LOAD GRID
             InventoryGrid grid;
             if (InventoryGrid.Grid == null)
-                grid = (InventoryGrid) InitWorldObject(new InventoryGrid("Grid", "Grid", new Vector2(15, 8)));
+                InventoryGrid.Grid =
+                (InventoryGrid) InitWorldObject(new InventoryGrid("Grid", "Grid", new Vector2(15, 8)));
+                //grid = InventoryGrid.Grid;
             else
             {
-                grid = InventoryGrid.Grid;
+                grid = InventoryGrid.Grid; // exhaustive enough i guess :^)
+                Console.WriteLine(InventoryGrid.Inventory.StoredItems.ToString());//debuggies
             }
             //
             // spawn in the player before any enemies
