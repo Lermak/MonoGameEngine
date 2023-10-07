@@ -20,8 +20,7 @@ namespace MonoGame_Core.Scripts
             AddBehavior("shoot",ShipBehaviors.ShootOnClick);
             AddBehavior("pointToMouse",Behaviors.PointAtMouse);
             AddComponent(new Movement(this,"movement",data.speed,0));
-            AddBehavior("wasd",Behaviors.Move);
+            AddBehavior("wasd",Behaviors.MoveWithRot);
         }
-
     }
 }
