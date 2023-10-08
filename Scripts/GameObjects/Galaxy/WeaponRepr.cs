@@ -7,6 +7,5 @@ public class WeaponRepr: WorldObject {
     : base(name,texID,new string[] {"weapon","repr"},pos,3) {
         AddComponent(new WeaponData(this,"WeaponData"));
         CoroutineManager.Add(Coroutines.Reload((WeaponData)GetComponent("WeaponData")),"Reload",1,true);
-        AddBehavior("shoot",ShipBehaviors.ShootOnClick);
     }
 }
