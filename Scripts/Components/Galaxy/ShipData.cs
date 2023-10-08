@@ -26,7 +26,7 @@ namespace MonoGame_Core.Scripts
             MyState = ShipState.Sorting;
             reload = 100;
             speed = 250;
-            
+            reloadSpeed = 90;
         }
     }
 }
