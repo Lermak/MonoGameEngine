@@ -11,10 +11,12 @@ namespace MonoGame_Core.Scripts
         /// the multiplier at which a bullet inflicts damage
         /// </summary>
         public float damageFactor;
+        public bool CanFire;
 
         public PlayerShipData(GameObject go, string name) : base(go, name)
         {
             damageFactor = 1;
+            CanFire = true;
         }
     }
 }
