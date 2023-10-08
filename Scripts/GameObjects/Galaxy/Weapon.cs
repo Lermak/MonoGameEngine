@@ -7,5 +7,6 @@ public class Weapon: InventoryItem {
     : base(name,texID,pos,InventoryItemShapeData.Shapes.Square) {
         AddComponent(new WeaponData(this,"WeaponData"));
         CoroutineManager.Add(Coroutines.Reload((WeaponData)GetComponent("WeaponData")),"Reload",1,true);
+        AddBehavior("shoot",ShipBehaviors.ShootOnClick);
     }
 }
