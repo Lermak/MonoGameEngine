@@ -10,15 +10,17 @@ namespace MonoGame_Core.Scripts
     {
         public static Player Ship = null;
         public static InventoryGridData Inventory { get { return (InventoryGridData)Ship.componentHandler.Get("Grid"); } }
+        public static ShipData.ShipState ShipState { get { return ((ShipData)Ship.componentHandler.Get("ShipData")).MyState; } }
 
         public Player(string texID, string name, Vector2 gridSize) : base(texID, name, new string[] { "InventoryGrid" }, new Vector2(0, 0), 1)
         {
             if (Ship == null)
             {
+                Ship = this;
                 AddBehavior("Scale", Behaviors.ManualScale);
                 AddBehavior("Move", Behaviors.MoveWithRot);
                 AddComponent(new Movement(this, "movement", 300, 360));
-                Ship = this;
+                AddComponent(new ShipData(this, "ShipData"));               
                 AddComponent(new InventoryGridData(this, "Grid", (int)gridSize.X, (int)gridSize.Y));
             }
         }

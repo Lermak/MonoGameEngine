@@ -12,8 +12,7 @@ namespace MonoGame_Core.Scripts
         {
             Combat,
             Tool,
-            Resource,
-            Economy
+            Equipment
         }
 
         public string DisplayName;

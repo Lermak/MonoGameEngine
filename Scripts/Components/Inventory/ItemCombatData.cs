@@ -25,6 +25,7 @@ namespace MonoGame_Core.Scripts
         public float ReloadMult;
         public float ReloadSpeed { get { return reloadSpeed * ReloadMult; } }
 
+        public bool Reloading = false;
 
         //DEAL WITH THESE LAST, MAY NOT BE INCLUDED FEATURE
         public List<BehaviorHandler.Act> ShotBehaviors = null; //This will store special bullet proerties like "homing shot"
