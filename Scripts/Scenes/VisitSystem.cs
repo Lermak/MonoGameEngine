@@ -49,6 +49,8 @@ namespace MonoGame_Core.Scripts
             ResourceManager.AddTexture("Square", "Images/Tetreminos/Square");
             ResourceManager.AddTexture("T", "Images/Tetreminos/T");
             ResourceManager.AddTexture("Line", "Images/Tetreminos/Line");
+            ResourceManager.AddTexture("BulletTex", "Images/Bullet");
+
 
             ResourceManager.AddTexture("SystemInfo", "Images/GalaxyMap/SystemInfo");
 
@@ -108,13 +110,13 @@ namespace MonoGame_Core.Scripts
             {
                 Random r = new Random();
                 InventoryItemShapeData.Shapes s = (InventoryItemShapeData.Shapes)r.Next(Enum.GetNames(typeof(InventoryItemShapeData.Shapes)).Length - 1);
-                InitWorldObject(new InventoryItem(Guid.NewGuid().ToString(), s.ToString(), new Vector2(-Globals.SCREEN_WIDTH * .25f + 50, -Globals.SCREEN_HEIGHT / 2 + 100), s));
+                InitWorldObject(new ShipWeapon(Guid.NewGuid().ToString(), s.ToString(), new Vector2(-Globals.SCREEN_WIDTH * .25f + 50, -Globals.SCREEN_HEIGHT / 2 + 100), s));
                 s = (InventoryItemShapeData.Shapes)r.Next(Enum.GetNames(typeof(InventoryItemShapeData.Shapes)).Length - 1);
-                InitWorldObject(new InventoryItem(Guid.NewGuid().ToString(), s.ToString(), new Vector2(-Globals.SCREEN_WIDTH * .05f + 50, -Globals.SCREEN_HEIGHT / 2 + 100), s));
+                InitWorldObject(new ShipWeapon(Guid.NewGuid().ToString(), s.ToString(), new Vector2(-Globals.SCREEN_WIDTH * .05f + 50, -Globals.SCREEN_HEIGHT / 2 + 100), s));
                 s = (InventoryItemShapeData.Shapes)r.Next(Enum.GetNames(typeof(InventoryItemShapeData.Shapes)).Length - 1);
-                InitWorldObject(new InventoryItem(Guid.NewGuid().ToString(), s.ToString(), new Vector2(Globals.SCREEN_WIDTH * .15f + 50, -Globals.SCREEN_HEIGHT / 2 + 100), s));
+                InitWorldObject(new ShipWeapon(Guid.NewGuid().ToString(), s.ToString(), new Vector2(Globals.SCREEN_WIDTH * .15f + 50, -Globals.SCREEN_HEIGHT / 2 + 100), s));
                 s = (InventoryItemShapeData.Shapes)r.Next(Enum.GetNames(typeof(InventoryItemShapeData.Shapes)).Length - 1);
-                InitWorldObject(new InventoryItem(Guid.NewGuid().ToString(), s.ToString(), new Vector2(Globals.SCREEN_WIDTH * .35f + 50, -Globals.SCREEN_HEIGHT / 2 + 100), s));
+                InitWorldObject(new ShipWeapon(Guid.NewGuid().ToString(), s.ToString(), new Vector2(Globals.SCREEN_WIDTH * .35f + 50, -Globals.SCREEN_HEIGHT / 2 + 100), s));
 
                 wo = InitWorldObject(new TextButton("LaunchBtn", 
                     "Btn",

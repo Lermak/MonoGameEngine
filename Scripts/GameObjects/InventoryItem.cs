@@ -34,7 +34,7 @@ namespace MonoGame_Core.Scripts
         public InventoryItemShapeData ShapeData { get { return (InventoryItemShapeData)componentHandler.Get("inventoryItemShape"); } }
         public ItemData ItemData { get { return (ItemData)componentHandler.Get("ItemData"); } }
 
-        public InventoryItem(string name, string texID, Vector2 pos, InventoryItemShapeData.Shapes shape) : base(texID, name, new string[] { "inventoryItem" }, pos, 2)
+        public InventoryItem(string name, string texID, Vector2 pos, InventoryItemShapeData.Shapes shape, string[] tags = null) : base(texID, name, tags==null?new string[] { "inventoryItem" }:tags, pos, 2)
         {
             AddComponent(new CollisionBox(this, "myBox", true, Globals.ResourceManager.GetTextureSize(texID), new List<string> { "myBox" }));
             AddComponent(new InventoryItemShapeData(this, shape));

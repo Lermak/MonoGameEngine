@@ -70,7 +70,6 @@ namespace MonoGame_Core.Scripts
             //
             // spawn in the player first
             PlayerShip player = (PlayerShip)InitWorldObject(new PlayerShip("Base", "playerShip", new Vector2(0, 0)));
-            player.AddBehavior("reload", ShipBehaviors.ReloadWeapon);
             //
             // spawn in enemies currently also populates
             // middle of the map, dangerous to player

@@ -11,77 +11,86 @@ namespace MonoGame_Core.Scripts
     {
         public static void RotateItem(float dt, GameObject go, Component[] c = null)
         {
-            InventoryItem item = (InventoryItem)go;
-            if (item.ShapeData.FollowMouse)
+            if (Player.ShipState == ShipData.ShipState.Sorting)
             {
-                if (InputManager.IsTriggered(ConfigurationManager.Configuration.Keybindings["rot_left"]))
+                InventoryItem item = (InventoryItem)go;
+                if (item.ShapeData.FollowMouse)
                 {
-                    item.Transform.Rotate(90);
-                    item.ShapeData.rotateLeft();
-                }
-                else if (InputManager.IsTriggered(ConfigurationManager.Configuration.Keybindings["rot_right"]))
-                {
-                    item.Transform.Rotate(-90);
-                    item.ShapeData.rotateRight();
+                    if (InputManager.IsTriggered(ConfigurationManager.Configuration.Keybindings["rot_left"]))
+                    {
+                        item.Transform.Rotate(90);
+                        item.ShapeData.rotateLeft();
+                    }
+                    else if (InputManager.IsTriggered(ConfigurationManager.Configuration.Keybindings["rot_right"]))
+                    {
+                        item.Transform.Rotate(-90);
+                        item.ShapeData.rotateRight();
+                    }
                 }
             }
         }
         public static void PickupItem(float dt, GameObject go, Component[] c = null)
         {
-            InventoryItem item = (InventoryItem)go;
-            Collider col = (Collider)go.GetComponent("myBox");
-            Vector2 v = InputManager.MousePos;
-
-            if (InputManager.IsTriggered(InputManager.MouseKeys.Left) &&
-                col.ContainsPoint(v))
+            if (Player.ShipState == ShipData.ShipState.Sorting)
             {
-                if (!item.ShapeData.FollowMouse)
-                {
-                    if (InventoryItemShapeData.CanGrab)
-                    {
-                        InventoryItemShapeData.CanGrab = false;
+                InventoryItem item = (InventoryItem)go;
+                Collider col = (Collider)go.GetComponent("myBox");
+                Vector2 v = InputManager.MousePos;
 
-                        item.ShapeData.FollowMouse = true;
-                        item.SpriteRenderer.OrderInLayer = 1;
-                        if (item.ShapeData.Placed)
-                        {
-                            item.ShapeData.Placed = false;
-                            Player.Inventory.RemoveItemFromPosition(item);
-                        }
-                    }
-                }
-                else
+                if (InputManager.IsTriggered(InputManager.MouseKeys.Left) &&
+                    col.ContainsPoint(v))
                 {
-                    if (Player.Inventory.CanPlaceItem(item))
+                    if (!item.ShapeData.FollowMouse)
                     {
-                        InventoryItemShapeData.CanGrab = true;
-                        item.ShapeData.FollowMouse = false;
-                        item.ShapeData.Placed = true;
-                        Player.Inventory.PlaceItem(item);
-                        item.SpriteRenderer.OrderInLayer = 0;
-                        item.Transform.SetPosition(item.GridToPos);
-                        item.SetParent(Player.Ship, true);
-                    }
-                    else if (!Player.Inventory.IsInsideGrid(item))
-                    {
-                        item.SpriteRenderer.OrderInLayer = 0;
-                        InventoryItemShapeData.CanGrab = true;
-                        item.ShapeData.FollowMouse = false;
-                        item.ShapeData.Placed = false;
+                        if (InventoryItemShapeData.CanGrab)
+                        {
+                            InventoryItemShapeData.CanGrab = false;
+
+                            item.ShapeData.FollowMouse = true;
+                            item.SpriteRenderer.OrderInLayer = 1;
+                            if (item.ShapeData.Placed)
+                            {
+                                item.ShapeData.Placed = false;
+                                Player.Inventory.RemoveItemFromPosition(item);
+                            }
+                        }
                     }
                     else
                     {
-                        CoroutineManager.Add(Coroutines.Shake(.1f, 10, 15, item.SpriteRenderer), "BadPlacement", 0, true);
+                        if (Player.Inventory.CanPlaceItem(item))
+                        {
+                            InventoryItemShapeData.CanGrab = true;
+                            item.ShapeData.FollowMouse = false;
+                            item.ShapeData.Placed = true;
+                            Player.Inventory.PlaceItem(item);
+                            item.SpriteRenderer.OrderInLayer = 0;
+                            item.Transform.SetPosition(item.GridToPos);
+                            item.SetParent(Player.Ship, true);
+                        }
+                        else if (!Player.Inventory.IsInsideGrid(item))
+                        {
+                            item.SpriteRenderer.OrderInLayer = 0;
+                            InventoryItemShapeData.CanGrab = true;
+                            item.ShapeData.FollowMouse = false;
+                            item.ShapeData.Placed = false;
+                        }
+                        else
+                        {
+                            CoroutineManager.Add(Coroutines.Shake(.1f, 10, 15, item.SpriteRenderer), "BadPlacement", 0, true);
+                        }
                     }
                 }
             }
         }
         public static void FollowMouse(float dt, GameObject go, Component[] c = null)
         {
-            InventoryItem item = (InventoryItem)go;
-            if(item.ShapeData.FollowMouse)
+            if (Player.ShipState == ShipData.ShipState.Sorting)
             {
-                item.Transform.SetPosition(InputManager.MousePos);
+                InventoryItem item = (InventoryItem)go;
+                if (item.ShapeData.FollowMouse)
+                {
+                    item.Transform.SetPosition(InputManager.MousePos);
+                }
             }
         }
     }

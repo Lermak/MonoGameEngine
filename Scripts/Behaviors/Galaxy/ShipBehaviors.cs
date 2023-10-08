@@ -17,21 +17,13 @@ namespace MonoGame_Core.Scripts
         public static void ShootOnClick(float dt, GameObject go, Component[] c = null)
         {
             Vector2 mousePos = InputManager.MousePos;
-            Transform shipTF = (Transform)go.GetComponent("transform");
-            ShipData shipData = (ShipData)go.GetComponent("ShipData");
+            Transform t = (Transform)go.GetComponent("transform");
+            ItemCombatData combatData = (ItemCombatData)go.GetComponent("CombatData");
 
-            if (InputManager.IsTriggered(InputManager.MouseKeys.Left) & shipData.reload > 99)
+            if (InputManager.IsTriggered(InputManager.MouseKeys.Left) && combatData.Reloading == false)
             {
-                shipData.reload = 0;
-                Bullet newBullet =(Bullet) SceneManager.CurrentScene.AddWorldObject(new Bullet("BulletTex", "", shipTF.Position, shipTF.RotationDegrees));
-                newBullet.CollisionHandler.myActions.Add(
-                    new CollisionActions(
-                        "bulletBox",
-                        new List<string> {"enemyBox"},
-                        new List<CollisionAction> {CollisionBehaviors.DealDamage}
-                        )
-                    );
-                
+                CoroutineManager.Add(Coroutines.Reload(combatData), "Reload" + go.Name, 0, true);
+                SceneManager.AddObject(new Bullet("BulletTex", "", t.Position, t.RotationDegrees));
             }
         }
         /// <summary>
@@ -49,22 +41,6 @@ namespace MonoGame_Core.Scripts
             t.Radians = hf_Math.GetAngleRad(playerTF.Position, t.Position) + 90 * (float)Math.PI / 180;
             if (t.Parent != null)
                 t.Rotate(t.Radians - t.Parent.Radians);
-
-        }
-        /// <summary>
-        /// constantly increases the reload value on a ship until it hits 100.00
-        /// </summary>
-        /// <param name="dt"></param>
-        /// <param name="go"></param>
-        /// <param name="c"></param>
-        public static void ReloadWeapon(float dt, GameObject go, Component[] c=null) {
-
-            ShipData data = (ShipData)((Ship)go).GetComponent("ShipData");
-            
-            if (data.reload < 100) {
-                data.reload += dt * 50;
-            }
-
 
         }
         /// <summary>
@@ -98,10 +74,10 @@ namespace MonoGame_Core.Scripts
             // on average 1 in every 120 frames the parent should shoot a bullet
             int shoot = rng.Next(120);
             // use any int here, 60 is a nice number right in the middle of 120
-            if (shoot == 60 & enemyData.reload == 100) {
+            /*if (shoot == 60 & enemyData.reload == 100) {
                 SceneManager.CurrentScene.AddWorldObject(new Bullet("BulletTex", "", enemyTF.Position, enemyTF.RotationDegrees));
                 enemyData.reload = 0;
-            }
+            }*/
 
         }
         /// <summary>
