@@ -29,9 +29,9 @@ namespace MonoGame_Core.Scripts
             float dx = p2.X - p1.X;
             float dy = p2.Y - p1.Y;
 
-            float degrees = (float)Math.Atan2(dy, dx);
+            float rad = (float)Math.Atan2(dy, dx);
 
-            return degrees;
+            return rad;
         }
 
         public static Vector2 RadToUnit(float r)
