@@ -20,6 +20,11 @@ namespace MonoGame_Core.Scripts
             Transform t = (Transform)go.GetComponent("transform");
             ItemCombatData combatData = (ItemCombatData)go.GetComponent("CombatData");
 
+            // dear R: this fucking makes it throw a tantrum when you left click in the combat
+            // scene i dont know what the fuck to do about it, the data is all instantiated
+            // and everything, it yells about pointing to null when you ask for the combatdata
+            // but the combatdata is there i dont know what happened i hate C#
+            // thank u for reading this had to get it off of my chest -Blake
             if (InputManager.IsTriggered(InputManager.MouseKeys.Left) && combatData.Reloading == false)
             {
                 CoroutineManager.Add(Coroutines.Reload(combatData), "Reload" + go.Name, 0, true);
