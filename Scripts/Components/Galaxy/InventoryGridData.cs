@@ -99,7 +99,7 @@ namespace MonoGame_Core.Scripts
                 Vector2 pos = GetGridPositionFromWorld(item.PosToGrid) + item.ShapeData.GridCells[i];
                 cells[(int)pos.X, (int)pos.Y] = "";
             }
-            item.RemoveParent();
+            ((WorldObject) item).RemoveParent();
             item.ShapeData.GridPosition = new Vector2(-1,-1);
             StoredItems.Remove(item);
         }
