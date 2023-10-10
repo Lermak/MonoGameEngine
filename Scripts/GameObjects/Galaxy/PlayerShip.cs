@@ -17,7 +17,6 @@ namespace MonoGame_Core.Scripts
             this.ComponentHandler.Remove(this.GetComponent("ShipData"));
             ShipData data = (PlayerShipData) new PlayerShipData(this,"ShipData");
             ComponentHandler.Add(data);
-            AddBehavior("shoot",ShipBehaviors.ShootOnClick);
             AddBehavior("pointToMouse",Behaviors.PointAtMouse);
             AddComponent(new Movement(this,"movement",data.speed,0));
             AddBehavior("wasd",Behaviors.MoveWithRot);

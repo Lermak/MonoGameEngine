@@ -52,7 +52,8 @@ namespace MonoGame_Core.Scripts
                 {
                     return scale * parent.Scale;
                 }
-            } 
+            }
+            set { scale = value; }
         }
         public Transform Parent { get { return parent; } }
         public byte Layer { get { return layer; } set { layer = value; } }

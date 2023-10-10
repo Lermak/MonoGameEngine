@@ -10,7 +10,7 @@ namespace MonoGame_Core.Scripts
     {
         public ShipWeapon(string name, string texID, Vector2 pos, InventoryItemShapeData.Shapes shape) : base(name, texID, pos, shape, new string[] { "ShipWeapon", "InventoryItem" })
         {
-            AddComponent(new ItemCombatData(this, "CombatData", 1, 300, 1, "base"));
+            AddComponent(new ItemCombatData(this, "CombatData", 1, 300, 1, "BulletTex"));
             AddBehavior("Fire", ShipBehaviors.ShootOnClick);
         }
     }

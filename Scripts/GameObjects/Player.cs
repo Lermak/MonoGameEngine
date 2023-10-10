@@ -19,6 +19,7 @@ namespace MonoGame_Core.Scripts
                 Ship = this;
                 AddBehavior("Scale", Behaviors.ManualScale);
                 AddBehavior("Move", Behaviors.MoveWithRot);
+                AddBehavior("Transition", ShipBehaviors.Transition);
                 AddComponent(new Movement(this, "movement", 300, 360));
                 AddComponent(new ShipData(this, "ShipData"));               
                 AddComponent(new InventoryGridData(this, "Grid", (int)gridSize.X, (int)gridSize.Y));

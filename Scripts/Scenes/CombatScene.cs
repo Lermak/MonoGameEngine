@@ -58,7 +58,7 @@ namespace MonoGame_Core.Scripts
             PlayerShip player = (PlayerShip)InitWorldObject(new PlayerShip("Base", "playerShip", new Vector2(0, 0)));
 
             if (Player.Ship == null)
-                InitWorldObject(new Player("Grid", "Grid", new Vector2(15, 8)));
+                InitWorldObject(new Player("Base", "Grid", new Vector2(15, 8)));
             else
             {
                 InitWorldObject(Player.Ship);

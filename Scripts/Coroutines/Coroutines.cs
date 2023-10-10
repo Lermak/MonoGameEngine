@@ -86,5 +86,53 @@ namespace MonoGame_Core.Scripts
             cd.Reloading = false;
             yield return true;
         }
+
+        public static IEnumerator<bool> ModifyShipTransition(WorldObject player)
+        {
+            ShipData sd = (ShipData)player.GetComponent("ShipData");
+            float timeElapsed = 0;
+            sd.ReturnRads = player.Transform.Radians;
+            sd.ReturnPos = player.Transform.Position;
+            sd.ReturnScale = player.Transform.Scale;
+            float duration = .25f;
+
+            sd.MyState = ShipData.ShipState.Animating;
+            while (timeElapsed < duration)
+            {
+                if (SceneManager.SceneState == SceneManager.State.Running)
+                {
+                    timeElapsed += TimeManager.DeltaTime;
+                    player.Transform.Radians = sd.ReturnRads - sd.ReturnRads * timeElapsed / duration;
+                    player.Transform.SetPosition(sd.ReturnPos - sd.ReturnPos * timeElapsed / duration);
+                    player.Transform.Scale = sd.ReturnScale + (new Vector2(1,1) - sd.ReturnScale) * timeElapsed / duration;
+                }
+                yield return false;
+            }
+            sd.MyState = ShipData.ShipState.Sorting;
+            yield return true;
+        }
+        public static IEnumerator<bool> PlayGameTransition(WorldObject player)
+        {
+            ShipData sd = (ShipData)player.GetComponent("ShipData");
+            float timeElapsed = 0;
+            float duration = .25f;
+
+            sd.MyState = ShipData.ShipState.Animating;
+
+            while (timeElapsed < duration)
+            {
+                if (SceneManager.SceneState == SceneManager.State.Running)
+                {
+                    timeElapsed += TimeManager.DeltaTime;
+                    player.Transform.Radians = sd.ReturnRads * timeElapsed / duration;
+                    player.Transform.SetPosition(sd.ReturnPos * timeElapsed / duration);
+                    player.Transform.Scale = new Vector2(1, 1) - (new Vector2(1, 1) - sd.ReturnScale) * timeElapsed / duration;
+                }
+                yield return false;
+            }
+            sd.MyState = ShipData.ShipState.Playing;
+            yield return true;
+        }
+
     }
 }
