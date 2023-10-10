@@ -16,18 +16,18 @@ namespace MonoGame_Core.Scripts
     {
         protected override void loadContent()
         {
+            // music
             ResourceManager.AddSong("Melody", "Music/TestSong");
             SoundManager.PlaySong("Melody");
-
-            ResourceManager.AddTexture("Galaxy", "Images/GalaxyMap/Galaxy");
-            ResourceManager.AddTexture("Ship", "Images/GalaxyMap/Ship");
+            // tex
             ResourceManager.AddTexture("BG", "Images/GalaxyMap/SpaceBG");
+            ResourceManager.AddTexture("Ship", "Images/GalaxyMap/Ship");
             ResourceManager.AddTexture("UIBar", "Images/GalaxyMap/UIBar");
+            ResourceManager.AddTexture("Galaxy", "Images/GalaxyMap/Galaxy");
+            ResourceManager.AddTexture("combat", "Images/Galaxy/GoofyEnemyShip");
             ResourceManager.AddTexture("JumpGate", "Images/GalaxyMap/JumpGate");
             ResourceManager.AddTexture("SystemInfo", "Images/GalaxyMap/SystemInfo");
-            ResourceManager.AddTexture("combat", "Images/Galaxy/GoofyEnemyShip");
-
-
+            // fonties
             ResourceManager.AddFont("BaseFont", "Fonts/TestFont");
         }
 
