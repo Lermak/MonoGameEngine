@@ -18,15 +18,16 @@ namespace MonoGame_Core.Scripts
         /// Object's speed relative to x percent of MoveVelocity
         /// </summary>
         public float speed;
-        public ShipState MyState;
+        public ShipState MyState = ShipState.Playing;
+
+        public Vector2 ReturnPos = new Vector2();
+        public float ReturnRads = 0;
+        public Vector2 ReturnScale = new Vector2(1,1);
 
         public ShipData(GameObject go, string name) : base(go, name)
         {
             speed = 300;
-            MyState = ShipState.Sorting;
-            reload = 100;
-            speed = 250;
-            reloadSpeed = 90;
+            MyState = ShipState.Playing;
         }
     }
 }

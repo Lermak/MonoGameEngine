@@ -13,7 +13,16 @@ namespace MonoGame_Core.Scripts
     /// </summary>
     public static class ShipBehaviors
     {
-        
+        public static void Transition(float dt, GameObject go, Component[] c = null)
+        {
+            if(InputManager.IsTriggered(ConfigurationManager.Configuration.Keybindings["space"]))
+            {
+                if(Player.ShipState == ShipData.ShipState.Playing)
+                    CoroutineManager.Add(Coroutines.ModifyShipTransition((WorldObject)go), "modifyTransition", 0, true);
+                else if(Player.ShipState == ShipData.ShipState.Sorting)
+                    CoroutineManager.Add(Coroutines.PlayGameTransition((WorldObject)go), "modifyTransition", 0, true);
+            }
+        }
         public static void ShootOnClick(float dt, GameObject go, Component[] c = null)
         {
             Vector2 mousePos = InputManager.MousePos;
