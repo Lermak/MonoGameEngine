@@ -114,9 +114,9 @@ namespace MonoGame_Core.Scripts
             //
             // strafe l/r
             if (state.IsKeyDown(InputManager.KeyMap["rot_right"])) {
-                v = hf_Math.RadToUnit(t.Radians + hf_Math.DegToRad(90)) * m.Speed * dt;
-            } else if (state.IsKeyDown(InputManager.KeyMap["rot_left"])) {
                 v = hf_Math.RadToUnit(t.Radians + hf_Math.DegToRad(-90)) * m.Speed * dt;
+            } else if (state.IsKeyDown(InputManager.KeyMap["rot_left"])) {
+                v = hf_Math.RadToUnit(t.Radians + hf_Math.DegToRad(90)) * m.Speed * dt;
             }
             //
             // rotate
