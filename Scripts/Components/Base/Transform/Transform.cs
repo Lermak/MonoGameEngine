@@ -42,7 +42,7 @@ namespace MonoGame_Core.Scripts
                         return radians;
                 }
             }
-            set { radians = value; }
+            set { radians = value % hf_Math.DegToRad(360); }
         }
         public float RotationDegrees { get { return hf_Math.RadToDeg(Radians); } }
         public Vector2 Scale { get { 
@@ -80,11 +80,11 @@ namespace MonoGame_Core.Scripts
         }
         public void Rotate(float degree)
         {
-            radians += hf_Math.DegToRad(degree);
+            radians = (radians + hf_Math.DegToRad(degree)) % hf_Math.DegToRad(360);
         }
         public void SetRotation(float degree)
         {
-            radians = hf_Math.DegToRad(degree);
+            radians = hf_Math.DegToRad(degree) % hf_Math.DegToRad(360);
         }
         public Vector2 WorldPosition()
         {
