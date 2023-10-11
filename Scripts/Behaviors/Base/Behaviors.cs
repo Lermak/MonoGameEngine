@@ -98,6 +98,7 @@ namespace MonoGame_Core.Scripts
         {
             Movement m = (Movement)go.GetComponent("movement");
             Transform t = ((WorldObject)go).Transform;
+            
             //
             // drive fw/bw
             KeyboardState state = Keyboard.GetState();
@@ -115,25 +116,19 @@ namespace MonoGame_Core.Scripts
             }
             //
             // strafe l/r
-            if (state.IsKeyDown(InputManager.KeyMap["rot_right"]))
-            {
-                v = hf_Math.RadToUnit(t.Radians + hf_Math.DegToRad(-90)) * m.Speed * dt;
-            }
-            else if (state.IsKeyDown(InputManager.KeyMap["rot_left"]))
-            {
+            if (state.IsKeyDown(InputManager.KeyMap["rot_right"])) {
                 v = hf_Math.RadToUnit(t.Radians + hf_Math.DegToRad(90)) * m.Speed * dt;
+            } else if (state.IsKeyDown(InputManager.KeyMap["rot_left"])) {
+                v = hf_Math.RadToUnit(t.Radians + hf_Math.DegToRad(-90)) * m.Speed * dt;
             }
             //
             // rotate
-            if (state.IsKeyDown(InputManager.KeyMap["left"]))
-            {
+            if (state.IsKeyDown(InputManager.KeyMap["left"])){
                 r = m.RotSpeed * dt;
-            }
-            else if (state.IsKeyDown(InputManager.KeyMap["right"]))
-            {
+            } else if (state.IsKeyDown(InputManager.KeyMap["right"])){
                 r = -(m.RotSpeed * dt);
             }
-
+                
 
             RigidBody rb = (RigidBody)go.GetComponent("rigidBody");
 
