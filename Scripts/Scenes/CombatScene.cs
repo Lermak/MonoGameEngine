@@ -53,16 +53,14 @@ namespace MonoGame_Core.Scripts
 
         protected override void loadObjects()
         {
-            //
-            // LOAD BG
-            InitWorldObject(new WorldObject("BG", "Background", new string[] { }, new Vector2(), -0));
-            //
-            // LOAD GRID
-            InventoryGrid grid;
-            if (InventoryGrid.Grid == null)
-                InventoryGrid.Grid =
-                (InventoryGrid) InitWorldObject(new InventoryGrid("Grid", "Grid", new Vector2(15, 8)));
-                //grid = InventoryGrid.Grid;
+
+            // todo: remove redundant player obj
+            /*
+            PlayerShip player = (PlayerShip)InitWorldObject(new PlayerShip("Base", "playerShip", new Vector2(0, 0)));
+            */ 
+
+            if (Player.Ship == null)
+                InitWorldObject(new Player("Base", "Grid", new Vector2(15, 8)));
             else
             {
                 grid = InventoryGrid.Grid; // exhaustive enough i guess :^)
@@ -79,14 +77,14 @@ namespace MonoGame_Core.Scripts
             for (int i = 0; i < max; i++)
             {
                 Random rng = new Random();
-                Vector2 spawnPos = SpawnPosRe(player.Transform.Position, 800);
+                Vector2 spawnPos = SpawnPosRe(ship.Transform.Position, 800);
                 EnemyShip enemy 
                 = (EnemyShip)InitWorldObject(new EnemyShip("Ship", "", spawnPos));
                 enemy
                 .AddBehavior(
                     "pointToPlayer",
                     ShipBehaviors.PointToPlayer,
-                    new Component[] { player.Transform }
+                    new Component[] { ship.Transform }
                     )
                 ;
                 enemy.AddBehavior("shootPlayer", ShipBehaviors.EmitRandomBullet);
