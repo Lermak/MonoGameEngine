@@ -83,6 +83,10 @@ namespace MonoGame_Core.Scripts
         /// <summary>
         /// moves a gameobject forwards and backwards relative 
         /// to its rotation, and rotates rather than moving left and right
+        /// <br/><br/><b><h1>control scheme</h1></b>
+        /// <br/>move forwards and backwards with keys [up, down]
+        /// <br/>strafe left and right with keys [rot_left,rot_right]
+        /// <br/>rotate left and right with keys [left,right]
         /// <br/><br/>
         /// P.S. thank u stackex <br/>
         /// https://gamedev.stackexchange.com/questions/130684/move-object-forward-according-to-rotation
@@ -93,7 +97,9 @@ namespace MonoGame_Core.Scripts
         public static void Drive(float dt, GameObject go, Component[] c = null) {
             Movement m = (Movement)go.GetComponent("movement");
             Transform t = ((WorldObject)go).Transform;
-
+            
+            //
+            // drive fw/bw
             KeyboardState state = Keyboard.GetState();
             Vector2 v = new Vector2();
             float r = 0;
@@ -105,12 +111,21 @@ namespace MonoGame_Core.Scripts
                 v.X = (float)Math.Cos(t.Radians) * m.Speed * dt;
                 v.Y = (float)Math.Sin(t.Radians) * m.Speed * dt;
             }
-                
-
-            if (state.IsKeyDown(InputManager.KeyMap["left"]))
-                r = (m.RotSpeed * dt);
-            else if (state.IsKeyDown(InputManager.KeyMap["right"]))
+            //
+            // strafe l/r
+            if (state.IsKeyDown(InputManager.KeyMap["rot_right"])) {
+                v = hf_Math.RadToUnit(t.Radians + hf_Math.DegToRad(90)) * m.Speed * dt;
+            } else if (state.IsKeyDown(InputManager.KeyMap["rot_left"])) {
+                v = hf_Math.RadToUnit(t.Radians + hf_Math.DegToRad(-90)) * m.Speed * dt;
+            }
+            //
+            // rotate
+            if (state.IsKeyDown(InputManager.KeyMap["left"])){
+                r = m.RotSpeed * dt;
+            } else if (state.IsKeyDown(InputManager.KeyMap["right"])){
                 r = -(m.RotSpeed * dt);
+            }
+                
 
             RigidBody rb = (RigidBody)go.GetComponent("rigidBody");
 
