@@ -80,6 +80,44 @@ namespace MonoGame_Core.Scripts
             //((Transform)go.GetComponent("transform")).Move(v);
             //((Transform)go.GetComponent("transform")).Rotate(r);
         }
+        /// <summary>
+        /// moves a gameobject forwards and backwards relative 
+        /// to its rotation, and rotates rather than moving left and right
+        /// <br/><br/>
+        /// P.S. thank u stackex <br/>
+        /// https://gamedev.stackexchange.com/questions/130684/move-object-forward-according-to-rotation
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="go"></param>
+        /// <param name="c"></param>
+        public static void Drive(float dt, GameObject go, Component[] c = null) {
+            Movement m = (Movement)go.GetComponent("movement");
+            Transform t = ((WorldObject)go).Transform;
+
+            KeyboardState state = Keyboard.GetState();
+            Vector2 v = new Vector2();
+            float r = 0;
+            if (state.IsKeyDown(InputManager.KeyMap["down"])) {
+                v.X = -(float)Math.Cos(t.Radians) * m.Speed * dt;
+                v.Y = -(float)Math.Sin(t.Radians) * m.Speed * dt;
+            }
+            else if (state.IsKeyDown(InputManager.KeyMap["up"])) {
+                v.X = (float)Math.Cos(t.Radians) * m.Speed * dt;
+                v.Y = (float)Math.Sin(t.Radians) * m.Speed * dt;
+            }
+                
+
+            if (state.IsKeyDown(InputManager.KeyMap["left"]))
+                r = (m.RotSpeed * dt);
+            else if (state.IsKeyDown(InputManager.KeyMap["right"]))
+                r = -(m.RotSpeed * dt);
+
+            RigidBody rb = (RigidBody)go.GetComponent("rigidBody");
+
+            rb.MoveVelocity = v;
+            rb.AngularVelocity = r;
+
+        }
 
         public static void ManualScale(float dt, GameObject go, Component[] c = null)
         {
