@@ -94,11 +94,10 @@ namespace MonoGame_Core.Scripts
         /// <param name="dt"></param>
         /// <param name="go"></param>
         /// <param name="c"></param>
-        public static void DriveStrafe(float dt, GameObject go, Component[] c = null)
+        public static void Drive(float dt, GameObject go, Component[] c = null)
         {
             Movement m = (Movement)go.GetComponent("movement");
             Transform t = ((WorldObject)go).Transform;
-            
             //
             // drive fw/bw
             KeyboardState state = Keyboard.GetState();
@@ -116,19 +115,25 @@ namespace MonoGame_Core.Scripts
             }
             //
             // strafe l/r
-            if (state.IsKeyDown(InputManager.KeyMap["rot_right"])) {
+            if (state.IsKeyDown(InputManager.KeyMap["rot_right"]))
+            {
                 v = hf_Math.RadToUnit(t.Radians + hf_Math.DegToRad(-90)) * m.Speed * dt;
-            } else if (state.IsKeyDown(InputManager.KeyMap["rot_left"])) {
+            }
+            else if (state.IsKeyDown(InputManager.KeyMap["rot_left"]))
+            {
                 v = hf_Math.RadToUnit(t.Radians + hf_Math.DegToRad(90)) * m.Speed * dt;
             }
             //
             // rotate
-            if (state.IsKeyDown(InputManager.KeyMap["left"])){
+            if (state.IsKeyDown(InputManager.KeyMap["left"]))
+            {
                 r = m.RotSpeed * dt;
-            } else if (state.IsKeyDown(InputManager.KeyMap["right"])){
+            }
+            else if (state.IsKeyDown(InputManager.KeyMap["right"]))
+            {
                 r = -(m.RotSpeed * dt);
             }
-                
+
 
             RigidBody rb = (RigidBody)go.GetComponent("rigidBody");
 
@@ -278,6 +283,14 @@ namespace MonoGame_Core.Scripts
             {
                 ShakeOnClick(dt, go, c);
                 SceneManager.ChangeScene(new CombatScene());
+            }
+        }
+
+        public static void reloadLevel(float dt, GameObject go, Component[] c = null)
+        {
+            if (InputManager.IsTriggered(Keys.R))
+            {
+                SceneManager.ChangeScene(new GalaxyMap());
             }
         }
 
