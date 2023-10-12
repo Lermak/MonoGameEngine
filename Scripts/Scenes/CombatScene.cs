@@ -66,9 +66,25 @@ namespace MonoGame_Core.Scripts
                 InitWorldObject(new Player("StarterShipSorting", "Player", new Vector2(11, 8), "StarterShip"));
             else
             {
-                grid = InventoryGrid.Grid; // exhaustive enough i guess :^)
-                Console.WriteLine(InventoryGrid.Inventory.StoredItems.ToString());//debuggies
+                InitWorldObject(Player.Ship);
+                Player.Ship.SpriteRenderer.Cameras = new List<Camera>() { CameraManager.MainCamera };
+                foreach(InventoryItem i in Player.Inventory.StoredItems)
+                {
+                    i.Restore();
+                    if ((ItemCombatData)i.GetComponent("CombatData") != null) {
+                        ((ItemCombatData)i.GetComponent("CombatData")).Reloading = false;
+                    }
+                }
+                
             }
+
+            Player ship = Player.Ship;
+            ship.Transform.SetScale((float)0.05,(float)0.05);
+            Console.WriteLine(
+                ((ItemCombatData)Player.Inventory.StoredItems[0].GetComponent("CombatData"))
+                .Reloading
+                .ToString())
+            ;
             //
             // spawn in the player before any enemies
             PlayerShip player =
