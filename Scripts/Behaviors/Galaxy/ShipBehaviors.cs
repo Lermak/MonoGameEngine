@@ -26,7 +26,7 @@ namespace MonoGame_Core.Scripts
         public static void ShootOnClick(float dt, GameObject go, Component[] c = null)
         {
             Vector2 mousePos = InputManager.MousePos;
-            Transform t = (Transform)go.GetComponent("transform");
+            Transform t = ((WorldObject)go).Transform;
             ItemCombatData combatData = (ItemCombatData)go.GetComponent("CombatData");
 
             // dear R: this fucking makes it throw a tantrum when you left click in the combat
@@ -34,8 +34,9 @@ namespace MonoGame_Core.Scripts
             // and everything, it yells about pointing to null when you ask for the combatdata
             // but the combatdata is there i dont know what happened i hate C#
             // thank u for reading this had to get it off of my chest -Blake
-            if (InputManager.IsTriggered(InputManager.MouseKeys.Left) && combatData.Reloading == false)
+            if (InputManager.IsPressed(InputManager.MouseKeys.Left) && combatData.Reloading == false)
             {
+                Console.WriteLine("shot detected");
                 CoroutineManager.Add(Coroutines.Reload(combatData), "Reload" + go.Name, 0, true);
                 SceneManager.AddObject(new Bullet("BulletTex", "", t.Position, t.RotationDegrees));
             }
