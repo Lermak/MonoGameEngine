@@ -94,7 +94,7 @@ namespace MonoGame_Core.Scripts
         /// <param name="dt"></param>
         /// <param name="go"></param>
         /// <param name="c"></param>
-        public static void Drive(float dt, GameObject go, Component[] c = null)
+        public static void DriveStrafe(float dt, GameObject go, Component[] c = null)
         {
             Movement m = (Movement)go.GetComponent("movement");
             Transform t = ((WorldObject)go).Transform;
