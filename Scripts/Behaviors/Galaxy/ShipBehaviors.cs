@@ -29,16 +29,14 @@ namespace MonoGame_Core.Scripts
             Transform t = ((WorldObject)go).Transform;
             ItemCombatData combatData = (ItemCombatData)go.GetComponent("CombatData");
 
-            // dear R: this fucking makes it throw a tantrum when you left click in the combat
-            // scene i dont know what the fuck to do about it, the data is all instantiated
-            // and everything, it yells about pointing to null when you ask for the combatdata
-            // but the combatdata is there i dont know what happened i hate C#
-            // thank u for reading this had to get it off of my chest -Blake
             if (InputManager.IsPressed(InputManager.MouseKeys.Left) && combatData.Reloading == false)
             {
                 Console.WriteLine("shot detected");
                 CoroutineManager.Add(Coroutines.Reload(combatData), "Reload" + go.Name, 0, true);
-                SceneManager.AddObject(new Bullet("BulletTex", "", t.Position, t.RotationDegrees));
+                Bullet b =
+                (Bullet) SceneManager
+                .AddObject(new Bullet("BulletTex", "", t.Position, t.RotationDegrees))
+                ;
             }
         }
         /// <summary>
@@ -76,6 +74,7 @@ namespace MonoGame_Core.Scripts
         }
         /// <summary>
         ///  spawns a bullet instance with EnemyShip's rotation at random intervals
+        ///  <br/> this does not work currently, dont use this for the love of god
         ///  
         /// </summary>
         /// <param name="dt"></param>
@@ -95,6 +94,7 @@ namespace MonoGame_Core.Scripts
             }*/
 
         }
+        //
         /// <summary>
         /// makes sure the thing dies when dead
         ///
@@ -108,7 +108,7 @@ namespace MonoGame_Core.Scripts
 
             if (!eS.ToDestroy)
             {
-                if (eSData.health >= 1)
+                if (eSData.health > 0)
                 {
                     // dont do nuffin
                 }
