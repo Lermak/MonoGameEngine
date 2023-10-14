@@ -75,17 +75,18 @@ namespace MonoGame_Core.Scripts
                         ((ItemCombatData)i.GetComponent("CombatData")).Reloading = false;
                     }
                 }
+                Console.WriteLine(
+                ((ItemCombatData)Player.Inventory.StoredItems[0].GetComponent("CombatData"))
+                .Reloading
+                .ToString())
+            ;
                 
             }
             //
             // spawn in the player first
             Player ship = Player.Ship;
             ship.Transform.SetScale((float)0.05,(float)0.05);
-            Console.WriteLine(
-                ((ItemCombatData)Player.Inventory.StoredItems[0].GetComponent("CombatData"))
-                .Reloading
-                .ToString())
-            ;
+            
             
             //
             // spawn in enemies, recursively find a good spawn point
