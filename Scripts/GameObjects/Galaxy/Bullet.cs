@@ -5,7 +5,9 @@ using Microsoft.Xna.Framework;
 using MonoGame_Core.Scripts;
 
 public class Bullet : WorldObject {
-    
+    public BulletData Data {
+        get {return (BulletData)GetComponent("BulletData");}
+    }
     public Bullet(string texID,string name,Vector2 pos,float parentRot)
     : base(texID,name,new string[] {"bullet","damage"},pos,2) {
         //
