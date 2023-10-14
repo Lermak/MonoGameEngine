@@ -130,7 +130,7 @@ namespace MonoGame_Core.Scripts
             return typeFilter;
 
         }
-        public float GetDamageBuff(List<InventoryItem> items) {
+        public float GetDamageBuff() {
             List<InventoryItem> guns = FetchItemsByType(ItemData.ItemTypes.Combat);
 
             // todo
