@@ -77,7 +77,8 @@ namespace MonoGame_Core.Scripts
                 }
                 
             }
-
+            //
+            // spawn in the player first
             Player ship = Player.Ship;
             ship.Transform.SetScale((float)0.05,(float)0.05);
             Console.WriteLine(
@@ -85,14 +86,10 @@ namespace MonoGame_Core.Scripts
                 .Reloading
                 .ToString())
             ;
-            //
-            // spawn in the player before any enemies
-            PlayerShip player =
-            (PlayerShip)InitWorldObject(new PlayerShip("Base", "playerShip", new Vector2(0, 0)));
-            player.AddBehavior("reload", ShipBehaviors.ReloadWeapon);
+            
             //
             // spawn in enemies, recursively find a good spawn point
-            int max = 5;
+            int max = 20;
             for (int i = 0; i < max; i++)
             {
                 Random rng = new Random();
