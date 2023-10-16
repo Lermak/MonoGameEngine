@@ -109,14 +109,10 @@ namespace MonoGame_Core.Scripts
             if (type != GalaxyData.GalaxyType.JumpGate)
             {
                 Random r = new Random();
-                InventoryItemShapeData.Shapes s = (InventoryItemShapeData.Shapes)r.Next(Enum.GetNames(typeof(InventoryItemShapeData.Shapes)).Length - 1);
-                InitWorldObject(new ShipWeapon(Guid.NewGuid().ToString(), s.ToString(), new Vector2(-Globals.SCREEN_WIDTH * .25f + 50, -Globals.SCREEN_HEIGHT / 2 + 100), s));
-                s = (InventoryItemShapeData.Shapes)r.Next(Enum.GetNames(typeof(InventoryItemShapeData.Shapes)).Length - 1);
-                InitWorldObject(new ShipWeapon(Guid.NewGuid().ToString(), s.ToString(), new Vector2(-Globals.SCREEN_WIDTH * .05f + 50, -Globals.SCREEN_HEIGHT / 2 + 100), s));
-                s = (InventoryItemShapeData.Shapes)r.Next(Enum.GetNames(typeof(InventoryItemShapeData.Shapes)).Length - 1);
-                InitWorldObject(new ShipWeapon(Guid.NewGuid().ToString(), s.ToString(), new Vector2(Globals.SCREEN_WIDTH * .15f + 50, -Globals.SCREEN_HEIGHT / 2 + 100), s));
-                s = (InventoryItemShapeData.Shapes)r.Next(Enum.GetNames(typeof(InventoryItemShapeData.Shapes)).Length - 1);
-                InitWorldObject(new ShipWeapon(Guid.NewGuid().ToString(), s.ToString(), new Vector2(Globals.SCREEN_WIDTH * .35f + 50, -Globals.SCREEN_HEIGHT / 2 + 100), s));
+                ShipWeapon.GenRandomWeapon(new Vector2(-Globals.SCREEN_WIDTH * .25f + 50, -Globals.SCREEN_HEIGHT / 2 + 100));
+                ShipWeapon.GenRandomWeapon(new Vector2(-Globals.SCREEN_WIDTH * .05f + 50, -Globals.SCREEN_HEIGHT / 2 + 100));
+                ShipWeapon.GenRandomWeapon(new Vector2(-Globals.SCREEN_WIDTH * .15f + 50, -Globals.SCREEN_HEIGHT / 2 + 100));
+                ShipWeapon.GenRandomWeapon(new Vector2(-Globals.SCREEN_WIDTH * .35f + 50, -Globals.SCREEN_HEIGHT / 2 + 100));
 
                 wo = InitWorldObject(new TextButton("LaunchBtn", 
                     "Btn",
