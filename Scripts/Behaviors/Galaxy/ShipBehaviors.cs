@@ -37,6 +37,7 @@ namespace MonoGame_Core.Scripts
                 (Bullet) SceneManager
                 .AddObject(new Bullet("BulletTex", "", t.Position, t.RotationDegrees))
                 ;
+                //Console.WriteLine(b.DumpStats());
             }
         }
         /// <summary>
