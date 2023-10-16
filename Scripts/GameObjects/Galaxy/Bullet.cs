@@ -30,5 +30,10 @@ public class Bullet : WorldObject {
         ;
 
     }
+    public string DumpStats() {
+        string dmg = Data.damage.ToString();
+        string spd = Data.speed.ToString();
+        return "dmg " + dmg + ", spd " + spd;
+    }
 
 }
