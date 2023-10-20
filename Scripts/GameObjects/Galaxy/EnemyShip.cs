@@ -11,7 +11,7 @@ public class EnemyShip : WorldObject {
             SpriteRenderer t = SpriteRenderer;
             //ComponentHandler.Remove(GetComponent("ShipData"));
             AddComponent(new EnemyShipData(this, "enemyShipData"));
-            AddComponent(new CollisionBox(this,"enemyBox",false,ResourceManager.GetTextureSize(texID)));
+            AddComponent(new CollisionBox(this,"enemyBox",false, Globals.ResourceManager.GetTextureSize(texID), new List<string> { "enemyBox" }));
             AddBehavior("moveToRot",Behaviors.MoveTowardRotation);
             AddBehavior("die",ShipBehaviors.DieWhenDead);
             /*CoroutineManager.Add(

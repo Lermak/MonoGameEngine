@@ -17,7 +17,7 @@ namespace MonoGame_Core.Scripts
         {
             if (Ship == null)
             {
-                SpriteRenderer cover = (SpriteRenderer)AddComponent(new SpriteRenderer(this, "CoverImage", coverTex, 100, ResourceManager.GetTextureSize(coverTex)));
+                SpriteRenderer cover = (SpriteRenderer)AddComponent(new SpriteRenderer(this, "CoverImage", coverTex, 100, Globals.ResourceManager.GetTextureSize(coverTex)));
                 cover.Visible = true;
                 Ship = this;
                 AddBehavior("Scale", Behaviors.ManualScale);

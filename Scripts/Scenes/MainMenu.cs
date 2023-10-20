@@ -27,6 +27,8 @@ namespace MonoGame_Core.Scripts
 
             ResourceManager.AddTexture("Btn", "Images/VisitSystem/ButtonTemplate");
             ResourceManager.AddTexture("BtnHover", "Images/VisitSystem/ButtonTemplateHover");
+
+            ResourceManager.AddFont("BaseFont", "Fonts/TestFont");
         }
 
         protected override void loadObjects()

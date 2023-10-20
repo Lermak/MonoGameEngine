@@ -30,7 +30,7 @@ namespace MonoGame_Core.Scripts
             TimeManager.Initilize();
             ConfigurationManager.Initilize();
             InputManager.Initilize();
-            SceneManager.Initilize(new MainMenu());
+            SceneManager.Initilize(new GalaxyMap());
             
             base.Initialize();
         }

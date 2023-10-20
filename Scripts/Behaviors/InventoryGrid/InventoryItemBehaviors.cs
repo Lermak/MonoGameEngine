@@ -76,7 +76,7 @@ namespace MonoGame_Core.Scripts
                         }
                         else
                         {
-                            CoroutineManager.Add(Coroutines.Shake(.1f, 10, 15, item.SpriteRenderer), "BadPlacement", 0, true);
+                            Globals.CoroutineManager.Add(Coroutines.Shake(.1f, 10, 15, item.SpriteRenderer), "BadPlacement", 0, true);
                         }
                     }
                 }

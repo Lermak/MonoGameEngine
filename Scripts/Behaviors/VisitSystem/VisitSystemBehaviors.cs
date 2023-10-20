@@ -26,7 +26,7 @@ namespace MonoGame_Core.Scripts
             if (InputManager.IsTriggered(InputManager.MouseKeys.Left) &&
                 col.ContainsPoint(v))
             {
-                CameraManager.MainCamera.Transform.SetPosition(new Vector2(Globals.SCREEN_WIDTH + 200, 0));
+                Globals.CameraManager.MainCamera.Transform.SetPosition(new Vector2(Globals.SCREEN_WIDTH + 200, 0));
             }
         }
         public static void GotoSystem(float dt, GameObject go, Component[] c = null)
@@ -36,7 +36,7 @@ namespace MonoGame_Core.Scripts
             if (InputManager.IsTriggered(InputManager.MouseKeys.Left) &&
                 col.ContainsPoint(v))
             {
-                CameraManager.MainCamera.Transform.SetPosition(new Vector2());
+                Globals.CameraManager.MainCamera.Transform.SetPosition(new Vector2());
             }
         }
 
@@ -55,7 +55,7 @@ namespace MonoGame_Core.Scripts
                     wo.SpriteRenderer.Visible = true;
                     itemName.Visible = true;
                     itemDesc.Visible = true;
-                    Vector2 tSize = ResourceManager.GetTextureSize("SystemInfo");
+                    Vector2 tSize = Globals.ResourceManager.GetTextureSize("SystemInfo");
                     wo.Transform.SetPosition(InputManager.MousePos + new Vector2(InputManager.MousePos.X > Globals.SCREEN_WIDTH * .25f ? -tSize.X : tSize.X, InputManager.MousePos.Y > Globals.SCREEN_HEIGHT * .25f ? -tSize.Y : tSize.Y) / 2);
                     ItemData id = (ItemData)(g.GetComponent("ItemData"));
                     itemName.Text = id.DisplayName;

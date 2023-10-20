@@ -48,7 +48,7 @@ namespace MonoGame_Core.Scripts
 
         public void Restore()
         {
-            SpriteRenderer.Cameras = new System.Collections.Generic.List<Camera>() { CameraManager.MainCamera };
+            SpriteRenderer.Cameras = new System.Collections.Generic.List<Camera>() { Globals.CameraManager.MainCamera };
             SceneManager.CurrentScene.InitWorldObject(this);
         }
     }

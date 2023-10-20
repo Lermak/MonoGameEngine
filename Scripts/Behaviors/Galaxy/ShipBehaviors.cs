@@ -18,9 +18,9 @@ namespace MonoGame_Core.Scripts
             if(InputManager.IsTriggered(ConfigurationManager.Configuration.Keybindings["space"]))
             {
                 if(Player.ShipState == ShipData.ShipState.Playing)
-                    CoroutineManager.Add(Coroutines.ModifyShipTransition((WorldObject)go), "modifyTransition", 0, true);
+                    Globals.CoroutineManager.Add(Coroutines.ModifyShipTransition((WorldObject)go), "modifyTransition", 0, true);
                 else if(Player.ShipState == ShipData.ShipState.Sorting)
-                    CoroutineManager.Add(Coroutines.PlayGameTransition((WorldObject)go), "modifyTransition", 0, true);
+                    Globals.CoroutineManager.Add(Coroutines.PlayGameTransition((WorldObject)go), "modifyTransition", 0, true);
             }
         }
         public static void ShootOnClick(float dt, GameObject go, Component[] c = null)
@@ -32,7 +32,7 @@ namespace MonoGame_Core.Scripts
             if (InputManager.IsPressed(InputManager.MouseKeys.Left) && combatData.Reloading == false)
             {
                 Console.WriteLine("shot detected");
-                CoroutineManager.Add(Coroutines.Reload(combatData), "Reload" + go.Name, 0, true);
+                Globals.CoroutineManager.Add(Coroutines.Reload(combatData), "Reload" + go.Name, 0, true);
                 Bullet b =
                 (Bullet) SceneManager
                 .AddObject(new Bullet("BulletTex", "", t.Position, t.RotationDegrees))
