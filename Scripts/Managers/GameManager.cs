@@ -49,8 +49,8 @@ namespace MonoGame_Core.Scripts
                 Exit();
 
             TimeManager.Update(deltaTime);
-            SceneManager.Update(TimeManager.ProdDelta);
             InputManager.Update(TimeManager.DeltaTime);
+            SceneManager.Update(TimeManager.ProdDelta);
 
             base.Update(deltaTime);
         }
