@@ -134,14 +134,6 @@ namespace MonoGame_Core.Scripts
                 r = -(m.RotSpeed * dt);
             }
 
-
-            RigidBody rb = (RigidBody)go.GetComponent("rigidBody");
-
-            rb.MoveVelocity = v;
-            rb.AngularVelocity = r;
-
-        }
-
             RigidBody rb = (RigidBody)go.GetComponent("rigidBody");
 
             rb.MoveVelocity = v;
@@ -313,6 +305,5 @@ namespace MonoGame_Core.Scripts
                 go.Destroy();
             }
         }
-
     }
 }
