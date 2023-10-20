@@ -130,5 +130,19 @@ namespace MonoGame_Core.Scripts
             return typeFilter;
 
         }
+        public float GetDamageBuff() {
+            List<InventoryItem> guns = FetchItemsByType(ItemData.ItemTypes.Combat);
+
+            // todo
+            return 1f;
+        }
+        public float GetFireRateBuff() {
+            // todo
+            return 1f;
+        }
+        public float GetSpeedBuff() {
+            // todo
+            return 1f;
+        }
     }
 }

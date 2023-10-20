@@ -32,11 +32,10 @@ namespace MonoGame_Core.Scripts
         /// <param name="go"></param>
         /// <param name="c"></param>
         public static void DealDamage(Collider a, Collider b, Vector2 p) {
-            
             Bullet bullet = (Bullet)a.GameObject;
 
             if (!bullet.ToDestroy) {
-                ((EnemyShipData)b.GameObject.GetComponent("enemyShipData")).health-=1;
+                ((EnemyShipData)b.GameObject.GetComponent("enemyShipData")).health-=bullet.Data.damage;
                 bullet.Destroy();
             }
             

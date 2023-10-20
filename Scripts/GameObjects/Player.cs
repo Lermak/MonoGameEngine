@@ -22,7 +22,7 @@ namespace MonoGame_Core.Scripts
                 Ship = this;
                 AddBehavior("Scale", Behaviors.ManualScale);
                 //AddBehavior("Move", Behaviors.MoveWithRot);
-                AddBehavior("Move", Behaviors.Drive);
+                AddBehavior("Move", Behaviors.DriveStrafe);
                 AddBehavior("Transition", ShipBehaviors.Transition);
                 AddComponent(new Movement(this, "movement", 300, 360));
                 AddComponent(new ShipData(this, "ShipData"));               

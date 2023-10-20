@@ -94,38 +94,46 @@ namespace MonoGame_Core.Scripts
         /// <param name="dt"></param>
         /// <param name="go"></param>
         /// <param name="c"></param>
-        public static void Drive(float dt, GameObject go, Component[] c = null) {
+        public static void DriveStrafe(float dt, GameObject go, Component[] c = null)
+        {
             Movement m = (Movement)go.GetComponent("movement");
             Transform t = ((WorldObject)go).Transform;
-            
             //
             // drive fw/bw
             KeyboardState state = Keyboard.GetState();
             Vector2 v = new Vector2();
             float r = 0;
-            if (state.IsKeyDown(InputManager.KeyMap["down"])) {
+            if (state.IsKeyDown(InputManager.KeyMap["down"]))
+            {
                 v.X = -(float)Math.Cos(t.Radians) * m.Speed * dt;
                 v.Y = -(float)Math.Sin(t.Radians) * m.Speed * dt;
             }
-            else if (state.IsKeyDown(InputManager.KeyMap["up"])) {
+            else if (state.IsKeyDown(InputManager.KeyMap["up"]))
+            {
                 v.X = (float)Math.Cos(t.Radians) * m.Speed * dt;
                 v.Y = (float)Math.Sin(t.Radians) * m.Speed * dt;
             }
             //
             // strafe l/r
-            if (state.IsKeyDown(InputManager.KeyMap["rot_right"])) {
+            if (state.IsKeyDown(InputManager.KeyMap["rot_right"]))
+            {
                 v = hf_Math.RadToUnit(t.Radians + hf_Math.DegToRad(-90)) * m.Speed * dt;
-            } else if (state.IsKeyDown(InputManager.KeyMap["rot_left"])) {
+            }
+            else if (state.IsKeyDown(InputManager.KeyMap["rot_left"]))
+            {
                 v = hf_Math.RadToUnit(t.Radians + hf_Math.DegToRad(90)) * m.Speed * dt;
             }
             //
             // rotate
-            if (state.IsKeyDown(InputManager.KeyMap["left"])){
+            if (state.IsKeyDown(InputManager.KeyMap["left"]))
+            {
                 r = m.RotSpeed * dt;
-            } else if (state.IsKeyDown(InputManager.KeyMap["right"])){
+            }
+            else if (state.IsKeyDown(InputManager.KeyMap["right"]))
+            {
                 r = -(m.RotSpeed * dt);
             }
-                
+
 
             RigidBody rb = (RigidBody)go.GetComponent("rigidBody");
 
@@ -246,12 +254,14 @@ namespace MonoGame_Core.Scripts
 
         }
 
-        public static void OnClickTemplate(float dt, GameObject go, Component[] c = null) {
+        public static void OnClickTemplate(float dt, GameObject go, Component[] c = null)
+        {
             Collider col = (Collider)go.GetComponent("myBox");
             Vector2 v = InputManager.MousePos;
             if (InputManager.IsTriggered(InputManager.MouseKeys.Left) &&
-                col.ContainsPoint(v)) {
-                    // don't do anything, this is a dead button
+                col.ContainsPoint(v))
+            {
+                // don't do anything, this is a dead button
             }
         }
 
@@ -284,14 +294,16 @@ namespace MonoGame_Core.Scripts
             }
         }
 
-        public static void DestroyOutOfBounds(float dt, GameObject go, Component[] c=null) {
+        public static void DestroyOutOfBounds(float dt, GameObject go, Component[] c = null)
+        {
             Transform t = ((WorldObject)go).Transform;
-            
-            if (   t.Position.X > (Globals.SCREEN_WIDTH/2)
-                || t.Position.X < (-Globals.SCREEN_WIDTH/2)
-                || t.Position.Y > (Globals.SCREEN_HEIGHT/2)
-                || t.Position.Y < (-Globals.SCREEN_HEIGHT/2)) {
-                    go.Destroy();
+
+            if (t.Position.X > (Globals.SCREEN_WIDTH / 2)
+                || t.Position.X < (-Globals.SCREEN_WIDTH / 2)
+                || t.Position.Y > (Globals.SCREEN_HEIGHT / 2)
+                || t.Position.Y < (-Globals.SCREEN_HEIGHT / 2))
+            {
+                go.Destroy();
             }
         }
 
