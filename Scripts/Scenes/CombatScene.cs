@@ -48,6 +48,9 @@ namespace MonoGame_Core.Scripts
             ResourceManager.AddTexture("JumpGate", "Images/GalaxyMap/JumpGate");
             ResourceManager.AddTexture("BulletTex", "Images/Bullet");
 
+            ResourceManager.AddTexture("StarterShip", "Images/Ships/StarterShip");
+            ResourceManager.AddTexture("StarterShipSorting", "Images/Ships/StarterShipSorting");
+
             ResourceManager.AddFont("BaseFont", "Fonts/TestFont");
         }
 
@@ -60,7 +63,7 @@ namespace MonoGame_Core.Scripts
             */ 
 
             if (Player.Ship == null)
-                InitWorldObject(new Player("Base", "Grid", new Vector2(15, 8)));
+                InitWorldObject(new Player("StarterShipSorting", "Player", new Vector2(11, 8), "StarterShip"));
             else
             {
                 grid = InventoryGrid.Grid; // exhaustive enough i guess :^)

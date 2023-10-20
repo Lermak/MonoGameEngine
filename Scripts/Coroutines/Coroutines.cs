@@ -109,6 +109,7 @@ namespace MonoGame_Core.Scripts
                 yield return false;
             }
             sd.MyState = ShipData.ShipState.Sorting;
+            Player.Cover.Visible = false;
             yield return true;
         }
         public static IEnumerator<bool> PlayGameTransition(WorldObject player)
@@ -118,7 +119,7 @@ namespace MonoGame_Core.Scripts
             float duration = .25f;
 
             sd.MyState = ShipData.ShipState.Animating;
-
+            Player.Cover.Visible = true;
             while (timeElapsed < duration)
             {
                 if (SceneManager.SceneState == SceneManager.State.Running)

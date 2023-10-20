@@ -47,7 +47,7 @@ namespace MonoGame_Core.Scripts
                             InventoryItemShapeData.CanGrab = false;
 
                             item.ShapeData.FollowMouse = true;
-                            item.SpriteRenderer.OrderInLayer = 1;
+                            item.SpriteRenderer.OrderInLayer = 5;
                             if (item.ShapeData.Placed)
                             {
                                 item.ShapeData.Placed = false;
@@ -63,13 +63,13 @@ namespace MonoGame_Core.Scripts
                             item.ShapeData.FollowMouse = false;
                             item.ShapeData.Placed = true;
                             Player.Inventory.PlaceItem(item);
-                            item.SpriteRenderer.OrderInLayer = 0;
+                            item.SpriteRenderer.OrderInLayer = 1;
                             item.Transform.SetPosition(item.GridToPos);
                             item.SetParent(Player.Ship, true);
                         }
                         else if (!Player.Inventory.IsInsideGrid(item))
                         {
-                            item.SpriteRenderer.OrderInLayer = 0;
+                            item.SpriteRenderer.OrderInLayer = 1;
                             InventoryItemShapeData.CanGrab = true;
                             item.ShapeData.FollowMouse = false;
                             item.ShapeData.Placed = false;

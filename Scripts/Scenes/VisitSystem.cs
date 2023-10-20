@@ -32,7 +32,8 @@ namespace MonoGame_Core.Scripts
             ResourceManager.AddTexture("JumpGateBG", "Images/VisitSystem/JumpGateBG");
 
             ResourceManager.AddTexture("ShopMenu", "Images/VisitSystem/ShopMenu");
-            ResourceManager.AddTexture("Grid", "Images/Inventory/Grid");
+            ResourceManager.AddTexture("StarterShip", "Images/Ships/StarterShip");
+            ResourceManager.AddTexture("StarterShipSorting", "Images/Ships/StarterShipSorting");
 
             ResourceManager.AddTexture("Btn", "Images/VisitSystem/ButtonTemplate");
             ResourceManager.AddTexture("BtnHover", "Images/VisitSystem/ButtonTemplateHover");
@@ -64,7 +65,7 @@ namespace MonoGame_Core.Scripts
             CameraManager.MainCamera.MinPos = new Vector2(0, 0);
             CameraManager.MainCamera.MaxPos = new Vector2(Globals.SCREEN_WIDTH+200, 0);
             if (Player.Ship == null)
-                InitWorldObject(new Player("Grid", "Grid", new Vector2(15, 8)));
+                InitWorldObject(new Player("StarterShipSorting", "Player", new Vector2(11, 8), "StarterShip"));
             else
             {
                 InitWorldObject(Player.Ship);
