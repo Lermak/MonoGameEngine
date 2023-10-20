@@ -276,7 +276,7 @@ namespace MonoGame_Core.Scripts
                     GameObject go = new GameObject("TileWall", new string[] { });
                     go.ComponentHandler.Add(new Transform(go, v, 0, 0));
                     //create a collision box
-                    CollisionBox cb = (CollisionBox)go.ComponentHandler.Add(new CollisionBox(go, "TileWall", true, new Vector2(Globals.TILE_WIDTH, Globals.TILE_HEIGHT)));
+                    CollisionBox cb = (CollisionBox)go.ComponentHandler.Add(new CollisionBox(go, "TileWall", true, new Vector2(Globals.TILE_WIDTH, Globals.TILE_HEIGHT), new List<string> { "TileWall" }));
                     //test collision against it
                     if(SATcollision(c, cb, out p))
                         ((CollisionHandler)c.GameObject.ComponentHandler.Get("collisionHandler")).RunCollisionActions(c, cb, p);

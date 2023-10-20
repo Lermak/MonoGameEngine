@@ -7,6 +7,8 @@ namespace MonoGame_Core.Scripts
 {
     public abstract class Collider : Component
     {
+        protected List<string> tags;
+
         protected float width;
         protected float height;
 
@@ -16,6 +18,7 @@ namespace MonoGame_Core.Scripts
         
         protected float radius;
 
+        public List<string> Tags { get { return tags; } }
         public bool IsStatic { get { return isStatic; } }
         public Vector2 Offset { get { return offset * transform.Scale; } }
         public Transform Transform { get { return transform; } }
@@ -28,8 +31,9 @@ namespace MonoGame_Core.Scripts
         public abstract List<Vector2> Axies();
 
 
-        public Collider(GameObject go, string name, bool isStatic) : base(go, name)
+        public Collider(GameObject go, string name, bool isStatic, List<string> tags) : base(go, name)
         {
+            this.tags = tags;
             transform = (Transform)go.ComponentHandler.Get("transform");
             this.isStatic = isStatic;
         }
@@ -51,7 +55,7 @@ namespace MonoGame_Core.Scripts
         {
             GameObject g = new GameObject("mouse", new string[] { });
             g.AddComponent(new Transform(g, InputManager.MousePos, 0, this.transform.Layer));
-            Collider c = (Collider)g.AddComponent(new CollisionCircle("mouse", g, 1, new Vector2(), false));
+            Collider c = (Collider)g.AddComponent(new CollisionCircle("mouse", g, 1, new Vector2(), false, new List<string> { "mouse" }));
 
             Vector2 pen = new Vector2();
             CollisionManager.SATcollision(c, this, out pen);

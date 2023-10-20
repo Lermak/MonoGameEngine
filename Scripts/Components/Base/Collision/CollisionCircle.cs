@@ -7,7 +7,7 @@ namespace MonoGame_Core.Scripts
 {
     public class CollisionCircle : Collider
     {        
-        public CollisionCircle(string name, GameObject go, float radius, Vector2 offset, bool isStatic) : base(go, name, isStatic)
+        public CollisionCircle(string name, GameObject go, float radius, Vector2 offset, bool isStatic, List<string> tags) : base(go, name, isStatic, tags)
         {
             this.offset = offset;
             gameObject = go;

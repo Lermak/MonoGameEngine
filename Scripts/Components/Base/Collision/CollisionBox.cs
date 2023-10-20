@@ -10,13 +10,13 @@ namespace MonoGame_Core.Scripts
     {
         private float cornerAngle { get { return (float)(Math.Acos((Width / 2) / Hypotenuse)) * (180 / (float)Math.PI); } }
 
-        public CollisionBox(GameObject go, string name, bool isStatic, Vector2 size) : base(go, name, isStatic)
+        public CollisionBox(GameObject go, string name, bool isStatic, Vector2 size, List<string> tags) : base(go, name, isStatic, tags)
         {
             offset = new Vector2();
             width = size.X;
             height = size.Y;
         }
-        public CollisionBox(GameObject go, string name, bool isStatic, SpriteRenderer sprite) : base(go, name, isStatic)
+        public CollisionBox(GameObject go, string name, bool isStatic, SpriteRenderer sprite, List<string> tags) : base(go, name, isStatic, tags)
         {
             offset = new Vector2();
             Vector2 size = ResourceManager.GetTextureSize(sprite.Texture);

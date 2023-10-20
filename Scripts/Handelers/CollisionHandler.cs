@@ -40,10 +40,16 @@ namespace MonoGame_Core.Scripts
     public class CollisionHandler : Component
     {
         public List<CollisionActions> myActions;
+        public List<CollisionActions> Actions { get { return myActions; } }
 
         public CollisionHandler(GameObject myObj) : base(myObj, "collisionHandler")
         {
             myActions = new List<CollisionActions>();
+        }
+
+        public void AddCollisionAction(CollisionActions a)
+        {
+            myActions.Add(a);
         }
 
         public void RunCollisionActions(Collider b1, Collider b2, Vector2 v)
@@ -52,7 +58,7 @@ namespace MonoGame_Core.Scripts
             {
                 if(ca.MyBox == b1.Name)
                 {
-                    if(ca.OtherBoxs.Contains(b2.Name))
+                    if(ca.OtherBoxs.Any(t => b2.Tags.Contains(t)))
                     {
                         foreach(CollisionAction c in ca.Actions)
                         {
