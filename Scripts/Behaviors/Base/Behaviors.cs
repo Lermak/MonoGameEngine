@@ -142,6 +142,13 @@ namespace MonoGame_Core.Scripts
 
         }
 
+            RigidBody rb = (RigidBody)go.GetComponent("rigidBody");
+
+            rb.MoveVelocity = v;
+            rb.AngularVelocity = r;
+
+        }
+
         public static void ManualScale(float dt, GameObject go, Component[] c = null)
         {
             Transform t = (Transform)go.GetComponent("transform");
