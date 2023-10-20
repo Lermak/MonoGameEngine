@@ -10,12 +10,13 @@ namespace MonoGame_Core.Scripts
     /// <summary>
     /// Static management class to handle the collection of cameras in the game and their rendering
     /// </summary>
-    public static class CameraManager
+    
+    public class CameraManager
     {
-        static List<Camera> cameras;
-        public static List<Camera> Cameras { get { return cameras; } }
-        public static Camera MainCamera { get { return cameras[0]; } }
-        public static void Initilize()
+        List<Camera> cameras;
+        public List<Camera> Cameras { get { return cameras; } }
+        public Camera MainCamera { get { return cameras[0]; } }
+        public void Initilize()
         {
             cameras = new List<Camera>();
             //MainCamera should always been the 0th element in the cameras list
@@ -23,7 +24,7 @@ namespace MonoGame_Core.Scripts
 
         }
 
-        public static void Add(Camera c)
+        public void Add(Camera c)
         {
             cameras.Add(c);
         }
@@ -32,7 +33,7 @@ namespace MonoGame_Core.Scripts
         /// Render all cameras to the screen, except the MainCamera, which defaults to the BackBuffer
         /// </summary>
         /// <param name="sb">The current spriteBatch</param>
-        public static void Draw(SpriteBatch sb)
+        public void Draw(SpriteBatch sb)
         {
             //Cameras are unique compaired to other game objects in that they don't require a spriteRenderer component
             //They manage thier own drawing
@@ -47,12 +48,15 @@ namespace MonoGame_Core.Scripts
         /// Perform any behaviors that the cameras have attached
         /// </summary>
         /// <param name="dt">Game Time</param>
-        public static void Update(float dt)
+        public void Update(float dt)
         {
-            //Cameras are GameObjects and need to be updated like them
-            foreach (Camera c in cameras)
+            if (SceneManager.CurrentScene != null)
             {
-                c.Update(dt);
+                //Cameras are GameObjects and need to be updated like them
+                foreach (Camera c in cameras)
+                {
+                    c.Update(dt);
+                }
             }
         }
     }

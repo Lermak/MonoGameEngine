@@ -10,9 +10,9 @@ using Microsoft.Xna.Framework.Graphics;
 namespace MonoGame_Core.Scripts
 {
     /// <summary>
-    /// Manageages the current scene, scene transitions and the state of the scene
+    /// Manageages the scenes, scene transitions and the state of the scene
     /// </summary>
-    static class SceneManager
+    public static class SceneManager
     {
         /// <summary>
         /// Determines how to handle the game loop based on what the scene is performing
@@ -21,6 +21,7 @@ namespace MonoGame_Core.Scripts
         public static Scene CurrentScene = new TestScene();
         public static Scene NextScene = null;
         public static State SceneState;
+        public static List<Scene> SavedScenes = new List<Scene>();
 
         public static void Initilize(Scene s)
         {
@@ -30,11 +31,29 @@ namespace MonoGame_Core.Scripts
             CurrentScene.OnLoad();
         }   
 
-        public static void ChangeScene(Scene s)
+        public static void ChangeScene(Scene s, bool save = false)
         {
             SceneState = State.SceneOut;
             CurrentScene.OnExit();
             NextScene = s;
+            if (save && !SavedScenes.Contains(CurrentScene))
+                SavedScenes.Add(CurrentScene);
+            else if (SavedScenes.Contains(CurrentScene))
+                SavedScenes.Remove(CurrentScene);
+        }
+        public static void ChangeScene(string name, bool save = false)
+        {
+            Scene s = SavedScenes.Where(s => s.Name == name).FirstOrDefault();
+            if (s != null)
+            {
+                SceneState = State.SceneOut;
+                CurrentScene.OnExit();
+                NextScene = s;
+                if (save && !SavedScenes.Contains(CurrentScene))
+                    SavedScenes.Add(CurrentScene);
+                else if (SavedScenes.Contains(CurrentScene))
+                    SavedScenes.Remove(CurrentScene);
+            }
         }
 
         public static GameObject AddObject(GameObject go)

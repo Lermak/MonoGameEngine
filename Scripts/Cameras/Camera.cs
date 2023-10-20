@@ -23,7 +23,7 @@ namespace MonoGame_Core.Scripts
             get { return target; }
             set
             {
-                if (RenderingManager.RenderTargets.Count > value)
+                if (Globals.RenderingManager.RenderTargets.Count > value)
                     target = value;
                 else
                     target = -1;
@@ -34,7 +34,7 @@ namespace MonoGame_Core.Scripts
             get { return shader; }
             set
             {
-                if (ResourceManager.Effects.ContainsKey(value))
+                if (Globals.ResourceManager.Effects.ContainsKey(value))
                     shader = value;
                 else
                     shader = "";
@@ -45,15 +45,15 @@ namespace MonoGame_Core.Scripts
         public Vector2 MinPos { get { return minPos; } set { minPos = value; } }
         public Vector2 MaxPos { get { return maxPos; } set { maxPos = value; } }
         public Rectangle DrawSize { get { return drawSize; } set { drawSize = value; } }
-        public Vector2 ScreenPosition { get { return (renderPosition * new Vector2(1,-1) - new Vector2(drawSize.Width / 2, drawSize.Height / 2)) * RenderingManager.GameScale + new Vector2(Globals.SCREEN_WIDTH / 2, Globals.SCREEN_HEIGHT / 2) * RenderingManager.WindowScale; } }
+        public Vector2 ScreenPosition { get { return (renderPosition * new Vector2(1,-1) - new Vector2(drawSize.Width / 2, drawSize.Height / 2)) * Globals.RenderingManager.GameScale + new Vector2(Globals.SCREEN_WIDTH / 2, Globals.SCREEN_HEIGHT / 2) * Globals.RenderingManager.WindowScale; } }
         public Color BG_Color { get { return bg_color; } set { bg_color = value; } }
         public Camera(string name, int target, byte layer, Vector2 size, Vector2 min, Vector2 max, Vector2 pos, Vector2 screenPos) : base(name, new string[] { "camera" })
         {
-            if (target >= 0 && target >= RenderingManager.RenderTargets.Count())
+            if (target >= 0 && target >= Globals.RenderingManager.RenderTargets.Count())
             {
-                while (RenderingManager.RenderTargets.Count() <= target)
+                while (Globals.RenderingManager.RenderTargets.Count() <= target)
                 {
-                    RenderingManager.RenderTargets.Add(new RenderTarget2D(RenderingManager.GraphicsDevice, (int)Globals.SCREEN_WIDTH, (int)Globals.SCREEN_HEIGHT, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8, 0, RenderTargetUsage.PreserveContents));
+                    Globals.RenderingManager.RenderTargets.Add(new RenderTarget2D(Globals.RenderingManager.GraphicsDevice, (int)Globals.SCREEN_WIDTH, (int)Globals.SCREEN_HEIGHT, false, SurfaceFormat.Color, DepthFormat.Depth24Stencil8, 0, RenderTargetUsage.PreserveContents));
                 }
             }
             renderPosition = screenPos;
@@ -88,7 +88,7 @@ namespace MonoGame_Core.Scripts
         {
             if (shader != "")
             {
-                foreach (EffectTechnique t in ResourceManager.Effects[shader].Techniques)
+                foreach (EffectTechnique t in Globals.ResourceManager.Effects[shader].Techniques)
                 {
                     foreach (EffectPass p in t.Passes)
                     {
@@ -103,13 +103,13 @@ namespace MonoGame_Core.Scripts
 
         private void DrawToSpriteBatch(SpriteBatch sb)
         {
-            sb.Draw(RenderingManager.RenderTargets[Target],
+            sb.Draw(Globals.RenderingManager.RenderTargets[Target],
                     ScreenPosition,
-                    new Rectangle(0, 0, (int)(RenderingManager.RenderTargets[target].Width * RenderingManager.GameScale.X), (int)(RenderingManager.RenderTargets[target].Height * RenderingManager.GameScale.Y)),
+                    new Rectangle(0, 0, (int)(Globals.RenderingManager.RenderTargets[target].Width * Globals.RenderingManager.GameScale.X), (int)(Globals.RenderingManager.RenderTargets[target].Height * Globals.RenderingManager.GameScale.Y)),
                     Color.White,
                     0,//-Transform.Radians, //Gotta figure out rotation when it comes to attaching the transform to another object
-                    (new Vector2(drawSize.Width / 2, drawSize.Height / 2) / new Vector2(RenderingManager.RenderTargets[target].Width, RenderingManager.RenderTargets[target].Height)) * RenderingManager.GameScale,
-                    new Vector2(drawSize.Width, drawSize.Height) / new Vector2(RenderingManager.RenderTargets[target].Width, RenderingManager.RenderTargets[target].Height) * transform.Scale,//all items being drawn were already scaled by gamescale, no need to scale down again
+                    (new Vector2(drawSize.Width / 2, drawSize.Height / 2) / new Vector2(Globals.RenderingManager.RenderTargets[target].Width, Globals.RenderingManager.RenderTargets[target].Height)) * Globals.RenderingManager.GameScale,
+                    new Vector2(drawSize.Width, drawSize.Height) / new Vector2(Globals.RenderingManager.RenderTargets[target].Width, Globals.RenderingManager.RenderTargets[target].Height) * transform.Scale,//all items being drawn were already scaled by gamescale, no need to scale down again
                     SpriteEffects.None,
                     (float)Transform.Layer / 256f);
         }

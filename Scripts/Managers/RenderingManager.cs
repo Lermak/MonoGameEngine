@@ -11,7 +11,7 @@ namespace MonoGame_Core.Scripts
     /// <summary>
     /// Handles the orginization and rendering of all spriteRenders to their sources
     /// </summary>
-    public static class RenderingManager
+    public class RenderingManager
     {
         /// <summary>
         /// Rendering order determines how items will be layered and orgized
@@ -20,47 +20,48 @@ namespace MonoGame_Core.Scripts
         /// <summary>
         /// The global scale of the game after adjusting for the window size
         /// </summary>
-        public static Vector2 GameScale { get { return WindowScale * BaseScale; } }
+        public Vector2 GameScale { get { return WindowScale * BaseScale; } }
         /// <summary>
         /// The global scale of the game, before adjusting for window size
         /// </summary>
-        public static Vector2 BaseScale = new Vector2(1, 1);
+        public Vector2 BaseScale = new Vector2(1, 1);
         /// <summary>
         /// The scale of the window compaired to the target size
         /// </summary>
-        public static Vector2 WindowScale = new Vector2(1, 1);
+        public Vector2 WindowScale = new Vector2(1, 1);
         /// <summary>
         /// Global color value applied to produce a fade effect between scenes
         /// </summary>
-        public static float GlobalFade = 255;
+        public float GlobalFade = 255;
         /// <summary>
         /// Set the rendering order
         /// </summary>
-        public static RenderOrder RenderingOrder = RenderOrder.TopDown;
+        public RenderOrder RenderingOrder = RenderOrder.TopDown;
 
         /// <summary>
         /// Render targets are what Cameras use to store image data
         /// </summary>
-        public static List<RenderTarget2D> RenderTargets;
+        public List<RenderTarget2D> RenderTargets;
         /// <summary>
         /// The list of all game sprites
         /// </summary>
-        public static List<SpriteRenderer> Sprites;
+        public List<SpriteRenderer> Sprites;
         /// <summary>
         /// The batch to use for sending clustered sprite data to render targets
         /// **NOTE** consider using multiple to allow for multiple processes
         /// </summary>
-        private static SpriteBatch spriteBatch;
+        private SpriteBatch spriteBatch;
         /// <summary>
         /// MonoGame's object for handling communication with the graphics card
         /// </summary>
-        public static GraphicsDevice GraphicsDevice;      
+        public GraphicsDevice GraphicsDevice;      
         /// <summary>
         /// Setup the current state of the rendering manager.
         /// This includes creating any render targets that cameras will need
         /// </summary>
-        public static void Initilize()
-        { 
+        public void Initilize()
+        {
+            GraphicsDevice = GameManager.Game.GraphicsDevice;
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Sprites = new List<SpriteRenderer>();
             RenderTargets = new List<RenderTarget2D>();
@@ -70,7 +71,7 @@ namespace MonoGame_Core.Scripts
         /// Remove all items from the list of sprites
         /// reset the spriteBatch
         /// </summary>
-        public static void Clear()
+        public void Clear()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Sprites = new List<SpriteRenderer>();
@@ -84,7 +85,7 @@ namespace MonoGame_Core.Scripts
         /// Draw all cameras
         /// </summary>
         /// <param name="dt"></param>
-        public static void Draw(float dt)
+        public void Draw()
         {
             Sort();
             var x = GraphicsDevice.GetRenderTargets();
@@ -97,7 +98,7 @@ namespace MonoGame_Core.Scripts
             GraphicsDevice.Clear(Color.Transparent);
 
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
-            IEnumerable<Camera> cameras = CameraManager.Cameras.OrderByDescending(s => s.Target);
+            IEnumerable<Camera> cameras = Globals.CameraManager.Cameras.OrderByDescending(s => s.Target);
 
             foreach (Camera c in cameras)
             {
@@ -133,7 +134,7 @@ namespace MonoGame_Core.Scripts
 
                         if (sr.Shader != "")
                         {
-                            foreach (EffectTechnique t in ResourceManager.Effects[sr.Shader].Techniques)
+                            foreach (EffectTechnique t in Globals.ResourceManager.Effects[sr.Shader].Techniques)
                             {
                                 foreach (EffectPass p in t.Passes)
                                 {
@@ -159,21 +160,21 @@ namespace MonoGame_Core.Scripts
             }
 
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
-            CameraManager.Draw(spriteBatch);
+            Globals.CameraManager.Draw(spriteBatch);
             spriteBatch.End();
             SetTarget(-1);
             GraphicsDevice.Clear(Color.Transparent);
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
-            CameraManager.MainCamera.Draw(spriteBatch);
+            Globals.CameraManager.MainCamera.Draw(spriteBatch);
             spriteBatch.End();
         }
 
         /// <summary>
         /// Sort the sprite list based on the current sort type
         /// </summary>
-        public static void Sort()
+        public void Sort()
         {
-            IEnumerable<Camera> cameras = CameraManager.Cameras.OrderByDescending(s => s.Target);
+            IEnumerable<Camera> cameras = Globals.CameraManager.Cameras.OrderByDescending(s => s.Target);
 
             IEnumerable<SpriteRenderer> s = Sprites;
 
@@ -208,7 +209,7 @@ namespace MonoGame_Core.Scripts
         /// Changes the current Render Target
         /// </summary>
         /// <param name="Target">new target id</param>
-        private static void SetTarget(int Target)
+        private void SetTarget(int Target)
         {
             if (Target == -1)
                 GraphicsDevice.SetRenderTarget(null);

@@ -22,8 +22,8 @@ namespace MonoGame_Core.Scripts
             int imageHeight = int.Parse(doc.ChildNodes[1].Attributes[7].Value);
 
 
-            CollisionManager.TileMap = new bool[width, height, doc.ChildNodes[1].ChildNodes.Count - 1];
-            CollisionManager.TileSize = new Vector2(imageWidth, imageHeight);
+            Globals.CollisionManager.TileMap = new bool[width, height, doc.ChildNodes[1].ChildNodes.Count - 1];
+            Globals.CollisionManager.TileSize = new Vector2(imageWidth, imageHeight);
             //CollisionManager.CollisionDetection = CollisionManager.CollisionType.TileMapFree;
             if (doc.ChildNodes[1].Attributes[2].Value == "orthogonal")
             {
@@ -45,7 +45,7 @@ namespace MonoGame_Core.Scripts
                             {
                                 case 2:
                                     WorldObject w = SceneManager.CurrentScene.InitWorldObject(new TestStaticObject("Test", pos, name , (byte)l));
-                                    CollisionManager.TileMap[x, y, l] = true;
+                                    Globals.CollisionManager.TileMap[x, y, l] = true;
                                     break;
                             }
 

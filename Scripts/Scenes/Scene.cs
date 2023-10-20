@@ -6,13 +6,33 @@ namespace MonoGame_Core.Scripts
 {
     public class Scene
     {
+        //Managers
+        public CollisionManager CollisionManager;
+        public RenderingManager RenderingManager;
+        public SoundManager SoundManager;
+        public ResourceManager ResourceManager;
+        public CameraManager CameraManager;
+        public CoroutineManager CoroutineManager;
+
+        protected string name;
         protected Vector2 size;//Scene size must never be smaller than the rendering size
+        public string Name { get { return name; } }
         public Vector2 Size { get { return size; } }
 
         protected List<GameObject> toAdd = new List<GameObject>();
         protected List<GameObject> gameObjects = new List<GameObject>();
 
         public IList<GameObject> GameObjects { get { return gameObjects.AsReadOnly(); } }
+
+        public Scene()
+        {
+            CollisionManager = new CollisionManager();
+            RenderingManager = new RenderingManager();
+            SoundManager = new SoundManager();
+            ResourceManager = new ResourceManager();
+            CameraManager = new CameraManager();
+            CoroutineManager = new CoroutineManager();
+        }
 
         /// <summary>
         /// Add a gameObject during scene loading
@@ -77,11 +97,12 @@ namespace MonoGame_Core.Scripts
         public virtual void Initilize()
         {
             size = new Vector2(Globals.SCREEN_WIDTH, Globals.SCREEN_HEIGHT);
-            CollisionManager.Initilize();
-            RenderingManager.Initilize();
-            SoundManager.Initilize();
-            CoroutineManager.Initilize();
-            CameraManager.Initilize();
+            this.CollisionManager.Initilize();
+            this.RenderingManager.Initilize();
+            this.SoundManager.Initilize();
+            this.CoroutineManager.Initilize();
+            this.CameraManager.Initilize();
+            this.ResourceManager.Initilize();
 
             loadContent();
             loadObjects();
@@ -115,6 +136,16 @@ namespace MonoGame_Core.Scripts
                 SceneRunning(dt);
             else if (SceneManager.SceneState == SceneManager.State.Paused)
                 ScenePaused(dt);
+
+            this.CoroutineManager.Update(TimeManager.DeltaTime);
+            this.CameraManager.Update(TimeManager.DeltaTime);
+            this.SoundManager.Update(TimeManager.DeltaTime);
+            this.CollisionManager.Update();
+        }
+
+        public virtual void Draw()
+        {
+            this.RenderingManager.Draw();
         }
 
         public virtual void SceneRunning(float dt)

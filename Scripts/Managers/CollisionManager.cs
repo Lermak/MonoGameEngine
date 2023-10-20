@@ -15,20 +15,20 @@ namespace MonoGame_Core.Scripts
     /// static colliders don't check collision
     /// When collision is detected, a collision event is posted to the detecting object's collisionHandler component
     /// </summary>
-    public static class CollisionManager
+    public class CollisionManager
     {
         //CollisionType will determine what collision detection method to utilize
         public enum CollisionType { AABB, SAT, TileMapFree, IsometricFree }
-        public static CollisionType CollisionDetection = CollisionType.SAT;
+        public CollisionType CollisionDetection = CollisionType.SAT;
 
-        public static Quadtree ActiveColliders;
-        public static Quadtree PassiveColliders;
+        public Quadtree ActiveColliders;
+        public Quadtree PassiveColliders;
 
         //These can be vistigial variabls in a non-tile based game. 
-        public static bool[,,] TileMap;
-        public static Vector2 TileSize;
+        public bool[,,] TileMap;
+        public Vector2 TileSize;
 
-        public static void Initilize()
+        public void Initilize()
         {
             ActiveColliders = new Quadtree(new Rectangle(-(int)SceneManager.CurrentScene.Size.X / 2, -(int)SceneManager.CurrentScene.Size.Y / 2, (int)SceneManager.CurrentScene.Size.X, (int)SceneManager.CurrentScene.Size.Y), null);
             PassiveColliders = new Quadtree(new Rectangle(-(int)SceneManager.CurrentScene.Size.X / 2, -(int)SceneManager.CurrentScene.Size.Y / 2, (int)SceneManager.CurrentScene.Size.X, (int)SceneManager.CurrentScene.Size.Y), null);
@@ -37,7 +37,7 @@ namespace MonoGame_Core.Scripts
         /// <summary>
         /// Remove all elements from the moving and static collider lists
         /// </summary>
-        public static void Clear()
+        public void Clear()
         {
             ActiveColliders = new Quadtree(new Rectangle(-(int)SceneManager.CurrentScene.Size.X / 2, -(int)SceneManager.CurrentScene.Size.Y / 2, (int)SceneManager.CurrentScene.Size.X, (int)SceneManager.CurrentScene.Size.Y), null);
             PassiveColliders = new Quadtree(new Rectangle(-(int)SceneManager.CurrentScene.Size.X / 2, -(int)SceneManager.CurrentScene.Size.Y / 2, (int)SceneManager.CurrentScene.Size.X, (int)SceneManager.CurrentScene.Size.Y), null);
@@ -50,7 +50,7 @@ namespace MonoGame_Core.Scripts
         /// <param name="b2">The collider to compair against</param>
         /// <param name="p">The vector of penitration</param>
         /// <returns>true when collision has occured</returns>
-        static bool AABBCollision(CollisionBox b1, CollisionBox b2, out Vector2 p)
+        public static bool AABBCollision(CollisionBox b1, CollisionBox b2, out Vector2 p)
         {
             p = new Vector2();
 
@@ -83,7 +83,7 @@ namespace MonoGame_Core.Scripts
         /// <param name="b2">The box to check against</param>
         /// <param name="p">The penetration vector</param>
         /// <returns>true when collision occurs</returns>
-        static bool SphereToBoxCollision(CollisionCircle s1, CollisionBox b2, out Vector2 p)
+        public static bool SphereToBoxCollision(CollisionCircle s1, CollisionBox b2, out Vector2 p)
         {
             p = new Vector2();
             return false;
@@ -95,7 +95,7 @@ namespace MonoGame_Core.Scripts
         /// <param name="b1">Collision Box 1</param>
         /// <param name="b2">Collision Box 2</param>
         /// <returns>true if collision is possible</returns>
-        static bool distanceHuristic(Collider b1, Collider b2)
+        public static bool distanceHuristic(Collider b1, Collider b2)
         {
             if (Vector2.Distance(b1.Transform.Position, b2.Transform.Position) > b1.Hypotenuse + b2.Hypotenuse)
                 return false;
@@ -187,25 +187,28 @@ namespace MonoGame_Core.Scripts
         /// Perform collision detection for all currently moving colliders
         /// Type of collision detection is determined by CollisionType
         /// </summary>
-        public static void Update()
+        public void Update()
         {
-            if (CollisionDetection == CollisionType.SAT)
+            if (SceneManager.CurrentScene != null)
             {
-                PerformSATCollision();
+                if (CollisionDetection == CollisionType.SAT)
+                {
+                    PerformSATCollision();
+                }
+                else if (CollisionDetection == CollisionType.TileMapFree)
+                {
+                    PerformFreeTileCollision();
+                }
+                //ActiveMovingColliders.Clear();
+                //ActiveStaticColliders.Clear();
+                ActiveColliders = new Quadtree(new Rectangle(-(int)SceneManager.CurrentScene.Size.X / 2, -(int)SceneManager.CurrentScene.Size.Y / 2, (int)SceneManager.CurrentScene.Size.X, (int)SceneManager.CurrentScene.Size.Y), null);
             }
-            else if(CollisionDetection == CollisionType.TileMapFree)
-            {
-                PerformFreeTileCollision();
-            }
-            //ActiveMovingColliders.Clear();
-            //ActiveStaticColliders.Clear();
-            ActiveColliders = new Quadtree(new Rectangle(-(int)SceneManager.CurrentScene.Size.X / 2, -(int)SceneManager.CurrentScene.Size.Y / 2, (int)SceneManager.CurrentScene.Size.X, (int)SceneManager.CurrentScene.Size.Y), null);
         }
 
         /// <summary>
         /// Performs the collision detection on all moving colliders utilizing the SATCollision method
         /// </summary>
-        private static void PerformSATCollision()
+        private void PerformSATCollision()
         {
             Vector2 p = new Vector2();
 
@@ -250,7 +253,7 @@ namespace MonoGame_Core.Scripts
         /// Performs collision detection with the tilemap for any moving objects
         /// This collision should only be used if objects are not constrained to move by the tilemap grid, but can move freely
         /// </summary>
-        private static void PerformFreeTileCollision()
+        private void PerformFreeTileCollision()
         {
             Vector2 p = new Vector2();
             foreach(Collider c in ActiveColliders.GetColliders())

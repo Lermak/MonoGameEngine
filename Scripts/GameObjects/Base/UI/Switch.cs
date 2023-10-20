@@ -11,7 +11,7 @@ namespace MonoGame_Core.Scripts
         {
 
             SpriteRenderer.IsHUD = true;
-            CollisionBox collisionBox = (CollisionBox)AddComponent(new CollisionBox(this,"myBox",true,ResourceManager.GetTextureSize(switchOffTex), new List<string> { "myBox" }));
+            CollisionBox collisionBox = (CollisionBox)AddComponent(new CollisionBox(this,"myBox",true,Globals.ResourceManager.GetTextureSize(switchOffTex), new List<string> { "myBox" }));
 
             SwitchData swData = (SwitchData)ComponentHandler.Add(new SwitchData(this,"swData",switchOnTex,switchOffTex));
 

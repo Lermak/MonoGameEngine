@@ -12,6 +12,11 @@ namespace MonoGame_Core.Scripts
 {
     public class TestScene:Scene
     {
+        public TestScene() : base()
+        {
+
+        }
+
         protected override void loadContent()
         {
             size = new Vector2(2100, 1080);

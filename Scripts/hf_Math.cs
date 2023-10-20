@@ -14,7 +14,7 @@ namespace MonoGame_Core.Scripts
         /// <returns></returns>
         public static Vector2 WorldPosition(Vector2 v)
         {
-            return (v * RenderingManager.GameScale * new Vector2(1, -1));
+            return (v * Globals.RenderingManager.GameScale * new Vector2(1, -1));
         }
         /// <summary>
         /// Get the position from a point given a radius and number of degrees, with 0 degrees being straight to the right

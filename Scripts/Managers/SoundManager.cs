@@ -10,20 +10,20 @@ namespace MonoGame_Core.Scripts
     /// <summary>
     /// Manages the different sound and song channels
     /// </summary>
-    public static class SoundManager
+    public class SoundManager
     {
         public static float MasterVolume;
         public static float SongVolume;
         public static float SoundEffectVolume;
-        public static string CurrentSong;
+        public string CurrentSong;
         public static float GlobalVolume;
 
         /// <summary>
         /// List of currently available sound effects
         /// </summary>
-        public static Dictionary<string, SoundEffectInstance> SoundEffects = new Dictionary<string, SoundEffectInstance>();
+        public Dictionary<string, SoundEffectInstance> SoundEffects = new Dictionary<string, SoundEffectInstance>();
 
-        public static void Initilize()
+        public void Initilize()
         {
             MasterVolume = ConfigurationManager.Configuration.MasterVolume;
             SongVolume = ConfigurationManager.Configuration.SongVolume;
@@ -33,14 +33,18 @@ namespace MonoGame_Core.Scripts
             Clear();
         }
 
-        public static void Clear()
+        public void Clear()
         {
             MediaPlayer.Stop();
             SoundEffects.Clear();
         }
 
-        public static void Update(float gt)
+        public void Update(float gt)
         {
+            if(SceneManager.CurrentScene != null)
+            {
+
+            }
         }
 
         public static void SetGlobalVolume(float v)
@@ -75,24 +79,24 @@ namespace MonoGame_Core.Scripts
             if (v > 1) v = 1;
             SoundEffectVolume = v;
 
-            foreach (SoundEffectInstance se in SoundEffects.Values)
-            {
-                se.Volume = SoundEffectVolume * MasterVolume * GlobalVolume;
-            }
+            //foreach (SoundEffectInstance se in SoundEffects.Values)
+            //{
+            //    se.Volume = SoundEffectVolume * MasterVolume * GlobalVolume;
+            //}
         }
 
-        public static void PlaySong(string name)
+        public void PlaySong(string name)
         {
             CurrentSong = name;
             MediaPlayer.IsRepeating = true;
-            MediaPlayer.Play(ResourceManager.Songs[name]);
+            MediaPlayer.Play(SceneManager.CurrentScene.ResourceManager.Songs[name]);
         }
 
-        public static void PlaySoundEffect(string name)
+        public void PlaySoundEffect(string name)
         {
             if (!SoundEffects.ContainsKey(name) || SoundEffects[name].State != SoundState.Playing)
             {
-                SoundEffectInstance se = ResourceManager.SoundEffects[name].CreateInstance();
+                SoundEffectInstance se = SceneManager.CurrentScene.ResourceManager.SoundEffects[name].CreateInstance();
                 se.Volume = MasterVolume * SoundEffectVolume * GlobalVolume;
                 se.Play();
                 SoundEffects[name] = se;

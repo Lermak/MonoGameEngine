@@ -161,7 +161,7 @@ namespace MonoGame_Core.Scripts
             Vector2 v = InputManager.MousePos;
             if (InputManager.IsTriggered(InputManager.MouseKeys.Left) &&
                 col.ContainsPoint(v))
-                CoroutineManager.Add(Coroutines.Shake(.1f, -10, 10, t), "screenShake", 0, true);
+                Globals.CoroutineManager.Add(Coroutines.Shake(.1f, -10, 10, t), "screenShake", 0, true);
         }
 
         public static void PointAtMouse(float dt, GameObject go, Component[] c = null)

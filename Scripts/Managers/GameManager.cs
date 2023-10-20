@@ -10,10 +10,13 @@ namespace MonoGame_Core.Scripts
 {
     public class GameManager : Game
     {
+        public static GameManager Game;
+
         private GraphicsDeviceManager _graphics;
         private static bool quit;
         public GameManager()
         {
+            Game = this;
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
@@ -24,16 +27,9 @@ namespace MonoGame_Core.Scripts
         {
             Window.Title = Globals.GAME_TITLE;
 
-            RenderingManager.GraphicsDevice = GraphicsDevice;
             TimeManager.Initilize();
             ConfigurationManager.Initilize();
-            ResourceManager.Initilize(Content);
             InputManager.Initilize();
-            RenderingManager.Initilize();
-            SoundManager.Initilize();
-            CollisionManager.Initilize();
-            CoroutineManager.Initilize();
-            CameraManager.Initilize();
             SceneManager.Initilize(new MainMenu());
             
             base.Initialize();
@@ -53,24 +49,18 @@ namespace MonoGame_Core.Scripts
                 Exit();
 
             TimeManager.Update(deltaTime);
-
-            InputManager.Update(TimeManager.DeltaTime);
-
-            CoroutineManager.Update(TimeManager.ProdDelta);
-
             SceneManager.Update(TimeManager.ProdDelta);
-
-            CameraManager.Update(TimeManager.ProdDelta);
-
-            CollisionManager.Update();
+            InputManager.Update(TimeManager.DeltaTime);
 
             base.Update(deltaTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            RenderingManager.Draw(TimeManager.DeltaTime);
-
+            if (SceneManager.CurrentScene != null)
+            {
+                SceneManager.CurrentScene.Draw();
+            }
             base.Draw(gameTime);
         }
     }

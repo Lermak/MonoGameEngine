@@ -88,7 +88,7 @@ namespace MonoGame_Core.Scripts
         }
         public Vector2 WorldPosition()
         {
-            return Position * RenderingManager.GameScale * new Vector2(1,-1);
+            return Position * Globals.RenderingManager.GameScale * new Vector2(1,-1);
         }
         public void Attach(Transform t, bool isStatic)
         {

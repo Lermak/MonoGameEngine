@@ -13,6 +13,11 @@ namespace MonoGame_Core.Scripts
 {
     public class MainMenu : Scene
     {
+        public MainMenu() : base()
+        {
+
+        }
+
         protected override void loadContent()
         {
             ResourceManager.AddSong("Melody", "Music/TestSong");

@@ -7,7 +7,7 @@ namespace MonoGame_Core.Scripts
     /// <summary>
     /// Class to manage the run cycles of coroutines
     /// </summary>
-    public static class CoroutineManager
+    public class CoroutineManager
     {
         /// <summary>
         /// Determines if a coroutine should progress or wait
@@ -43,18 +43,18 @@ namespace MonoGame_Core.Scripts
             }
         }
 
-        static List<string> keys = new List<string>();
-        static Dictionary<string, Coroutine> coroutines = new Dictionary<string, Coroutine>();
+        List<string> keys = new List<string>();
+        Dictionary<string, Coroutine> coroutines = new Dictionary<string, Coroutine>();
 
         /// <summary>
         /// Remove all coroutines from the list
         /// </summary>
-        public static void Clear()
+        public void Clear()
         {
             coroutines.Clear();
         }
 
-        public static void Add(IEnumerator<bool> coroutine, string name, float timeBetween, bool start)
+        public void Add(IEnumerator<bool> coroutine, string name, float timeBetween, bool start)
         {
             if (!coroutines.ContainsKey(name))
             {
@@ -67,7 +67,7 @@ namespace MonoGame_Core.Scripts
         /// </summary>
         /// <param name="coroutine">The name of the coroutine</param>
         /// <returns>true if the coroutine' CoroutineStat is Running</returns>
-        public static bool IsRunning(string coroutine)
+        public bool IsRunning(string coroutine)
         {
             return coroutines.ContainsKey(coroutine) && coroutines[coroutine].State == CoroutineState.Running;
         }
@@ -76,7 +76,7 @@ namespace MonoGame_Core.Scripts
         /// Changes the named coroutine's CoroutineState to Paused
         /// </summary>
         /// <param name="coroutine">The coroutine's name</param>
-        public static void Pause(string coroutine)
+        public void Pause(string coroutine)
         {
             if (coroutines.ContainsKey(coroutine))
             {
@@ -90,7 +90,7 @@ namespace MonoGame_Core.Scripts
         /// Changes the named coroutine's CoroutineState to Running
         /// </summary>
         /// <param name="coroutine">The coroutine's name</param>
-        public static void Start(string coroutine)
+        public void Start(string coroutine)
         {
             if (coroutines.ContainsKey(coroutine))
             {
@@ -106,7 +106,7 @@ namespace MonoGame_Core.Scripts
         /// Removes a coroutine from the list of coroutines
         /// </summary>
         /// <param name="coroutine">The coroutine's name</param>
-        public static void Stop(string coroutine)
+        public void Stop(string coroutine)
         {
             if (coroutines.ContainsKey(coroutine))
             {
@@ -114,7 +114,7 @@ namespace MonoGame_Core.Scripts
             }
         }
 
-        public static void Initilize()
+        public void Initilize()
         {
             coroutines = new Dictionary<string, Coroutine>();
         }
@@ -124,33 +124,36 @@ namespace MonoGame_Core.Scripts
         /// If a coroutine is finished, remove it from the list
         /// </summary>
         /// <param name="dt">Game Time</param>
-        public static void Update(float dt)
+        public void Update(float dt)
         {
-            List<string> k = new List<string>(coroutines.Keys);
-            List<string> toRemove = new List<string>();
-
-            for (int i = 0; i < coroutines.Count; ++i)
+            if (SceneManager.CurrentScene != null)
             {
-                Coroutine c = coroutines[k[i]];
-                if (c.State == CoroutineState.Running)
+                List<string> k = new List<string>(coroutines.Keys);
+                List<string> toRemove = new List<string>();
+
+                for (int i = 0; i < coroutines.Count; ++i)
                 {
-                    c.TimeSinceLast += dt;
-                    if (c.TimeSinceLast > c.TimeBetweenSteps)
+                    Coroutine c = coroutines[k[i]];
+                    if (c.State == CoroutineState.Running)
                     {
-                        c.Routine.MoveNext();
-                        if (c.Routine.Current)
+                        c.TimeSinceLast += dt;
+                        if (c.TimeSinceLast > c.TimeBetweenSteps)
                         {
-                            toRemove.Add(c.Name);
+                            c.Routine.MoveNext();
+                            if (c.Routine.Current)
+                            {
+                                toRemove.Add(c.Name);
+                            }
                         }
                     }
+
+                    coroutines[k[i]] = c;
                 }
 
-                coroutines[k[i]] = c;
-            }
-
-            for(int i = 0; i < toRemove.Count; ++i)
-            {
-                coroutines.Remove(toRemove[i]);
+                for (int i = 0; i < toRemove.Count; ++i)
+                {
+                    coroutines.Remove(toRemove[i]);
+                }
             }
         }
     }

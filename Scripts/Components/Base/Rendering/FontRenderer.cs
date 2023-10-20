@@ -17,7 +17,7 @@ namespace MonoGame_Core.Scripts
             get { return texture; }
             set
             {
-                if (ResourceManager.Fonts.ContainsKey(value))
+                if (Globals.ResourceManager.Fonts.ContainsKey(value))
                     texture = value;
                 else
                     texture = null;
@@ -30,29 +30,29 @@ namespace MonoGame_Core.Scripts
 
         public override void Draw(SpriteBatch sb, Camera c)
         {
-            Vector2 stringSize = ResourceManager.Fonts[Texture].MeasureString(text) * 0.5f;
+            Vector2 stringSize = Globals.ResourceManager.Fonts[Texture].MeasureString(text) * 0.5f;
 
             if (isHUD)
             {
-                sb.DrawString(ResourceManager.Fonts[Texture],
+                sb.DrawString(Globals.ResourceManager.Fonts[Texture],
                     text,
                     ScreenPosition(c),
-                    new Color(Color.R - (int)RenderingManager.GlobalFade, Color.G - (int)RenderingManager.GlobalFade, Color.B - (int)RenderingManager.GlobalFade, Color.A),
+                    new Color(Color.R - (int)Globals.RenderingManager.GlobalFade, Color.G - (int)Globals.RenderingManager.GlobalFade, Color.B - (int)Globals.RenderingManager.GlobalFade, Color.A),
                     -(Transform.Radians + addedRotation),
                     stringSize,
-                    RenderingManager.WindowScale * Transform.Scale * textScale,
+                    Globals.RenderingManager.WindowScale * Transform.Scale * textScale,
                     Flip,
                     1);
             }
             else
             {
-                sb.DrawString(ResourceManager.Fonts[Texture],
+                sb.DrawString(Globals.ResourceManager.Fonts[Texture],
                     text,
                     ScreenPosition(c),
-                    new Color(Color.R - (int)RenderingManager.GlobalFade, Color.G - (int)RenderingManager.GlobalFade, Color.B - (int)RenderingManager.GlobalFade, Color.A),
+                    new Color(Color.R - (int)Globals.RenderingManager.GlobalFade, Color.G - (int)Globals.RenderingManager.GlobalFade, Color.B - (int)Globals.RenderingManager.GlobalFade, Color.A),
                     -(Transform.Radians + addedRotation),
                     stringSize,
-                    RenderingManager.GameScale * Transform.Scale * textScale,
+                    Globals.RenderingManager.GameScale * Transform.Scale * textScale,
                     Flip,
                     (float)transform.Layer / 256);
             }

@@ -10,13 +10,13 @@ namespace MonoGame_Core.Scripts
         public static IEnumerator<bool> FadeInSceneTransision()
         {
             float speed = 510;
-            while (RenderingManager.GlobalFade > 0)
+            while (Globals.RenderingManager.GlobalFade > 0)
             {
-                RenderingManager.GlobalFade -= speed * TimeManager.DeltaTime;
+                Globals.RenderingManager.GlobalFade -= speed * TimeManager.DeltaTime;
                 SoundManager.SetGlobalVolume(SoundManager.GlobalVolume + speed / 255 * TimeManager.DeltaTime); 
-                if (RenderingManager.GlobalFade < 0)
+                if (Globals.RenderingManager.GlobalFade < 0)
                 {
-                    RenderingManager.GlobalFade = 0;
+                    Globals.RenderingManager.GlobalFade = 0;
                     SceneManager.SceneState = SceneManager.State.Running;
                 }
                 yield return false;
@@ -26,13 +26,13 @@ namespace MonoGame_Core.Scripts
         public static IEnumerator<bool> FadeOutSceneTransision()
         {
             float speed = 510;
-            while (RenderingManager.GlobalFade < 255)
+            while (Globals.RenderingManager.GlobalFade < 255)
             {
-                RenderingManager.GlobalFade += speed * TimeManager.DeltaTime;
+                Globals.RenderingManager.GlobalFade += speed * TimeManager.DeltaTime;
                 SoundManager.SetGlobalVolume(SoundManager.GlobalVolume - speed / 255 * TimeManager.DeltaTime);
-                if (RenderingManager.GlobalFade > 255)
+                if (Globals.RenderingManager.GlobalFade > 255)
                 {
-                    RenderingManager.GlobalFade = 255;
+                    Globals.RenderingManager.GlobalFade = 255;
                     SceneManager.CurrentScene = null;
                 }
                 yield return false;

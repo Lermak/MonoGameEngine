@@ -7,19 +7,22 @@ using Microsoft.Xna.Framework.Media;
 
 namespace MonoGame_Core.Scripts
 {
-    public static class ResourceManager
+    public class ResourceManager
     {
-        public static ContentManager Content;
+        public ContentManager Content;
 
-        public static Dictionary<string, Texture2D> Textures = new Dictionary<string, Texture2D>();
-        public static Dictionary<string, Song> Songs = new Dictionary<string, Song>();
-        public static Dictionary<string, SoundEffect> SoundEffects = new Dictionary<string, SoundEffect>();
-        public static Dictionary<string, Effect> Effects = new Dictionary<string, Effect>();
-        public static Dictionary<string, SpriteFont> Fonts = new Dictionary<string, SpriteFont>();
-
-        public static void Initilize(ContentManager c)
+        public Dictionary<string, Texture2D> Textures = new Dictionary<string, Texture2D>();
+        public Dictionary<string, Song> Songs = new Dictionary<string, Song>();
+        public Dictionary<string, SoundEffect> SoundEffects = new Dictionary<string, SoundEffect>();
+        public Dictionary<string, Effect> Effects = new Dictionary<string, Effect>();
+        public Dictionary<string, SpriteFont> Fonts = new Dictionary<string, SpriteFont>();
+        public void ContendManager()
         {
-            Content = c;
+            Initilize();
+        }
+        public void Initilize()
+        {
+            Content = GameManager.Game.Content;
             Textures = new Dictionary<string, Texture2D>();
             Songs = new Dictionary<string, Song>();
             SoundEffects = new Dictionary<string, SoundEffect>();
@@ -27,27 +30,27 @@ namespace MonoGame_Core.Scripts
             Fonts = new Dictionary<string, SpriteFont>();
         }
 
-        public static void AddTexture(string name, string location)
+        public void AddTexture(string name, string location)
         {
             Textures[name] = Content.Load<Texture2D>(location);
         }
-        public static void AddFont(string name, string location)
+        public void AddFont(string name, string location)
         {
             Fonts[name] = Content.Load<SpriteFont>(location);
         }
-        public static void AddSong(string name, string location)
+        public void AddSong(string name, string location)
         {
             Songs[name] = Content.Load<Song>(location);
         }
-        public static void AddEffect(string name, string location)
+        public void AddEffect(string name, string location)
         {
             Effects[name] = Content.Load<Effect>(location);
         }
-        public static void AddSoundEffect(string name, string location)
+        public void AddSoundEffect(string name, string location)
         {
             SoundEffects[name] = Content.Load<SoundEffect>(location);
         }
-        public static Vector2 GetTextureSize(string name)
+        public Vector2 GetTextureSize(string name)
         {
             if (Textures.ContainsKey(name))
                 return new Vector2(Textures[name].Width, Textures[name].Height);
