@@ -35,7 +35,7 @@ namespace MonoGame_Core.Scripts
                 if (start)
                     State = CoroutineState.Running;
                 else
-                    State = CoroutineState.Paused;
+                    State = CoroutineState.Paused; 
                 Routine = routine;
                 Name = name;
                 TimeBetweenSteps = timeBetween;

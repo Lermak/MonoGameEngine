@@ -9,6 +9,7 @@ namespace MonoGame_Core.Scripts
         List<Component> components;
         GameObject gameObject;
         public GameObject GameObject { get { return gameObject; } }
+        public List<Component> Components { get { return components; } }
 
         public ComponentHandler(GameObject go)
         {
@@ -18,7 +19,7 @@ namespace MonoGame_Core.Scripts
 
         public Component Get(string t)
         {
-            return components.Where(c => c.Name == t).First();
+            return components.Where(c => c.Name == t).FirstOrDefault<Component>();
         }
 
         public void Remove(Component c)

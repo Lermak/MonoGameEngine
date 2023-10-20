@@ -368,6 +368,8 @@ namespace MonoGame_Core.Scripts
 
         public void Insert(Collider c)
         {
+            if (c.GameObject.ToDestroy)
+                return;
             Rectangle r = new Rectangle(new Point((int)(c.Transform.Position.X - c.Width / 2), (int)(c.Transform.Position.Y - c.Height / 2)), new Point((int)c.Width, (int)c.Height));
 
             if (Area.Intersects(r))

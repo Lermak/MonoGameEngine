@@ -49,10 +49,13 @@ namespace MonoGame_Core.Scripts
         }
         public virtual bool ContainsPoint(Vector2 v)
         {
-            return v.X > transform.Position.X - Width / 2 &&
-                    v.X < transform.Position.X + Width / 2 &&
-                    v.Y > transform.Position.Y - Height / 2 &&
-                    v.Y < transform.Position.Y + Height / 2;
+            GameObject g = new GameObject("mouse", new string[] { });
+            g.AddComponent(new Transform(g, InputManager.MousePos, 0, this.transform.Layer));
+            Collider c = (Collider)g.AddComponent(new CollisionCircle("mouse", g, 1, new Vector2(), false));
+
+            Vector2 pen = new Vector2();
+            CollisionManager.SATcollision(c, this, out pen);
+            return CollisionManager.SATcollision(c, this, out pen);
         }
 
         private static void addToActiveColliders(float dt, GameObject go, Component[] c)

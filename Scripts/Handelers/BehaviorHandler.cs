@@ -30,7 +30,7 @@ namespace MonoGame_Core.Scripts
 
         public Behavior Get(string t)
         {
-            return behaviors.Where(b => b.Name == t).First();
+            return behaviors.Where(b => b.Name == t).FirstOrDefault();
         }
 
         public BehaviorHandler(GameObject go)

@@ -22,10 +22,11 @@ namespace MonoGame_Core.Scripts
                     return position;
                 else
                 {
+                    float f = parent.Scale.Length();
                     if (staticAttach)
-                        return hf_Math.GetPosFromPoint(hf_Math.RadToDeg(parent.radians + radFromParent), distanceToParent, parent.position);
+                        return hf_Math.GetPosFromPoint(hf_Math.RadToDeg(parent.radians + radFromParent), distanceToParent * parent.Scale.X, parent.position);
                     else
-                        return position + parent.position;
+                        return (position * parent.Scale) + parent.position;
                 }
 
             } 
@@ -41,9 +42,19 @@ namespace MonoGame_Core.Scripts
                         return radians;
                 }
             }
-            set { radians = value; }
+            set { radians = value % hf_Math.DegToRad(360); }
         }
-        public Vector2 Scale { get { return scale; } }
+        public float RotationDegrees { get { return hf_Math.RadToDeg(Radians); } }
+        public Vector2 Scale { get { 
+                if(parent == null)
+                    return scale; 
+                else
+                {
+                    return scale * parent.Scale;
+                }
+            }
+            set { scale = value; }
+        }
         public Transform Parent { get { return parent; } }
         public byte Layer { get { return layer; } set { layer = value; } }
         public Transform(GameObject go, Vector2 pos, float degrees, byte l) : base(go, "transform")
@@ -69,11 +80,11 @@ namespace MonoGame_Core.Scripts
         }
         public void Rotate(float degree)
         {
-            radians += hf_Math.DegToRad(degree);
+            radians = (radians + hf_Math.DegToRad(degree)) % hf_Math.DegToRad(360);
         }
         public void SetRotation(float degree)
         {
-            radians = hf_Math.DegToRad(degree);
+            radians = hf_Math.DegToRad(degree) % hf_Math.DegToRad(360);
         }
         public Vector2 WorldPosition()
         {
@@ -82,19 +93,26 @@ namespace MonoGame_Core.Scripts
         public void Attach(Transform t, bool isStatic)
         {
             staticAttach = isStatic;
-            parent = t;
             startingRotation = t.radians;
-            radFromParent = hf_Math.DegToRad(hf_Math.GetAngleDeg(t.position, position)) - t.radians;
+            radFromParent = hf_Math.GetAngleRad(t.position, position) - t.radians;
             distanceToParent = Vector2.Distance(position, t.position);
             position = position - t.position;
+            scale = scale / t.Scale;
+            parent = t;
         }
         public void Detach()
         {
             position = Position;
             radians = Radians;
+            scale = Scale;
             parent = null;
             radFromParent = 0;
-            startingRotation = 0;          
+            startingRotation = 0;
+        }
+
+        public Vector2 GetReletivePosition()
+        {
+            return position;
         }
     }
 }
